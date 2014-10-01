@@ -5,7 +5,8 @@ Is a development fork of [ruby-processing][]
 
 First you should install processing-2.2.1
 
-Then create a `~/.k9rc` config file
+Then create a `~/.k9rc` config file, here is
+what mine looks like on Arch-linux
 ```ruby
 ---
 PROCESSING_ROOT: /usr/share/processing
