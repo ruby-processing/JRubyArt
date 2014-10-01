@@ -32,6 +32,20 @@ end
 require 'java'
 require 'rake/javaextensiontask'
 
+# -*- encoding: utf-8 -*-
+require 'psych'
+
+Rake::FileTask 
+!File.exist? './lib/core.jar'
+begin
+  CONFIG_FILE_PATH=File.expand_path('~/.k9rc')
+  RB_CONFIG = (Psych.load_file(CONFIG_FILE_PATH))
+  source= "#{RB_CONFIG["PROCESSING_ROOT"]}/core/library/core.jar"
+  FileUtils.cp(source, './lib')
+rescue
+  raise 'WARNING: you must set PROCESSING_ROOT in .k9rc to compile'
+end
+
 Rake::JavaExtensionTask.new('processing') do |ext|
   jars = FileList['lib/*.jar']
   ext.classpath = jars.map { |x| File.expand_path x}.join ':'
