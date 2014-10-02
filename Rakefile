@@ -14,14 +14,15 @@ require 'rspec/core/rake_task'
 
 spec = Gem::Specification.new do |s|
   s.name = 'jruby_art'
-  s.version = '0.0.7'
+  s.version = '0.1.2'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.md', 'LICENSE.md']
   s.summary = 'Ruby processing development branch'
-  s.description = s.summary
+  s.description = 'A jruby wrapper for processing'
+  s.licence = 'MIT'
   s.author = 'Martin Prout'
   s.email = 'martin_p@lineone.net'
-  # s.executables = ['rp5']
+  s.executables = ['k9']
   s.files = %w(LICENSE.md README.md Rakefile) + Dir.glob("{bin,lib,spec}/**/*")
   s.require_path = "lib"
   s.bindir = "bin"
