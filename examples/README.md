@@ -11,4 +11,6 @@ jruby-complete) you can use the following:-
 java -jar jruby-complete.jar my_sketch.rb
 ```
 
+Or if you are using netbeans with the jruby-plugin you can run the sketch using the built in jruby....
+
 [ruby-processing]:https://github.com/jashkenas/ruby-processing
