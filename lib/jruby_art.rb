@@ -1,4 +1,4 @@
-$VERBOSE = true
+VERBOSE = true
 
 working_directory = File.join(File.dirname(__FILE__))
 $LOAD_PATH << working_directory unless $LOAD_PATH.include?(working_directory)
@@ -18,3 +18,4 @@ require 'jruby_art/helpers/numeric'
 require 'jruby_art/helpers/string'
 require 'jruby_art/helpers/range'
 require 'jruby_art/helper_methods'
+require 'jruby_art/runner'
