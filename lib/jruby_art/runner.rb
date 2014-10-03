@@ -2,7 +2,7 @@ require 'ostruct'
 require 'fileutils'
 require 'rbconfig'
 #require_relative '../jruby_art/config'
-#require_relative '../jruby_art/version'
+require_relative '../jruby_art/version'
 
 
 module Processing
@@ -11,35 +11,17 @@ module Processing
   # offers. Able to run, watch, live, create, app, and unpack
   class Runner
     HELP_MESSAGE = <<-EOS
-
-    Ruby-Processing is a little shim between Processing and JRuby that helps
+    JRubyArt Version: #{JRubyArt::VERSION}
+    
+    JRubyArt is a little shim between Processing and JRuby that helps
     you create sketches of code art.
 
     Usage:
-    rp5 [choice] path/to/sketch
-
-    choice:-
-    run:              run sketch once
-    watch:            watch for changes on the file and relaunch it on the fly
-    live:                  launch sketch and give an interactive IRB shell
-    create [width height][mode][flag]: create a new sketch.
-    app:              create an application version of the sketch
-    setup:            check setup, install jruby-complete, unpack samples
-
-    Common options:
-    --nojruby:  use jruby-complete in place of an installed version of jruby
-    (Set [JRUBY: 'false'] in .rp5rc to make using jruby-complete default)
-
-    Examples:
-    rp5 setup unpack_samples
-    rp5 run samples/contributed/jwishy.rb
-    rp5 create some_new_sketch 640 480 p3d (P3D mode example)
-    rp5 create some_new_sketch 640 480 --wrap (a class wrapped default sketch)
-    rp5 watch some_new_sketch.rb
-
-    Everything Else:
-    http://wiki.github.com/jashkenas/ruby-processing
-
+    k9  create some_new_sketch 640 480
+    jruby some_new_sketch.rb
+    @todo  Allow a covenient way of running sketches with jruby-complete
+    
+    .......k9 run some_new_sketch.rb    
     EOS
     
     WIN_PATTERNS = [

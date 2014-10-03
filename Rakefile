@@ -11,10 +11,11 @@ require 'rubygems/package_task'
 require 'rdoc/task'
 require 'rake/testtask'
 require 'rspec/core/rake_task'
+require_relative 'lib/jruby_art/version'
 
 spec = Gem::Specification.new do |s|
   s.name = 'jruby_art'
-  s.version = '0.1.2'
+  s.version = JRubyArt::VERSION
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.md', 'LICENSE.md']
   s.summary = 'Ruby processing development branch'
@@ -24,8 +25,8 @@ spec = Gem::Specification.new do |s|
   s.email = 'martin_p@lineone.net'
   s.executables = ['k9']
   s.files = %w(LICENSE.md README.md Rakefile) + Dir.glob("{bin,lib,spec}/**/*")
-  s.require_path = "lib"
-  s.bindir = "bin"
+  s.require_path = 'lib'
+  s.bindir = 'bin'
 end
 
 # -*- ruby -*-

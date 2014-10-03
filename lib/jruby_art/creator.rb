@@ -112,11 +112,3 @@ end
     end
   end
 end
-
-def test
-  require_relative 'helper_methods'
-  require_relative 'helpers/string'
-  include Processing, Processing::HelperMethods
-  ClassSketch.new.create!('my_app', ['200', '200'])
-end
-test
