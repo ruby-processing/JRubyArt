@@ -1,7 +1,7 @@
 # Mandelbrot Set example
 # by Jordan Scales (http://jordanscales.com)
 # Modified to use map1d (instead of map), and somewhat 
-# optimized (update_pixels instead of set, and hypot for abs)
+# optimized (update_pixels instead of set, and dist for abs)
 # default size 900x600
 # no need to loop
 require 'jruby_art'
@@ -42,13 +42,12 @@ def mandel(z, max = 10)
   score
 end
 
-# rolled my own Complex class
-#   stripped of all functionality, except for what I needed (abs, square, add, to_s)
+#  Jordan Scales rolled his own Complex class
+#   stripped of all functionality, except for what he needed (abs, square, add, to_s)
 #   
-#   Using this class, runs in ~12.5s on my MacBook Air
-#     compared to ~22s using ruby's Complex struct
-class Complex
 
+class Complex
+  include Processing::HelperMethods
   attr_accessor :real, :imag
 
   def initialize(real, imag)
@@ -71,9 +70,9 @@ class Complex
     @imag += c.imag
   end
 
-  # computes the magnitude
+  # computes the magnitude (HelperMethods dist is a safer version of Math.hypot)
   def abs
-    Math.hypot(real, imag)
+    dist(real, imag, 0, 0)
   end
 
   def to_s

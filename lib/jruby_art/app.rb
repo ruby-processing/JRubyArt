@@ -2,7 +2,7 @@ require_relative 'helper_methods'
 require_relative 'proxy'
 
 module Processing
-  import 'processing.core' # imports the processing jar.
+  include_package 'processing.core' # imports the processing.core package.
 
   # This class is the base class the user should inherit from when making
   # their own sketch.

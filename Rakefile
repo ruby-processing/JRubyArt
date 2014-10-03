@@ -1,9 +1,3 @@
-# 
-# To change this license header, choose License Headers in Project Properties.
-# To change this template file, choose Tools | Templates
-# and open the template in the editor.
- 
-
 require 'rubygems'
 require 'rake'
 require 'rake/clean'
@@ -23,10 +17,16 @@ spec = Gem::Specification.new do |s|
   s.license = 'MIT'
   s.author = 'Martin Prout'
   s.email = 'martin_p@lineone.net'
+  s.homepage = 'https://github.com/ruby-processing/JRubyArt'
   s.executables = ['k9']
   s.files = %w(LICENSE.md README.md Rakefile) + Dir.glob("{bin,lib,spec}/**/*")
   s.require_path = 'lib'
   s.bindir = 'bin'
+  s.add_development_dependency "rake", "~> 10.3"
+  s.add_development_dependency "rake-compiler", "~> 0.9"
+  s.requirements << 'A decent graphics card'
+  s.requirements << 'java runtime >= 1.7+'
+  s.requirements << 'processing = 2.2.1+'
 end
 
 # -*- ruby -*-
@@ -37,16 +37,24 @@ require 'rake/javaextensiontask'
 # -*- encoding: utf-8 -*-
 require 'psych'
 
-Rake::FileTask 
-!File.exist? './lib/core.jar'
-begin
-  CONFIG_FILE_PATH=File.expand_path('~/.k9rc')
-  RB_CONFIG = (Psych.load_file(CONFIG_FILE_PATH))
-  source= "#{RB_CONFIG["PROCESSING_ROOT"]}/core/library/core.jar"
-  FileUtils.cp(source, './lib')
-rescue
-  raise 'WARNING: you must set PROCESSING_ROOT in .k9rc to compile'
+def copy_jars(name, dest)
+  begin
+    path = File.expand_path('~/.k9rc')
+    rp_config = (Psych.load_file(path))
+    source= "#{rp_config["PROCESSING_ROOT"]}/core/library/"    
+  rescue
+    raise 'WARNING: you must set PROCESSING_ROOT in .k9rc to compile'
+  end
+	body = proc {
+	  Dir["#{source}/*.jar"].each do |f|
+	    puts "Copying #{f} To #{dest}"
+	    FileUtils.cp f, dest
+	  end
+	}
+	Rake::Task.define_task(name, &body)	
 end
+
+copy_jars(:processing_jars, 'lib')
 
 Rake::JavaExtensionTask.new('processing') do |ext|
   jars = FileList['lib/*.jar']
@@ -67,7 +75,7 @@ end
 Rake::RDocTask.new do |rdoc|
   files =['README.md', 'LICENSE.md', 'lib/**/*.rb']
   rdoc.rdoc_files.add(files)
-  rdoc.main = "README" # page to start on
+  rdoc.main = "README.md" # page to start on
   rdoc.title = "JRubyArt Docs"
   rdoc.rdoc_dir = 'doc/rdoc' # rdoc output folder
   rdoc.options << '--line-numbers'
@@ -81,3 +89,5 @@ RSpec::Core::RakeTask.new do |spec|
   spec.pattern = 'spec/*_spec.rb'
   spec.rspec_opts = [Dir["lib"].to_a.join(':')]
 end
+
+
