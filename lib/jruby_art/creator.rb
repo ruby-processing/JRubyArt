@@ -78,7 +78,9 @@ end
 
     def class_template_mode
 %(
-class <%=@name%> < Processing::App
+require 'jruby_art'
+
+class <%=@name%> < Processing::AppGL
   def setup
     size <%=@width%>, <%=@height%>, <%=@mode%>
   end

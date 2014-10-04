@@ -108,4 +108,14 @@ module Processing
       end
     end
   end
+
+  class AppGL < Processing::App
+    include_package 'processing.opengl' # imports the processing.opengl package.
+    def setup
+      width  = opts.fetch(:width,  800)
+      height = opts.fetch(:height, 640)
+      mode = opts.fetch(:mode, P3D)
+      size(width, height, mode)
+    end    
+  end
 end

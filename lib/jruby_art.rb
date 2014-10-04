@@ -8,6 +8,8 @@ if RUBY_PLATFORM == 'java'   # guard prevents issues with mri ruby when using cr
     end 
     Java::ProcessingFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
     Java::ProcessingVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
+    Java::ProcessingVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
+    Java::ProcessingVecmathArcball::ArcballLibrary.new.load(JRuby.runtime, false)
     AppRender = Java::ProcessingVecmath::AppRender
     ShapeRender = Java::ProcessingVecmath::ShapeRender
     require 'jruby_art/proxy'

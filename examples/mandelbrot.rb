@@ -80,4 +80,4 @@ class Mandelbrot < Processing::App
 
 end
 
-Mandelbrot.new title: 'Mandelbrot'
+Mandelbrot.new(title: 'Mandelbrot')

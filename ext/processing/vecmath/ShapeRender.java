@@ -19,4 +19,20 @@ public class ShapeRender implements JRender {
     public void vertex(double x, double y) {
         shape.vertex((float) x, (float) y);
     }
+
+    @Override
+    public void vertex(double x, double y, double z) {
+        shape.vertex((float) x, (float) y, (float) z);
+    }
+
+    @Override
+    public void normal(double x, double y, double z) {
+        shape.normal((float) x, (float) y, (float) z);
+    }
+
+    @Override
+    public void vertex(double x, double y, double z, double u, double v) {
+        shape.vertex((float) x, (float) y, (float) z, (float) u, (float) v);
+    }
+
 }
