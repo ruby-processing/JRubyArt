@@ -2,6 +2,7 @@
 # into Processing. To load an image as the background, it must be
 # the same width and height as the program.
 # currently requires 'java -jar jruby-complete.jar background_image.rb'
+# Or just install local gem and run from NetBeans (with jruby plugin)
 
 require 'jruby_art'
 
