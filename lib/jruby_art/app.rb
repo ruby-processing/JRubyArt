@@ -32,6 +32,7 @@ module Processing
       fail TypeError unless args.is_a? Array
       # Set up the sketch.
       super()
+      proxy_java_fields
       post_initialize(opts)
       @args = args
       @opts = opts
