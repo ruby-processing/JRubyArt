@@ -14,7 +14,7 @@ PROCESSING_ROOT: /usr/share/processing
 
 ```
 
-To copy processing jars rake `processing_jars`
+To copy processing jars `rake processing_jars`
 
 To compile extensions `jruby -S rake compile`
 
