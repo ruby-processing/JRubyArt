@@ -1,5 +1,4 @@
 require_relative 'helper_methods'
-require_relative 'proxy'
 
 module Processing
   include_package 'processing.core' # imports the processing.core package.

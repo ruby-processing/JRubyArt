@@ -1,6 +1,6 @@
 module Processing
   require 'erb'
-
+  require_relative '../jruby_art/helpers/string'
   class SketchWriter
     include ERB::Util
 
