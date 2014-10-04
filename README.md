@@ -28,6 +28,12 @@ To create a new blank sketch
 k9 create my_app 200 200
 ```
 
+or for 3D opengl sketch
+
+```bash
+k9 create my_app 200 200 p3d
+```
+
 [Contributing][]
 
 [License][]
