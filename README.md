@@ -40,9 +40,12 @@ k9 create my_app 200 200 p3d
 
 [Acknowledgements][]
 
+[Examples][]
+
 
 [Acknowledgements]:ACKNOWLEDGEMENTS.md
 [Contributing]:CONTRIBUTING.md
+[Examples]:examples
 [License]:LICENSE.md
 [processing]:https://github.com/processing/processing
 [ruby-processing]:https://github.com/jashkenas/ruby-processing
