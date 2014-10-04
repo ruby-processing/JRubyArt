@@ -1,7 +1,6 @@
 require 'jruby_art'
 
 class Ball
-  include Processing::Proxy
   attr_accessor :position, :r, :m, :velocity, :app
   
   def initialize(app, x = 0.0, y = 0.0, r = 0.0)
