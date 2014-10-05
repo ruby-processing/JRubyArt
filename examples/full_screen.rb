@@ -3,7 +3,7 @@
 # Since processing-2.0 it is opengl
 require 'jruby_art'
 
-class FullScreen < Processing::App  
+class FullScreen < Processing::AppGL  
   def setup
     size 1000, 1000, P3D
     no_stroke
