@@ -43,9 +43,9 @@ module Processing
     # be overridden by the user for finer grained control.
     #
     def setup
-      width  = opts.fetch(:width,  800)
-      height = opts.fetch(:height, 640)
-      size(width, height)
+      # width  = opts.fetch(:width,  800)
+      # height = opts.fetch(:height, 640)
+      size(width = 100, height = 200)
     end
 
     # This method provides the possibility of adding and using
@@ -65,20 +65,23 @@ module Processing
     # This method runs the processing sketch.
     #
     def run_sketch
-      PApplet.run_sketch(args, self)
+      PApplet.run_sketch(args.to_java(:string), self)
     end
 
     # This method configures the sketch title and and presentation mode.
     #
     def configure_sketch
-      sketch_title
       presentation_mode
+      sketch_title
     end
 
     # This method sets the sketch presentation mode.
     #
     def presentation_mode
-      args << '--present' # if opts[:fullscreen]
+      return unless opts[:fullscreen]
+      full_screen = true
+      args << '--full-screen'
+      args << "--bgcolor=#{opts[:bgcolor]}" if opts[:bgcolor]
     end
 
     # This method sets the sketch title.
@@ -108,13 +111,11 @@ module Processing
     end
   end
 
-  class AppGL < Processing::App
+  class AppGL < App
+    include Processing
     include_package 'processing.opengl' # imports the processing.opengl package.
     def setup
-      width  = opts.fetch(:width,  800)
-      height = opts.fetch(:height, 640)
-      mode = opts.fetch(:mode, P3D)
-      size(width, height, mode)
+      size(width = 200, height = 200, mode = P3D)
     end    
   end
 end
