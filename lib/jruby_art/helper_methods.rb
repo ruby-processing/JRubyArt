@@ -175,8 +175,6 @@ module Processing
 
     define_method(:frame_count) { frameCount }
 
-    define_method(:full_screen?) { fullScreen }
-
     define_method(:mouse_button) { mouseButton }
 
     define_method(:key_code) { keyCode }
