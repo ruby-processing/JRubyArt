@@ -34,6 +34,12 @@ or for 3D opengl sketch
 k9 create my_app 200 200 p3d
 ```
 
+To run most sketches, all you need is an installed jruby:-
+
+```bash
+jruby my_app.rb
+```
+
 To run certain sketches, eg those with load_image (or shaders), either use [netbeans][] as your development ide or provide your own jruby-complete (beyond our control something to do with jruby permissions?).
 
 ```bash
