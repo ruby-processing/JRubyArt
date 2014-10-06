@@ -13,7 +13,7 @@ what mine looks like on Arch-linux
 PROCESSING_ROOT: /usr/share/processing
 
 ```
-On the mac
+The following should work on macosx
 
 ```ruby
 ---
