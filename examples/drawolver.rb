@@ -91,4 +91,4 @@ class Drawolver < Processing::AppGL
 	end
 end
 
-Drawolver.new(title: 'Draw Elvolver')
+Drawolver.new(title: 'Draw Evolver', fullscreen: true, bgcolor: '#000000')
