@@ -13,6 +13,12 @@ what mine looks like on Arch-linux
 PROCESSING_ROOT: /usr/share/processing
 
 ```
+On the mac
+
+```ruby
+---
+PROCESSING_ROOT: /Applications/Processing.app/Contents/Java
+```
 
 To copy processing jars `rake processing_jars`
 
