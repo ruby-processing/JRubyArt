@@ -40,6 +40,8 @@ To run certain sketches, eg those with load_image (or shaders), either use [netb
 java -jar jruby-complete my_app.rb
 ```
 
+Future versions will probably include jruby-complete, but the running sketches will require bespoke command like the original ruby-processing.
+
 [Contributing][]
 
 [License][]
