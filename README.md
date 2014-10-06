@@ -3,15 +3,21 @@
 
 Is a development fork of [ruby-processing][]
 
-First you should install processing-2.2.1
+First you should install [processing-2.2.1][]
 
 Then create a `~/.k9rc` config file, here is
-what mine looks like on Arch-linux
+what mine looks like on arch-linux
 
 ```ruby
 ---
 PROCESSING_ROOT: /usr/share/processing
 
+```
+The following should work on macosx
+
+```ruby
+---
+PROCESSING_ROOT: /Applications/Processing.app/Contents/Java
 ```
 
 To copy processing jars `rake processing_jars`
@@ -34,6 +40,20 @@ or for 3D opengl sketch
 k9 create my_app 200 200 p3d
 ```
 
+To run most sketches, all you need is an installed jruby:-
+
+```bash
+jruby my_app.rb
+```
+
+To run certain sketches, eg those with load_image (or shaders), either use [netbeans][] as your development ide or provide your own jruby-complete (beyond our control something to do with jruby permissions?).
+
+```bash
+java -jar jruby-complete my_app.rb
+```
+
+Future versions will probably include jruby-complete, but then running sketches will require a bespoke command like the original ruby-processing.
+
 [Contributing][]
 
 [License][]
@@ -42,10 +62,14 @@ k9 create my_app 200 200 p3d
 
 [Examples][]
 
+[CHANGELOG][]
 
 [Acknowledgements]:ACKNOWLEDGEMENTS.md
+[CHANGELOG]:CHANGELOG.md
 [Contributing]:CONTRIBUTING.md
 [Examples]:examples
 [License]:LICENSE.md
 [processing]:https://github.com/processing/processing
 [ruby-processing]:https://github.com/jashkenas/ruby-processing
+[netbeans]:http://learning-ruby-processing.blogspot.co.uk/2014/10/alternative-ruby-processing-implentation.html
+[processing-2.2.1]:https://processing.org/download/
