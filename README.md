@@ -62,8 +62,10 @@ Future versions will probably include jruby-complete, but then running sketches 
 
 [Examples][]
 
+[CHANGELOG][]
 
 [Acknowledgements]:ACKNOWLEDGEMENTS.md
+[CHANGELOG]:CHANGELOG.md
 [Contributing]:CONTRIBUTING.md
 [Examples]:examples
 [License]:LICENSE.md
