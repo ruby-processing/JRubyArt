@@ -34,6 +34,12 @@ or for 3D opengl sketch
 k9 create my_app 200 200 p3d
 ```
 
+To run sketches with load_image (or shaders) either use [netbeans][] as your development ide or provide your own jruby-complete.
+
+```bash
+java -jar jruby-complete my_app.rb
+```
+
 [Contributing][]
 
 [License][]
@@ -49,3 +55,4 @@ k9 create my_app 200 200 p3d
 [License]:LICENSE.md
 [processing]:https://github.com/processing/processing
 [ruby-processing]:https://github.com/jashkenas/ruby-processing
+[netbeans]:http://learning-ruby-processing.blogspot.co.uk/2014/10/alternative-ruby-processing-implentation.html
