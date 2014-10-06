@@ -3,7 +3,7 @@
 
 Is a development fork of [ruby-processing][]
 
-First you should install processing-2.2.1
+First you should install [processing-2.2.1][]
 
 Then create a `~/.k9rc` config file, here is
 what mine looks like on arch-linux
@@ -70,3 +70,4 @@ Future versions will probably include jruby-complete, but then running sketches 
 [processing]:https://github.com/processing/processing
 [ruby-processing]:https://github.com/jashkenas/ruby-processing
 [netbeans]:http://learning-ruby-processing.blogspot.co.uk/2014/10/alternative-ruby-processing-implentation.html
+[processing-2.2.1]:https://processing.org/download/
