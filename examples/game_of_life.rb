@@ -9,10 +9,11 @@
 #
 # The original Game of Life was created by John Conway in 1970.
 #
+
 require 'jruby_art'
 require 'mdarray'
 
-class GameOfLife < Processing::App
+class GameOfLife < Processing::App  
   CELL_SIZE = 5
   ALIVE = true
   DEAD = false
@@ -21,9 +22,9 @@ class GameOfLife < Processing::App
   HEIGHT = 640
   SKIP = 10
   INTERVAL = 100
-
+  
   attr_reader :pause, :cells, :row, :column, :last_time, :alive, :cells_buffer
-
+  
   def setup
     size WIDTH, HEIGHT
     @row = WIDTH / CELL_SIZE
@@ -37,16 +38,15 @@ class GameOfLife < Processing::App
     stroke(48, 100)
     no_smooth
   end
-
+  
   def draw
     background(0)
     # Draw live cells
     (0...row).each do |x|
       (0...column).each do |y|
-        if cells.get([x, y])
-          fill(alive)
-          rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
-        end
+        next unless cells.get([x, y])
+        fill(alive)
+        rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
       end
     end
     # Iterate if timer ticks
@@ -54,15 +54,13 @@ class GameOfLife < Processing::App
       tick!
       @last_time = millis
     end if millis - last_time > INTERVAL
-
     # Create  new cells manually on pause
     if pause && mouse_pressed?
-      # Map and avoid out of bound errors (use map1d range and range.clip)
+      # # Map and avoid out of bound errors
       x_cell_over = (map1d(mouse_x, (0..width), (0..row))).to_i
       x_cell_over = (0..row - 1).clip(x_cell_over)
       y_cell_over = (map1d(mouse_y, (0..height), (0..column))).to_i
       y_cell_over = (0..column - 1).clip(y_cell_over)
-
       # Check against cells in buffer
       if cells_buffer.get([x_cell_over, y_cell_over])  # Cell is alive
         cells.set([x_cell_over, y_cell_over], DEAD) # Kill
@@ -71,15 +69,16 @@ class GameOfLife < Processing::App
         cells.set([x_cell_over, y_cell_over], ALIVE) # Make alive
         fill(alive) # Fill alive color
       end
-
     elsif pause && !mouse_pressed?  # And then save to buffer once mouse goes up
-      # Save cells to buffer (so we operate with one array keeping the other intact)
+      # Save cells to buffer
+      # (so we operate with one array keeping the other intact)
       @cells_buffer = cells.copy
     end
   end
-
+    
   def tick!  # When the clock ticks
-    # Save cells to buffer (so we operate with one array keeping the other intact)
+    # Save cells to buffer
+    # (so we operate with one array keeping the other intact)
     @cells_buffer = cells.copy
     # Visit each cell:
     (0...row).each do |x|
@@ -89,13 +88,12 @@ class GameOfLife < Processing::App
         (x - 1..x + 1).each do |xx|
           (y - 1..y + 1).each do |yy|
             # Make sure you are not out of bounds
-            next unless [(xx >= 0), (xx < row), (yy >= 0), (yy < column)].all? { |in_bounds| in_bounds == true }
+            next unless [(xx >= 0), (xx < row), (yy >= 0), (yy < column)].all?
             # Make sure to check against self
-            unless [(xx == x), (yy == y)].all? { |is_self| is_self == true }
-              if cells_buffer.get([xx, yy]) # true == ALIVE
-                neighbours += 1 # Check alive neighbours and count them
-              end # alive
-            end # End of if self
+            unless [(xx == x), (yy == y)].all?
+              next unless cells_buffer.get([xx, yy]) # true == ALIVE
+              neighbours += 1 # Check alive neighbours and count them
+            end # End of if grid bounds
           end # End of yy loop
         end # End of xx loop
         # We've checked the neighbours: apply rules in one line (only in ruby)!
@@ -103,7 +101,7 @@ class GameOfLife < Processing::App
       end # End of y loop
     end # End of x loop
   end # End of function
-
+    
   def key_pressed
     case key
     when 'r', 'R'
@@ -115,10 +113,10 @@ class GameOfLife < Processing::App
       @cells = MDArray.boolean([row, column], DEAD)
     end
   end
-
+    
   def random_data
     (0...row * column).map { rand(1000) < ALIVE_START }
   end
-end
-
-GameOfLife.new(title: 'Game of Life mdarray version')
+end  
+  
+GameOfLife.new(title: 'mdarray game of life')
