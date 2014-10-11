@@ -6,11 +6,8 @@ require 'jruby_art'
 include Math
 
 Vert = Struct.new(:x, :y, :z) do
-  def distance(vec)
-    sqrt(
-      (x - vec.x) * (x - vec.x) +
-      (y - vec.y) * (y - vec.y) +
-      (z - vec.z) * (z - vec.z))
+  def dist_sq(v)
+    (x - v.x) * (x - v.x) + (y - v.y) * (y - v.y) + (z - v.z) * (z - v.z)
   end
 end
 
@@ -19,18 +16,18 @@ class Polyhedrons < Processing::App
   PHI_SQ = PHI * PHI
   PHI_CU = PHI * PHI * PHI
   ROOT2 = sqrt(2)
-
+  
   attr_reader :verts, :curr_id, :scayl, :ang, :spd, :name, :notes, :off_x, :off_y
   attr_reader :off_z, :len_edge
 
-  def setup
-    size(700, 450, P3D)
-    smooth
-    textSize(11)
+  def setup 
+    size(1020, 576, P3D)
+    smooth 4
+    text_size(14)
     # some positional variables for translation
     @off_y = height / 2
-    @off_x = off_y - 20
-    @off_z = -off_y
+    @off_x = width / 2 - 100
+    @off_z = -off_y / 8
     # angle and speed for rotation
     @ang = 0.0
     @spd = 0.015
@@ -39,17 +36,17 @@ class Polyhedrons < Processing::App
     @curr_id = 0
     create_poly(curr_id)
   end
-
+  
   def draw
     # setup the view
-    background(200)
+    background(211, 211, 211)
     push_matrix
     translate(off_x, off_y, off_z)
     rotate_x(sin(-ang * 0.3) * 0.5)
     rotate_y(ang)
     draw_axis
     # draw the polyhedron
-    stroke_weight(0.75)
+    stroke_weight(1.0)
     stroke(0)
     (0...verts.size).each do |i|
       (i...verts.size).each do |j|
@@ -60,31 +57,31 @@ class Polyhedrons < Processing::App
     hint(DISABLE_DEPTH_TEST)
     # show some notes
     fill(80, 50, 20)
-    text(name, height - 50, 50)
-    text(notes, height - 30, 70)
-    text('Click to view next polyhedron...', height - 50, height - 50)
+    text(name, width - 360, 50)
+    text(notes, width- 340, 70)
+    text('Click to view next polyhedron...', width - 340, height - 50)
     hint(ENABLE_DEPTH_TEST)
     # bump up the angle for the spin
     @ang += spd
   end
-
+  
   def mouse_released
     # change the polyhedron
     create_poly(@curr_id += 1)
   end
-
+  
   def draw_line(v1, v2)
     # Draws an edge line
     line(v1.x * scayl, v1.y * scayl, v1.z * scayl, v2.x * scayl, v2.y * scayl, v2.z * scayl)
   end
-
+  
   def edge?(v1, v2)
     # had some rounding errors, now a bit more forgiving...
     pres = 1000
-    d = v1.distance(v2) + 0.00001
-    ((d *  pres).round == (len_edge * pres).round)
+    d = v1.dist_sq(v2) + 0.00001
+    ((d *  pres).round == (len_edge * len_edge * pres).round)
   end
-
+  
   def add_verts(x, y, z)
     # adds the requested vert and all 'mirrored' verts
     verts << Vert.new(x, y, z)
@@ -96,14 +93,14 @@ class Polyhedrons < Processing::App
     verts << Vert.new(-x, -y, z) unless (y == 0.0)
     verts << Vert.new(-x, -y, -z) unless (z == 0.0)
   end
-
+  
   def add_permutations(x, y, z)
     # adds vertices for all three permutations of x, y, and z
     add_verts(x, y, z)
     add_verts(z, x, y)
     add_verts(y, z, x)
   end
-
+  
   def draw_axis
     # based off how Sketchup handles their axis
     stroke_weight(0.5)
@@ -121,7 +118,7 @@ class Polyhedrons < Processing::App
     stroke(128, 0, 0)
     line(0, 0, 300, 0, 0, 0)
   end
-
+  
   def create_poly(id)
     # This is where the actual defining of the polyhedrons takes place
     verts.clear # clear out whatever verts are currently defined
@@ -246,4 +243,4 @@ class Polyhedrons < Processing::App
   end
 end
 
-Polyhedrons.new
+Polyhedrons.new(title: 'Polyhedrons', fullscreen: true, bgcolor: "#d3d3d3")
