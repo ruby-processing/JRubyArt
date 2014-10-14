@@ -20,21 +20,13 @@ class Polyhedrons < Processing::App
   attr_reader :verts, :curr_id, :scayl, :ang, :spd, :name, :notes, :off_x, :off_y
   attr_reader :off_z, :len_edge
 
-<<<<<<< HEAD
   def setup
-=======
-  def setup 
->>>>>>> 38b888ec7515d3e27cfb67d03fb4a07e0beff79e
     size(1020, 576, P3D)
     smooth 4
     text_size(14)
     # some positional variables for translation
     @off_y = height / 2
-<<<<<<< HEAD
-    @off_x = width / 2 - 100 
-=======
     @off_x = width / 2 - 100
->>>>>>> 38b888ec7515d3e27cfb67d03fb4a07e0beff79e
     @off_z = -off_y / 8
     # angle and speed for rotation
     @ang = 0.0
@@ -47,11 +39,7 @@ class Polyhedrons < Processing::App
   
   def draw
     # setup the view
-<<<<<<< HEAD
-    background 211, 211, 211
-=======
     background(211, 211, 211)
->>>>>>> 38b888ec7515d3e27cfb67d03fb4a07e0beff79e
     push_matrix
     translate(off_x, off_y, off_z)
     rotate_x(sin(-ang * 0.3) * 0.5)
@@ -60,11 +48,8 @@ class Polyhedrons < Processing::App
     stroke 0
     stroke_weight 1
     # draw the polyhedron
-<<<<<<< HEAD
-=======
     stroke_weight(1.0)
     stroke(0)
->>>>>>> 38b888ec7515d3e27cfb67d03fb4a07e0beff79e
     (0...verts.size).each do |i|
       (i...verts.size).each do |j|
         draw_line(verts[i], verts[j]) if edge?(verts[i], verts[j])
@@ -75,13 +60,8 @@ class Polyhedrons < Processing::App
     # show some notes
     fill(80, 50, 20)
     text(name, width - 360, 50)
-<<<<<<< HEAD
     text(notes, width - 340, 70)
-    text('Click to view next polyhedron...',  width - 360, height - 50)
-=======
-    text(notes, width- 340, 70)
     text('Click to view next polyhedron...', width - 340, height - 50)
->>>>>>> 38b888ec7515d3e27cfb67d03fb4a07e0beff79e
     hint(ENABLE_DEPTH_TEST)
     # bump up the angle for the spin
     @ang += spd
@@ -265,8 +245,4 @@ class Polyhedrons < Processing::App
   end
 end
 
-<<<<<<< HEAD
 Polyhedrons.new(title: 'Polyhedrons', fullscreen: true, bgcolor: '#d3d3d3')
-=======
-Polyhedrons.new(title: 'Polyhedrons', fullscreen: true, bgcolor: "#d3d3d3")
->>>>>>> 38b888ec7515d3e27cfb67d03fb4a07e0beff79e
