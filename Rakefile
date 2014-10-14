@@ -39,7 +39,7 @@ require 'psych'
 
 def copy_jars(name, dest)
   begin
-    path = File.expand_path('~/.k9rc')
+    path = File.expand_path('~/.jruby_art/config.yml')
     rp_config = (Psych.load_file(path))
     source= "#{rp_config["PROCESSING_ROOT"]}/core/library/"    
   rescue
