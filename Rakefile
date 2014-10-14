@@ -38,12 +38,13 @@ require 'rake/javaextensiontask'
 require 'psych'
 
 def copy_jars(name, dest)
+  conf = '~/.jruby_art/config.yml'
   begin
-    path = File.expand_path('~/.jruby_art/config.yml')
+    path = File.expand_path(conf)
     rp_config = (Psych.load_file(path))
     source= "#{rp_config["PROCESSING_ROOT"]}/core/library/"    
   rescue
-    raise 'WARNING: you must set PROCESSING_ROOT in .k9rc to compile'
+    raise "WARNING: you must set PROCESSING_ROOT in #{conf} compile"
   end
 	body = proc {
 	  Dir["#{source}/*.jar"].each do |f|

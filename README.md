@@ -26,7 +26,7 @@ To compile extensions `jruby -S rake compile` _requires rake-compiler gem_
 
 To build gem `jruby -S rake package`
 
-To install `gem install pkg/jruby_art-0.1.2.gem`
+To install `gem install pkg/jruby_art-0.1.3.gem`
 
 To create a new blank sketch
 
@@ -49,10 +49,8 @@ jruby my_app.rb
 To run certain sketches, eg those with load_image (or shaders), either use [netbeans][] as your development ide or provide your own jruby-complete (beyond our control something to do with jruby permissions?).
 
 ```bash
-java -jar jruby-complete my_app.rb
+k9 run my_app.rb # need to run one time "k9 setup install"
 ```
-
-Future versions will probably include jruby-complete, but then running sketches will require a bespoke command like the original ruby-processing.
 
 [Contributing][]
 

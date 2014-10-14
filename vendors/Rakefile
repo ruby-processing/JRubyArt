@@ -1,0 +1,51 @@
+require 'rake/clean'
+
+WARNING = <<-EOS 
+   WARNING: you may not have wget installed, you could just download
+   the correct version of jruby-complete to the vendors folder, and 
+   re-run rp5 setup install instead of installing wget. Some systems
+   may also require 'sudo' access to install, NB: this is untested....
+      
+EOS
+
+JRUBY_COMPLETE_VERSION      = "1.7.16"
+
+CLOBBER.include("jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar")
+
+desc "download, and copy to ruby-processing"
+task :default => [:download, :copy_ruby]
+
+desc "download JRuby upstream sources"
+task :download => ["jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar"]
+
+file "jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar" do
+  begin
+    sh "wget http://jruby.org.s3.amazonaws.com/downloads/#{JRUBY_COMPLETE_VERSION}/jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar"    
+  rescue
+    warn(WARNING)
+  end
+  check_sha1("jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar", "8ef6c848cc5491c5f22ddad4532c68fe778421f6")
+end
+
+directory "../lib/ruby"
+
+desc "copy jruby-complete"
+task :copy_ruby => ["../lib/ruby"] do
+  sh "cp -v jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar ../lib/ruby/jruby-complete.jar"
+end
+
+def check_sha1(filename, expected_hash)
+  require "digest/sha1"
+  sha1 = Digest::SHA1.new
+  File.open(filename, "r") do |f|
+    while buf = f.read(4096)
+      sha1.update(buf)
+    end
+  end
+  if sha1.hexdigest != expected_hash
+    raise "bad sha1 checksum for #{filename} (expected #{expected_hash} got #{sha1.hexdigest})"
+  end
+end
+
+
+

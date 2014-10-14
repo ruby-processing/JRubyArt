@@ -4,7 +4,7 @@ It might seem a little of that this log starts at version 0.1.2, the reason for 
 
 ### Version 0.1.3
 
-Move config file from ~/.k9rc to ~/.jruby_art/config.yml
+Move config file from ~/.k9rc to ~/.jruby_art/config.yml, created installer for jruby-complete.jar.  For sketches needing to be run with jruby-complete use `rp5 run sketch.rb` (includes shader sketches with `load_image`.
 
 
 ### Version 0.1.2
