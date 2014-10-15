@@ -70,7 +70,7 @@ k9 run my_app.rb # NB: k9 setup install, is a one-time install to gem procedure
 [Acknowledgements]:ACKNOWLEDGEMENTS.md
 [CHANGELOG]:CHANGELOG.md
 [Contributing]:CONTRIBUTING.md
-[Examples]:examples
+[Examples]:https://github.com/ruby-processing/JRubyArt-examples
 [License]:LICENSE.md
 [processing]:https://github.com/processing/processing
 [ruby-processing]:https://github.com/jashkenas/ruby-processing
