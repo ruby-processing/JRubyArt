@@ -3,7 +3,7 @@ syntax: glob
 *.sw*
 *.*~
 *~
-
+pkg
 *.pdf
 *.gem
 *.tgz

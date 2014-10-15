@@ -91,7 +91,7 @@ module Processing
       proc_root = File.exist?("#{ENV['HOME']}/.jruby_art/config.yml")
       case choice
       when /install/
-        "cd #{K9_ROOT}/vendors && rake"
+        system "cd #{K9_ROOT}/vendors && rake"
         unless proc_root
           set_processing_root
           warn 'PROCESSING_ROOT set optimistically, run check to confirm'
