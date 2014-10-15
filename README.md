@@ -46,7 +46,12 @@ To run most sketches, all you need is an installed jruby:-
 jruby my_app.rb
 ```
 
-To run certain sketches, eg those with load_image (or shaders), either use [netbeans][] as your development ide or use the vendored jruby-complete (beyond our control something to do with jruby permissions?).
+To run certain sketches, eg those with load_image (or shaders), either use [netbeans][] as your development ide or use the vendored jruby-complete (beyond our control something to do with jruby permissions?).  To install jruby-complete:-
+
+```bash
+k9 setup install # requires wget
+```
+To run sketches with jruby-complete (rather than installed jruby)
 
 ```bash
 k9 run my_app.rb # need to run one time "k9 setup install"
