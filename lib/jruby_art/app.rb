@@ -23,7 +23,7 @@ module Processing
     # App should be instantiated with an optional list of opts
     # and array of args.
     #
-    # App.new(title: 'My Simple App',fullscreen: true)
+    # App.new(title: 'My Simple App', fullscreen: true)
     #
     def initialize(opts = {}, args = [])
       super()
