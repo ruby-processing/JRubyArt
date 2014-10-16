@@ -20,10 +20,10 @@ module Processing
     include HelperMethods
     attr_reader :title, :args, :opts
 
-    # SimpleApp should be instantiated with an optional list of opts
+    # App should be instantiated with an optional list of opts
     # and array of args.
     #
-    # SimpleApp.new(title: 'My Simple App',fullscreen: true)
+    # App.new(title: 'My Simple App',fullscreen: true)
     #
     def initialize(opts = {}, args = [])
       super()
