@@ -23,13 +23,9 @@ module Processing
     # SimpleApp should be instantiated with an optional list of opts
     # and array of args.
     #
-    # SimpleApp.new(width: 500, height: 500, fullscreen: true)
+    # SimpleApp.new(title: 'My Simple App',fullscreen: true)
     #
     def initialize(opts = {}, args = [])
-      # Guard against invalid input.
-      fail TypeError unless opts.is_a? Hash
-      fail TypeError unless args.is_a? Array
-      # Set up the sketch.
       super()
       proxy_java_fields
       post_initialize(opts)
@@ -43,9 +39,7 @@ module Processing
     # be overridden by the user for finer grained control.
     #
     def setup
-      # width  = opts.fetch(:width,  800)
-      # height = opts.fetch(:height, 640)
-      size(width = 100, height = 200)
+      size(width = 100, height = 100)
     end
 
     # This method provides the possibility of adding and using
@@ -116,6 +110,7 @@ module Processing
     include_package 'processing.opengl' # imports the processing.opengl package.
     def setup
       size(width = 200, height = 200, mode = P3D)
+      fail unless [P3D, P2D].include? mode
     end    
   end
 end
