@@ -8,7 +8,7 @@ module Processing
   #
   # i.e.
   #
-  # class MySketch < SimpleApp
+  # class MySketch < Processing::App
   #
   #   def draw
   #     background rand(255)
