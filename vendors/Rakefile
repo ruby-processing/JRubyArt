@@ -2,18 +2,20 @@ require 'rake/clean'
 
 WARNING = <<-EOS 
    WARNING: you may not have wget installed, you could just download
-   the correct version of jruby-complete to the vendors folder, and 
-   re-run k9 setup install instead of installing wget. Some systems
-   may also require 'sudo' access to install, NB: this is untested....
+   the correct version of jruby-complete and/or examples to the vendors 
+   folder, and re-run k9 setup install instead of installing wget. Some 
+   systems may also require 'sudo' access to install jruby-complete, 
+   NB: this is untested....
       
 EOS
 
-JRUBY_COMPLETE_VERSION      = "1.7.16"
-
-CLOBBER.include("jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar")
+JRUBY_COMPLETE_VERSION      = '1.7.16'
+EXAMPLES                    = '0.0.1-pre'
+HOME_DIR = ENV['HOME']
+CLOBBER.include("jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar", "#{EXAMPLES}.tar.gz")
 
 desc "download, and copy to ruby-processing"
-task :default => [:download, :copy_ruby]
+task :default => [:download, :copy_ruby, :download_examples, :copy_examples]
 
 desc "download JRuby upstream sources"
 task :download => ["jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar"]
@@ -32,6 +34,23 @@ directory "../lib/ruby"
 desc "copy jruby-complete"
 task :copy_ruby => ["../lib/ruby"] do
   sh "cp -v jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar ../lib/ruby/jruby-complete.jar"
+end
+
+desc 'download and copy examples to user home'
+task :download_examples
+file "#{EXAMPLES}.tar.gz" do
+  begin
+    sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz" 
+  rescue
+    warn(WARNING)
+  end
+end
+
+desc "copy examples"
+task :copy_examples => ["#{EXAMPLES}.tar.gz"] do
+  sh "tar xzvf #{EXAMPLES}.tar.gz" 
+  sh "cp -r JRubyArt-examples-#{EXAMPLES} #{HOME_DIR}/examples"  
+  sh "rm -r JRubyArt-examples-#{EXAMPLES}"   
 end
 
 def check_sha1(filename, expected_hash)
