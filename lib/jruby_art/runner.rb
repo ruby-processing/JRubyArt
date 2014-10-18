@@ -75,7 +75,7 @@ module Processing
     end
     
     def run(sketch, args)
-      command = ['java', '-jar', jruby_complete, sketch, args].flatten
+      command = ['java', '-jar', jruby_complete, parse, sketch, args].flatten
       exec(*command)
     end
     
@@ -83,6 +83,10 @@ module Processing
       rcomplete = File.join(K9_ROOT, "/lib/ruby/jruby-complete.jar")
       return rcomplete if File.exist?(rcomplete)
       warn "#{rcomplete} does not exist\nTry running `k9 setup install`"
+    end
+
+    def parse
+      File.join(K9_ROOT, "lib/jruby_art/parse.rb")
     end
     
     def setup(choice)

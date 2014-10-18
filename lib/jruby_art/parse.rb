@@ -12,15 +12,14 @@ module Processing
   require 'jruby_art'
 
   class Sketch < Processing::App
-  <% if has_methods %>
-  <%= source %>
-  <% else %>
-  def setup
-  size(DEFAULT_WIDTH, DEFAULT_HEIGHT, JAVA2D)
-  <%= source %>
-  no_loop
-  end
-  <% end %>
+    <% if has_methods %>
+    <%= source %>
+    <% else %>
+    def setup
+      <%= source %>
+      no_loop
+    end
+    <% end %>
   end
 
   Sketch.new(title: 'Bare Sketch')
@@ -39,7 +38,6 @@ module Processing
       require 'erb'
       code = ERB.new(SKETCH_TEMPLATE).result(binding)
       Object.class_eval code, SKETCH_PATH, -1
-      Processing::App.sketch_class.new
     end
   end
 
@@ -48,6 +46,8 @@ module Processing
     File.read(SKETCH_PATH)
   end
 end
+
+Processing.load_and_run_sketch 
 
 
 
