@@ -1,5 +1,7 @@
 require_relative 'helper_methods'
 
+# The Processing module is a wrapper for JRubyArt
+# Author:: Martin Prout (extends / re-implements ruby-processing)
 module Processing
   include_package 'processing.core' # imports the processing.core package.
   include_package 'processing.event'
@@ -58,7 +60,20 @@ module Processing
       args << opts.fetch(:title, 'Sketch')
     end
   end
+  # Watch the definition of these methods, to make sure
+  # that Processing is able to call them during events.
+  METHODS_TO_ALIAS = {
+    mouse_pressed: :mousePressed,
+    mouse_dragged: :mouseDragged,
+    mouse_clicked: :mouseClicked,
+    mouse_moved: :mouseMoved,
+    mouse_released: :mouseReleased,
+    key_pressed: :keyPressed,
+    key_released: :keyReleased,
+    key_typed: :keyTyped
+  }
 
+  # This class is for default (Java2D) sketches only
   class App < PApplet
     include Common, HelperMethods
     Java::ProcessingVecmathArcball::ArcballLibrary.new.load(JRuby.runtime, false)
@@ -88,25 +103,16 @@ module Processing
 
     # When certain special methods get added to the sketch, we need to let
     # Processing call them by their expected Java names.
-    def self.method_added(method_name) #:nodoc:
+    def self.method_added(method_name) # :nodoc:
       # Watch the definition of these methods, to make sure
       # that Processing is able to call them during events.
-      methods_to_alias = {
-        mouse_pressed:  :mousePressed,
-        mouse_dragged:  :mouseDragged,
-        mouse_clicked:  :mouseClicked,
-        mouse_moved:    :mouseMoved,
-        mouse_released: :mouseReleased,
-        key_pressed:    :keyPressed,
-        key_released:   :keyReleased,
-        key_typed:      :keyTyped
-      }
-      if methods_to_alias.key?(method_name)
-        alias_method methods_to_alias[method_name], method_name
+      if METHODS_TO_ALIAS.key?(method_name)
+        alias_method METHODS_TO_ALIAS[method_name], method_name
       end
     end
   end
 
+  # This class is for opengl sketches (P2D and P3D)
   class AppGL < PApplet
     include Processing, Common
     include_package 'processing.opengl' # imports the processing.opengl package.
@@ -139,20 +145,8 @@ module Processing
     # When certain special methods get added to the sketch, we need to let
     # Processing call them by their expected Java names.
     def self.method_added(method_name) #:nodoc:
-      # Watch the definition of these methods, to make sure
-      # that Processing is able to call them during events.
-      methods_to_alias = {
-        mouse_pressed:  :mousePressed,
-        mouse_dragged:  :mouseDragged,
-        mouse_clicked:  :mouseClicked,
-        mouse_moved:    :mouseMoved,
-        mouse_released: :mouseReleased,
-        key_pressed:    :keyPressed,
-        key_released:   :keyReleased,
-        key_typed:      :keyTyped
-      }
-      if methods_to_alias.key?(method_name)
-        alias_method methods_to_alias[method_name], method_name
+      if METHODS_TO_ALIAS.key?(method_name)
+        alias_method METHODS_TO_ALIAS[method_name], method_name
       end
     end
   end
