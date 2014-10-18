@@ -4,7 +4,7 @@ It might seem a little of that this log starts at version 0.1.2, the reason for 
 
 ### Version 0.1.3
 
-Move config file from ~/.k9rc to ~/.jruby_art/config.yml, created installer for jruby-complete.jar.  For sketches needing to be run with jruby-complete use `rp5 run sketch.rb` (includes shader sketches with `load_image`.
+Move config file from ~/.k9rc to ~/.jruby_art/config.yml, created installer for jruby-complete.jar.  For sketches needing to be run with jruby-complete use `k9 run sketch.rb` (this includes shader sketches with `load_image`) or use netbeans with jruby-plugin to develop your sketches. For 3D sketches (or to use P2D) inherit from AppGL, both AppGL and App inherit directly from PApplet. Examples have been moved to there own repo `k9 setup install` downloads and install jruby-complete and downloads and extracts sample to users HOME directory.
 
 
 ### Version 0.1.2

@@ -35,7 +35,6 @@ module Processing
     #
     def presentation_mode
       return unless opts[:fullscreen]
-      # present = true
       args << '--full-screen'
       args << "--bgcolor=#{opts[:bgcolor]}" if opts[:bgcolor]
     end
