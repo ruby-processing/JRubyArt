@@ -2,9 +2,13 @@
 
 It might seem a little of that this log starts at version 0.1.2, the reason for this is that previous version relate to earlier versions which were essentially a clone of ruby-processing.
 
+### Version 0.1.5
+
+Now you can wrap a bare sketch with `k9 wrap sketch.rb` sensibly wraps bare P2D, P3D and default processing mode sketches.  The runner now laso makes a similar check.
+
 ### Version 0.1.4
 
-Now with k9 you can run 'bare' sketches, like original ruby-processing but with less sugar. So instead of cos use Math,cos etc, further no attempt has been made to mimic processing inner-class behaviour (bad OO practice). @Todo write a sketch converter 'bare' => 'class wrapped'
+Now with k9 you can run `bare` sketches, like original ruby-processing but with less sugar. So instead of `cos` use `Math,cos` etc, further no attempt has been made to mimic processing inner-class behaviour (bad OO practice). 
 
 
 ### Version 0.1.3
