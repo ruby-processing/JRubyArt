@@ -4,7 +4,8 @@ SKETCH_PATH ||= ARGV.shift
 SKETCH_ROOT ||= File.dirname(SKETCH_PATH)
 
 require_relative '../jruby_art'
-require_relative '../jruby_art/app'
+require_relative '../jruby_art/'
+require_relative '../jruby_art/helpers/string'
 
 module Processing
   # For use with "bare" sketches that don't want to define a class or methods
@@ -22,20 +23,19 @@ module Processing
     <% end %>
   end
 
-  Sketch.new(title: 'Bare Sketch')
+  Sketch.new(title: <%= %q(title) %>)
   EOS
 
   # This method is the common entry point to run a sketch, bare or complete.
   def self.load_and_run_sketch
-    source = read_sketch_source
+    source = read_sketch_source    
     has_sketch = !source.match(/^[^#]*< Processing::App/).nil?
-    has_methods = !source.match(/^[^#]*(def\s+setup|def\s+draw)/).nil?
-
+    has_methods = !source.match(/^[^#]*(def\s+setup|def\s+draw)/).nil?    
     if has_sketch
       load File.join(SKETCH_ROOT, SKETCH_PATH)
-      Processing::App.sketch_class.new unless $app
     else
       require 'erb'
+      title = File.basename(SKETCH_PATH).sub(/(\.rb)$/, '').titleize
       code = ERB.new(SKETCH_TEMPLATE).result(binding)
       Object.class_eval code, SKETCH_PATH, -1
     end
@@ -48,6 +48,4 @@ module Processing
 end
 
 Processing.load_and_run_sketch 
-
-
 
