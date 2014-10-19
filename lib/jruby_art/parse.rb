@@ -28,16 +28,16 @@ module Processing
 
   # This method is the common entry point to run a sketch, bare or complete.
   def self.load_and_run_sketch
-    source = read_sketch_source    
+    source = read_sketch_source
     has_sketch = !source.match(/^[^#]*< Processing::App/).nil?
     has_methods = !source.match(/^[^#]*(def\s+setup|def\s+draw)/).nil?
-    opengl = !source.match(/P(2|3)D/)
+    default = source.match(/P(2|3)D/)
     if has_sketch
       load File.join(SKETCH_ROOT, SKETCH_PATH)
     else
       require 'erb'
       title = File.basename(SKETCH_PATH).sub(/(\.rb)$/, '').titleize
-      mode = opengl ? "Processing::AppGL" : "Processing::App"
+      mode = default ? 'Processing::App' : 'Processing::AppGL'
       code = ERB.new(SKETCH_TEMPLATE).result(binding)
       Object.class_eval code, SKETCH_PATH, -1
     end
@@ -49,5 +49,5 @@ module Processing
   end
 end
 
-Processing.load_and_run_sketch 
+Processing.load_and_run_sketch
 
