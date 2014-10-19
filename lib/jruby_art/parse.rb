@@ -12,7 +12,7 @@ module Processing
   SKETCH_TEMPLATE = <<-EOS
   require 'jruby_art'
 
-  class Sketch < Processing::App
+  class Sketch < <%= mode %>
     <% if has_methods %>
     <%= source %>
     <% else %>
@@ -30,12 +30,14 @@ module Processing
   def self.load_and_run_sketch
     source = read_sketch_source    
     has_sketch = !source.match(/^[^#]*< Processing::App/).nil?
-    has_methods = !source.match(/^[^#]*(def\s+setup|def\s+draw)/).nil?    
+    has_methods = !source.match(/^[^#]*(def\s+setup|def\s+draw)/).nil?
+    opengl = !source.match(/P(2|3)D/)
     if has_sketch
       load File.join(SKETCH_ROOT, SKETCH_PATH)
     else
       require 'erb'
       title = File.basename(SKETCH_PATH).sub(/(\.rb)$/, '').titleize
+      mode = opengl ? "Processing::AppGL" : "Processing::App"
       code = ERB.new(SKETCH_TEMPLATE).result(binding)
       Object.class_eval code, SKETCH_PATH, -1
     end

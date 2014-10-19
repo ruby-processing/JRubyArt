@@ -47,7 +47,7 @@ module Processing
       case @options.action
       when 'run'    then run(@options.path, @options.args)
       #when 'watch'  then watch(@options.path, @options.args)
-      #when 'live'   then live(@options.path, @options.args)
+      when 'wrap'   then wrap(@options.path, @options.args)
       when 'create' then create(@options.path, @options.args)
       #when 'app'    then app(@options.path)
       when 'setup'  then setup(@options.path)
@@ -72,6 +72,13 @@ module Processing
     def create(sketch, args)
       require_relative 'creator'
       Processing::ClassSketch.new.create!(sketch, args)
+    end
+    
+    def wrap(sketch, args)
+      require_relative 'writer'
+      writer = Processing::Writer.new
+      writer.read(sketch)
+      writer.write
     end
     
     def run(sketch, args)
