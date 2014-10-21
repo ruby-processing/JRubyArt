@@ -10,7 +10,7 @@ WARNING = <<-EOS
 EOS
 
 JRUBY_COMPLETE_VERSION      = '1.7.16'
-EXAMPLES                    = '0.0.2-pre'
+EXAMPLES                    = '0.0.3'
 HOME_DIR = ENV['HOME']
 CLOBBER.include("jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar", "#{EXAMPLES}.tar.gz")
 
