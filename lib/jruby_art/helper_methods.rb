@@ -107,20 +107,19 @@ module Processing
       end
       fail ArgumentError, 'takes 4 parameters'
     end
-  end
   
-  # dist_squared only makes sense with 3D distance
-  def dist_squared(*args)
-    len = args.length
-    if len == 6
-      dx = args[0] - args[3]
-      dy = args[1] - args[4]
-      dz = args[2] - args[5]
-      return 0 if dx.abs < EPSILON && dy.abs < EPSILON && dz.abs < EPSILON
-      return dx * dx + dy * dy + dz * dz
+    # dist_squared only makes sense with 3D distance
+    def dist_squared(*args)
+      len = args.length
+      if len == 6
+        dx = args[0] - args[3]
+        dy = args[1] - args[4]
+        dz = args[2] - args[5]
+        return 0 if dx.abs < EPSILON && dy.abs < EPSILON && dz.abs < EPSILON
+        return dx * dx + dy * dy + dz * dz
+      end
+      fail ArgumentError, 'takes 6 parameters'
     end
-    fail ArgumentError, 'takes 6 parameters'
-  end
 
     # explicitly provide 'processing.org' constrain instance method
     # to return a float:- amt, low and high need to be floats
