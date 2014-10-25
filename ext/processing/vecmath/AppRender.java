@@ -18,11 +18,18 @@ public class AppRender implements JRender {
     public void vertex(double x, double y) {
         app.vertex((float) x, (float) y);
     }
+    
+   
+     @Override
+    public void curveVertex(double x, double y) {
+        app.curveVertex((float) x, (float) y);
+    }
 
     @Override
     public void vertex(double x, double y, double z) {
         app.vertex((float) x, (float) y, (float) z);
-    }
+    } 
+
 
     @Override
     public void normal(double x, double y, double z) {
@@ -32,6 +39,11 @@ public class AppRender implements JRender {
     @Override
     public void vertex(double x, double y, double z, double u, double v) {
         app.vertex((float) x, (float) y, (float) z, (float) u, (float) v);
+    }
+    
+        @Override
+    public void curveVertex(double x, double y, double z) {
+        app.curveVertex((float) x, (float) y, (float) z);
     }
 
 }

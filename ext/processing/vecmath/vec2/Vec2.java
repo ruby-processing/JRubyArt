@@ -181,25 +181,6 @@ public class Vec2 extends RubyObject {
     * @param other
     * @return
     */
-    // @JRubyMethod(name = "dist_squared", required = 1)
-    //
-    // public IRubyObject dist_squared(ThreadContext context, IRubyObject other) {
-    // Vec2 b = null;
-    // if (other instanceof Vec2) {
-    // b = (Vec2) other.toJava(Vec2.class);
-    // } else {
-    // throw context.runtime.newTypeError("argument should be Vec2D");
-    // }
-    // double result = (jx - b.jx) * (jx - b.jx) + (jy - b.jy) * (jy - b.jy);
-    // return context.getRuntime().newFloat(result);
-    // }
-
-    /**
-    *
-    * @param context
-    * @param other
-    * @return
-    */
     @JRubyMethod(name = "cross", required = 1)
 
     public IRubyObject cross(ThreadContext context, IRubyObject other) {
@@ -313,16 +294,6 @@ public class Vec2 extends RubyObject {
         return context.getRuntime().newFloat(Math.atan2(-jy, jx) * -1.0);
     }
 
-    /**
-    *
-    * @param context
-    * @return
-    */
-    // @JRubyMethod(name = "mag_squared")
-    //
-    // public IRubyObject mag_squared(ThreadContext context) {
-    // return context.getRuntime().newFloat(jx * jx + jy * jy);
-    // }
 
     /**
     *
@@ -579,6 +550,19 @@ public class Vec2 extends RubyObject {
     }
 
 
+     /**
+      *
+      * @param context
+      * @param object
+      */
+      @JRubyMethod(name = "to_curve_vertex")
+
+      public void toCurveVertex(ThreadContext context, IRubyObject object) {
+          JRender renderer = (JRender) object.toJava(JRender.class);
+          renderer.curveVertex(jx, jy);
+      }
+
+
     /**
     *
     * @param context
@@ -642,23 +626,5 @@ public class Vec2 extends RubyObject {
         return result; // return false as default unless not null && values equal
     }
 
-    /**
-    *
-    * @param context
-    * @param other
-    * @return
-    */
-    //    @JRubyMethod(name = "almost_eql?", required = 1)
-    //
-    //    public IRubyObject almost_eql_p(ThreadContext context, IRubyObject other) {
-    //        Vec2 v = (other instanceof Vec2) ? (Vec2) other.toJava(Vec2.class) : null;
-    //        RubyBoolean result = (v == null) ? RubyBoolean.newBoolean(context.getRuntime(), false)
-    //                : (Math.abs(jx - v.jx) > Vec2.EPSILON)
-    //                ? RubyBoolean.newBoolean(context.getRuntime(), false)
-    //                : (Math.abs(jy - v.jy) > Vec2.EPSILON)
-    //                ? RubyBoolean.newBoolean(context.getRuntime(), false)
-    //                : RubyBoolean.newBoolean(context.getRuntime(), true);
-    //        return result; // return false as default unless not null && values equal
-    //    }
 
 }

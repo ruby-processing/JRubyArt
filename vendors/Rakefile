@@ -22,7 +22,7 @@ task :download => ["jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar"]
 
 file "jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar" do
   begin
-    sh "wget http://jruby.org.s3.amazonaws.com/downloads/#{JRUBY_COMPLETE_VERSION}/jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar"    
+    sh "wget https://s3.amazonaws.com/jruby.org/downloads/#{JRUBY_COMPLETE_VERSION}/jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar"    
   rescue
     warn(WARNING)
   end

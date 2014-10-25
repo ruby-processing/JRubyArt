@@ -468,6 +468,18 @@ public final class Vec3 extends RubyObject {
         renderer.vertex(jx, jy, jz);
     }
     
+        /**
+    *
+    * @param context
+    * @param object
+    */
+    @JRubyMethod(name = "to_curve_vertex")
+    
+    public void toCurveVertex(ThreadContext context, IRubyObject object) {
+        JRender renderer = (JRender) object.toJava(JRender.class);
+        renderer.curveVertex(jx, jy, jz);
+    }
+    
     /**
     * 
     * @param context
@@ -564,25 +576,5 @@ public final class Vec3 extends RubyObject {
         return result; // return false as default unless not null && values equal
     }
     
-    /**
-    *
-    * @param context
-    * @param other
-    * @return
-    */
-    //    @JRubyMethod(name = "almost_eql?", required = 1)
-    //
-    //    public IRubyObject almost_eql_p(ThreadContext context, IRubyObject other) {
-    //        Vec3 v = (other instanceof Vec3) ? (Vec3) other.toJava(Vec3.class) : null;
-    //        RubyBoolean result = (v == null) ? RubyBoolean.newBoolean(context.runtime, false)
-    //                : (Math.abs(jx - v.jx) > Vec3.EPSILON)
-    //                ? RubyBoolean.newBoolean(context.runtime, false)
-    //                : (Math.abs(jy - v.jy) > Vec3.EPSILON)
-    //                ? RubyBoolean.newBoolean(context.runtime, false)
-    //                : (Math.abs(jz - v.jz) > Vec3.EPSILON)
-    //                ? RubyBoolean.newBoolean(context.runtime, false)
-    //                : RubyBoolean.newBoolean(context.runtime, true);
-    //        return result; // return false as default unless not null && values equal
-    //    }
-    
+   
 }
