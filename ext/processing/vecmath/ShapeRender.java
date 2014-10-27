@@ -23,7 +23,7 @@ public class ShapeRender implements JRender {
 
     @Override
     public void curveVertex(double x, double y) {
-         new UnsupportedOperationException("Not implemented for this renderer");
+         throw new UnsupportedOperationException("Not implemented for this renderer");
     }
 
 
@@ -44,7 +44,7 @@ public class ShapeRender implements JRender {
     
         @Override
     public void curveVertex(double x, double y, double z) {
-        new UnsupportedOperationException("Not implemented for this renderer");
+        throw new UnsupportedOperationException("Not implemented for this renderer");
     }
 
 }

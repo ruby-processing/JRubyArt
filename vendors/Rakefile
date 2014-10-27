@@ -9,38 +9,43 @@ WARNING = <<-EOS
       
 EOS
 
-JRUBY_COMPLETE_VERSION      = '1.7.16'
-EXAMPLES                    = '0.0.3'
+JRUBYC_VERSION      = '1.7.16'
+EXAMPLES                    = '0.0.4'
 HOME_DIR = ENV['HOME']
-CLOBBER.include("jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar", "#{EXAMPLES}.tar.gz")
+MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os'] 
+CLOBBER.include("jruby-complete-#{JRUBYC_VERSION}.jar", "#{EXAMPLES}.tar.gz")
 
 desc "download, and copy to ruby-processing"
 task :default => [:download, :copy_ruby, :download_examples, :copy_examples]
 
 desc "download JRuby upstream sources"
-task :download => ["jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar"]
+task :download => ["jruby-complete-#{JRUBYC_VERSION}.jar"]
 
-file "jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar" do
+file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   begin
-    sh "wget https://s3.amazonaws.com/jruby.org/downloads/#{JRUBY_COMPLETE_VERSION}/jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar"    
+    sh "wget https://s3.amazonaws.com/jruby.org/downloads/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar"    
   rescue
     warn(WARNING)
   end
-  check_sha1("jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar", "8ef6c848cc5491c5f22ddad4532c68fe778421f6")
+  check_sha1("jruby-complete-#{JRUBYC_VERSION}.jar", "8ef6c848cc5491c5f22ddad4532c68fe778421f6")
 end
 
 directory "../lib/ruby"
 
 desc "copy jruby-complete"
 task :copy_ruby => ["../lib/ruby"] do
-  sh "cp -v jruby-complete-#{JRUBY_COMPLETE_VERSION}.jar ../lib/ruby/jruby-complete.jar"
+  sh "cp -v jruby-complete-#{JRUBYC_VERSION}.jar ../lib/ruby/jruby-complete.jar"
 end
 
 desc 'download and copy examples to user home'
 task :download_examples
-file "#{EXAMPLES}.tar.gz" do
+file "#{EXAMPLES}" do
   begin
-    sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz" 
+    if MAC_OR_LINUX.nil?
+      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"      
+    else
+      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
+    end
   rescue
     warn(WARNING)
   end
@@ -48,7 +53,11 @@ end
 
 desc "copy examples"
 task :copy_examples => ["#{EXAMPLES}.tar.gz"] do
-  sh "tar xzvf #{EXAMPLES}.tar.gz" 
+  if MAC_OR_LINUX.nil?
+    sh "unzip #{EXAMPLES},zip"
+  else
+    sh "tar xzvf #{EXAMPLES}.tar.gz" 
+  end
   sh "cp -r JRubyArt-examples-#{EXAMPLES} #{HOME_DIR}/examples"  
   sh "rm -r JRubyArt-examples-#{EXAMPLES}"   
 end
@@ -65,6 +74,3 @@ def check_sha1(filename, expected_hash)
     raise "bad sha1 checksum for #{filename} (expected #{expected_hash} got #{sha1.hexdigest})"
   end
 end
-
-
-
