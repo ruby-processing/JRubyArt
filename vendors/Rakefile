@@ -9,7 +9,7 @@ WARNING = <<-EOS
       
 EOS
 
-JRUBYC_VERSION      = '1.7.16'
+JRUBYC_VERSION      = '1.7.16.1'
 EXAMPLES                    = '0.0.4'
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os'] 
@@ -27,7 +27,7 @@ file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   rescue
     warn(WARNING)
   end
-  check_sha1("jruby-complete-#{JRUBYC_VERSION}.jar", "8ef6c848cc5491c5f22ddad4532c68fe778421f6")
+  check_sha1("jruby-complete-#{JRUBYC_VERSION}.jar", "b76682bd0966a31dab60dc5e275d8b28ac17c38f")
 end
 
 directory "../lib/ruby"
@@ -51,16 +51,35 @@ file "#{EXAMPLES}" do
   end
 end
 
+desc "download, and copy to JRubyArt"
+task :unpack_samples => [:download_examples, :copy_examples]
+
+desc 'download and copy examples to user home'
+task :download_examples
+file_name = (MAC_OR_LINUX.nil?) ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
+file file_name do
+  begin
+    if MAC_OR_LINUX.nil?
+      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"      
+    else
+      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
+    end
+  rescue
+    warn(WARNING)
+  end
+end
+
 desc "copy examples"
-task :copy_examples => ["#{EXAMPLES}.tar.gz"] do
+task :copy_examples => file_name do
   if MAC_OR_LINUX.nil?
     sh "unzip #{EXAMPLES},zip"
   else
     sh "tar xzvf #{EXAMPLES}.tar.gz" 
   end
   sh "cp -r JRubyArt-examples-#{EXAMPLES} #{HOME_DIR}/examples"  
-  sh "rm -r JRubyArt-examples-#{EXAMPLES}"   
+  sh "rm -r JRubyArt-examples-#{EXAMPLES}"     
 end
+
 
 def check_sha1(filename, expected_hash)
   require "digest/sha1"

@@ -2,6 +2,10 @@
 
 It might seem a little of that this log starts at version 0.1.2, the reason for this is that previous version relate to earlier versions which were essentially a clone of ruby-processing.
 
+### Version 0.1.7
+
+Now installs jruby-complete-1.7.16.1 (which is a good deal smaller)
+
 ### Version 0.1.6
 
 Vec2D and Vec3D get `:to_curve_vertex`, see included example. Also new in examples is how to use jar libraries (toxiclibs) with JRubyArt.
