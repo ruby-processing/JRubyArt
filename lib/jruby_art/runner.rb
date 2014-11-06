@@ -135,6 +135,11 @@ module Processing
     def show_help
       puts HELP_MESSAGE
     end
+    
+    # Display the current version of Ruby-Processing.
+    def show_version
+      puts "JRubyArt version #{JRubyArt::VERSION}"
+    end
   end
 end
 
