@@ -110,6 +110,10 @@ module Processing
         alias_method METHODS_TO_ALIAS[method_name], method_name
       end
     end
+
+    def pre
+    end
+     
   end
 
   # This class is for opengl sketches (P2D and P3D)

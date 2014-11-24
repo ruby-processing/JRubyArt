@@ -8,8 +8,8 @@ module Processing
       @name = param[:name]
       @file_name = param[:file_name]
       @title = param[:title]
-      @width = param[:width]
-      @height = param[:height]
+      @width = param.fetch(:width, 200)
+      @height = param.fetch(:height, 200)
       @mode = param[:mode].upcase unless param[:mode].nil?
       @template = template
       save(@file_name)
@@ -110,7 +110,11 @@ end
       @with_size = @param[:width] && @param[:width].match(ALL_DIGITS) &&
         @param[:height] && @param[:height].match(ALL_DIGITS)
       template = @param[:mode].nil? ? class_template : class_template_mode
-      SketchWriter.new(template, @param)
+      sketch_writer(template, @param)
+    end
+    
+    def sketch_writer(template, param)
+      SketchWriter.new(template, param)
     end
   end
 end
