@@ -101,15 +101,12 @@ module Processing
       installed = File.exist?(File.join(K9_ROOT, "/lib/ruby/jruby-complete.jar"))
       proc_root = File.exist?("#{ENV['HOME']}/.jruby_art/config.yml")
       case choice
-      when /install/
+      when /install/  # download and install jruby-complete and unpack examples to user home
         system "cd #{K9_ROOT}/vendors && rake"
         unless proc_root
           set_processing_root
           warn 'PROCESSING_ROOT set optimistically, run check to confirm'
         end
-      when /unpack_samples/
-        require 'fileutils'
-        FileUtils.cp_r("#{File.dirname(__FILE__)}/examples", "#{Dir.pwd}/k9_samples")
       else
         puts usage
       end

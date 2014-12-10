@@ -4,7 +4,7 @@ It might seem a little of that this log starts at version 0.1.2, the reason for 
 
 ### Version 0.1.7
 
-Now installs jruby-complete-1.7.16.1 (which is a good deal smaller), also includes experimental Proxy extension to access draw, pre and post loops by reflection
+Now installs jruby-complete-1.7.17 (which is a good deal smaller), also includes experimental Proxy extension to access draw, pre and post loops by reflection
 
 ### Version 0.1.6
 
