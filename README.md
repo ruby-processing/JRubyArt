@@ -26,7 +26,7 @@ To compile extensions `jruby -S rake compile` _requires rake-compiler gem_
 
 To build gem `jruby -S rake package`
 
-To install `gem install pkg/jruby_art-0.1.3.gem`
+To install `gem install pkg/jruby_art-0.1.7.gem`
 
 To create a new blank sketch
 
