@@ -18,10 +18,9 @@ spec = Gem::Specification.new do |s|
   s.author = 'Martin Prout'
   s.email = 'martin_p@lineone.net'
   s.homepage = 'https://github.com/ruby-processing/JRubyArt'
-  s.executables = ['k9']
+  s.executables << 'k9'
   s.files = %w(LICENSE.md README.md Rakefile) + Dir.glob("{bin,lib,spec,vendors}/**/*")
   s.require_path = 'lib'
-  s.bindir = 'bin'
   s.add_development_dependency "rake", "~> 10.3"
   s.add_development_dependency "rake-compiler", "~> 0.9"
   s.requirements << 'A decent graphics card'
