@@ -1,9 +1,7 @@
 VERBOSE = true
 
-unless defined? K9_ROOT
-  $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
-  K9_ROOT = File.expand_path(File.dirname(__FILE__) + '/../')
-end
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__))
+K9_ROOT ||= File.expand_path(File.dirname(__FILE__) + '/../')
 
 if RUBY_PLATFORM == 'java'   # guard prevents issues with mri ruby when using creator
   working_directory = File.join(File.dirname(__FILE__))
