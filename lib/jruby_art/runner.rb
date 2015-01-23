@@ -1,7 +1,7 @@
 require 'ostruct'
 require 'fileutils'
 require 'rbconfig'
-#require_relative '../jruby_art/config'
+require_relative '../jruby_art/config'
 require_relative '../jruby_art/version'
 
 
@@ -46,10 +46,10 @@ module Processing
     def execute!
       case @options.action
       when 'run'    then run(@options.path, @options.args)
-      #when 'watch'  then watch(@options.path, @options.args)
+      # when 'watch'  then watch(@options.path, @options.args)
       when 'wrap'   then wrap(@options.path, @options.args)
       when 'create' then create(@options.path, @options.args)
-      #when 'app'    then app(@options.path)
+      # when 'app'    then app(@options.path)
       when 'setup'  then setup(@options.path)
       when /-v/     then show_version
       when /-h/     then show_help
@@ -87,18 +87,18 @@ module Processing
     end
     
     def jruby_complete
-      rcomplete = File.join(K9_ROOT, "/lib/ruby/jruby-complete.jar")
+      rcomplete = File.join(K9_ROOT, '/lib/ruby/jruby-complete.jar')
       return rcomplete if File.exist?(rcomplete)
       warn "#{rcomplete} does not exist\nTry running `k9 setup install`"
     end
 
     def parse
-      File.join(K9_ROOT, "lib/jruby_art/parse.rb")
+      File.join(K9_ROOT, 'lib/jruby_art/parse.rb')
     end
     
     def setup(choice)
       usage = 'Usage: k9 setup [install]'
-      installed = File.exist?(File.join(K9_ROOT, "/lib/ruby/jruby-complete.jar"))
+      installed = File.exist?(File.join(K9_ROOT, '/lib/ruby/jruby-complete.jar'))
       proc_root = File.exist?("#{ENV['HOME']}/.jruby_art/config.yml")
       case choice
       when /install/  # download and install jruby-complete and unpack examples to user home

@@ -3,7 +3,8 @@ VERBOSE = true
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
 K9_ROOT ||= File.expand_path(File.dirname(__FILE__) + '/../')
 
-if RUBY_PLATFORM == 'java'   # guard prevents issues with mri ruby when using creator
+# guard prevents issues with mri ruby when using creator
+if RUBY_PLATFORM == 'java'
   working_directory = File.join(File.dirname(__FILE__))
   $LOAD_PATH << working_directory unless $LOAD_PATH.include?(working_directory)
   Dir[File.join(working_directory, '*.jar')].each do |jar|
@@ -20,6 +21,5 @@ end
 
 require 'jruby_art/version'
 require 'jruby_art/helpers/numeric'
-# require 'jruby_art/helpers/string'
 require 'jruby_art/helpers/range'
 require 'jruby_art/runner'

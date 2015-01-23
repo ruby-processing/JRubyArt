@@ -5,7 +5,7 @@ SKETCH_ROOT ||= File.dirname(SKETCH_PATH)
 
 require_relative '../jruby_art'
 require_relative '../jruby_art/'
-require_relative '../jruby_art/helpers/string'
+require_relative '../jruby_art/helpers/string_extra'
 
 module Processing
   # For use with "bare" sketches that don't want to define a class or methods
@@ -39,7 +39,7 @@ module Processing
     has_sketch = !source.match(/^[^#]*< Processing::App/).nil?
     has_methods = !source.match(/^[^#]*(def\s+setup|def\s+draw)/).nil?    
     return load File.join(SKETCH_ROOT, SKETCH_PATH) if has_sketch
-    title = File.basename(SKETCH_PATH).sub(/(\.rb)$/, '').titleize
+    title = StringExtra.new(File.basename(SKETCH_PATH).sub(/(\.rb)$/, '')).titleize
     if has_methods
       default = source.match(/P(2|3)D/)      
       mode = default ? 'Processing::App' : 'Processing::AppGL'
