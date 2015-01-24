@@ -1,4 +1,5 @@
-require_relative './helpers/string'
+require_relative './helpers/camel_string'
+require_relative './helpers/string_extra'
 
 module Processing
   # Wraps bare sketch with class wrapper etc
@@ -18,12 +19,14 @@ module Processing
       default = source.match(/P(2|3)D/).nil?
       name = File.basename(input).sub(/(\.rb)$/, '')
       mode = default ? 'Processing::App' : 'Processing::AppGL'
-      code << format(KLASS, name.camelize, mode)
+      camel_name = CamelString.new(name).camelize
+      code << format(KLASS, camel_name, mode)
       IO.foreach(input) do |line|
         code << format('  %s', line)
       end
       code << "end\n\n"
-      code << "#{name.camelize}.new(title: \"#{name.titleize}\")"
+      title = StringExtra.new(name).titleize
+      code << "#{camel_name}.new(title: \"#{title}\")"
     end
 
     def write
