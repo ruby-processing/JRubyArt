@@ -4,8 +4,8 @@ require 'forwardable'
 class CamelString
   extend Forwardable
   def_delegators(:@string, *String.public_instance_methods(false))
-  def initialize(str)
-    @string = str
+  def initialize(str = 'no_name')
+    @string = (str.length > 60) ? 'long_name' : str
   end
 
   def camelize(first_letter_in_uppercase = true)
