@@ -1,11 +1,11 @@
 VERBOSE = true
 
-$LOAD_PATH << File.expand_path(File.dirname(__FILE__))
-K9_ROOT ||= File.expand_path(File.dirname(__FILE__) + '/../')
+$LOAD_PATH << File.expand_path(__dir__)
+K9_ROOT ||= File.expand_path(File.dirname(__dir__) + '/../')
 
 # guard prevents issues with mri ruby when using creator
 if RUBY_PLATFORM == 'java'
-  working_directory = File.join(File.dirname(__FILE__))
+  working_directory = File.join(__dir__)
   $LOAD_PATH << working_directory unless $LOAD_PATH.include?(working_directory)
   Dir[File.join(working_directory, '*.jar')].each do |jar|
     require jar
