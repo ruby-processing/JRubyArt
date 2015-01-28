@@ -1,7 +1,8 @@
 ## JRubyArt
 
 
-Is a development fork of [ruby-processing][]
+Is a development fork of [ruby-processing][] that may take an independent existence see [processing-core][] at least in the short term. However until that time:-
+
 
 First you should install [processing-2.2.1][]
 
@@ -76,3 +77,4 @@ k9 run my_app.rb # NB: k9 setup install, is a one-time install to gem procedure
 [ruby-processing]:https://github.com/jashkenas/ruby-processing
 [netbeans]:http://learning-ruby-processing.blogspot.co.uk/2014/10/alternative-ruby-processing-implentation.html
 [processing-2.2.1]:https://processing.org/download/
+[processing-core]:https://github.com/ruby-processing/processing-core/blob/master/README.md
