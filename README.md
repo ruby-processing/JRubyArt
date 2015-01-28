@@ -57,7 +57,7 @@ k9 setup install # requires wget (Now also downloads examples to users home)
 To run sketches with jruby-complete (rather than installed jruby)
 
 ```bash
-k9 run my_app.rb # NB: k9 setup install, is a one-time install to gem procedure
+k9 run my_app.rb # NB: k9 setup install, is a one-time 'install to gem' procedure
 ```
 
 [Contributing][]
