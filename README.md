@@ -1,7 +1,7 @@
 ## JRubyArt
 
 
-Is a development fork of [ruby-processing][] that may soon have a somewhat independent existence, see [processing-core][] at least in the short term. Plan is that JRubyArt will be using jruby-9.0.0.0 from the start.  However until that time:-
+Is a development fork of [ruby-processing][] that may soon have a somewhat independent existence, see [processing-core][] at least in the short term. Plan is that JRubyArt releases (pre-releases) will be using jruby-9.0.0.0 from the start.  However until that time:-
 
 
 You should (like ruby-processing) install [processing-2.2.1][]
