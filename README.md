@@ -14,6 +14,8 @@ what mine looks like on arch-linux
 PROCESSING_ROOT: /usr/share/processing
 
 ```
+However unlike ruby-processing, the core jars become part of the gem and PROCESSING_ROOT is not used at runtime.
+
 The following should work on macosx
 
 ```ruby
