@@ -1,7 +1,7 @@
 ## JRubyArt
 
 
-Is a development fork of [ruby-processing][] that may take an independent existence see [processing-core][] at least in the short term. However until that time:-
+Is a development fork of [ruby-processing][] that may soon have an independent existence see [processing-core][] at least in the short term. However until that time:-
 
 
 First you should install [processing-2.2.1][]
