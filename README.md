@@ -29,7 +29,7 @@ To compile extensions `jruby -S rake compile` _requires rake-compiler gem_
 
 To build gem `jruby -S rake package`
 
-To install `gem install pkg/jruby_art-0.1.7.gem`
+To install `gem install pkg/jruby_art-0.2.pre.gem`
 
 To create a new blank sketch
 
@@ -69,6 +69,12 @@ k9 run my_app.rb # NB: k9 setup install, is a one-time install to gem procedure
 [Examples][]
 
 [CHANGELOG][]
+
+###Ruby Versions
+
+jruby-9.0.0.0.pre1+ (when sketches run with jruby command)
+
+ruby-2.1.2+ (when sketches are run using k9 command, ie using jruby-complete)
 
 [Acknowledgements]:ACKNOWLEDGEMENTS.md
 [CHANGELOG]:CHANGELOG.md

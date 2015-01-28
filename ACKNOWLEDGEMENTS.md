@@ -12,11 +12,3 @@ The whole @ProcessingOrg team, especially @benfry, @REAS, and @codeanticode
 ## Ruby-processing
 
 Ruby-processing was started by @jashkenas, but there were many other contributors including @moumar, @fjennet.
-
-
-## Ribiprocessing
-
-Some ideas use here come from [ribiprocessing][] by @unsymbol
-
-[github]:https://github.com/jashkenas/ruby-processing
-[ribiprocessing]:https://github.com/unsymbol/ribiprocessing
