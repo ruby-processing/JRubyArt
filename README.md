@@ -1,10 +1,10 @@
 ## JRubyArt
 
 
-Is a development fork of [ruby-processing][] that may soon have a somewhat independent existence, see [processing-core][] at least in the short term. However until that time:-
+Is a development fork of [ruby-processing][] that may soon have a somewhat independent existence, see [processing-core][] at least in the short term. Plan is that JRubyArt will be using jruby-9.0.0.0 from the start.  However until that time:-
 
 
-Until that time you should (like ruby-processing) install [processing-2.2.1][]
+You should (like ruby-processing) install [processing-2.2.1][]
 
 Then create a `~/.jruby_art/config.yml` config file, here is
 what mine looks like on arch-linux
