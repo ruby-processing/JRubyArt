@@ -72,7 +72,9 @@ k9 run my_app.rb # NB: k9 setup install, is a one-time install to gem procedure
 
 ###Ruby Versions
 
-jruby-9.0.0.0.pre1+ (when sketches run with jruby command)
+jruby-1.7.18 (when sketches run with jruby command)
+
+or
 
 ruby-2.1.2+ (when sketches are run using k9 command, ie using jruby-complete)
 
