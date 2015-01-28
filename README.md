@@ -4,7 +4,7 @@
 Is a development fork of [ruby-processing][] that may soon have a somewhat independent existence, see [processing-core][] at least in the short term. However until that time:-
 
 
-Until that time you should install [processing-2.2.1][]
+Until that time you should (like ruby-processing) install [processing-2.2.1][]
 
 Then create a `~/.jruby_art/config.yml` config file, here is
 what mine looks like on arch-linux
