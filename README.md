@@ -16,7 +16,7 @@ PROCESSING_ROOT: /usr/share/processing
 ```
 However unlike ruby-processing, the core jars become part of the gem and PROCESSING_ROOT is not used at runtime.
 
-The following should work on macosx
+The following config should work on macosx
 
 ```ruby
 ---
