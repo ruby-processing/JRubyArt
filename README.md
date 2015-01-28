@@ -1,7 +1,7 @@
 ## JRubyArt
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
-Is a development fork of [ruby-processing][] that may has a somewhat independent existence, see [processing-core][] at least in the short term. Plan was that JRubyArt releases (pre-releases) would use jruby-9.0.0.0 from the start, but now I think it might be more sane to start with jruby-1.7.18. Version 0.2.0.pre is now available from rubygems. To build from repo:-
+Is a development fork of [ruby-processing][] that has a somewhat independent existence, see [processing-core][] at least in the short term. Plan was that JRubyArt releases (pre-releases) would use jruby-9.0.0.0 from the start, but now I think it might be more sane to start with jruby-1.7.18. Version 0.2.0.pre is now available from rubygems. To build from repo:-
 
 
 You should (like ruby-processing) install [processing-2.2.1][]
