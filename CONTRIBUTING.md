@@ -26,7 +26,7 @@ the bug, including your gem version, Ruby version, and operating system.
 2. [Submit a pull request.][pr]
 
 [free-sw]: http://www.fsf.org/licensing/essays/free-sw.html
-[issues]: https://github.com/monkstone/JRubyArt/issues
+[issues]: https://github.com/ruby-processing/JRubyArt/issues
 [gist]: https://gist.github.com/
 [fork]: http://help.github.com/fork-a-repo/
 [pr]: http://help.github.com/send-pull-requests/
