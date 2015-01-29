@@ -74,6 +74,7 @@ that also downloads and install samples in examples folder in users directory
 ###Ruby Versions
 
 jruby-1.7.18 (when sketches run with jruby command)
+
 jruby-9.0.0.0.pre1 also seems to work
 
 or
