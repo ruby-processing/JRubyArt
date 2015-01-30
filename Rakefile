@@ -21,11 +21,11 @@ spec = Gem::Specification.new do |s|
   s.executables << 'k9'
   s.files = %w(LICENSE.md README.md Rakefile) + Dir.glob("{bin,lib,spec,vendors}/**/*")
   s.require_path = 'lib'
-  s.add_development_dependency "rake", "~> 10.3"
+  s.add_development_dependency "rake", "~> 10.4"
+  s.add_development_dependency "rspec", "~> 3.1"
   s.add_development_dependency "rake-compiler", "~> 0.9"
   s.requirements << 'A decent graphics card'
   s.requirements << 'java runtime >= 1.7+'
-  s.requirements << 'processing = 2.2.1+'
 end
 
 # -*- ruby -*-
