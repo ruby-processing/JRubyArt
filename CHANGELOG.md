@@ -2,6 +2,14 @@
 
 It might seem a little of that this log starts at version 0.1.2, the reason for this is that previous version relate to earlier versions which were essentially a clone of ruby-processing.
 
+### Version 0.2.1
+
+Features jruby-complete-1.7.19 and filtered native jars (attempt at load according to OS and Arch) works linux64
+
+### Version 0.2.0
+
+First pre release version features jruby-complete-1.7.18
+
 ### Version 0.1.7
 
 Now installs jruby-complete-1.7.17 (which is a good deal smaller), also includes experimental Proxy extension to access draw, pre and post loops by reflection
