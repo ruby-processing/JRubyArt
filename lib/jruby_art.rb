@@ -24,10 +24,12 @@ if RUBY_PLATFORM == 'java'
   working_directory = File.join(File.dirname(__FILE__))
   $LOAD_PATH << working_directory unless $LOAD_PATH.include?(working_directory)
   Dir[File.join(working_directory, '*.jar')].each do |jar|
-    require_relative jar unless jar =~ /native/
+    # require_relative jar unless jar =~ /native/ (breaks netbeans)
+    require jar unless jar =~ /native/
   end
   Dir[File.join(working_directory, platform)].each do |jar|
-    require_relative jar
+    # require_relative jar (break netbeans)
+    require jar
   end
   Java::ProcessingFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
   Java::ProcessingVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
