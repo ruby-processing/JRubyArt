@@ -468,13 +468,13 @@ public final class Vec3 extends RubyObject {
         renderer.vertex(jx, jy, jz);
     }
     
-        /**
+       /**
     *
     * @param context
     * @param object
     */
     @JRubyMethod(name = "to_curve_vertex")
-    
+
     public void toCurveVertex(ThreadContext context, IRubyObject object) {
         JRender renderer = (JRender) object.toJava(JRender.class);
         renderer.curveVertex(jx, jy, jz);
@@ -508,11 +508,11 @@ public final class Vec3 extends RubyObject {
     }
     
     /**
-    *
+    * For jruby-9000 we alias to inspect
     * @param context
     * @return
     */
-    @JRubyMethod(name = "to_s")
+    @JRubyMethod(name = "to_s", alias = "inspect")
     
     public IRubyObject to_s(ThreadContext context) {
         return context.getRuntime().newString(String.format("Vec3D(x = %4.4f, y = %4.4f, z = %4.4f)", jx, jy, jz));
@@ -576,5 +576,25 @@ public final class Vec3 extends RubyObject {
         return result; // return false as default unless not null && values equal
     }
     
-   
+    /**
+    *
+    * @param context
+    * @param other
+    * @return
+    */
+    //    @JRubyMethod(name = "almost_eql?", required = 1)
+    //
+    //    public IRubyObject almost_eql_p(ThreadContext context, IRubyObject other) {
+    //        Vec3 v = (other instanceof Vec3) ? (Vec3) other.toJava(Vec3.class) : null;
+    //        RubyBoolean result = (v == null) ? RubyBoolean.newBoolean(context.runtime, false)
+    //                : (Math.abs(jx - v.jx) > Vec3.EPSILON)
+    //                ? RubyBoolean.newBoolean(context.runtime, false)
+    //                : (Math.abs(jy - v.jy) > Vec3.EPSILON)
+    //                ? RubyBoolean.newBoolean(context.runtime, false)
+    //                : (Math.abs(jz - v.jz) > Vec3.EPSILON)
+    //                ? RubyBoolean.newBoolean(context.runtime, false)
+    //                : RubyBoolean.newBoolean(context.runtime, true);
+    //        return result; // return false as default unless not null && values equal
+    //    }
+    
 }

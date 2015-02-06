@@ -1,4 +1,4 @@
-require_relative '../lib/ribiprocessing'
+require_relative '../lib/jruby_art'
 
 Java::ProcessingVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
 
