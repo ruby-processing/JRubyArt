@@ -1,7 +1,7 @@
 ## JRubyArt
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
-Is a development fork of [ruby-processing][] that has a somewhat independent existence, see [processing-core][] at least in the short term. Plan was that JRubyArt releases (pre-releases) would use jruby-9.0.0.0 from the start, but now I think it might be more sane to start with jruby-1.7.18. Version 0.2.0.pre is now available from rubygems. To build from repo:-
+Is a development fork of [ruby-processing][] that has a somewhat independent existence, see [processing-core][] at least in the short term. Plan was that JRubyArt releases (pre-releases) would use jruby-9.0.0.0 from the start, but now I think it might be more sane to start with jruby-1.7.19. Version 0.2.1.pre is now available from rubygems. To build from repo:-
 
 
 You should (like ruby-processing) install [processing-2.2.1][]
@@ -52,7 +52,7 @@ jruby my_app.rb
 To run certain sketches, eg those with load_image (or shaders), either use [netbeans][] as your development ide or use the vendored jruby-complete (beyond our control something to do with jruby permissions?).  To install jruby-complete:-
 
 ```bash
-k9 setup install # requires wget (Now also downloads examples to users home)
+k9 setup install # requires curl (Now also downloads examples to users home)
 ```
 To run sketches with jruby-complete (rather than installed jruby)
 
@@ -73,7 +73,7 @@ that also downloads and install samples in examples folder in users directory
 
 ###Ruby Versions
 
-jruby-1.7.18 (when sketches run with jruby command)
+jruby-1.7.19 (when sketches run with jruby command)
 
 jruby-9.0.0.0.pre1 also seems to work
 
