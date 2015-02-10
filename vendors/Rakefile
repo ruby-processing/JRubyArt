@@ -23,7 +23,7 @@ task :download => ["jruby-complete-#{JRUBYC_VERSION}.jar"]
 
 file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   begin
-    sh "curl -L https://s3.amazonaws.com/jruby.org/downloads/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar -O --remote-name"    
+    sh "curl -O https://s3.amazonaws.com/jruby.org/downloads/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar"    
   rescue
     warn(WARNING)
   end
@@ -39,15 +39,15 @@ end
 
 desc "download, and copy to JRubyArt"
 task :unpack_samples => [:download_examples, :copy_examples]
-
 desc 'download and copy examples to user home'
 task :download_examples
-file "#{EXAMPLES}" do
+file_name = (MAC_OR_LINUX.nil?) ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
+file file_name do
   begin
     if MAC_OR_LINUX.nil?
-      sh "curl -L https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip -O --remote-name"      
+      sh "curl -O https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"
     else
-      sh "curl -L https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz -O --remote-name"    
+      sh "curl -O https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
     end
   rescue
     warn(WARNING)
