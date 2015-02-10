@@ -45,9 +45,9 @@ file_name = (MAC_OR_LINUX.nil?) ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
 file file_name do
   begin
     if MAC_OR_LINUX.nil?
-      sh "curl -O https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"
+      sh "curl -Lo examples.zip https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"
     else
-      sh "curl -O https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
+      sh "curl -Lo examples.tar.gz https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
     end
   rescue
     warn(WARNING)
@@ -57,9 +57,9 @@ end
 desc "copy examples"
 task :copy_examples => file_name do
   if MAC_OR_LINUX.nil?
-    sh "unzip #{EXAMPLES}.zip"
+    sh "unzip examples.zip"
   else
-    sh "tar xzvf #{EXAMPLES}.tar.gz" 
+    sh "tar xzvf examples.tar.gz" 
   end
   sh "cp -r JRubyArt-examples-#{EXAMPLES} #{HOME_DIR}/examples"  
   sh "rm -r JRubyArt-examples-#{EXAMPLES}"     
