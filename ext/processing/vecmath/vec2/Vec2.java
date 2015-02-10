@@ -129,32 +129,7 @@ public class Vec2 extends RubyObject {
     * @return new Vec2 object (ruby)
     *
     */
-    // @Deprecated
-    // @JRubyMethod(name = "dist", meta = true, rest = true)
-    // public static RubyFloat dist(ThreadContext context, IRubyObject klazz, IRubyObject[] args) {
-    // Arity.checkArgumentCount(context.runtime, args, 2, 2);
-    // Vec2 vec0 = (Vec2) args[0].toJava(Vec2.class);
-    // Vec2 vec1 = (Vec2) args[1].toJava(Vec2.class);
-    // return context.getRuntime().newFloat(Math.hypot((vec0.jx - vec1.jx), (vec0.jy - vec1.jy)));
-    // }
 
-    /**
-    * Example of a regular ruby class method
-    *
-    * @deprecated use instance method
-    * @param context
-    * @param klazz
-    * @param args
-    * @return new Vec2 object (ruby)
-    */
-    // @Deprecated
-    // @JRubyMethod(name = "dist_squared", meta = true, rest = true)
-    // public static RubyFloat dist_squared(ThreadContext context, IRubyObject klazz, IRubyObject[] args) {
-    // Arity.checkArgumentCount(context.runtime, args, 2, 2);
-    // Vec2 vec0 = (Vec2) args[0].toJava(Vec2.class);
-    // Vec2 vec1 = (Vec2) args[1].toJava(Vec2.class);
-    // return context.getRuntime().newFloat((vec0.jx - vec1.jx) * (vec0.jx - vec1.jx) + (vec0.jy - vec1.jy) * (vec0.jy - vec1.jy));
-    // }
 
     /**
     *
@@ -562,11 +537,11 @@ public class Vec2 extends RubyObject {
 
 
     /**
-    * For jruby-9000 we alias to inspect
+    * For jruby-9000 we implement inspect
     * @param context
     * @return
     */
-    @JRubyMethod(name = "to_s", alias = "inspect")
+    @JRubyMethod(name = {"inspect", "to_s"})
 
     public IRubyObject to_s(ThreadContext context) {
         return context.getRuntime().newString(String.format("Vec2D(x = %4.4f, y = %4.4f)", jx, jy));

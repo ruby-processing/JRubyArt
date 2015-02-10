@@ -1,8 +1,3 @@
-/*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
-*/
 package processing.vecmath.vec3;
 
 import java.io.IOException;
@@ -508,11 +503,11 @@ public final class Vec3 extends RubyObject {
     }
     
     /**
-    * For jruby-9000 we alias to inspect
+    * For jruby-9000 we explicitly implement inspect
     * @param context
     * @return
     */
-    @JRubyMethod(name = "to_s", alias = "inspect")
+    @JRubyMethod(name = {"inspect", "to_s"})
     
     public IRubyObject to_s(ThreadContext context) {
         return context.getRuntime().newString(String.format("Vec3D(x = %4.4f, y = %4.4f, z = %4.4f)", jx, jy, jz));
