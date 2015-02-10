@@ -2,6 +2,10 @@
 
 It might seem a little of that this log starts at version 0.1.2, the reason for this is that previous version relate to earlier versions which were essentially a clone of ruby-processing.
 
+### Version 0.2.2
+
+Now using curl instead of wget "following the path of least resistance for enfeebled Mac users" and also there might be better Windows support for curl vs wget
+
 ### Version 0.2.1
 
 Features jruby-complete-1.7.19 and filtered native jars (attempt at load according to OS and Arch) works linux64
