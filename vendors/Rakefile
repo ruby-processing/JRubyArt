@@ -1,9 +1,9 @@
 require 'rake/clean'
 
 WARNING = <<-EOS 
-   WARNING: you may not have wget installed, you could just download
+   WARNING: you may not have curl installed, you could just download
    the correct version of jruby-complete and/or examples to the vendors 
-   folder, and re-run k9 setup install instead of installing wget. Some 
+   folder, and re-run k9 setup install instead of installing curl. Some 
    systems may also require 'sudo' access to install jruby-complete, 
    NB: this is untested....
       
@@ -23,7 +23,7 @@ task :download => ["jruby-complete-#{JRUBYC_VERSION}.jar"]
 
 file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   begin
-    sh "wget https://s3.amazonaws.com/jruby.org/downloads/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar"    
+    sh "curl -L https://s3.amazonaws.com/jruby.org/downloads/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar -O --remote-name"    
   rescue
     warn(WARNING)
   end
@@ -37,32 +37,17 @@ task :copy_ruby => ["../lib/ruby"] do
   sh "cp -v jruby-complete-#{JRUBYC_VERSION}.jar ../lib/ruby/jruby-complete.jar"
 end
 
-desc 'download and copy examples to user home'
-task :download_examples
-file "#{EXAMPLES}" do
-  begin
-    if MAC_OR_LINUX.nil?
-      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"      
-    else
-      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
-    end
-  rescue
-    warn(WARNING)
-  end
-end
-
 desc "download, and copy to JRubyArt"
 task :unpack_samples => [:download_examples, :copy_examples]
 
 desc 'download and copy examples to user home'
 task :download_examples
-file_name = (MAC_OR_LINUX.nil?) ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
-file file_name do
+file "#{EXAMPLES}" do
   begin
     if MAC_OR_LINUX.nil?
-      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"      
+      sh "curl -L https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip -O --remote-name"      
     else
-      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
+      sh "curl -L https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz -O --remote-name"    
     end
   rescue
     warn(WARNING)
@@ -72,14 +57,13 @@ end
 desc "copy examples"
 task :copy_examples => file_name do
   if MAC_OR_LINUX.nil?
-    sh "unzip #{EXAMPLES},zip"
+    sh "unzip #{EXAMPLES}.zip"
   else
     sh "tar xzvf #{EXAMPLES}.tar.gz" 
   end
   sh "cp -r JRubyArt-examples-#{EXAMPLES} #{HOME_DIR}/examples"  
   sh "rm -r JRubyArt-examples-#{EXAMPLES}"     
 end
-
 
 def check_sha1(filename, expected_hash)
   require "digest/sha1"
