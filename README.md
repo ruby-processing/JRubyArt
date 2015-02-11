@@ -49,6 +49,16 @@ end
 ```
 However such sketches must be run with `k9 run sketch.rb`, however you can do 'k9 wrap sketch.rb` which converts bare sketches to a class wrapped form.
 
+###Ruby Versions
+
+jruby-1.7.19 (when sketches run with jruby command)
+
+jruby-9.0.0.0.pre1 also seems to work
+
+or
+
+ruby-2.1.2+ (when sketches are run using k9 command, ie using jruby-complete)
+
 ### Using netbeans as an ide for JRubyArt
 
 See [netbeans][]
@@ -62,16 +72,6 @@ See [netbeans][]
 [Examples][]
 
 [CHANGELOG][]
-
-###Ruby Versions
-
-jruby-1.7.19 (when sketches run with jruby command)
-
-jruby-9.0.0.0.pre1 also seems to work
-
-or
-
-ruby-2.1.2+ (when sketches are run using k9 command, ie using jruby-complete)
 
 [Acknowledgements]:ACKNOWLEDGEMENTS.md
 [CHANGELOG]:CHANGELOG.md
