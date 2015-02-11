@@ -5,7 +5,7 @@ Is an alternative implementation of [ruby-processing][] that provides a ruby-wra
 
 ### Requirements
 
-Java runtime, and ruby (can be MRI ruby), curl (to download jruby-complete and examples, although there is a  workaround).
+Java runtime 7+, and ruby (can be MRI ruby), curl (to download jruby-complete and examples, although there is a  workaround). NB: it is not necessary to install vanilla [processing][] with this implementation, core jars are included in the gem.
 
 ### Getting Started
 
