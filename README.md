@@ -73,7 +73,7 @@ See [netbeans][]
 
 [CHANGELOG][]
 
-[[Building-latest-gem]]
+[[Building latest gem]]
 [Acknowledgements]:ACKNOWLEDGEMENTS.md
 [CHANGELOG]:CHANGELOG.md
 [Contributing]:CONTRIBUTING.md
