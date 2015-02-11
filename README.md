@@ -53,7 +53,7 @@ However such sketches must be run with `k9 run sketch.rb`, however you can do 'k
 
 jruby-1.7.19 (when sketches run with jruby command)
 
-jruby-9.0.0.0.pre1 also seems to work
+jruby-9.0.0.0.pre1 also seems to work (the next pre-release will target jruby-9.0.0.0-pre1)
 
 or
 
