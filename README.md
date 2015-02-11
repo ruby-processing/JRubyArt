@@ -10,7 +10,7 @@ Java runtime 7+, and ruby (can be MRI ruby), curl (to download jruby-complete an
 ### Getting Started
 
 ```bash
-gem install jruby-art --dev
+gem install jruby-art --pre
 k9 setup install # uses curl to to download jruby-complete and examples
 cd examples/contributed
 k9 run clock.rb # if you've got jruby on your machine `jruby clock.rb` also works
