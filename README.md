@@ -1,65 +1,57 @@
 ## JRubyArt
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
-Is a development fork of [ruby-processing][] that has a somewhat independent existence, see [processing-core][] at least in the short term. Plan was that JRubyArt releases (pre-releases) would use jruby-9.0.0.0 from the start, but now I think it might be more sane to start with jruby-1.7.19. Version 0.2.1.pre is now available from rubygems. To build from repo:-
+Is an alternative implementation of [ruby-processing][] that provides a ruby-wrapper for the java version of [processing][]. It is currently at the pre-release stage, but is ready for testing, and available from rubygems.org.
 
+### Requirements
 
-You should (like ruby-processing) install [processing-2.2.1][]
+Java runtime, and ruby (can be MRI ruby), curl (to download jruby-complete and examples, although there is a  workaround).
 
-Then create a `~/.jruby_art/config.yml` config file, here is
-what mine looks like on arch-linux
+### Getting Started
 
+```bash
+gem install jruby-art --dev
+k9 setup install # uses curl to to download jruby-complete and examples
+cd examples/contributed
+k9 run clock.rb # if you've got jruby on your machine `jruby clock.rb` also works
+```
+
+### Creating your own
+```bash
+k9 create my_sketch 200 200
+vim my_sketch.rb # other editors are available
+```
+Output:
 ```ruby
----
-PROCESSING_ROOT: /usr/share/processing
+require 'jruby_art'
 
+class MySketch < Processing::App
+  def setup
+    size 200, 200
+  end
+
+  def draw
+
+  end
+end
+
+MySketch.new(title: 'My Sketch')
 ```
-However unlike ruby-processing, the core jars become part of the gem and PROCESSING_ROOT is not used at runtime.
-
-The following config should work on macosx
-
+The above is an example of class wrapped sketch (that can be run using `jruby my_sketch.rb` or `k9 run my_sketch.rb`), bare sketches also work. See [examples/bare_sketches][]
 ```ruby
----
-PROCESSING_ROOT: /Applications/Processing.app/Contents/Java
+def setup
+  size 200, 200
+end
+
+def draw
+
+end
 ```
+However such sketches must be run with `k9 run sketch.rb`, however you can do 'k9 wrap sketch.rb` which converts bare sketches to a class wrapped form.
 
-To copy processing jars `rake processing_jars`
+### Using netbeans as an ide for JRubyArt
 
-To compile extensions `jruby -S rake compile` _requires rake-compiler gem_
-
-To build gem `jruby -S rake package`
-
-To install `gem install pkg/jruby_art-0.2.pre.gem`
-
-To create a new blank sketch
-
-```bash
-k9 create my_app 200 200
-```
-
-or for 3D opengl sketch
-
-```bash
-k9 create my_app 200 200 p3d
-```
-
-To run most sketches, all you need is an installed jruby:-
-
-```bash
-jruby my_app.rb
-```
-
-To run certain sketches, eg those with load_image (or shaders), either use [netbeans][] as your development ide or use the vendored jruby-complete (beyond our control something to do with jruby permissions?).  To install jruby-complete:-
-
-```bash
-k9 setup install # requires curl (Now also downloads examples to users home)
-```
-To run sketches with jruby-complete (rather than installed jruby)
-
-```bash
-k9 run my_app.rb # NB: k9 setup install, is a one-time 'install to gem' procedure
-that also downloads and install samples in examples folder in users directory
-```
+See [netbeans][]
 
 [Contributing][]
 
@@ -85,6 +77,7 @@ ruby-2.1.2+ (when sketches are run using k9 command, ie using jruby-complete)
 [CHANGELOG]:CHANGELOG.md
 [Contributing]:CONTRIBUTING.md
 [Examples]:https://github.com/ruby-processing/JRubyArt-examples
+[examples/bare_sketches]:https://github.com/ruby-processing/JRubyArt-examples/bare_sketches
 [License]:LICENSE.md
 [processing]:https://github.com/processing/processing
 [ruby-processing]:https://github.com/jashkenas/ruby-processing
