@@ -73,7 +73,7 @@ See [netbeans][]
 
 [CHANGELOG][]
 
-[Building latest gem]:https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem
+[Building latest gem](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem/)
 [Acknowledgements]:ACKNOWLEDGEMENTS.md
 [CHANGELOG]:CHANGELOG.md
 [Contributing]:CONTRIBUTING.md
