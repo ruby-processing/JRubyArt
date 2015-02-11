@@ -77,7 +77,7 @@ ruby-2.1.2+ (when sketches are run using k9 command, ie using jruby-complete)
 [CHANGELOG]:CHANGELOG.md
 [Contributing]:CONTRIBUTING.md
 [Examples]:https://github.com/ruby-processing/JRubyArt-examples
-[examples/bare_sketches]:https://github.com/ruby-processing/JRubyArt-examples/bare_sketches
+[examples/bare_sketches]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/bare_sketches
 [License]:LICENSE.md
 [processing]:https://github.com/processing/processing
 [ruby-processing]:https://github.com/jashkenas/ruby-processing
