@@ -1,4 +1,5 @@
 module Processing
+  # Useful methods, not otherwise available	
   module HelperMethods
     # processings epsilon may not be defined yet
     EPSILON ||= 1.0e-04
@@ -107,7 +108,7 @@ module Processing
       end
       fail ArgumentError, 'takes 4 parameters'
     end
-  
+
     # dist_squared only makes sense with 3D distance
     def dist_squared(*args)
       len = args.length

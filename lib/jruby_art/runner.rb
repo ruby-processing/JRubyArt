@@ -25,12 +25,12 @@ module Processing
     EOS
     
     WIN_PATTERNS = [
-    /bccwin/i,
-    /cygwin/i,
-    /djgpp/i,
-    /mingw/i,
-    /mswin/i,
-    /wince/i
+                      /bccwin/i,
+                      /cygwin/i,
+                      /djgpp/i,
+                      /mingw/i,
+                      /mswin/i,
+                      /wince/i
     ]
     
     attr_reader :os
@@ -80,7 +80,7 @@ module Processing
       writer.read(sketch)
       writer.write
     end
-    
+  
     def run(sketch, args)
       command = ['java', '-jar', jruby_complete, parse, sketch, args].flatten
       exec(*command)
@@ -88,7 +88,7 @@ module Processing
     
     def jruby_complete
       rcomplete = File.join(K9_ROOT, '/lib/ruby/jruby-complete.jar')
-      return rcomplete if File.exist?(rcomplete)
+      return rcomplete if FileTest.exist?(rcomplete)
       warn "#{rcomplete} does not exist\nTry running `k9 setup install`"
     end
 
@@ -98,8 +98,8 @@ module Processing
     
     def setup(choice)
       usage = 'Usage: k9 setup [install]'
-      installed = File.exist?(File.join(K9_ROOT, '/lib/ruby/jruby-complete.jar'))
-      proc_root = File.exist?("#{ENV['HOME']}/.jruby_art/config.yml")
+      installed = FileTest.exist?(File.join(K9_ROOT, '/lib/ruby/jruby-complete.jar'))
+      proc_root = FileTest.exist?("#{ENV['HOME']}/.jruby_art/config.yml")
       case choice
       when /install/  # download and install jruby-complete and unpack examples to user home
         system "cd #{K9_ROOT}/vendors && rake"

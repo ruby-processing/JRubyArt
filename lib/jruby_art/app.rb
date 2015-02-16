@@ -90,6 +90,7 @@ module Processing
       post_initialize(opts)
       @args = args
       @opts = opts
+      $app = self
       configure_sketch
       run_sketch
     end
@@ -130,6 +131,7 @@ module Processing
       post_initialize(opts)
       @args = args
       @opts = opts
+      $app = self
       configure_sketch
       run_sketch
     end
