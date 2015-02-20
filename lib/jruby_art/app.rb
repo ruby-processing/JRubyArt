@@ -1,4 +1,5 @@
 require_relative 'helper_methods'
+require_relative 'library_loader'
 
 # The Processing module is a wrapper for JRubyArt
 # Author:: Martin Prout (extends / re-implements ruby-processing)
@@ -76,8 +77,21 @@ module Processing
   # This class is for default (Java2D) sketches only
   class App < PApplet
     include Common, HelperMethods
-    Java::ProcessingVecmathArcball::ArcballLibrary.new.load(JRuby.runtime, false)
     attr_reader :title, :args, :opts
+    
+    # Handy getters and setters on the class go here:
+    class << self
+      attr_accessor :sketch_class, :library_loader
+    end
+
+    def sketch_class
+      self.class.sketch_class
+    end
+    
+    def self.load_library(args)
+      App.library_loader ||= LibraryLoader.new
+      App.library_loader.load_libraries(args)
+    end
 
     # App should be instantiated with an optional list of opts
     # and array of args.
@@ -118,6 +132,7 @@ module Processing
     include Processing, Common
     include_package 'processing.opengl' # imports the processing.opengl package.
     include HelperMethods
+    Java::ProcessingVecmathArcball::ArcballLibrary.new.load(JRuby.runtime, false)
     attr_reader :title, :args, :opts
 
     # App should be instantiated with an optional list of opts

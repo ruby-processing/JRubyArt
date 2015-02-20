@@ -22,6 +22,7 @@ if RUBY_PLATFORM == 'java'
   Java::ProcessingFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
   Java::ProcessingVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
   Java::ProcessingVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
+  
   AppRender = Java::ProcessingVecmath::AppRender
   ShapeRender = Java::ProcessingVecmath::ShapeRender
   require 'jruby_art/app'
