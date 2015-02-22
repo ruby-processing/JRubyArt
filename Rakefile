@@ -68,8 +68,8 @@ end
 
 Gem::PackageTask.new(spec) do |p|
   p.gem_spec = spec
-  p.need_tar = true
-  p.need_zip = true
+  p.need_tar = false
+  p.need_zip = false
 end
 
 Rake::RDocTask.new do |rdoc|

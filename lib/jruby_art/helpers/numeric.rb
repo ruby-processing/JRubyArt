@@ -1,4 +1,5 @@
-class Numeric #:nodoc:
+# extends Numeric class to provide degrees and radians convenience methods
+class Numeric  
   def degrees
     self * 180 / Math::PI
   end
