@@ -76,7 +76,7 @@ module Processing
 
   # This class is for default (Java2D) sketches only
   class App < PApplet
-    include Common, HelperMethods
+    include Math, Common, HelperMethods
     attr_reader :title, :args, :opts
     
     class << self
@@ -127,7 +127,7 @@ module Processing
 
   # This class is for opengl sketches (P2D and P3D)
   class AppGL < PApplet
-    include Processing, Common
+    include Math, Processing, Common
     include_package 'processing.opengl' # imports the processing.opengl package.
     include HelperMethods
     Java::ProcessingVecmathArcball::ArcballLibrary.new.load(JRuby.runtime, false)

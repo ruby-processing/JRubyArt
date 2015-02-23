@@ -5,6 +5,7 @@ It might seem a little of that this log starts at version 0.1.2, the reason for 
 ### Version 0.2.2
 
 Now using curl instead of wget "following the path of least resistance for enfeebled Mac users" and also there might be better Windows support for curl vs wget.Installed a crude library loader for jars (supports video and sound library etc)
+Added a library loader so we get jwishy back and boids
 
 ### Version 0.2.1
 

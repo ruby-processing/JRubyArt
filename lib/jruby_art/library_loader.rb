@@ -50,7 +50,7 @@ class LibraryLoader
   def installed_ruby_lib(*args)
     args.each do |arg|
       ruby_file = File.join(installed, format('%s/%s.rb', arg, arg))
-      next unless FileTest.exist? ruby_file
+      next unless FileTest.exist?(ruby_file)
       require ruby_file
       loaded_libraries << arg
     end

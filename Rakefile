@@ -19,7 +19,7 @@ spec = Gem::Specification.new do |s|
   s.email = 'martin_p@lineone.net'
   s.homepage = 'https://github.com/ruby-processing/JRubyArt'
   s.executables << 'k9'
-  s.files = %w(LICENSE.md README.md Rakefile) + Dir.glob("{bin,lib,spec,vendors}/**/*")
+  s.files = %w(LICENSE.md README.md Rakefile) + Dir.glob("{bin,lib,library,spec,vendors}/**/*")
   s.require_path = 'lib'
   s.add_development_dependency "rake", "~> 10.4"
   s.add_development_dependency "rspec", "~> 3.1"
@@ -73,7 +73,7 @@ Gem::PackageTask.new(spec) do |p|
 end
 
 Rake::RDocTask.new do |rdoc|
-  files =['README.md', 'LICENSE.md', 'lib/**/*.rb']
+  files =['README.md', 'LICENSE.md', 'lib/**/*.rb', 'library']
   rdoc.rdoc_files.add(files)
   rdoc.main = "README.md" # page to start on
   rdoc.title = "JRubyArt Docs"
