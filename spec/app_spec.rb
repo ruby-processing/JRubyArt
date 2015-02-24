@@ -13,7 +13,7 @@ describe Processing::App do
     @processing_sketch = TestSketch.new title: 'sketch'
   end
 
-  METHODS = %w(
+  METHODS = %i(
     alpha
     ambient
     ambient_light
@@ -196,13 +196,13 @@ describe Processing::App do
   )
 
   METHODS.each { |method_string|
-    it "method: #{method_string}" do
-      @processing_sketch.should respond_to(method_string)
+    it "method: .#{method_string}" do
+      expect(@processing_sketch).to respond_to(method_string)
     end
   }
 
   after :all do
-    java.lang.System.exit 0
+    @processing_sketch.exit 
   end
 
 end
