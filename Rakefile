@@ -4,14 +4,14 @@ require 'rake/clean'
 require 'rubygems/package_task'
 require 'rdoc/task'
 require 'rake/testtask'
-require 'rspec/core/rake_task'
+
 require_relative 'lib/jruby_art/version'
 
 spec = Gem::Specification.new do |s|
   s.name = 'jruby_art'
   s.version = JRubyArt::VERSION
   s.has_rdoc = true
-  s.extra_rdoc_files = ['README.md', 'LICENSE.md']
+  s.extra_rdoc_files = ['README.md', 'LICENSE.md', 'CHANGELOG.md']
   s.summary = 'Ruby processing development branch'
   s.description = 'A jruby wrapper for processing'
   s.license = 'MIT'
@@ -21,8 +21,9 @@ spec = Gem::Specification.new do |s|
   s.executables << 'k9'
   s.files = %w(LICENSE.md README.md Rakefile) + Dir.glob("{bin,lib,library,spec,vendors}/**/*")
   s.require_path = 'lib'
+  s.required_ruby_version = '~> 2.0'
   s.add_development_dependency "rake", "~> 10.4"
-  s.add_development_dependency "rspec", "~> 3.1"
+  s.add_development_dependency "rspec", "~> 3.2"
   s.add_development_dependency "rake-compiler", "~> 0.9"
   s.requirements << 'A decent graphics card'
   s.requirements << 'java runtime >= 1.7+'
@@ -81,13 +82,5 @@ Rake::RDocTask.new do |rdoc|
   rdoc.options << '--line-numbers'
 end
 
-Rake::TestTask.new do |t|
-  t.test_files = FileList['test/**/*.rb']
-end
-
-RSpec::Core::RakeTask.new do |spec|
-  spec.pattern = 'spec/*_spec.rb'
-  spec.rspec_opts = [Dir["lib"].to_a.join(':')]
-end
 
 

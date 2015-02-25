@@ -1,10 +1,11 @@
 require_relative '../lib/jruby_art/library_loader'
+require_relative '../lib/jruby_art/config'
 require 'spec_helper'
 
 describe LibraryLoader do
   
   before :all do    
-    LibraryLoader::K9_ROOT = "../"
+    K9_ROOT = "../"
     @library_loader = LibraryLoader.new 
   end
 
@@ -19,5 +20,4 @@ describe LibraryLoader do
   after :all do
     @library_loader = nil
   end
-
 end
