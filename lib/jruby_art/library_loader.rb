@@ -55,7 +55,7 @@ class LibraryLoader
   def java_lib(path, library_name)
     library_name = library_name.to_sym
     jars = get_library_paths(path, library_name)
-    jpath = format("/%s", path, library_name.to_s )
+    jpath = format("%s/%s/library", path, library_name.to_s )
     return false if jars.empty?
     jars.each { |jar| require jar }
     platform_specific_library_paths = get_platform_specific_library_paths(jpath)
