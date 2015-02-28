@@ -2,10 +2,13 @@
 
 It might seem a little of that this log starts at version 0.1.2, the reason for this is that previous version relate to earlier versions which were essentially a clone of ruby-processing.
 
-### Version 0.2.2
+### Version 0.2.3
 
-Now using curl instead of wget "following the path of least resistance for enfeebled Mac users" and also there might be better Windows support for curl vs wget.Installed a crude library loader for jars (supports video and sound library etc)
-Added a library loader so we get jwishy back and boids
+Now using curl instead of wget "following the path of least resistance for enfeebled Mac users" and also there might be better Windows support for curl vs wget. Now includes a library loader for jars (supports video and sound library etc), added control_panel and boids library.
+
+### Version 0.2.2
+This was meant to be the pre-jruby-9000 version, but is now the pre library_loader
+version
 
 ### Version 0.2.1
 
