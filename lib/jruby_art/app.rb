@@ -26,14 +26,14 @@ module Processing
     def post_initialize(_opts = {})
       nil
     end
-
+    
     # This method configures the sketch title and and presentation mode.
     #
     def configure_sketch
       presentation_mode
       sketch_title
     end
-
+    
     # This method sets the sketch presentation mode.
     #
     def presentation_mode
@@ -41,20 +41,20 @@ module Processing
       args << '--full-screen'
       args << "--bgcolor=#{opts[:bgcolor]}" if opts[:bgcolor]
     end
-
+    
     # This method is the main draw loop of the sketch. This is usually
     # overridden by the user.
     #
     def draw
       nil
     end
-
+    
     # This method runs the processing sketch.
     #
     def run_sketch
       PApplet.run_sketch(args.to_java(:string), self)
     end
-
+    
     # This method sets the sketch title.
     #
     def sketch_title
@@ -73,7 +73,7 @@ module Processing
     key_released: :keyReleased,
     key_typed: :keyTyped
   }
-
+  
   # This class is for default (Java2D) sketches only
   class App < PApplet
     include Math, Common, HelperMethods
@@ -82,13 +82,13 @@ module Processing
     class << self
       # Handy getters and setters on the class go here:
       attr_accessor :sketch_class, :library_loader
-
+      
       def load_libraries(*args)
         library_loader ||= LibraryLoader.new
         library_loader.load_libraries(*args)
       end
       alias_method :load_library, :load_libraries
-
+      
       # When certain special methods get added to the sketch, we need to let
       # Processing call them by their expected Java names.
       def method_added(method_name) #:nodoc:
@@ -96,11 +96,11 @@ module Processing
         alias_method METHODS_TO_ALIAS[method_name], method_name
       end
     end
-
+    
     def sketch_class
       self.class.sketch_class
     end
-
+    
     # App should be instantiated with an optional list of opts
     # and array of args.
     #
@@ -116,7 +116,7 @@ module Processing
       configure_sketch
       run_sketch
     end
-
+    
     # This method provides the default setup for the sketch. It can
     # be overridden by the user for finer grained control.
     #
@@ -124,7 +124,7 @@ module Processing
       size(width, height)
     end
   end
-
+  
   # This class is for opengl sketches (P2D and P3D)
   class AppGL < PApplet
     include Math, Processing, Common
@@ -132,7 +132,7 @@ module Processing
     include HelperMethods
     Java::ProcessingVecmathArcball::ArcballLibrary.new.load(JRuby.runtime, false)
     attr_reader :title, :args, :opts
-
+    
     # App should be instantiated with an optional list of opts
     # and array of args.
     #
@@ -148,7 +148,7 @@ module Processing
       configure_sketch
       run_sketch
     end
-
+    
     # This method provides the default setup for the sketch. It can
     # be overridden by the user for finer grained control.
     #
@@ -156,7 +156,13 @@ module Processing
       size(width, height, mode = P3D)
       fail unless /opengl/ =~ mode
     end
-
+    
+    def load_libraries(*args)
+      library_loader ||= LibraryLoader.new
+      library_loader.load_libraries(*args)
+    end
+    alias_method :load_library, :load_libraries
+    
     # When certain special methods get added to the sketch, we need to let
     # Processing call them by their expected Java names.
     def self.method_added(method_name) #:nodoc:
@@ -166,3 +172,4 @@ module Processing
     end
   end
 end
+
