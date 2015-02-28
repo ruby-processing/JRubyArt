@@ -10,7 +10,7 @@ WARNING = <<-EOS
 EOS
 
 JRUBYC_VERSION      = '1.7.19'
-EXAMPLES                    = '0.0.4'
+EXAMPLES                    = '0.0.5'
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os'] 
 CLOBBER.include("jruby-complete-#{JRUBYC_VERSION}.jar", "#{EXAMPLES}.tar.gz")
