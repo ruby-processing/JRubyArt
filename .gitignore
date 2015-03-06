@@ -7,7 +7,6 @@ pkg
 *.pdf
 *.gem
 *.tgz
-*.tar.gz
 *.jar
 *.zip
 Gemfile.lock
