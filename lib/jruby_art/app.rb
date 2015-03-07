@@ -157,16 +157,20 @@ module Processing
       fail unless /opengl/ =~ mode
     end
     
-    def load_libraries(*args)
-      library_loader ||= LibraryLoader.new
-      library_loader.load_libraries(*args)
-    end
-    alias_method :load_library, :load_libraries
-    
-    # When certain special methods get added to the sketch, we need to let
-    # Processing call them by their expected Java names.
-    def self.method_added(method_name) #:nodoc:
-      if METHODS_TO_ALIAS.key?(method_name)
+    class << self
+      # Handy getters and setters on the class go here:
+      attr_accessor :sketch_class, :library_loader
+      
+      def load_libraries(*args)
+        library_loader ||= LibraryLoader.new
+        library_loader.load_libraries(*args)
+      end
+      alias_method :load_library, :load_libraries
+      
+      # When certain special methods get added to the sketch, we need to let
+      # Processing call them by their expected Java names.
+      def method_added(method_name) #:nodoc:
+        return unless METHODS_TO_ALIAS.key?(method_name)
         alias_method METHODS_TO_ALIAS[method_name], method_name
       end
     end
