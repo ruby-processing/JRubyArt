@@ -103,29 +103,9 @@ module Processing
       case choice
       when /install/  # download and install jruby-complete and unpack examples to user home
         system "cd #{K9_ROOT}/vendors && rake"
-        unless proc_root
-          set_processing_root
-          warn 'PROCESSING_ROOT set optimistically, run check to confirm'
-        end
       else
         puts usage
       end
-    end
-    
-    # Optimistically set processing root
-    def set_processing_root
-      require 'psych'
-      @os ||= host_os
-      data = {}
-      path = File.expand_path("#{ENV['HOME']}/.jruby_art/config.yml")
-      if os == :mac
-        data['PROCESSING_ROOT'] = '/Applications/Processing.app/Contents/Java'
-      else
-        root = "#{ENV['HOME']}/processing-2.2.1"
-        data['PROCESSING_ROOT'] = root
-      end
-      data['JRUBY'] = true
-      open(path, 'w:UTF-8') { |f| f.write(data.to_yaml) }
     end
     
     # Show the standard help/usage message.

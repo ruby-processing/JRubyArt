@@ -16,7 +16,7 @@ MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
 CLOBBER.include("jruby-complete-#{JRUBYC_VERSION}.jar", "#{EXAMPLES}.tar.gz")
 
 desc "download, and copy to ruby-processing"
-task :default => [:download, :copy_ruby, :download_examples, :copy_examples]
+task :default => [:download, :copy_ruby, :download_examples, :copy_examples, :config]
 
 desc "download JRuby upstream sources"
 task :download => ["jruby-complete-#{JRUBYC_VERSION}.jar"]
@@ -64,6 +64,12 @@ task :copy_examples => file_name do
   sh "cp -r JRubyArt-examples-#{EXAMPLES} #{HOME_DIR}/examples"  
   sh "rm -r JRubyArt-examples-#{EXAMPLES}"     
 end
+
+desc "config"
+task :config => file_name do
+  sh "tar xzvf config.tar.gz"
+  sh "cp -r .jruby_art #{HOME_DIR}"
+end  
 
 def check_sha1(filename, expected_hash)
   require "digest/sha1"

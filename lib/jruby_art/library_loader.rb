@@ -76,11 +76,11 @@ class LibraryLoader
   end
   
   def platform
-    match = %w(Mac Linux Windows).find do |os|
-      java.lang.System.getProperty('os.name').index(os)
+    match = %w(mac linux windows).find do |os|
+      java.lang.System.getProperty('os.name').downcase.index(os)
     end
     return 'other' unless match
-    return match.downcase unless match =~ /Mac/
+    return match unless match =~ /mac/
     'macosx'
   end
   
