@@ -67,7 +67,7 @@ end
 
 desc "config"
 task :config => file_name do
-  next FileTest.exist?("#{HOME_DIR}/.jruby_art/config.yml")
+  next if FileTest.exist?("#{HOME_DIR}/.jruby_art/config.yml")
   sh "tar xzvf config.tar.gz"
   sh "cp -r .jruby_art #{HOME_DIR}"
 end  
