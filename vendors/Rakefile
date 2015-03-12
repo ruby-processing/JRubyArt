@@ -1,4 +1,5 @@
 require 'rake/clean'
+require 'rbconfig'
 
 WARNING = <<-EOS 
    WARNING: you may not have curl installed, you could just download
