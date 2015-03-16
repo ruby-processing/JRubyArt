@@ -62,7 +62,7 @@ ruby-2.1.2+ (when sketches are run using k9 command, ie using jruby-complete)
 ### Using netbeans as an ide for JRubyArt
 
 See [netbeans][]
-
+................................................................................................................
 [Contributing][]
 
 [License][]
