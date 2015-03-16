@@ -63,7 +63,7 @@ ruby-2.1.2+ (when sketches are run using k9 command, ie using jruby-complete)
 
 See [netbeans][]
 
-................................................................................................................
+___
 
 [Contributing][]
 
