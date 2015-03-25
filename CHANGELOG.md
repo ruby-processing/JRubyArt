@@ -4,7 +4,7 @@ It might seem a little of that this log starts at version 0.1.2, the reason for 
 
 ### Version 0.2.4
 
-Can't wait forever for jruby-9000, this release is require to promote the new toxiclibs gem.
+Can't wait forever for jruby-9000, this release is required to promote the new [toxiclibs gem][].
 
 ### Version 0.2.3
 
@@ -47,3 +47,5 @@ Move config file from ~/.k9rc to ~/.jruby_art/config.yml, created installer for 
 ### Version 0.1.2
 
 First point release, requires user build, supports 2D and opengl sketches, but no library support. Sketches will only run with jruby (jruby-complete is not included). To run sketches with load_image jruby-complete is required, so either provide that or use netbeans as your ide (with jruby plugin).
+
+[toxiclibs gem]:https://github.com/ruby-processing/toxicgem
