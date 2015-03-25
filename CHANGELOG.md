@@ -2,6 +2,10 @@
 
 It might seem a little of that this log starts at version 0.1.2, the reason for this is that previous version relate to earlier versions which were essentially a clone of ruby-processing.
 
+### Version 0.2.4
+
+Can't wait forever for jruby-9000, this release is require to promote the new toxiclibs gem.
+
 ### Version 0.2.3
 
 Now using curl instead of wget "following the path of least resistance for enfeebled Mac users" and also there might be better Windows support for curl vs wget. Now includes a library loader for jars (supports video and sound library etc), added control_panel and boids library.
