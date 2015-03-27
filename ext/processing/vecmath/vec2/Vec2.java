@@ -120,18 +120,6 @@ public class Vec2 extends RubyObject {
     }
 
     /**
-    * Example of a regular ruby class method
-    *
-    * @deprecated use instance method
-    * @param context
-    * @param klazz
-    * @param args
-    * @return new Vec2 object (ruby)
-    *
-    */
-
-
-    /**
     *
     * @param context
     * @param other
@@ -537,11 +525,11 @@ public class Vec2 extends RubyObject {
 
 
     /**
-    * For jruby-9000 we implement inspect
+    * For jruby-9000 we alias to inspect
     * @param context
     * @return
     */
-    @JRubyMethod(name = {"inspect", "to_s"})
+    @JRubyMethod(name = {"to_s", "inspect"})
 
     public IRubyObject to_s(ThreadContext context) {
         return context.getRuntime().newString(String.format("Vec2D(x = %4.4f, y = %4.4f)", jx, jy));
@@ -566,17 +554,14 @@ public class Vec2 extends RubyObject {
     */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+        if (obj instanceof Vec2){
         final Vec2 other = (Vec2) obj;
-        if (Double.doubleToLongBits(this.jx) != Double.doubleToLongBits(other.jx)) {
+        if (!((Double)this.jx).equals(other.jx)) {
             return false;
         }
-        return (Double.doubleToLongBits(this.jy) == Double.doubleToLongBits(other.jy));
+        return ((Double)this.jy).equals(other.jy);
+        }
+        return false;
     }
 
     /**
@@ -598,24 +583,4 @@ public class Vec2 extends RubyObject {
         : RubyBoolean.newBoolean(context.getRuntime(), true);
         return result; // return false as default unless not null && values equal
     }
-
-    /**
-    *
-    * @param context
-    * @param other
-    * @return
-    */
-    //    @JRubyMethod(name = "almost_eql?", required = 1)
-    //
-    //    public IRubyObject almost_eql_p(ThreadContext context, IRubyObject other) {
-    //        Vec2 v = (other instanceof Vec2) ? (Vec2) other.toJava(Vec2.class) : null;
-    //        RubyBoolean result = (v == null) ? RubyBoolean.newBoolean(context.getRuntime(), false)
-    //                : (Math.abs(jx - v.jx) > Vec2.EPSILON)
-    //                ? RubyBoolean.newBoolean(context.getRuntime(), false)
-    //                : (Math.abs(jy - v.jy) > Vec2.EPSILON)
-    //                ? RubyBoolean.newBoolean(context.getRuntime(), false)
-    //                : RubyBoolean.newBoolean(context.getRuntime(), true);
-    //        return result; // return false as default unless not null && values equal
-    //    }
-
 }
