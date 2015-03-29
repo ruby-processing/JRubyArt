@@ -89,17 +89,19 @@ public final class JVector {
     }
 
     /**
-     * The usual normalize
+     * Normalize, except vectors with 'zero or very small' magnitudes
      *
      * @return this
      */
-    public JVector normalize() {
-        double mag = Math.sqrt(x * x + y * y + z * z);
-        this.x /= mag;
-        this.y /= mag;
-        this.z /= mag;
-        return this;
-    }
+     public JVector normalize() {
+         double mag = Math.sqrt(x * x + y * y + z * z);
+         if (mag > EPSILON){
+             this.x /= mag;
+             this.y /= mag;
+             this.z /= mag;
+         }
+         return this;
+     }
 
      /**
       *
