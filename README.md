@@ -6,7 +6,7 @@ Core processing jars are included, so it does not require a vanilla processing i
 
 ### Requirements
 
-Java runtime 7+, and ruby (can be MRI ruby), curl (to download jruby-complete and examples, although there is a  workaround). NB: it is not necessary to install vanilla [processing][] with this implementation, core jars are included in the gem.
+Java runtime 7+, and ruby (can be MRI ruby), curl (to download jruby-complete and examples, although there is a  workaround). 
 
 ### Getting Started
 
