@@ -2,7 +2,7 @@
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
 Is an alternative implementation of [ruby-processing][] that provides a ruby-wrapper for the java version of [processing][]. It is currently at the pre-release stage, but is ready for testing, and available from rubygems.org.
-Core processing jars are included, so it does not require a vanilla processing install... yous should perhaps consider making a contribution to the [processing foundation][].
+Core processing jars are included, so it does not require a vanilla processing install..., you should perhaps consider making a contribution to the [processing foundation][].
 
 ### Requirements
 
