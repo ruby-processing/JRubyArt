@@ -1,6 +1,9 @@
 ## JRubyArt CHANGELOG
 
 It might seem a little of that this log starts at version 0.1.2, the reason for this is that previous version relate to earlier versions which were essentially a clone of ruby-processing.
+### Version 0.2.5
+
+Revert to Processing::Proxy as a module, but implement as :constant_missing, :method_missing (after tyfkda processing ruby-mode)
 
 ### Version 0.2.4
 
