@@ -176,18 +176,17 @@ module Processing
     end
   end
 
-  # Using :method_missing to mimic inner class methods and
-  # :constant_missing to mimic access to inner class constants
+  # Importing PConstants to access to processing constants,
+  # to keep namespace clean use PConstants::TRIANGLE (for example)
+  # or to use bare TRIANGLE also 'include PConstants'
+  # Using :method_missing to mimic inner class methods
   # @HACK you should consider using 'forwardable' to avoid this
   # egregious hack...
   module Proxy
+    java_import 'processing.core.PConstants'
+ 
     def method_missing(name, *args)
       return $app.send(name, *args) if $app && $app.respond_to?(name)
-      super
-    end
-
-    def self.const_missing(name)
-      return $app.class.const_get(name) if $app && $app.class.const_defined?(name)
       super
     end
   end
