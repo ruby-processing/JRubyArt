@@ -7,7 +7,7 @@ if !File.exist? './lib/video.jar'
   RB_CONFIG = (Psych.load_file(CONFIG_FILE_PATH))
   core= "#{RB_CONFIG["PROCESSING_ROOT"]}/core/library/core.jar"
   FileUtils.cp(core, './lib')
-  video= "#{RB_CONFIG["PROCESSING_ROOT"]}/modes/java/libraries/video/library/video.jar"
+  video= "#{RB_CONFIG["sketchbook_path"]}/libraries/video/library/video.jar"
   FileUtils.cp(video, './lib')
   rescue
     raise "WARNING: you must set PROCESSING_ROOT in '~/.jruby_art/config.yml' to compile"
