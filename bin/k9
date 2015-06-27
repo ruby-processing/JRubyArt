@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+file = __FILE__
+if test(?l, file)
+  require "pathname"
+  file = Pathname.new(file).realpath
+end
+
+require File.expand_path(File.dirname(file) + "/../lib/jruby_art")
+Processing::Runner.execute

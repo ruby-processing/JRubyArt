@@ -1,0 +1,81 @@
+require 'rake/clean'
+
+WARNING = <<-EOS 
+   WARNING: you may not have wget installed, you could just download
+   the correct version of jruby-complete to the vendors folder, and 
+   re-run rp5 setup install instead of installing wget. Some systems
+   may also require 'sudo' access to install, NB: this is untested....
+      
+EOS
+
+JRUBYC_VERSION     = '9.0.0.0.rc1'
+EXAMPLES           = '0.1'
+HOME_DIR = ENV['HOME']
+MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os'] 
+
+CLOBBER.include("jruby-complete-#{JRUBYC_VERSION}.jar")
+
+desc "download, and copy to jruby_art"
+task :default => [:download, :copy_ruby]
+
+desc "download JRuby upstream sources"
+task :download => ["jruby-complete-#{JRUBYC_VERSION}.jar"]
+
+file "jruby-complete-#{JRUBYC_VERSION}.jar" do
+  begin
+    sh "wget https://s3.amazonaws.com/jruby.org/downloads/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar"    
+  rescue
+    warn(WARNING)
+  end
+  check_sha1("jruby-complete-#{JRUBYC_VERSION}.jar", "18dac3f000fe8814cd2fb7708e32612f17c28edf")
+end
+
+directory "../lib/ruby"
+
+desc "copy jruby-complete"
+task :copy_ruby => ["../lib/ruby"] do
+  sh "cp -v jruby-complete-#{JRUBYC_VERSION}.jar ../lib/ruby/jruby-complete.jar"
+end
+
+def check_sha1(filename, expected_hash)
+  require "digest/sha1"
+  sha1 = Digest::SHA1.new
+  File.open(filename, "r") do |f|
+    while buf = f.read(4096)
+      sha1.update(buf)
+    end
+  end
+  if sha1.hexdigest != expected_hash
+    raise "bad sha1 checksum for #{filename} (expected #{expected_hash} got #{sha1.hexdigest})"
+  end
+end
+
+desc "download, and copy to jruby_art"
+task :unpack_samples => [:download_examples, :copy_examples]
+
+desc 'download and copy examples to user home'
+task :download_examples
+file_name = (MAC_OR_LINUX.nil?) ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
+file file_name do
+  begin
+    if MAC_OR_LINUX.nil?
+      sh "wget https://github.com/jruby_art/samples4jruby_art3/archive/#{EXAMPLES}"
+    else
+      sh "wget https://github.com/jruby_art/samples4jruby_art3/archive/#{EXAMPLES}.tar.gz"
+    end
+  rescue
+    warn(WARNING)
+  end
+end
+
+desc "copy examples"
+task :copy_examples => file_name do
+  if MAC_OR_LINUX.nil?
+    sh "unzip #{EXAMPLES},zip"
+  else
+    sh "tar xzvf #{EXAMPLES}.tar.gz" 
+  end
+  sh "rm -r #{HOME_DIR}/rp_samples" if File.exist? "#{HOME_DIR}/rp_samples"
+  sh "cp -r Example-Sketches-#{EXAMPLES} #{HOME_DIR}/rp_samples"  
+  sh "rm -r Example-Sketches-#{EXAMPLES}"   
+end
