@@ -143,7 +143,7 @@ module Processing
 
     # Display the current version of Ruby-Processing.
     def show_version
-      puts "Ruby-Processing version #{RubyProcessing::VERSION}"
+      puts format('JRubyArt version %s', JRubyArt::VERSION)
     end
 
     # Show the standard help/usage message.
