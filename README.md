@@ -14,12 +14,13 @@ A clean start for `jruby_art` based on processing-3.0 alpha and jruby-9.0.0.0 rc
 
 ## Configuration
 
-Config file is `config.yml` in `~/.jruby_art folder` so can co-exist with regular install
+Config file is `config.yml` in `~/.jruby_art folder` so can co-exist with a ruby-processing install
 
 ```yaml
 # YAML configuration file for jruby_art
 # RP5_HOME: "/home/ruby2.2.0 ... /jruby_art" #windows users may need to set this
-PROCESSING_ROOT: "/home/tux/processing-3.0a10"
+PROCESSING_ROOT: /home/tux/processing-3.0a10
+sketchbook_path: /home/tux/sketchbook
 ```
 
 ## Steps 
