@@ -1,40 +1,80 @@
-# JRubyArt
-
-![Build Status](https://travis-ci.org/ruby-processing/JRubyArt.svg)
-
-
-Is a development fork of [ruby-processing][], based on the latest development version of jruby-complete (9000-dev) and the latest stable version of [processing][]. As an exlusive linux user myself I am not able to support [ruby-processing][] on the Mac, without help from Mac users!!! The minimum java required is jdk7 (jdk8 preferred), and actually this is actually a requirement for processing-2.1.0+, and will very likeley be a minimum requirement for jruby-9000 (expected release summer 2014) which is what this development version is targetting. To avoid confusion with the original ruby-processing that development branch has been renamed to JRubyArt and the executable has been changed from `rp5` to `k9` (yes the same as the doctors canine companion). I have reverted to the default of using jruby-complete by default (mainly because it is easiers to keep track of jruby development that way). Currently vanilla processing development is unstable, working toward 3.0 release, you, can track the latest developments in [processing][] but it won't be worth testing it for for the foreseeable future. 
-
-## Installation
-
-You need to have vanilla processing installed and preferably the latest release of java-8 (that way my experiments with performance tuning stand a chance of making sense (detailed instructions to follow).
-
-    `rake` to build and test
-
-And then execute:
-
-    `gem install jruby_art-{version}.gem`
-
-You need to install jruby-complete to installed version:
-
-    `install_jruby_dev`
-
-You may if you wish use bundler, but for me it is a complete pain (it assumes too much, and you lose control). But if that is what you are used, to it makes sense to carry on using it.   
-
-## Usage
-
-`k9 run jwishy.rb`
-
-[Contributing][]
-
-[License][]
-
-[Acknowledgements][]
-
+# jruby_art-3.0
+A clean start for jruby_art based on processing-3.0 alpha and jruby-9.0.0.0 rc1, having difficulty with JRubyArt and jruby-9000, also this might be the way to go retaining the jruby_art good bits, with no legacy overhang.
+## Requirements
  
-[Acknowledgements]:ACKNOWLEDGEMENTS.md
-[Contributing]:CONTRIBUTING.md
-[License]:LICENSE.md
-[processing]:https://github.com/processing/processing
-[ruby-processing]:https://github.com/jashkenas/ruby-processing
+ Clone this repository
+
+`jruby-9.0.0.0.rc1+`
+
+`processing-3.0a10+`
+
+`processing video library (processing-3.0a5+)`
+
+`jdk1.8.0_45+`
+
+## Configuration
+
+Config file is `config.yml` in `~/.jruby_art folder` so can co-exist with regular install
+
+```yaml
+# YAML configuration file for jruby_art
+# RP5_HOME: "/home/ruby2.2.0 ... /jruby_art" #windows users may need to set this
+PROCESSING_ROOT: "/home/tux/processing-3.0a10"
+```
+
+## Steps 
+
+Manually copy video.jar to lib folder (core.jar should get copied there on build)
+```bash
+ rake # should build the gem and run minitest
+ gem install --local jruby_art-0.3.0.gem
+ rp5 setup install # Downloads and install jruby-complete-9.0.0.0.rc1
+```
+## Create sketches from built in templates
+```bash
+rp5 create fred 200, 200               # basic FX2D sketch fred.rb
+rp5 create fred 200, 200, p2d          # basic P2D sketch fred.rb
+rp5 create fred 200, 200 --wrap        # class wrapped FX2D sketch fred.rb
+rp5 create fred 200, 200, p2d --wrap   # class wrapped P2D sketch fred.rb
+```
+
+## Simple Sketch
+```ruby
+# :sketch_title belongs in setup it is a convenience method of jruby_art-3.0
+def setup
+  sketch_title 'My Sketch'
+end
+
+def draw
+  background 0
+  fill 200
+  ellipse width / 2, height / 2, 300, 200
+end
+
+# size goes here since processing-3.0a10, the processing guys hide this
+# by doing pre-processing on the pde file (check the java output).
+# FX2D works better for me (on linux) than JAVA2D with Ben Fry current loop() kludge
+def settings
+  size 400, 300, FX2D
+end
+```
+## Run Sketch
+`rp5 run sketch.rb`
+or
+`rp5 --nojruby run sketch.rb`
+
+be prepared to KILL the odd java process (that doesn't exit cleanly all the time), watch seems now to work (but no easy way of disposing last window) failing
+
+## Watch sketches
+```bash
+rp5 watch sketch.rb # don't try and change render mode, or use the FX2D render mode
+```
+
+## Example sketches
+
+[Worked Examples](https://github.com/jruby_art/samples4jruby_art3) more to follow, feel free to add your own, especially ruby-2.1+ syntax now we can. These can now be downloaded using `rp5 setup unpack_samples` please move existing rp_samples.
+
+## Conversion Tool
+
+I wrote this little script to convert sketches from jruby_art (2.0) to jruby_art-3.0 [here](https://gist.github.com/monkstone/1a658bdda4ea21c204c5)
 
