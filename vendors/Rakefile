@@ -59,9 +59,9 @@ file_name = (MAC_OR_LINUX.nil?) ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
 file file_name do
   begin
     if MAC_OR_LINUX.nil?
-      sh "wget https://github.com/jruby_art/samples4jruby_art3/archive/#{EXAMPLES}"
+      sh "wget https://github.com/ruby-processing/samples4ruby-processing3/archive/#{EXAMPLES}.zip"
     else
-      sh "wget https://github.com/jruby_art/samples4jruby_art3/archive/#{EXAMPLES}.tar.gz"
+      sh "wget https://github.com/ruby-processing/samples4ruby-processing3/archive/#{EXAMPLES}.tar.gz"
     end
   rescue
     warn(WARNING)
@@ -75,7 +75,7 @@ task :copy_examples => file_name do
   else
     sh "tar xzvf #{EXAMPLES}.tar.gz" 
   end
-  sh "rm -r #{HOME_DIR}/rp_samples" if File.exist? "#{HOME_DIR}/rp_samples"
-  sh "cp -r Example-Sketches-#{EXAMPLES} #{HOME_DIR}/rp_samples"  
-  sh "rm -r Example-Sketches-#{EXAMPLES}"   
+  sh "rm -r #{HOME_DIR}/k9_samples" if File.exist? "#{HOME_DIR}/k9_samples"
+  sh "cp -r samples4ruby-processing3-#{EXAMPLES} #{HOME_DIR}/k9_samples"  
+  sh "rm -r samples4ruby-processing3-#{EXAMPLES}"   
 end
