@@ -10,7 +10,7 @@ A clean start for `jruby_art` based on processing-3.0 alpha and jruby-9.0.0.0 rc
 
 `processing video library (processing-3.0a5+)`
 
-`jdk1.8.0_45+`
+`jdk1.8.0_45+` can be openjdk with OpenJFX _a separate download works on ArchLinux_
 
 ## Configuration
 
