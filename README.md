@@ -29,7 +29,7 @@ Manually copy video.jar to lib folder (core.jar should get copied there on build
 ```bash
  rake # should build the gem and run minitest
  gem install --local jruby_art-0.3.0.gem
- rp5 setup install # Downloads and install jruby-complete-9.0.0.0.rc1
+ k9 setup install # Downloads and install jruby-complete-9.0.0.0.rc1
 ```
 ## Create sketches from built in templates
 ```bash
