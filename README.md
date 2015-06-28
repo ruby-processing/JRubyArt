@@ -18,7 +18,7 @@ Config file is `config.yml` in `~/.jruby_art folder` so can co-exist with a ruby
 
 ```yaml
 # YAML configuration file for jruby_art
-# RP5_HOME: "/home/ruby2.2.0 ... /jruby_art" #windows users may need to set this
+# K9_HOME: "/home/ruby2.2.0 ... /jruby_art" #windows users may need to set this
 PROCESSING_ROOT: /home/tux/processing-3.0a10
 sketchbook_path: /home/tux/sketchbook
 ```
@@ -33,10 +33,10 @@ Manually copy video.jar to lib folder (core.jar should get copied there on build
 ```
 ## Create sketches from built in templates
 ```bash
-rp5 create fred 200, 200               # basic FX2D sketch fred.rb
-rp5 create fred 200, 200, p2d          # basic P2D sketch fred.rb
-rp5 create fred 200, 200 --wrap        # class wrapped FX2D sketch fred.rb
-rp5 create fred 200, 200, p2d --wrap   # class wrapped P2D sketch fred.rb
+k9 create fred 200, 200               # basic FX2D sketch fred.rb
+k9 create fred 200, 200, p2d          # basic P2D sketch fred.rb
+k9 create fred 200, 200 --wrap        # class wrapped FX2D sketch fred.rb
+k9 create fred 200, 200, p2d --wrap   # class wrapped P2D sketch fred.rb
 ```
 
 ## Simple Sketch
@@ -60,22 +60,22 @@ def settings
 end
 ```
 ## Run Sketch
-`rp5 run sketch.rb`
+`k9 run sketch.rb`
 or
-`rp5 --nojruby run sketch.rb`
+`k9 --nojruby run sketch.rb`
 
 be prepared to KILL the odd java process (that doesn't exit cleanly all the time), watch seems now to work (but no easy way of disposing last window) failing
 
 ## Watch sketches
 ```bash
-rp5 watch sketch.rb # don't try and change render mode, or use the FX2D render mode
+k9 watch sketch.rb # don't try and change render mode, or use the FX2D render mode
 ```
 
 ## Example sketches
 
-[Worked Examples](https://github.com/jruby_art/samples4jruby_art3) more to follow, feel free to add your own, especially ruby-2.1+ syntax now we can. These can now be downloaded using `rp5 setup unpack_samples` please move existing rp_samples.
+[Worked Examples](https://github.com/jruby_art/samples4jruby_art3) more to follow, feel free to add your own, especially ruby-2.1+ syntax now we can. These can now be downloaded using `k9 setup unpack_samples` please move existing rp_samples.
 
 ## Conversion Tool
 
-I wrote this little script to convert sketches from jruby_art (2.0) to jruby_art-3.0 [here](https://gist.github.com/monkstone/1a658bdda4ea21c204c5)
+I wrote this little script to convert sketches from ruby-processing (processing-2) to jruby_art (processing-3.0) [here](https://gist.github.com/monkstone/1a658bdda4ea21c204c5)
 
