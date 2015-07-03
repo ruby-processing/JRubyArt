@@ -1,4 +1,4 @@
-# jruby_art-3.0
+# JRubyArt
 A clean start for `jruby_art` based on processing-3.0 alpha and jruby-9.0.0.0 rc1, having difficulty with original JRubyArt and jruby-9000, also this might be the way to go retaining the ruby-processing good bits, with no legacy overhang.
 ## Requirements
  
