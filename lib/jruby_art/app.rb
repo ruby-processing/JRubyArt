@@ -1,4 +1,5 @@
 require 'java'
+require_relative '../rpextras'
 require_relative '../jruby_art/helper_methods'
 require_relative '../jruby_art/helpers/string_extra'
 require_relative '../jruby_art/library_loader'
@@ -8,6 +9,13 @@ require_relative '../jruby_art/config'
 module Processing
   # Include some core processing classes that we'd like to use:
   include_package 'processing.core'
+  # Load vecmath and fastmath modules
+  Java::ProcessingVecmathArcball::ArcballLibrary.new.load(JRuby.runtime, false)
+  Java::ProcessingVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
+  Java::ProcessingVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
+  Java::ProcessingFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
+  AppRender = Java::ProcessingVecmath::AppRender
+  ShapeRender = Java::ProcessingVecmath::ShapeRender
 
   # Watch the definition of these methods, to make sure
   # that Processing is able to call them during events.
