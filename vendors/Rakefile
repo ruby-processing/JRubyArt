@@ -3,7 +3,7 @@ require 'rake/clean'
 WARNING = <<-EOS 
    WARNING: you may not have wget installed, you could just download
    the correct version of jruby-complete to the vendors folder, and 
-   re-run rp5 setup install instead of installing wget. Some systems
+   re-run k9 setup install instead of installing wget. Some systems
    may also require 'sudo' access to install, NB: this is untested....
       
 EOS

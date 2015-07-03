@@ -14,8 +14,8 @@ module Processing
   Java::ProcessingVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
   Java::ProcessingVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
   Java::ProcessingFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
-  AppRender = Java::ProcessingVecmath::AppRender
-  ShapeRender = Java::ProcessingVecmath::ShapeRender
+  AppRender ||= Java::ProcessingVecmath::AppRender
+  ShapeRender ||= Java::ProcessingVecmath::ShapeRender
 
   # Watch the definition of these methods, to make sure
   # that Processing is able to call them during events.

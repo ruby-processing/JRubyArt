@@ -84,7 +84,7 @@ module Processing
       @options.args = args[2..-1] || []
     end
 
-    # Create a fresh Ruby-Processing sketch, with the necessary
+    # Create a fresh JRubyArt sketch, with the necessary
     # boilerplate filled out.
     def create(sketch, args)
       require_relative '../jruby_art/creators/creator'
@@ -93,7 +93,7 @@ module Processing
       Processing::BasicSketch.new.create!(sketch, args)
     end
 
-    # Just simply run a jruby_art sketch.
+    # Just simply run a JRubyArt sketch.
     def run(sketch, args)
       ensure_exists(sketch)
       spin_up('run.rb', sketch, args)

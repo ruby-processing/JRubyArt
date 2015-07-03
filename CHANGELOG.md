@@ -1,0 +1,1 @@
+v0.3.0 Revert to similar architecture as ruby-processing-2.6.12, including changes that make jruby and PApplet use same classloader.  This change is required for JRuby-9.0.0.0 compatibility. Loads `rpextras.jar` early (so it only get loaded once) incorporate `vecmath` and `fastmath` libraries bu default.
