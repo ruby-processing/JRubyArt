@@ -9,7 +9,7 @@ WARNING = <<-EOS
 EOS
 
 JRUBYC_VERSION     = '9.0.0.0.rc1'
-EXAMPLES           = '0.1'
+EXAMPLES           = '0.2'
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os'] 
 
@@ -77,5 +77,5 @@ task :copy_examples => file_name do
   end
   sh "rm -r #{HOME_DIR}/k9_samples" if File.exist? "#{HOME_DIR}/k9_samples"
   sh "cp -r samples4ruby-processing3-#{EXAMPLES} #{HOME_DIR}/k9_samples"  
-  sh "rm -r samples4ruby-processing3-#{EXAMPLES}"   
-end
+  sh "rm -r samples4ruby-processing3-#{EXAMPLvim lib/jruby_art/version.rb
+                                       clean Xfn.pre
