@@ -2,7 +2,7 @@
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
 ## Requirements
-A clean start for `jruby_art` based on processing-3.0 alpha and jruby-9.0.0.0 rc1, having difficulty with original JRubyArt and jruby-9000, also this might be the way to go retaining the ruby-processing good bits, with no legacy overhang. See [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) to for instructions to build from this repo.
+A clean start for `jruby_art` based on processing-3.0 alpha and jruby-9.0.0.0 rc1, having difficulty with original JRubyArt and jruby-9000, also this might be the way to go retaining the ruby-processing good bits, with no legacy overhang. See [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
 ## Requirements
  
 A suitable version of ruby (MRI ruby > 2.1 or latest `pre jruby-9.0.0.0.rc2+ SNAPSHOT` to download gem. *I had an issue with `jruby-9.0.0.0.rc1` not being recognised as 2.1 compliant*
