@@ -1,4 +1,7 @@
 # JRubyArt
+[![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
+
+## Requirements
 A clean start for `jruby_art` based on processing-3.0 alpha and jruby-9.0.0.0 rc1, having difficulty with original JRubyArt and jruby-9000, also this might be the way to go retaining the ruby-processing good bits, with no legacy overhang. See [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) to for instructions to build from this repo.
 ## Requirements
  
