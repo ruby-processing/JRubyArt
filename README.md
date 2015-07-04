@@ -6,9 +6,13 @@ A suitable version of ruby (MRI ruby > 2.1 or latest `pre jruby-9.0.0.0.rc2+ SNA
 
 `processing-3.0a10+`
 
-`processing video library (processing-3.0a5+)` _install from the processing ide_
 
 `jdk1.8.0_45+` can be openjdk with OpenJFX _a separate download works on ArchLinux_
+
+### optional extras
+
+`processing video and sound libraries` _install from the processing-3.0a10 ide_
+
 
 ## Configuration
 
