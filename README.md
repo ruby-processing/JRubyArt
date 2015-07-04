@@ -7,7 +7,7 @@ A suitable version of ruby (MRI ruby > 2.1 or latest `pre jruby-9.0.0.0.rc2+ SNA
 `processing-3.0a10+`
 
 
-`jdk1.8.0_45+` can be openjdk with OpenJFX _a separate download works on ArchLinux_
+`jdk1.8.0_45+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably save to go with the Oracle version
 
 ### optional extras
 
