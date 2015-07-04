@@ -28,7 +28,7 @@ PROCESSING_ROOT: /home/tux/processing-3.0a10
 sketchbook_path: /home/tux/sketchbook
 ```
 
-## Steps 
+## Install Steps (assumes you have requirements above) 
 
 
 ```bash
