@@ -3,7 +3,7 @@ module Processing
   # Provides some convenience methods
   module HelperMethods
     # processings epsilon may not be defined yet
-    EPSILON ||= 1.0e-04
+    EPSILON ||= 9.999999747378752e-05
     # Nice block method to draw to a buffer.
     # You can optionally pass it a width, a height, and a renderer.
     # Takes care of starting and ending the draw for you.

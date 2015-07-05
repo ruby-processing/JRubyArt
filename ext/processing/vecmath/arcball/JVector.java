@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2014 Martin Prout
+ * Copyright (c) 2015 Martin Prout
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,7 +25,7 @@ package processing.vecmath.arcball;
  */
 public final class JVector {
 
-    static final double EPSILON = 1.0e-04;
+    static final double EPSILON = 9.999999747378752e-05;
 
     /**
      *

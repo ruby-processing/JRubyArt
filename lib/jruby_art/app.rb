@@ -31,8 +31,7 @@ module Processing
   }
   # All sketches extend this class
   class App < PApplet
-    include Math
-    include HelperMethods
+    include HelperMethods, Math
     # Alias some methods for familiarity for Shoes coders.
     # surface replaces :frame, but needs field_reader for access
     alias_method :oval, :ellipse
@@ -163,15 +162,10 @@ module Processing
     end
   end # Processing::App
 
-  # Importing PConstants to access to processing constants,
-  # to keep namespace clean use PConstants::TRIANGLE (for example)
-  # or to use bare TRIANGLE also 'include PConstants'
-  # Using :method_missing to mimic inner class methods
-  # @HACK you should consider using 'forwardable' to avoid this
-  # egregious hack...
+  # @HACK purists may prefer 'forwardable' to the use of Proxy
+  # Importing PConstants here to access the processing constants
   module Proxy
-    include Math
-    java_import 'processing.core.PConstants'
+    include Math, HelperMethods, Java::ProcessingCore::PConstants
 
     def method_missing(name, *args)
       return $app.send(name, *args) if $app && $app.respond_to?(name)
