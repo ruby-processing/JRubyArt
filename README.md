@@ -1,16 +1,21 @@
-# jruby_art-3.0
-A clean start for `jruby_art` based on processing-3.0 alpha and jruby-9.0.0.0 rc1, having difficulty with original JRubyArt and jruby-9000, also this might be the way to go retaining the ruby-processing good bits, with no legacy overhang.
+# JRubyArt
+[![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
+
+## Requirements
+A clean start for `jruby_art` based on processing-3.0 alpha and jruby-9.0.0.0 rc1, having difficulty with original JRubyArt and jruby-9000, also this might be the way to go retaining the ruby-processing good bits, with no legacy overhang. See [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
 ## Requirements
  
- Clone this repository
-
-`jruby-9.0.0.0.rc1+`
+A suitable version of ruby (MRI ruby > 2.1 or latest `pre jruby-9.0.0.0.rc2+ SNAPSHOT` to download gem. *I had an issue with `jruby-9.0.0.0.rc1` not being recognised as 2.1 compliant*
 
 `processing-3.0a10+`
 
-`processing video library (processing-3.0a5+)` _install from the processing ide_
 
-`jdk1.8.0_45+` can be openjdk with OpenJFX _a separate download works on ArchLinux_
+`jdk1.8.0_45+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably save to go with the Oracle version
+
+### optional extras
+
+`processing video and sound libraries` _install from the processing-3.0a10 ide_
+
 
 ## Configuration
 
@@ -23,13 +28,16 @@ PROCESSING_ROOT: /home/tux/processing-3.0a10
 sketchbook_path: /home/tux/sketchbook
 ```
 
-## Steps 
+## Install Steps (assumes you have requirements above) 
 
-Manually copy video.jar to lib folder (core.jar should get copied there on build)
+
 ```bash
- rake # should build the gem and run minitest
- gem install --local jruby_art-0.3.0.gem
- k9 setup install # Downloads and install jruby-complete-9.0.0.0.rc1
+ gem install jruby_art --pre
+ k9 setup install # installs jruby-complete-9.0.0.0.rc1
+ k9 setup unpack_samples # downloads and installs samples to ~/k9_samples
+ cd ~/k9_samples/contributed
+ k9 --nojruby run jwishy.rb # unless you have jruby-9.0.0.0.rc1 installed or config JRUBY: 'false'
+ k9 run jwishy.rb # if you have jruby-9.0.0.0.rc1 installed or config JRUBY: 'false'
 ```
 ## Create sketches from built in templates
 ```bash
