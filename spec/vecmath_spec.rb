@@ -1,6 +1,7 @@
 require_relative '../lib/rpextras'
 
 Java::ProcessingVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
+Java::ProcessingVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
 
 EPSILON = 1.0e-04
 
@@ -273,5 +274,214 @@ describe 'Vec2D#rotate rot' do
     b = Vec2D.new(x, y)
     a = b.rotate(Math::PI / 2)
     expect(a).to eq(Vec2D.new(-10.0, 20.0))
+  end
+end
+
+describe 'Vec2D#[:x]' do
+  it 'should return the x value of the vector' do
+     x, y = 10, 20
+     b = Vec2D.new(x, y)
+     expect(b[:x]).to eq x
+  end
+end
+
+describe 'Vec2D#[:x]=' do
+  it 'should set the x value of the vector' do
+     x = 10
+     b = Vec2D.new
+     b[:x] = x
+     expect(b).to eq Vec2D.new(x, 0)
+  end
+end
+
+describe 'Vec3D#to_a' do
+  it 'should return x, y, z as an array' do
+    x, y, z = 1.0000001, 1.01, 0.999999
+    a = Vec3D.new(x, y, z)
+    expect(a.to_a).to eq([x, y, z])
+  end
+end
+
+describe 'Vec3D#copy' do
+  it 'should return a deep copy' do
+    x, y, z = 1.0000001, 1.01, 0.999999
+    a = Vec3D.new(x, y, z)
+    expect(a.copy.to_a).to eq([x, y, z])
+  end
+end
+
+describe 'Vec3D#copy' do
+  it 'should produce a new object' do
+    x, y, z = 1.0000001, 1.01, 0.999999
+    a = Vec3D.new(x, y, z)
+    b = a.copy
+    b.normalize!
+    expect(a).not_to eq(b)
+  end
+end
+
+describe 'Vec3D#normalize! zero vector' do
+  it 'should do nothing' do
+    a = Vec3D.new
+    b = a.normalize!
+    expect(a).to eq(b)
+  end
+end
+
+describe 'Vec3D#normalize zero vector' do
+  it 'should do nothing' do
+    a = Vec3D.new
+    b = a.normalize
+    expect(a).to eq(b)
+    expect(a).to_not equal(b)
+  end
+end
+
+describe 'Vec3D#dist_squared' do
+  it 'should return Vec3D.dist_squared(a, b)' do
+    a = Vec3D.new(3, 5, 2)
+    b = Vec3D.new(6, 7, 1)
+    expect(a.dist_squared(b)).to eq 3.0**2 + 2**2 + 1
+  end
+end
+
+describe 'Vec3D#dist' do
+  it 'should return Vec3D.dist(a, b)' do
+    a = Vec3D.new(3, 5, 2)
+    b = Vec3D.new(6, 7, 1)
+    expect(a.dist(b)).to eq Math.sqrt(3.0**2 + 2**2 + 1)
+  end
+end
+
+describe 'Vec3D#normalize' do
+  it 'should return Vec3D#normalize a new Vec3D with mag == 1.0' do
+    a = Vec3D.new(3, 5, 2)
+    b = a.normalize
+    expect(b.mag).to be_within(EPSILON).of(1.0)
+  end
+end
+
+describe 'Vec3D#normalize!' do
+  it 'should return Vec3D#normalize! Vec3D#mag == 1.0' do
+    a = Vec3D.new(3, 5, 2)
+    a.normalize!
+    expect(a.mag).to be_within(EPSILON).of(1.0)
+  end
+end
+
+describe 'Vec3D#set_mag zero vector' do
+  it 'should return zero vector' do
+    a = Vec3D.new(0, 0, 0)
+    expect(a.set_mag(Math.sqrt(48))).to eq Vec3D.new(0, 0, 0)
+  end
+end
+
+describe 'Vec3D#set_mag' do
+  it 'should return Vec3D#set_mag' do
+    a = Vec3D.new(1, 1, 1)
+    expect(a.set_mag(Math.sqrt(48))).to eq Vec3D.new(4, 4, 4)
+  end
+end
+
+describe 'Vec3D#cross product' do
+  it 'should return Vec3D.cross(vec)' do
+    a = Vec3D.new(3, 5, 2)
+    b = Vec3D.new(6, 7, 1)
+    expect(a.cross(b)).to eq Vec3D.new(-9.0, 9.0, -9.0)
+  end
+end
+
+describe 'Vec3D#set_mag negative block' do
+  it 'should return Vec3D#set_mag' do
+    a = Vec3D.new(1, 1, 1)
+    expect(a.set_mag(Math.sqrt(48)) { false }).to eq a
+  end
+end
+
+describe 'Vec3D#inspect' do
+  it 'should return a String' do
+    a = Vec3D.new(3, 5, 2.000000000000001)
+    expect(a.inspect).to eq 'Vec3D(x = 3.0000, y = 5.0000, z = 2.0000)'
+  end
+end
+
+describe 'Vec3D#set_mag positive block' do
+  it 'should return Vec3D#set_mag' do
+    a = Vec3D.new(1, 1, 1)
+    expect(a.set_mag(Math.sqrt(48)) { true }).to eq Vec3D.new(4, 4, 4)
+  end
+end
+
+describe 'Vec3D#to_a' do
+  it 'should return x, y as an array' do
+    x, y, z = 1.0000001, 1.01, 1.001
+    a = Vec3D.new(x, y, z)
+    expect(a.to_a).to eq([x, y, z])
+  end
+end
+
+describe 'Vec3D#z=' do
+  it 'should set z value' do
+    x, y, z = 1.0000001, 1.01, 1.001
+    a = Vec3D.new(x, y, z)
+    w = 56.0
+    a.z = w
+    expect(a.z).to eq w
+  end
+end
+
+describe 'Vec3D#==' do
+  it 'should return a == b' do
+    a = Vec3D.new(3.0, 5.0, 0)
+    b = Vec3D.new(3.0, 5.000001, 0)
+    expect(a == b).to be true
+  end
+end
+
+describe 'Vec3D#eql?' do
+  it 'should return a.eql? b' do
+    a = Vec3D.new(3.0, 5.0, 0)
+    b = Vec3D.new(3.0, 5.0, 0)
+    expect(a.eql?(b)).to be true
+  end
+end
+
+describe 'Vec3D#eql?' do
+  it 'should return a.eql? b' do
+    a = Vec3D.new(3.0, 5.0, 0)
+    b = Vec3D.new(3.0, 5.000001, 0)
+    expect(a.eql?(b)).to be false
+  end
+end
+
+describe 'Vec3D#equal?' do
+  it 'should return a.eql? b' do
+    a = Vec3D.new(3.0, 5.0)
+    expect(a.equal?(a)).to be true
+  end
+end
+
+describe 'Vec3D#equal?' do
+  it 'should return a.eql? b' do
+    a = Vec3D.new(3.0, 5.0, 0)
+    b = Vec3D.new(3.0, 5.0, 0)
+    expect(a.equal?(b)).to be false
+  end
+end
+
+describe 'Vec3D#[:x]' do
+  it 'should return the x value of the vector' do
+     x, y, z = 10, 20, 50
+     b = Vec3D.new(x, y, z)
+     expect(b[:x]).to eq x
+  end
+end
+
+describe 'Vec3D#[:x]=' do
+  it 'should set the x value of the vector' do
+     x = 10
+     b = Vec3D.new
+     b[:x] = x
+     expect(b).to eq Vec3D.new(x, 0, 0)
   end
 end

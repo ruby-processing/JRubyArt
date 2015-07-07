@@ -24,6 +24,7 @@ import org.jruby.RubyArray;
 import org.jruby.RubyBoolean;
 import org.jruby.RubyClass;
 import org.jruby.RubyObject;
+import org.jruby.RubySymbol;
 import org.jruby.anno.JRubyClass;
 import org.jruby.anno.JRubyMethod;
 import org.jruby.runtime.Arity;
@@ -165,6 +166,57 @@ public final class Vec3 extends RubyObject {
         return context.getRuntime().newFloat(jz);
     }
     
+      /**
+  *
+  * @param key as symbol
+  * @return value float
+  */
+  @JRubyMethod(name = "[]", required = 1)
+  
+  public IRubyObject aref(ThreadContext context, IRubyObject key) {
+    Ruby runtime = context.getRuntime();
+    if (key instanceof RubySymbol) {
+      if (key == RubySymbol.newSymbol(runtime, "x"))
+        {return runtime.newFloat(jx);}            
+      else if (key == RubySymbol.newSymbol(runtime, "y"))
+        {return runtime.newFloat(jy);}
+      else if (key == RubySymbol.newSymbol(runtime, "z"))
+        {return runtime.newFloat(jz);}
+      else
+        {throw runtime.newIndexError("invalid key");}
+    }
+    else
+      {throw runtime.newIndexError("invalid key");}
+  }
+  
+  /**
+  * @param key as symbol
+  * @param value as float
+  * @return value float
+  */
+  
+  @JRubyMethod(name = "[]=")
+  
+  public IRubyObject aset(ThreadContext context, IRubyObject key, IRubyObject value) {
+    Ruby runtime = context.getRuntime();
+    if (key instanceof RubySymbol) {
+      if (key == RubySymbol.newSymbol(runtime, "x"))
+      {jx = (Double)value.toJava(Double.class);
+      }
+      else if (key == RubySymbol.newSymbol(runtime, "y"))
+      {jy = (Double)value.toJava(Double.class);
+      }
+      else if (key == RubySymbol.newSymbol(runtime, "z"))
+      {jz = (Double)value.toJava(Double.class);
+      }
+      else
+        {throw runtime.newIndexError("invalid key");}
+    }
+    else
+      {throw runtime.newIndexError("invalid key");}
+    return value;
+  }
+    
     /**
     *
     * @param context
@@ -212,16 +264,17 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "cross", required = 1)
     
     public IRubyObject cross(ThreadContext context, IRubyObject other) {
+        Ruby runtime = context.getRuntime();
         Vec3 vec = null;
         if (other instanceof Vec3) {
             vec = (Vec3) other.toJava(Vec3.class);
         } else {
-            throw context.runtime.newTypeError("argument should be Vec3D");
+            throw runtime.newTypeError("argument should be Vec3D");
         }
         return Vec3.rbNew(context, other.getMetaClass(), new IRubyObject[]{
-            context.runtime.newFloat(jy * vec.jz - jz * vec.jy),
-            context.runtime.newFloat(jz * vec.jx - jx * vec.jz),
-            context.runtime.newFloat(jx * vec.jy - jy * vec.jx)
+            runtime.newFloat(jy * vec.jz - jz * vec.jy),
+            runtime.newFloat(jz * vec.jx - jx * vec.jz),
+            runtime.newFloat(jx * vec.jy - jy * vec.jx)
         }
         );
     }
@@ -235,13 +288,14 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "dot", required = 1)
     
     public IRubyObject dot(ThreadContext context, IRubyObject other) {
+        Ruby runtime = context.getRuntime();
         Vec3 b = null;
         if (other instanceof Vec3) {
             b = (Vec3) other.toJava(Vec3.class);
         } else {
-            throw context.runtime.newTypeError("argument should be Vec3D");
+            throw runtime.newTypeError("argument should be Vec3D");
         }
-        return context.getRuntime().newFloat(jx * b.jx + jy * b.jy + jz * b.jz);
+        return runtime.newFloat(jx * b.jx + jy * b.jy + jz * b.jz);
     }
     
     /**
@@ -253,11 +307,12 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "+", required = 1)
     
     public IRubyObject op_add(ThreadContext context, IRubyObject other) {
+        Ruby runtime = context.getRuntime();
         Vec3 b = (Vec3) other.toJava(Vec3.class);
         return Vec3.rbNew(context, other.getMetaClass(), new IRubyObject[]{
-                context.runtime.newFloat(jx + b.jx),
-                context.runtime.newFloat(jy + b.jy),
-        context.runtime.newFloat(jz + b.jz)});
+                runtime.newFloat(jx + b.jx),
+                runtime.newFloat(jy + b.jy),
+                runtime.newFloat(jz + b.jz)});
     }
     
     /**
@@ -269,16 +324,17 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "-")
     
     public IRubyObject op_sub(ThreadContext context, IRubyObject other) {
+        Ruby runtime = context.getRuntime();
         Vec3 b = null;
         if (other instanceof Vec3) {
             b = (Vec3) other.toJava(Vec3.class);
         } else {
-            throw context.runtime.newTypeError("argument should be Vec3D");
+            throw runtime.newTypeError("argument should be Vec3D");
         }
         return Vec3.rbNew(context, other.getMetaClass(), new IRubyObject[]{
-                context.runtime.newFloat(jx - b.jx),
-                context.runtime.newFloat(jy - b.jy),
-        context.runtime.newFloat(jz - b.jz)});
+                runtime.newFloat(jx - b.jx),
+                runtime.newFloat(jy - b.jy),
+                runtime.newFloat(jz - b.jz)});
     }
     
     /**
@@ -290,11 +346,12 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "*", required = 1)
     
     public IRubyObject op_mul(ThreadContext context, IRubyObject other) {
+        Ruby runtime = context.getRuntime();
         double scalar = (Double) other.toJava(Double.class);
         return Vec3.rbNew(context, this.getMetaClass(), new IRubyObject[]{
-                context.runtime.newFloat(jx * scalar),
-                context.runtime.newFloat(jy * scalar),
-        context.runtime.newFloat(jz * scalar)});
+                runtime.newFloat(jx * scalar),
+                runtime.newFloat(jy * scalar),
+                runtime.newFloat(jz * scalar)});
     }
     
     /**
@@ -306,14 +363,15 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "/", required = 1)
     
     public IRubyObject op_div(ThreadContext context, IRubyObject other) {
+        Ruby runtime = context.getRuntime();
         double scalar = (Double) other.toJava(Double.class);
         if (Math.abs(scalar) < Vec3.EPSILON) {
             return this;
         }
         return Vec3.rbNew(context, this.getMetaClass(), new IRubyObject[]{
-                context.runtime.newFloat(jx / scalar),
-                context.runtime.newFloat(jy / scalar),
-        context.runtime.newFloat(jz / scalar)});
+                runtime.newFloat(jx / scalar),
+                runtime.newFloat(jy / scalar),
+                runtime.newFloat(jz / scalar)});
     }
     
     /**
@@ -391,16 +449,17 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "normalize")
     
     public IRubyObject normalize(ThreadContext context) {
+        Ruby runtime = context.getRuntime();
         double mag = Math.sqrt(jx * jx + jy * jy + jz * jz);
         if (mag < EPSILON){return Vec3.rbNew(context, this.getMetaClass(), new IRubyObject[]{
-                context.runtime.newFloat(jx),
-                context.runtime.newFloat(jy),
-            context.runtime.newFloat(jz)});          
+                runtime.newFloat(jx),
+                runtime.newFloat(jy),
+                runtime.newFloat(jz)});          
         }
         return Vec3.rbNew(context, this.getMetaClass(), new IRubyObject[]{
-                context.runtime.newFloat(jx / mag),
-                context.runtime.newFloat(jy / mag),
-        context.runtime.newFloat(jz / mag)});
+                runtime.newFloat(jx / mag),
+                runtime.newFloat(jy / mag),
+                runtime.newFloat(jz / mag)});
     }
     
     /**
@@ -412,14 +471,15 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "angle_between")
     
     public IRubyObject angleBetween(ThreadContext context, IRubyObject other) {
+        Ruby runtime = context.getRuntime();
         Vec3 vec = (Vec3) other.toJava(Vec3.class);
         // We get NaN if we pass in a zero vector which can cause problems
         // Zero seems like a reasonable angle between a (0,0,0) vector and something else
         if (jx == 0 && jy == 0 && jz == 0) {
-            return context.runtime.newFloat(0.0);
+            return runtime.newFloat(0.0);
         }
         if (vec.jx == 0 && vec.jy == 0 && vec.jz == 0) {
-            return context.runtime.newFloat(0.0);
+            return runtime.newFloat(0.0);
         }
         
         double dot = jx * vec.jx + jy * vec.jy + jz * vec.jz;
@@ -428,11 +488,11 @@ public final class Vec3 extends RubyObject {
         // This should be a number between -1 and 1, since it's "normalized"
         double amt = dot / (v1mag * v2mag);
         if (amt <= -1) {
-            return context.runtime.newFloat(Math.PI);
+            return runtime.newFloat(Math.PI);
         } else if (amt >= 1) {
-            return context.runtime.newFloat(0.0);
+            return runtime.newFloat(0.0);
         }
-        return context.runtime.newFloat(Math.acos(amt));
+        return runtime.newFloat(Math.acos(amt));
     }
     
     /**
@@ -443,10 +503,11 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = {"copy", "dup"})
     
     public IRubyObject copy(ThreadContext context) {
+        Ruby runtime = context.getRuntime();
         return Vec3.rbNew(context, this.getMetaClass(), new IRubyObject[]{
-                context.runtime.newFloat(jx),
-                context.runtime.newFloat(jy),
-        context.runtime.newFloat(jz)});
+                runtime.newFloat(jx),
+                runtime.newFloat(jy),
+                runtime.newFloat(jz)});
     }
     
     /**
@@ -457,10 +518,11 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "to_a")
     
     public IRubyObject toArray(ThreadContext context) {
+        Ruby runtime = context.getRuntime();
         return RubyArray.newArray(context.runtime, new IRubyObject[]{
-                context.runtime.newFloat(jx),
-                context.runtime.newFloat(jy),
-        context.runtime.newFloat(jz)});
+                runtime.newFloat(jx),
+                runtime.newFloat(jy),
+                runtime.newFloat(jz)});
     }
     
     
