@@ -68,7 +68,7 @@ public final class Quaternion {
      * @param w scalar 
      * @param v custom Vector class
      */
-    public void set(double w, JVector v) {
+    public void set(double w, Jvector v) {
         this.w = w;
         x = v.x;
         y = v.y;

@@ -23,7 +23,7 @@ package processing.vecmath.arcball;
  *
  * @author Martin Prout
  */
-public final class JVector {
+public final class Jvector {
 
     static final double EPSILON = 9.999999747378752e-05;
 
@@ -48,7 +48,7 @@ public final class JVector {
      * @param y
      * @param z
      */
-    public JVector(double x, double y, double z) {
+    public Jvector(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -57,7 +57,7 @@ public final class JVector {
     /**
      *
      */
-    public JVector() {
+    public Jvector() {
         this(0.0f, 0.0f, 0.0f);
     }
 
@@ -66,8 +66,8 @@ public final class JVector {
       * @param other
       * @return
       */
-     public JVector sub(JVector other) {
-         return new JVector(this.x - other.x, this.y - other.y, this.z - other.z);
+     public Jvector sub(Jvector other) {
+         return new Jvector(this.x - other.x, this.y - other.y, this.z - other.z);
      }
  
      /**
@@ -75,8 +75,8 @@ public final class JVector {
       * @param scalar
       * @return
       */
-     public JVector mult(double scalar) {
-         return new JVector(this.x * scalar, this.y * scalar, this.z * scalar);
+     public Jvector mult(double scalar) {
+         return new Jvector(this.x * scalar, this.y * scalar, this.z * scalar);
      }
 
     /**
@@ -92,7 +92,7 @@ public final class JVector {
      *
      * @return this
      */
-    public JVector normalize() {
+    public Jvector normalize() {
         double mag = Math.sqrt(x * x + y * y + z * z);
         this.x /= mag;
         this.y /= mag;
@@ -105,7 +105,7 @@ public final class JVector {
       * @param other
       * @return
       */
-     public double dot(JVector other) {
+     public double dot(Jvector other) {
          return x * other.x + y * other.y + z * other.z;
      }
  
@@ -114,10 +114,10 @@ public final class JVector {
       * @param other
       * @return
       */
-     public JVector cross(JVector other) {
+     public Jvector cross(Jvector other) {
          double xc = y * other.z - z * other.y;
          double yc = z * other.x - x * other.z;
          double zc = x * other.y - y * other.x;
-         return new JVector(xc, yc, zc);
+         return new Jvector(xc, yc, zc);
      }   
 }
