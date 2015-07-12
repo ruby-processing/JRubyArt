@@ -101,8 +101,8 @@ module Processing
       extensions.each do |ext|
         ["#{SKETCH_ROOT}/library/#{library_name}",
         "#{Processing::RP_CONFIG['PROCESSING_ROOT']}/modes/java/libraries/#{library_name}/library",
-        "#{RP5_ROOT}/library/#{library_name}/library",
-        "#{RP5_ROOT}/library/#{library_name}",
+        "#{K9_ROOT}/library/#{library_name}/library",
+        "#{K9_ROOT}/library/#{library_name}",
         "#{@sketchbook_library_path}/#{library_name}/library"
         ].each do |jpath|
           if File.exist?(jpath) && !Dir.glob(format('%s/*.%s', jpath, ext)).empty?

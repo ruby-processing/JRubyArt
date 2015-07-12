@@ -110,18 +110,18 @@ module Processing
       proc_root = FileTest.exist?("#{ENV['HOME']}/.jruby_art/config.yml")
       case choice
       when /check/
-        check(proc_root, FileTest.exist?("#{RP5_ROOT}/lib/ruby/jruby-complete.jar"))
+        check(proc_root, FileTest.exist?("#{K9_ROOT}/lib/ruby/jruby-complete.jar"))
       when /install/
         install(proc_root)
       when /unpack_samples/
-        system "cd #{RP5_ROOT}/vendors && rake unpack_samples"
+        system "cd #{K9_ROOT}/vendors && rake unpack_samples"
       else
         puts 'Usage: k9 setup [check | install | unpack_samples]'
       end
     end
 
     def install(root_exist)
-      system "cd #{RP5_ROOT}/vendors && rake"
+      system "cd #{K9_ROOT}/vendors && rake"
       return if root_exist
       set_processing_root
       warn 'PROCESSING_ROOT set optimistically, run check to confirm'
@@ -164,7 +164,7 @@ module Processing
     # jruby-complete by default set JRUBY: false in ~/.k9rc config
     # (but that will make using other gems in your sketches hard....)
     def spin_up(starter_script, sketch, args)
-      runner = "#{RP5_ROOT}/lib/jruby_art/runners/#{starter_script}"
+      runner = "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}"
       warn('The --jruby flag is no longer required') if @options.jruby
       @options.nojruby = true if Processing::RP_CONFIG['JRUBY'] == 'false'
       java_args = discover_java_args(sketch)
@@ -221,7 +221,7 @@ module Processing
     end
 
     def jruby_complete
-      rcomplete = File.join(RP5_ROOT, 'lib/ruby/jruby-complete.jar')
+      rcomplete = File.join(K9_ROOT, 'lib/ruby/jruby-complete.jar')
       return [rcomplete] if FileTest.exist?(rcomplete)
       warn "#{rcomplete} does not exist\nTry running `k9 setup install`"
       exit
@@ -262,7 +262,7 @@ module Processing
       icon = []
       if os == :mac
         icon << '-Xdock:name=Ruby-Processing'
-        icon << "-Xdock:icon=#{RP5_ROOT}/lib/templates/application/Contents/Resources/sketch.icns"
+        icon << "-Xdock:icon=#{K9_ROOT}/lib/templates/application/Contents/Resources/sketch.icns"
       end
       icon
     end
