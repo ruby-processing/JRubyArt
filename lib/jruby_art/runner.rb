@@ -190,7 +190,7 @@ module Processing
       begin
         exec(*command)
         # exec replaces the Ruby process with the JRuby one.
-      rescue Java::JavaLang::ClassNotFoundExcetion
+      rescue Java::JavaLang::ClassNotFoundException
       end
     end
 
