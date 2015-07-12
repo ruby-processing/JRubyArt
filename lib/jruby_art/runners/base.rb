@@ -3,7 +3,7 @@
 SKETCH_PATH ||= ARGV.shift
 SKETCH_ROOT ||= File.dirname(SKETCH_PATH)
 
-# require_relative '../../jruby_art'
+# we can safely require app.rb as we are using a jruby runtime
 require_relative '../app'
 
 # More processing module
