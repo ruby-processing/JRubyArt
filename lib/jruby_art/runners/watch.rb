@@ -12,7 +12,7 @@ module Processing
       start_watching
     end
 
-    # Kicks off a thread to watch the sketch, reloading Ruby-Processing
+    # Kicks off a thread to watch the sketch, reloading JRubyArt
     # and restarting the sketch whenever it changes.
     def start_watching
       start_runner

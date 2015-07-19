@@ -1,4 +1,6 @@
-# Then processing wrapper module
+# The processing wrapper module
+require_relative '../jruby_art'
+
 module Processing
 
   # Encapsulate library loader functionality as a class
@@ -19,7 +21,7 @@ module Processing
     # Usage: load_libraries :opengl, :boids
     #
     # If a library is put into a 'library' folder next to the sketch it will
-    # be used instead of the library that ships with Ruby-Processing.
+    # be used instead of the library that ships with JRubyArt.
     def load_libraries(*args)
       message = 'no such file to load -- %s'
       args.each do |lib|

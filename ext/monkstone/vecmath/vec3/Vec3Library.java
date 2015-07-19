@@ -1,4 +1,4 @@
-package processing.vecmath.vec3;
+package monkstone.vecmath.vec3;
 
 import java.io.IOException;
 import org.jruby.Ruby;

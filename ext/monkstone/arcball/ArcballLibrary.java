@@ -1,15 +1,14 @@
-package processing.fastmath;
+package monkstone.arcball;
 
 import java.io.IOException;
 import org.jruby.Ruby;
 import org.jruby.runtime.load.Library;
 
-
 /**
  *
  * @author Martin Prout
  */
-public class DeglutLibrary implements Library {
+public class ArcballLibrary implements Library {
 
     /**
      *
@@ -19,6 +18,6 @@ public class DeglutLibrary implements Library {
      */
     @Override
     public void load(final Ruby runtime, boolean wrap) throws IOException {
-        Deglut.createDeglut(runtime);
-    }    
+        Rarcball.createArcBall(runtime);
+    }
 }

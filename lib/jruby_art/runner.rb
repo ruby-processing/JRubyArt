@@ -12,7 +12,7 @@ module Processing
     HELP_MESSAGE ||= <<-EOS
     Version: #{JRubyArt::VERSION}
 
-    Ruby-Processing is a little shim between Processing and JRuby that helps
+    JRubyArt is a little shim between Processing and JRuby that helps
     you create sketches of code art.
 
     Usage:
@@ -141,7 +141,7 @@ module Processing
       puts "  jruby-complete installed = #{installed}"
     end
 
-    # Display the current version of Ruby-Processing.
+    # Display the current version of JRubyArt.
     def show_version
       puts format('JRubyArt version %s', JRubyArt::VERSION)
     end
@@ -261,7 +261,7 @@ module Processing
       @os ||= host_os
       icon = []
       if os == :mac
-        icon << '-Xdock:name=Ruby-Processing'
+        icon << '-Xdock:name=JRubyArt'
         icon << "-Xdock:icon=#{K9_ROOT}/lib/templates/application/Contents/Resources/sketch.icns"
       end
       icon

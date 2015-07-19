@@ -10,12 +10,12 @@ module Processing
   # Include some core processing classes that we'd like to use:
   include_package 'processing.core'
   # Load vecmath and fastmath modules
-  Java::ProcessingVecmathArcball::ArcballLibrary.new.load(JRuby.runtime, false)
-  Java::ProcessingVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
-  Java::ProcessingVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
-  Java::ProcessingFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
-  AppRender ||= Java::ProcessingVecmath::AppRender
-  ShapeRender ||= Java::ProcessingVecmath::ShapeRender
+  Java::MonkstoneArcball::ArcballLibrary.new.load(JRuby.runtime, false)
+  Java::MonkstoneVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
+  Java::MonkstoneVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
+  Java::MonkstoneFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
+  AppRender ||= Java::MonkstoneVecmath::AppRender
+  ShapeRender ||= Java::MonkstoneVecmath::ShapeRender
 
   # Watch the definition of these methods, to make sure
   # that Processing is able to call them during events.

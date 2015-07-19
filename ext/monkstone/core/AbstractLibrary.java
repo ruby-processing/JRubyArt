@@ -1,18 +1,18 @@
-package processing.core;
+package monkstone.core;
 
 import static processing.core.PConstants.*;
 
 /**
  * The purpose of this class is to enable
  * access to processing pre, draw and post loops in
- * jruby_art as a regular java library class.
+ * ruby-processing as a regular java library class.
  * Also included background, fill and stroke methods.
  * PConstants should also be available from static import
  * @author Martin Prout
  */
 public abstract class AbstractLibrary {
 
-    private final PApplet app;
+    private final processing.core.PApplet app;
 
     /**
      * Useful accessors
@@ -21,9 +21,9 @@ public abstract class AbstractLibrary {
 
     /**
      *
-     * @param app Applet
+     * @param app PApplet
      */
-    public AbstractLibrary(PApplet app) {
+    public AbstractLibrary(processing.core.PApplet app) {
         this.app = app;
         this.width = app.width;
         this.height = app.height;
@@ -89,7 +89,7 @@ public abstract class AbstractLibrary {
      * Access applet if we must
      * @return
      */
-    public PApplet app() {
+    public processing.core.PApplet app() {
         return this.app;
     }
 

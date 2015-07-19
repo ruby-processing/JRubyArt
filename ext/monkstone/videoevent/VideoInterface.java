@@ -1,8 +1,9 @@
-package processing.core;
-
+package monkstone.videoevent;
+import processing.video.Movie;
+import processing.video.Capture;
 /**
  * This interface makes it easier/possible to use the reflection methods
- * from Movie and Capture classes in Processing::App in jruby_art
+ * from Movie and Capture classes in Processing::App in ruby-processing
  * @author Martin Prout
  */
 public interface VideoInterface {
@@ -11,11 +12,11 @@ public interface VideoInterface {
      * @see processing.video.Movie
      * @param movie Movie
      */
-    void movieEvent(processing.video.Movie movie);
+    void movieEvent(Movie movie);
     /**
      * Used to implement reflection method in PApplet
      * @see processing.video.Capture
      * @param capture Capture
      */
-    void captureEvent(processing.video.Capture capture);    
+    void captureEvent(Capture capture);    
 }

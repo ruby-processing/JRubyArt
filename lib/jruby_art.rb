@@ -1,4 +1,4 @@
-# Ruby-Processing is for Code Art.
+# JRubyArt is for Code Art.
 # Send suggestions, ideas, and hate-mail to mamba2928 [at] gmail.com
 # Also, send samples and libraries.
 unless defined? K9_ROOT
@@ -12,7 +12,7 @@ require 'jruby_art/version'
 require 'jruby_art/helpers/numeric'
 require 'jruby_art/helpers/range'
 
-# The top-level namespace, a home for all Ruby-Processing classes.
+# The top-level namespace, a home for all JRubyArt classes.
 module Processing
   require 'jruby_art/runner'
 end
