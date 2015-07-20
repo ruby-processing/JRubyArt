@@ -12,9 +12,9 @@ A suitable version of ruby (MRI ruby > 2.1 or latest `pre jruby-9.0.0.0.rc2+ SNA
 
 `jdk1.8.0_45+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably save to go with the Oracle version
 
-### optional extras
+### recommended installs (JRubyArt is currently hard-coded to expect them)
 
-`processing video and sound libraries` _install from the processing-3.0a10 ide_
+`processing video and sound libraries` _install from the processing-3.0a11 ide_
 
 
 ## Configuration
