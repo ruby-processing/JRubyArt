@@ -42,25 +42,24 @@ public class Rarcball extends RubyObject {
     /**
      *
      * @param context
-     * @param klazz
+     * @param self
      * @param args optional (no args jx = 0, jy = 0)
-     * @return Rarcballball object (ruby)
      */
     @JRubyMethod(name = "init", meta = true, rest = true, required = 1, optional = 3)
 
-    static void init(ThreadContext context, IRubyObject self, IRubyObject args[]) {
+    public static void init(ThreadContext context, IRubyObject self, IRubyObject args[]) {
         int count = Arity.checkArgumentCount(context.getRuntime(), args, 1, 4);
         if (count == 4) {
             PApplet parent = (PApplet) args[0].toJava(PApplet.class);
-            float cx = (float) args[1].toJava(Float.class);
-            float cy = (float) args[2].toJava(Float.class);
-            float radius = (float) args[3].toJava(Float.class);
+            double cx = (double) args[1].toJava(Double.class);
+            double cy = (double) args[2].toJava(Double.class);
+            double radius = (double) args[3].toJava(Double.class);
             new Arcball(parent, cx, cy, radius).setActive(true);
         }
         if (count == 3) {
             PApplet parent = (PApplet) args[0].toJava(PApplet.class);
-            float cx = (float) args[1].toJava(Float.class);
-            float cy = (float) args[2].toJava(Float.class);
+            double cx = (double) args[1].toJava(Double.class);
+            double cy = (double) args[2].toJava(Double.class);
             new Arcball(parent, cx, cy, parent.width * 0.8f).setActive(true);
         }
         if (count == 1) {
