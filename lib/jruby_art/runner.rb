@@ -165,11 +165,10 @@ module Processing
     # (but that will make using other gems in your sketches hard....)
     def spin_up(starter_script, sketch, args)
       runner = "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}"
-      warn('The --jruby flag is no longer required') if @options.jruby
       @options.nojruby = true if Processing::RP_CONFIG['JRUBY'] == 'false'
       java_args = discover_java_args(sketch)
       if @options.nojruby
-        classpath = jruby_complete + core_classpath
+        classpath = jruby_complete + core_classpath + libraries
         command = ['java',
                    java_args,
                    '-cp',
@@ -226,6 +225,14 @@ module Processing
       warn "#{rcomplete} does not exist\nTry running `k9 setup install`"
       exit
     end
+    
+    def libraries
+      %w(video sound).map { |library| sketchbook_library(library) }.flatten
+    end
+    
+    def sketchbook_library(name)
+      Dir["#{Processing::RP_CONFIG['sketchbook_path']}/libraries/#{name}/library/\*.jar"]
+    end
 
     def host_os
       detect_os = RbConfig::CONFIG['host_os']
@@ -249,7 +256,7 @@ module Processing
       if os == :mac
         data['PROCESSING_ROOT'] = '/Applications/Processing.app/Contents/Java'
       else
-        root = "#{ENV['HOME']}/processing-3.0a10"
+        root = "#{ENV['HOME']}/processing-3.0a11"
         data['PROCESSING_ROOT'] = root
       end
       data['JRUBY'] = 'true'

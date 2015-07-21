@@ -12,9 +12,9 @@ A suitable version of ruby (MRI ruby > 2.1 or latest `pre jruby-9.0.0.0.rc2+ SNA
 
 `jdk1.8.0_45+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably save to go with the Oracle version
 
-### optional extras
+### recommended installs (JRubyArt is currently hard-coded to expect them)
 
-`processing video and sound libraries` _install from the processing-3.0a10 ide_
+`processing video and sound libraries` _install from the processing-3.0a11 ide_
 
 
 ## Configuration
@@ -36,7 +36,7 @@ Manually install jruby-complete-SNAPSHOT
  # k9 setup install # installs jruby-complete-9.0.0.0.rc2
  k9 setup unpack_samples # downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --nojruby run jwishy.rb # unless you have jruby-9.0.0.0.rc2 installed or config JRUBY: 'false'
+ k9 --nojruby run jwishy.rb # unless you have jruby-9.0.0.0.rc2+ installed or config JRUBY: 'false'
  k9 run jwishy.rb # if you have jruby-9.0.0.0.rc2 installed or config JRUBY: 'false'
 ```
 ## Create sketches from built in templates

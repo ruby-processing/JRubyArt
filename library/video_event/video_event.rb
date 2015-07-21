@@ -1,4 +1,3 @@
-
 class Processing::App
-  include Java::MonkstoneCore::VideoInterface
+  include Java::MonkstoneVideoevent::VideoInterface
 end
