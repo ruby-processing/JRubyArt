@@ -7,6 +7,9 @@ require_relative '../jruby_art/config'
 
 # A wrapper module for the processing App
 module Processing
+  Dir[format("%s/core/library/\*.jar", RP_CONFIG['PROCESSING_ROOT'])].each do |jar| 
+    require jar unless jar =~ /native/
+  end
   # Include some core processing classes that we'd like to use:
   include_package 'processing.core'
   # Load vecmath and fastmath modules
