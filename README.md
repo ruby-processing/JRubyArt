@@ -61,7 +61,7 @@ end
 
 # size goes here since processing-3.0a10, the processing guys hide this
 # by doing pre-processing on the pde file (check the java output).
-# FX2D works better for me (on linux) than JAVA2D with Ben Fry current loop() kludge
+# FX2D (is in the works but not 100%) default is still JAVA2D
 def settings
   size 400, 300, FX2D
 end
@@ -71,11 +71,11 @@ end
 or
 `k9 --nojruby run sketch.rb`
 
-be prepared to KILL the odd java process (that doesn't exit cleanly all the time), watch seems now to work (but no easy way of disposing last window) failing
+be prepared to KILL the odd java process (that doesn't exit cleanly all the time), watch seems now to work
 
 ## Watch sketches
 ```bash
-k9 watch sketch.rb # don't try and change render mode, or use the FX2D render mode
+k9 watch sketch.rb # don't try and change render mode, or use the FX2D render mode during watch
 ```
 
 ## Example sketches
