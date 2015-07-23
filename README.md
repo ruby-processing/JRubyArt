@@ -2,15 +2,14 @@
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
 ## Requirements
-A clean start for `jruby_art` based on processing-3.0 alpha and jruby-9.0.0.0, having difficulty with original JRubyArt and jruby-9000, also this might be the way to go retaining the ruby-processing good bits, with no legacy overhang. See [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
+A clean start for `jruby_art` based on processing-3.0 alpha and jruby-9.0.0.0  [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
 ## Requirements
  
-A suitable version of ruby (MRI ruby > 2.1 or latest `pre jruby-9.0.0.0.rc2+ SNAPSHOT` to download gem. *I had an issue with `jruby-9.0.0.0.rc1` rgem not being recognised as 2.1 compliant*
+A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.0.0` to download gem. 
 
 `processing-3.0a11+`
 
-
-`jdk1.8.0_45+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably save to go with the Oracle version
+`jdk1.8.0_51+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably save to go with the Oracle version
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
@@ -32,12 +31,12 @@ sketchbook_path: /home/tux/sketchbook
 Manually install jruby-complete-SNAPSHOT
 
 ```bash
- gem install jruby_art --pre
- # k9 setup install # installs jruby-complete-9.0.0.0.rc2
+ gem install jruby_art
+ # k9 setup install # installs jruby-complete-9.0.0.0
  k9 setup unpack_samples # downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --nojruby run jwishy.rb # unless you have jruby-9.0.0.0.rc2+ installed or config JRUBY: 'false'
- k9 run jwishy.rb # if you have jruby-9.0.0.0.rc2 installed or config JRUBY: 'false'
+ k9 --nojruby run jwishy.rb # unless you have jruby-9.0.0.0 installed or config JRUBY: 'false'
+ k9 run jwishy.rb # if you have jruby-9.0.0.0 installed or config JRUBY: 'false'
 ```
 ## Create sketches from built in templates
 ```bash
