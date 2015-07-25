@@ -84,6 +84,6 @@ k9 watch sketch.rb # don't try and change render mode, or use the FX2D render mo
 
 ## Conversion Tool
 
-I wrote this little script to convert sketches from ruby-processing (processing-2) to jruby_art (processing-3.0) [here](https://gist.github.com/monkstone/1a658bdda4ea21c204c5)
+I wrote this little script to convert sketches from ruby-processing (processing-2) to jruby_art (processing-3.0) [here](https://gist.github.com/monkstone/1a658bdda4ea21c204c5).
 
 That I used to convert The-Nature-of-Code-Examples-in-Ruby to [The-Nature-of-Code-Examples-for-JRubyArt](https://github.com/ruby-processing/The-Nature-of-Code-for-JRubyArt)
