@@ -28,11 +28,10 @@ sketchbook_path: /home/tux/sketchbook
 ```
 
 ## Install Steps (assumes you have requirements above) 
-Manually install jruby-complete-SNAPSHOT
 
 ```bash
  gem install jruby_art
- # k9 setup install # installs jruby-complete-9.0.0.0
+ k9 setup install # installs jruby-complete-9.0.0.0
  k9 setup unpack_samples # downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
  k9 --nojruby run jwishy.rb # unless you have jruby-9.0.0.0 installed or config JRUBY: 'false'
