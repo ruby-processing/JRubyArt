@@ -79,7 +79,7 @@ k9 watch sketch.rb # don't try and change render mode, or use the FX2D render mo
 
 ## Example sketches
 
-[Worked Examples](https://github.com/ruby-processing/samples4ruby-processing3) more to follow, feel free to add your own, especially ruby-2.1+ syntax now we can. These can now be downloaded using `k9 setup unpack_samples` please move existing rp_samples.
+[Worked Examples](https://github.com/ruby-processing/samples4ruby-processing3) more to follow, feel free to add your own, especially ruby-2.1+ syntax now we can. These can now be downloaded using `k9 setup unpack_samples` please move existing k9_samples.
 
 ## Conversion Tool
 
