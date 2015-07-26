@@ -9,7 +9,7 @@ A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.0.0` to download gem.
 
 `processing-3.0a11+`
 
-`jdk1.8.0_51+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version
+`jdk1.8.0_51+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version, currently FX2D is experimental but might supplant JAVA2D in the future...
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
