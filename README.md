@@ -2,7 +2,7 @@
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
 ## Requirements
-A clean start for `jruby_art` based on [processing-3.0 alpha](https://github.com/processing/processing/releases) and [jruby-9.0.0.0](http://blog.jruby.org/2015/07/jruby_9000/)  [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
+A clean start for `jruby_art` based on [processing-3.0 alpha](https://github.com/processing/processing/releases) and [jruby-9.0.0.0](http://blog.jruby.org/2015/07/jruby_9000/) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
 ## Requirements
  
 A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.0.0` to download gem. 
