@@ -1,5 +1,6 @@
-**v0.4.0** Update to jruby-9.0.0.0 we can revert to using require to load jars first release tested with processing-3.0a11 on linux
+**v0.4.1** Implement a `live` mode with `pry`
 
+**v0.4.0** Update to jruby-9.0.0.0 we can revert to using require to load jars first release tested with processing-3.0a11 on linux
 
 **v0.3.1** Update to jruby-complete-9.0.0.0.rc2, add vector type access to Vec2D and Vec3D parameters eg `vector[:x]` to return 'x' value,  and `vector[:x] = 20` to assign value (also simplify the return type of assignment as input value).
 
