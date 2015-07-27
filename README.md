@@ -2,14 +2,14 @@
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
 ## Requirements
-A clean start for `jruby_art` based on processing-3.0 alpha and jruby-9.0.0.0  [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
+A clean start for `jruby_art` based on [processing-3.0 alpha](https://github.com/processing/processing/releases) and [jruby-9.0.0.0](http://blog.jruby.org/2015/07/jruby_9000/) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
 ## Requirements
  
 A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.0.0` to download gem. 
 
 `processing-3.0a11+`
 
-`jdk1.8.0_51+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version
+`jdk1.8.0_51+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version, currently FX2D is experimental but might supplant JAVA2D in the future...
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
