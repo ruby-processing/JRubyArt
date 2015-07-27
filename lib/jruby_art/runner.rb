@@ -62,6 +62,7 @@ module Processing
     def execute!
       case @options.action
       when 'run'    then run(@options.path, @options.args)
+      when 'live'   then live(@options.path, @options.args)  
       when 'watch'  then watch(@options.path, @options.args)
       when 'create' then create(@options.path, @options.args)
       when 'setup'  then setup(@options.path)
@@ -97,6 +98,12 @@ module Processing
     def run(sketch, args)
       ensure_exists(sketch)
       spin_up('run.rb', sketch, args)
+    end
+    
+    # Just simply run a JRubyArt sketch.
+    def live(sketch, args)
+      ensure_exists(sketch)
+      spin_up('live.rb', sketch, args)
     end
 
     # Run a sketch, keeping an eye on it's file, and reloading
