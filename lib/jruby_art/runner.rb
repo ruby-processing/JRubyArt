@@ -21,6 +21,7 @@ module Processing
     choice:-
     run:              run sketch once
     watch:            watch for changes on the file and relaunch it on the fly
+    live:             run sketch and open a pry console bound to $app
     create [width height][mode][flag]: create a new sketch.
     setup:            check setup, install jruby-complete, unpack samples
 

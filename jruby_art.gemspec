@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   JRubyArt is a ruby wrapper for the processing art framework.
   The current version supports processing-3.0a11, and uses jruby-9.0.0.0
   as the glue between ruby and java. You can use both processing libraries and ruby
-  gems in your sketches. Features create/run/watch modes. The "watch" mode,
+  gems in your sketches. Features create/run/watch/live modes. The "watch" mode,
   provides a nice REPL-ish way to work on your processing sketches. Includes:-
   A "Control Panel" library, so that you can easily create sliders, buttons,
   checkboxes and drop-down menus, and hook them into your sketch's instance
