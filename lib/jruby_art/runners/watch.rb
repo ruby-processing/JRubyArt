@@ -1,10 +1,23 @@
 require_relative 'base'
+require_relative '../config'
 
 module Processing
+  class WatchException < StandardError
+  end
+
   # A sketch loader, observer, and reloader, to tighten
   # the feedback between code and effect.
   class Watcher
     # Sic a new Processing::Watcher on the sketch
+    WATCH_MESSAGE ||= <<-EOS
+    Warning:
+    To protect you from running watch mode in a top level
+    directory with lots of nested ruby or GLSL files we
+    limit the number of files to watch to %d.
+    If you really want to watch %d files you should
+    increase MAX_WATCH in ~/.jruby_art/config.yml
+
+    EOS
     SLEEP_TIME = 0.2
     def initialize
       reload_files_to_watch
@@ -37,7 +50,7 @@ module Processing
       wformat = 'Exception occured while running sketch %s...'
       tformat = "Backtrace:\n\t%s"
       warn format(wformat, File.basename(SKETCH_PATH))
-      puts format(tformat, e.backtrace.join("\n\t"))
+      fail WatchException.new, format(tformat, e.backtrace.join("\n\t"))
     end
 
     def start_runner
@@ -52,6 +65,11 @@ module Processing
 
     def reload_files_to_watch
       @files = Dir.glob(File.join(SKETCH_ROOT, '**/*.{rb,glsl}'))
+      count = @files.length
+      max_watch = RP_CONFIG.fetch('MAX_WATCH', 20)
+      return unless count > max_watch
+      warn format(WATCH_MESSAGE, max_watch, count)
+      abort
     end
   end
 end
