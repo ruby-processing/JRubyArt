@@ -50,7 +50,7 @@ module Processing
       wformat = 'Exception occured while running sketch %s...'
       tformat = "Backtrace:\n\t%s"
       warn format(wformat, File.basename(SKETCH_PATH))
-      fail WatchException.new, format(tformat, e.backtrace.join("\n\t"))
+      puts format(tformat, e.backtrace.join("\n\t"))
     end
 
     def start_runner
