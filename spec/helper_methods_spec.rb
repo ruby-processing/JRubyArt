@@ -1,8 +1,23 @@
-require_relative '../lib/ruby-processing/helper_methods'
+require_relative '../lib/jruby_art/helper_methods'
+require_relative '../lib/core'
 
 include Processing::HelperMethods
 
 EPSILON = 1.0e-04
+
+describe 'hexadecimal color' do
+  it 'should return color(hex)' do
+    hexcolor = 0xFFCC6600
+    expect(hex_color(hexcolor)).to eq -3381760
+  end
+end
+
+describe 'hexadecimal string color' do
+  it 'should return color(hex_string)' do
+    hexstring = '#CC6600'
+    expect(hex_color(hexstring)).to eq -3381760
+  end
+end
 
 describe 'constrained_map included' do
   it 'should return constrained_map(x, range1, range2)' do

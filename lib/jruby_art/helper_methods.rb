@@ -32,17 +32,8 @@ module Processing
     end
 
     def color(*args)
-      a = args[0]
-      # convert to signed int
-      if args.length == 1
-        if a.is_a?(Fixnum) && a >= 2**31
-          args = [a - 2**32]
-        elsif a.is_a?(String) && a[0].eql?('#')
-          h = a[1..-1].rjust(6, '0').prepend('ff')
-          return color(h.hex)
-        end
-      end
-      super(*args)
+      return super(*args) unless args.length == 1
+      super(hex_color(args[0]))
     end
 
     # Overrides Processing convenience function thread, which takes a String
@@ -134,7 +125,7 @@ module Processing
 
     # Uses PImage class method under hood
     def blend_color(c1, c2, mode)
-      Java::ProcessingCore::PImage::blendColor(c1, c2, mode)
+      Java::ProcessingCore::PImage.blendColor(c1, c2, mode)
     end
 
     # There's just so many functions in Processing,
@@ -212,6 +203,17 @@ module Processing
     end
 
     private
+
+    def hex_color(*args)
+      a = args[0]
+      if a.is_a?(Fixnum)
+        return (a < 2**31) ? a : a - 2**32
+      elsif a.is_a?(String) && a =~ /#\h+/
+        hex_string = format('ff%s', a[1..-1].rjust(6, '0'))
+        coll = Java::JavaLang::Long.parseLong(hex_string, 16)
+        return (coll < 2**31) ? coll : coll - 2**32
+      end
+    end
 
     def dist2d(*args)
       dx = args[0] - args[2]
