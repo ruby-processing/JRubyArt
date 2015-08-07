@@ -19,6 +19,13 @@ describe 'hexadecimal String color' do
   end
 end
 
+describe 'double color' do
+  it 'should return color(double)' do
+     col_double = 0.5
+     expect(hex_color(col_double)).to eq 0.5
+  end
+end  
+
 describe 'constrained_map included' do
   it 'should return constrained_map(x, range1, range2)' do
     x = 0

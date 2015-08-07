@@ -2,18 +2,18 @@
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
 ## Requirements
-A clean start for `jruby_art` based on [processing-3.0 alpha](https://github.com/processing/processing/releases) and [jruby-9.0.0.0](http://blog.jruby.org/2015/07/jruby_9000/) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
+A clean start for `jruby_art` based on [processing-3.0 beta](https://github.com/processing/processing/releases) and [jruby-9.0.0.0](http://blog.jruby.org/2015/07/jruby_9000/) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
 ## Requirements
  
 A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.0.0` to download gem. 
 
-`processing-3.0a11+`
+`processing-3.0b1+`
 
 `jdk1.8.0_51+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version, currently FX2D is experimental but might supplant JAVA2D in the future...
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
-`processing video and sound libraries` _install from the processing-3.0a11 ide_
+`processing video and sound libraries` _install from the processing-3.0b1 ide_
 
 
 ## Configuration
@@ -23,8 +23,9 @@ Config file is `config.yml` in `~/.jruby_art folder` so can co-exist with a ruby
 ```yaml
 # YAML configuration file for jruby_art
 # K9_HOME: "/home/ruby2.2.0 ... /jruby_art" #windows users may need to set this
-PROCESSING_ROOT: /home/tux/processing-3.0a11
-sketchbook_path: /home/tux/sketchbook
+PROCESSING_ROOT: /home/tux/processing-3.0b1
+# important sketch_book path may be different for processing-3.0
+sketchbook_path: /home/tux/sketchbook 
 ```
 
 ## Install Steps (assumes you have requirements above) 

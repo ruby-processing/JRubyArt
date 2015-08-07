@@ -34,7 +34,7 @@ module Processing
     end
 
     def color(*args)
-      return super(*args.to_java(:int)) unless args.length == 1
+      return super(*args) unless args.length == 1
       super(hex_color(args[0]))
     end
 
@@ -206,13 +206,14 @@ module Processing
 
     private
 
-    def hex_color(*args)
-      a = args[0]
+    # parse single argument color int/double/String
+    def hex_color(a)
       if a.is_a?(Fixnum)
         return Java::Monkstone::ColorUtil.colorLong(a)
       elsif a.is_a?(String) && a =~ /#\h+/
         return Java::Monkstone::ColorUtil.colorString(a)
       end
+      Java::Monkstone::ColorUtil.colorDouble(a)
     end
 
     def dist2d(*args)

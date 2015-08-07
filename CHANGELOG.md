@@ -1,4 +1,7 @@
+**v0.4.2** Tested with processing-3.0b1 color helper method refactored to use a jruby extension
+
 **v0.4.1** Implement a `live` mode with `pry`
+
 
 **v0.4.0** Update to jruby-9.0.0.0 we can revert to using require to load jars first release tested with processing-3.0a11 on linux
 

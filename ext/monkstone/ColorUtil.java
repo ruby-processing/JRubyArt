@@ -39,4 +39,8 @@ public class ColorUtil {
     static public int colorLong(long hexlong){
        return hexLong(hexlong);
     }
+
+    static public float colorDouble(double hex){
+       return (float)hex;
+    }
 }
