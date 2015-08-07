@@ -5,14 +5,14 @@ include Processing::HelperMethods
 
 EPSILON = 1.0e-04
 
-describe 'hexadecimal color' do
+describe 'hexadecimal Fixnum color' do
   it 'should return color(hex)' do
     hexcolor = 0xFFCC6600
     expect(hex_color(hexcolor)).to eq -3381760
   end
 end
 
-describe 'hexadecimal string color' do
+describe 'hexadecimal String color' do
   it 'should return color(hex_string)' do
     hexstring = '#CC6600'
     expect(hex_color(hexstring)).to eq -3381760

@@ -1,4 +1,6 @@
 # processing module wrapper
+require_relative '../rpextras'
+
 module Processing
   # Provides some convenience methods
   module HelperMethods
@@ -32,7 +34,7 @@ module Processing
     end
 
     def color(*args)
-      return super(*args) unless args.length == 1
+      return super(*args.to_java(:int)) unless args.length == 1
       super(hex_color(args[0]))
     end
 
@@ -207,11 +209,9 @@ module Processing
     def hex_color(*args)
       a = args[0]
       if a.is_a?(Fixnum)
-        return (a < 2**31) ? a : a - 2**32
+        return Java::Monkstone::ColorUtil.colorLong(a)
       elsif a.is_a?(String) && a =~ /#\h+/
-        hex_string = format('ff%s', a[1..-1].rjust(6, '0'))
-        coll = Java::JavaLang::Long.parseLong(hex_string, 16)
-        return (coll < 2**31) ? coll : coll - 2**32
+        return Java::Monkstone::ColorUtil.colorString(a)
       end
     end
 
