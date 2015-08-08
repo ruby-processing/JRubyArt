@@ -81,7 +81,7 @@ k9 watch sketch.rb # don't try and change render mode, or use the FX2D render mo
 ```
 ## Open pry console on sketch
 ```bash
-k9 live sketch.rb # pry is bound to $app
+k9 live sketch.rb # pry is bound to $app # needs `jruby -S gem install pry`
 ```
 ## Example sketches
 
