@@ -59,9 +59,11 @@ def draw
   ellipse width / 2, height / 2, 300, 200
 end
 
-# size goes here since processing-3.0a10, the processing guys hide this
-# by doing pre-processing on the pde file (check the java output).
-# FX2D (is in the works but not 100%) default is still JAVA2D
+# NB: changes for processing-3.0
+# size, full_screen, pixel_density and smooth should all be moved to settings (this is hidden 
+# to users of processing ide, but not for JRubyArt, or for Eclipse NetBeans users). The FX2D 
+# rendering mode is introduced, and is expected to replace JAVA2D (as default rendering mode) 
+# but not for processing-3.01b
 def settings
   size 400, 300, FX2D
 end
