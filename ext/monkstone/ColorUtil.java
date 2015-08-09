@@ -7,18 +7,20 @@ package monkstone;
 
 /**
  *
- * @author tux
+ * @author Martin Prout
  */
 public class ColorUtil {
 
    /**
-     * Math.pow(2, 31) = 2147483648L Math.pow(2, 32) = 4294967296L
+     * Returns hex long as a positive int unless greater than Integer.MAX_VALUE
+     * else return the complement as a negative integer or something like that
      */
     static final int hexLong(long hexlong) {
-        if (hexlong <= 2147483648L) {
+        long SPLIT = Integer.MAX_VALUE + 1;
+        if (hexlong < SPLIT) {
             return (int) hexlong;
         } else {
-            return (int) (hexlong - 4294967296L);
+            return (int) (hexlong - SPLIT * 2L);
         }
     }
 
