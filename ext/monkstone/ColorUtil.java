@@ -11,19 +11,9 @@ package monkstone;
  */
 public class ColorUtil {
 
-    static final long hexString(String hexstring) {
-        if (hexstring.startsWith("#")) {
-            String bare = hexstring.substring(1);
-            String pad = String.format("%-6s", bare).replace(' ', '0');
-            String hex = String.format("%8s", pad).replace(' ', 'F');
-            return Long.parseLong(hex, 16);
-        }
-        return 0;
-    }
-    /**
-      Math.pow(2, 31) = 2147483648L
-      Math.pow(2, 32) = 4294967296L
-    */
+   /**
+     * Math.pow(2, 31) = 2147483648L Math.pow(2, 32) = 4294967296L
+     */
     static final int hexLong(long hexlong) {
         if (hexlong <= 2147483648L) {
             return (int) hexlong;
@@ -31,9 +21,13 @@ public class ColorUtil {
             return (int) (hexlong - 4294967296L);
         }
     }
-    
-    static public int colorString(String hexstring){
-       return hexLong(hexString(hexstring));
+
+    static public int colorString(String hexstring) {
+        return java.awt.Color.decode(hexstring).getRGB();
+    }
+
+    static public float colorLong(double hex) {
+        return (float) hex;
     }
     
     static public int colorLong(long hexlong){

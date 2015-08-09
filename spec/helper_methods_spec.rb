@@ -5,6 +5,13 @@ include Processing::HelperMethods
 
 EPSILON = 1.0e-04
 
+describe 'dodgy String color' do
+  it 'should raise TypeError' do
+    hexstring = '*56666'
+    expect {hex_color(hexstring)}.to raise_error(StandardError, 'Dodgy Hexstring')
+  end
+end
+
 describe 'hexadecimal Fixnum color' do
   it 'should return color(hex)' do
     hexcolor = 0xFFCC6600

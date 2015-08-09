@@ -210,8 +210,9 @@ module Processing
     def hex_color(a)
       if a.is_a?(Fixnum)
         return Java::Monkstone::ColorUtil.colorLong(a)
-      elsif a.is_a?(String) && a =~ /#\h+/
-        return Java::Monkstone::ColorUtil.colorString(a)
+      elsif a.is_a?(String) 
+        return Java::Monkstone::ColorUtil.colorString(a) if a =~ /#\h+/
+        raise StandardError, 'Dodgy Hexstring'
       end
       Java::Monkstone::ColorUtil.colorDouble(a)
     end
