@@ -13,7 +13,7 @@ A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.0.0` to download gem.
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
-`processing video and sound libraries` _install from the processing-3.0b1 ide_
+`processing video and sound libraries` _install from the processing-3.0 ide_
 
 
 ## Configuration
