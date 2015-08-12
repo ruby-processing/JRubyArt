@@ -1,3 +1,5 @@
+**v0.5.0** Tested with processing-3.0b3 more samples included
+
 **v0.4.2** Tested with processing-3.0b2 color helper method refactored to use a jruby extension
 
 **v0.4.1** Implement a `live` mode with `pry`
