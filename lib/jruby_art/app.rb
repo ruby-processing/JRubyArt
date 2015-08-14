@@ -1,6 +1,7 @@
 require 'java'
 require_relative '../rpextras'
 require_relative '../jruby_art/helper_methods'
+require_relative '../jruby_art/helpers/aabb'
 require_relative '../jruby_art/helpers/string_extra'
 require_relative '../jruby_art/library_loader'
 require_relative '../jruby_art/config'

@@ -16,6 +16,13 @@ module Processing
       buf.end_draw
       buf
     end
+    
+    def kamera(
+        eye: Vec3D.new(width / 2.0, height / 2.0, (height / 2.0) / tan(PI * 30.0 / 180.0)),
+        center: Vec3D.new(width / 2.0, height / 2.0, 0),
+        up: Vec3D.new(0, 1.0, 0))
+        camera(eye.x, eye.y, eye.z, center.x, center.y, center.z, up.x, up.y, up.z)
+    end
 
     # A nice method to run a given block for a grid.
     # Lifted from action_coding/Nodebox.
