@@ -295,33 +295,6 @@ describe 'Vec2D#[:x]=' do
   end
 end
 
-describe 'AABB.new(center:, extent:)' do
-  it 'should return a new instance' do
-    x, y  = 1.0000001, 1.01
-    a = Vec2D.new(x, y)
-    expect(AABB.new(center: Vec2D.new, extent: a)).to be_kind_of AABB
-  end
-end
-
-describe 'aabb.position(vec)' do
-  it 'should return a moved' do
-    x, y  = 1.0000001, 1.01
-    a = AABB.new(center: Vec2D.new, extent: Vec2D.new(x, y))
-    a.position(Vec2D.new(4, 6))
-    expect(a.center).to eq Vec2D.new(4, 6)
-  end
-end
-
-describe 'AABB.from_min_max' do
-  it 'should return match' do
-    x0, y0  = -4, -4
-    x1, y1  = 4, 4
-    a = Vec2D.new(x0, y0)
-    b = Vec2D.new(x1, y1)
-    expect(AABB.from_min_max(min: a, max: b).center).to eq Vec2D.new
-  end
-end
-
 describe 'Vec3D#to_a' do
   it 'should return x, y, z as an array' do
     x, y, z = 1.0000001, 1.01, 0.999999
