@@ -13,11 +13,12 @@ module Processing
   end
   # Include some core processing classes that we'd like to use:
   include_package 'processing.core'
-  # Load vecmath and fastmath modules
+  # Load vecmath, fastmath and mathtool modules
   Java::MonkstoneArcball::ArcballLibrary.new.load(JRuby.runtime, false)
   Java::MonkstoneVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
   Java::MonkstoneVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
   Java::MonkstoneFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
+  Java::Monkstone::MathToolLibrary.new.load(JRuby.runtime, false)
   AppRender ||= Java::MonkstoneVecmath::AppRender
   ShapeRender ||= Java::MonkstoneVecmath::ShapeRender
 
@@ -35,7 +36,7 @@ module Processing
   }
   # All sketches extend this class
   class App < PApplet
-    include HelperMethods, Math
+    include HelperMethods, Math, MathTool
     # Alias some methods for familiarity for Shoes coders.
     # surface replaces :frame, but needs field_reader for access
     alias_method :oval, :ellipse
