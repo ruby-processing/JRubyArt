@@ -55,42 +55,6 @@ module Processing
       end
     end
 
-    # Explicitly provides 'processing.org' map instance method, in which
-    # value is mapped from range 1, to range 2 (NB: values are not clamped to
-    # range 1). It may be better to explicitly write your own interpolate
-    # function
-    # @param [float] value input
-    # @param [range] start1, stop1
-    # @param [range] start2, stop2
-    # @return [float] mapped value
-    def map(value, start1, stop1, start2, stop2)
-      start2 + (stop2 - start2) * ((value - start1).to_f / (stop1 - start1))
-    end
-
-    # ruby alternative implementation of map using range parameters
-    # (begin..end) and excluded end (begin...end) produce the same result
-    def map1d(val, r_in, r_out)
-      r_out.begin + (r_out.end - r_out.begin) *
-        ((val - r_in.begin).to_f / (r_in.end - r_in.begin))
-    end
-
-    # Explicitly provides 'processing.org' map instance method, where
-    # value is mapped from range 1 to range 2 where values are clamped to
-    # range 2.
-    # @param val input
-    # @param [r_in] start1, stop1
-    # @param [r_out] start2, stop2
-    # @return mapped value
-    def constrained_map(val, r_in, r_out)
-      unless r_in.include? val
-        return r_out.begin if (val < r_in.begin && r_in.begin < r_in.end) ||
-                              (val > r_in.begin && r_in.begin > r_in.end)
-        return r_out.end
-      end
-      r_out.begin + (r_out.end - r_out.begin) *
-        ((val - r_in.begin).to_f / (r_in.end - r_in.begin))
-    end
-
     # explicitly provide 'processing.org' norm instance method
     def norm(value, start, stop)
       (value - start).to_f / (stop - start)
