@@ -1,4 +1,5 @@
-**v0.5.0** Tested with processing-3.0b3 more samples included, introducing `keyword` args and a 2D `AABB` implementation
+**v0.5.0** Tested with processing-3.0b4 more samples included, introducing `keyword` args and a 2D `AABB` implementation
+map1d and constrined_map as module methods in a JRuby extension
 
 **v0.4.2** Tested with processing-3.0b2 color helper method refactored to use a jruby extension
 

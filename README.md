@@ -7,7 +7,7 @@ A clean start for `jruby_art` based on [processing-3.0 beta](https://github.com/
  
 A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.0.0` to download gem. 
 
-`processing-3.0b3+`
+`processing-3.0b4+`
 
 `jdk1.8.0_51+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
 
@@ -63,7 +63,7 @@ end
 # size, full_screen, pixel_density and smooth should all be moved to settings (this is hidden 
 # to users of processing ide, but not for JRubyArt, or for Eclipse NetBeans users). The FX2D 
 # rendering mode is introduced, and is expected to replace JAVA2D (as default rendering mode) 
-# but not for processing-3.0b3
+# but not for processing-3.0b4
 def settings
   size 400, 300, FX2D
 end
