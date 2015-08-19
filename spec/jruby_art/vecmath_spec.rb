@@ -1,10 +1,10 @@
-require_relative '../lib/rpextras'
-require_relative '../lib/jruby_art/helpers/aabb'
+require_relative '../../lib/rpextras'
+require_relative '../../lib/jruby_art/helpers/aabb'
 
 Java::MonkstoneVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
 Java::MonkstoneVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
 
-EPSILON = 1.0e-04
+EPSILON ||= 1.0e-04
 
 describe 'Vec2D#to_a' do
   it 'should return x, y as an array' do
@@ -264,7 +264,6 @@ describe 'Vec2D#array.zip(Vec2D#array)' do
     one = [Vec2D.new(1, 2), Vec2D.new(10, 2), Vec2D.new(1, 2)]
     two = [Vec2D.new(1, 2), Vec2D.new(10, 2), Vec2D.new(1, 2)]
     zipped = one.zip(two).flatten
-    puts zipped
     expect(zipped).to eq([Vec2D.new(1, 2), Vec2D.new(1, 2), Vec2D.new(10, 2), Vec2D.new(10, 2), Vec2D.new(1, 2), Vec2D.new(1, 2)])
   end
 end

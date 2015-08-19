@@ -1,9 +1,9 @@
-require_relative '../lib/jruby_art/helper_methods'
-require_relative '../lib/core'
+require_relative '../../lib/jruby_art/helper_methods'
+require_relative '../../lib/core'
 
 include Processing::HelperMethods
 
-EPSILON = 1.0e-04
+EPSILON ||= 1.0e-04
 
 describe 'dodgy String color' do
   it 'should raise TypeError' do

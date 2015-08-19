@@ -1,10 +1,10 @@
-require_relative '../lib/rpextras'
-require_relative '../lib/jruby_art/helpers/aabb'
+require_relative '../../lib/rpextras'
+require_relative '../../lib/jruby_art/helpers/aabb'
 
 Java::MonkstoneVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
 Java::MonkstoneVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
 
-EPSILON = 1.0e-04
+EPSILON ||= 1.0e-04
 
 describe 'AABB.new(center:, extent:)' do
   it 'should return a new instance' do

@@ -1,5 +1,5 @@
-require_relative '../lib/core'
-require_relative '../lib/rpextras'
+require_relative '../../lib/core'
+require_relative '../../lib/rpextras'
 
 Java::MonkstoneArcball::ArcballLibrary.new.load(JRuby.runtime, false)
 

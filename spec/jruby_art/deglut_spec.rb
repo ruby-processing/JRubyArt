@@ -1,8 +1,8 @@
-require_relative '../lib/rpextras'
+require_relative '../../lib/rpextras'
 
 Java::MonkstoneFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
 
-EPSILON = 1.0e-04
+EPSILON ||= 1.0e-04
 TO_RADIAN = Math::PI / 180
 
 describe '#DegLut.sin(-720 .. 720) test' do

@@ -32,6 +32,14 @@ task :compile do
   sh "jruby -S rake --rakefile JRakefile compile"
 end
 
+desc 'Spec'
+task :spec do
+  Dir['./spec/jruby_art'].each do |sp|
+    sh "jruby -S rspec #{sp}"
+  end
+end
+  
+
 desc 'gem'
 task :gem do
   sh "jruby -S gem build jruby_art.gemspec"

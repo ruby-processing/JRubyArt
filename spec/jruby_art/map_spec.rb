@@ -1,12 +1,12 @@
-require_relative '../lib/rpextras'
-require_relative '../lib/jruby_art/helper_methods'
+require_relative '../../lib/rpextras'
+require_relative '../../lib/jruby_art/helper_methods'
 
 Java::Monkstone::MathToolLibrary.new.load(JRuby.runtime, false)
 
 include Processing::HelperMethods
 include Processing::MathTool
 
-EPSILON = 1.0e-04
+EPSILON ||= 1.0e-04
 
 describe 'map1d' do
   it 'should return map1d(x, range1, range2)' do
