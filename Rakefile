@@ -34,7 +34,7 @@ end
 
 desc 'Spec'
 task :spec do
-  Dir['./spec/jruby_art'].each do |sp|
+  Dir['./spec/jruby_art/*.rb'].each do |sp|
     sh "jruby -S rspec #{sp}"
   end
 end
