@@ -29,7 +29,6 @@ import org.jruby.anno.JRubyClass;
 import org.jruby.anno.JRubyMethod;
 import org.jruby.runtime.Arity;
 import org.jruby.runtime.Block;
-import org.jruby.runtime.ObjectAllocator;
 import org.jruby.runtime.ThreadContext;
 import org.jruby.runtime.builtin.IRubyObject;
 import monkstone.vecmath.JRender;
@@ -50,12 +49,7 @@ public class Vec2 extends RubyObject {
   * @param runtime
   */
   public static void createVec2(final Ruby runtime) {
-    RubyClass vec2Cls = runtime.defineClass("Vec2D", runtime.getObject(), new ObjectAllocator() {
-        @Override
-        public IRubyObject allocate(Ruby runtime, RubyClass rubyClass) {
-          return new Vec2(runtime, rubyClass);
-        }
-    });
+    RubyClass vec2Cls = runtime.defineClass("Vec2D", runtime.getObject(), (Ruby runtime1, RubyClass rubyClass) -> new Vec2(runtime1, rubyClass));
     vec2Cls.defineAnnotatedMethods(Vec2.class);
     
   }
@@ -512,8 +506,8 @@ public class Vec2 extends RubyObject {
     assert (scalar >= 0 && scalar < 1.0) :
     "Lerp value " + scalar + " out of range 0 .. 1.0";
     return Vec2.rbNew(context, this.getMetaClass(), new IRubyObject[]{
-        runtime.newFloat(jx + (vec.jx - jx) * scalar),
-        runtime.newFloat(jy + (vec.jy - jy) * scalar)});
+        runtime.newFloat((1 - scalar) * jx + vec.jx * scalar),
+        runtime.newFloat((1 - scalar) * jy + vec.jy * scalar)});
   }
   
   /**

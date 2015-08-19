@@ -32,7 +32,7 @@ if RUBY_PLATFORM =~ /java/
     ext.name = 'rpextras'
     ext.debug = true
     ext.lib_dir = 'lib'
-    ext.source_version='1.7'
-    ext.target_version='1.7'
+    ext.source_version='1.8'
+    ext.target_version='1.8'
   end
 end

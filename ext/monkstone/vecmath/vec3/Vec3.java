@@ -30,7 +30,6 @@ import org.jruby.anno.JRubyClass;
 import org.jruby.anno.JRubyMethod;
 import org.jruby.runtime.Arity;
 import org.jruby.runtime.Block;
-import org.jruby.runtime.ObjectAllocator;
 import org.jruby.runtime.ThreadContext;
 import org.jruby.runtime.builtin.IRubyObject;
 import monkstone.vecmath.JRender;
@@ -48,12 +47,7 @@ public final class Vec3 extends RubyObject {
      * @throws IOException
      */
     public static void createVec3(final Ruby runtime) throws IOException {
-        RubyClass vec3Cls = runtime.defineClass("Vec3D", runtime.getObject(), new ObjectAllocator() {
-            @Override
-            public IRubyObject allocate(Ruby runtime, RubyClass rubyClass) {
-                return new Vec3(runtime, rubyClass);
-            }
-        });
+        RubyClass vec3Cls = runtime.defineClass("Vec3D", runtime.getObject(), (Ruby runtime1, RubyClass rubyClass) -> new Vec3(runtime1, rubyClass));
         vec3Cls.defineAnnotatedMethods(Vec3.class);
     }
 

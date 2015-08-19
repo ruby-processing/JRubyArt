@@ -55,16 +55,6 @@ module Processing
       end
     end
 
-    # explicitly provide 'processing.org' norm instance method
-    def norm(value, start, stop)
-      (value - start).to_f / (stop - start)
-    end
-
-    # explicitly provide 'processing.org' lerp instance method
-    def lerp(start, stop, amt)
-      start + (stop - start) * amt
-    end
-
     # explicitly provide 'processing.org' min instance method
     # to return a float:- a, b and c need to be floats
 
