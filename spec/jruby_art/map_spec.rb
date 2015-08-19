@@ -84,7 +84,7 @@ describe 'p5map' do
 end 
 
 describe 'p5map' do
-  it 'should return map1d(x, range1, range2)' do
+  it 'should return p5map(x, start1, last1, start2, last2)' do
     x = 50
     start1, last1, start2, last2 = 0, 100, 0, 1.0
     expect(p5map(x, start1, last1, start2, last2)).to eq 0.5
@@ -92,7 +92,7 @@ describe 'p5map' do
 end
 
 describe 'p5map' do
-  it 'should return map1d(x, range1, range2)' do
+  it 'should return p5map(x, start1, last1, start2, last2)' do
     x = 50
     start1, last1, start2, last2 = 0, 100, 0, 1.0
     expect(p5map(x, start1, last1, start2, last2)).to eq 0.5
@@ -100,7 +100,7 @@ describe 'p5map' do
 end
 
 describe 'p5map' do
-  it 'should return map1d(x, range1, range2)' do
+  it 'should return p5map(x, start1, last1, start2, last2)' do
     x = 7.5
     start1, last1, start2, last2 = 0, 10, 5, 105
     expect(p5map(x, start1, last1, start2, last2)).to eq 80.0
@@ -108,7 +108,7 @@ describe 'p5map' do
 end 
 
 describe 'norm' do
-  it 'should return norm(x, range1, range2)' do
+  it 'should return norm(x, start1, last1)' do
     x = 140
     start1, last1 = 0, 200
     expect(norm(x, start1, last1)).to eq 0.7
@@ -116,7 +116,7 @@ describe 'norm' do
 end 
 
 describe 'norm' do
-  it 'should return norm(x, range1, range2)' do
+  it 'should return norm(x, start1, last1)' do
     x = 210
     start1, last1 = 0, 200
     expect(norm(x, start1, last1)).to eq 1.05
@@ -124,7 +124,7 @@ describe 'norm' do
 end
 
 describe 'norm' do
-  it 'should return norm(x, range1, range2)' do
+  it 'should return norm(x, start1, last1)' do
     x = 10
     start1, last1 = 30, 200
     expect(norm(x, start1, last1)).to eq -0.11764705882352941

@@ -1,5 +1,5 @@
 **v0.5.0** Tested with processing-3.0b4 more samples included, introducing `keyword` args and a 2D `AABB` implementation
-map1d and constrined_map as module methods in a JRuby extension
+map1d, lerp, norm, p5map and constrained_map as module methods in a JRuby extension. Using jdk-8 source for lambda...
 
 **v0.4.2** Tested with processing-3.0b2 color helper method refactored to use a jruby extension
 
