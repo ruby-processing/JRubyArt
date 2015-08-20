@@ -116,7 +116,8 @@ public class MathTool extends RubyObject {
         if (amount <= 0) return context.getRuntime().newFloat(start);
         if (amount >= 1.0) return context.getRuntime().newFloat(stop);
         return context.getRuntime().newFloat((1 - amount) * start + (stop * amount));
-    }
+    }   
+
     
     /**
      * Identical to p5map(value, low, high, 0, 1).
@@ -133,8 +134,30 @@ public class MathTool extends RubyObject {
         double start = (Double) args[1].toJava(Double.class);
         double stop = (Double) args[2].toJava(Double.class);         
         return mapMt(context, value, start, stop, 0, 1.0);
-    }   
+    }
     
+    /**
+     * Identical to p5map(value, low, high, 0, 1) but 'clamped'.
+     * Numbers outside of the range are clamped to 0 and 1, 
+     * @param context
+     * @param recv
+     * @param args
+     * @return
+     */
+    @JRubyMethod(name = "norm_strict", rest = true, module = true)
+    public static IRubyObject norm_strict(ThreadContext context, IRubyObject recv, IRubyObject[] args) {
+        Ruby ruby = context.runtime;
+        double value = (Double) args[0].toJava(Double.class);
+        double start = (Double) args[1].toJava(Double.class);
+        double stop = (Double) args[2].toJava(Double.class);
+        if (value <= start) {
+            return new RubyFloat(ruby, 0);
+        } else if (value >= stop) {
+            return new RubyFloat(ruby, 1.0);
+        } else {
+            return mapMt(context, value, start, stop, 0, 1.0);
+        }
+    }    
     
     static final RubyFloat mapMt(ThreadContext context, double value, double first1, double last1, double first2, double last2) {   
         double result = first2 + (last2 - first2) * ((value - first1) / (last1 - first1));

@@ -131,6 +131,14 @@ describe 'norm' do
   end
 end
 
+describe 'norm_strict' do
+  it 'should convert input to a normalized value' do
+    x = 10
+    start1, last1 = 30, 200
+    expect(norm_strict(x, start1, last1)).to eq 0
+  end
+end  
+
 
 describe 'lerp' do
   it 'should return lerp(start1, last1, x)' do
