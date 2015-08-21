@@ -67,6 +67,8 @@ class %s < Processing::App
     # smooth # here
   end
 end
+
+%s.new unless defined? $app
 CODE
 
 CLASS_MODE = <<-CODE
@@ -84,8 +86,6 @@ class %s < Processing::App
     # smooth # here
   end
 end
-
-%s.new unless defined? $app
 CODE
 
 EMACS_MODE = <<-CODE
