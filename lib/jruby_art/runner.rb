@@ -77,6 +77,7 @@ module Processing
     # Parse the command-line options. Keep it simple.
     def parse_options(args)
       @options = OpenStruct.new
+      @options.emacs = !args.delete('--emacs').nil?
       @options.wrap = !args.delete('--wrap').nil?
       @options.inner = !args.delete('--inner').nil?
       @options.jruby = !args.delete('--jruby').nil?
@@ -92,6 +93,7 @@ module Processing
       require_relative '../jruby_art/creators/creator'
       return Processing::Inner.new.create!(sketch, args) if @options.inner
       return Processing::ClassSketch.new.create!(sketch, args) if @options.wrap
+      return Processing::EmacsSketch.new.create!(sketch, args) if @options.emacs
       Processing::BasicSketch.new.create!(sketch, args)
     end
 
