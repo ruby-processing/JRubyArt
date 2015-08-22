@@ -44,6 +44,8 @@ k9 create fred 200, 200               # basic FX2D sketch fred.rb
 k9 create fred 200, 200, p2d          # basic P2D sketch fred.rb
 k9 create fred 200, 200 --wrap        # class wrapped FX2D sketch fred.rb
 k9 create fred 200, 200, p2d --wrap   # class wrapped P2D sketch fred.rb
+k9 create ted 200, 200 --emacs        # class wrapped sketch ted.rb for emacs / netbeans
+k9 create ted 200, 200, p2d --emacs   # class wrapped P2D sketch ted.rb for emacs / netbeans
 ```
 
 ## Simple Sketch
