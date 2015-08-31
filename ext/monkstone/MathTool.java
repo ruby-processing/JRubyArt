@@ -163,6 +163,29 @@ public class MathTool extends RubyObject {
         double result = first2 + (last2 - first2) * ((value - first1) / (last1 - first1));
         return context.getRuntime().newFloat(result);
     }
+    
+    /**
+     * Provides processing constrain method as a ruby module method
+     * @param context
+     * @param recv
+     * @param args
+     * @return original or limit values
+     */
+    @JRubyMethod(name = "constrain", rest = true, module = true)
+    public static IRubyObject constrainValue(ThreadContext context, IRubyObject recv, IRubyObject[] args) {
+        RubyFloat value = args[0].convertToFloat();
+        RubyFloat start = args[1].convertToFloat();
+        RubyFloat stop = args[2].convertToFloat();
+        if (value.op_ge(context, start).isTrue() && value.op_le(context, stop).isTrue()) {
+            return args[0];
+        } else if (value.op_ge(context, start).isTrue()) {
+            return args[2];
+        } else {
+            return args[1];
+        }
+    }
+    
+    
 
     /**
      *

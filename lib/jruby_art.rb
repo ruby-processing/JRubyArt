@@ -10,7 +10,6 @@ SKETCH_ROOT ||= Dir.pwd
 
 require 'jruby_art/version'
 require 'jruby_art/helpers/numeric'
-require 'jruby_art/helpers/range'
 
 # The top-level namespace, a home for all JRubyArt classes.
 module Processing

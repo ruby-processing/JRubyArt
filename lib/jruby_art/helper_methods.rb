@@ -80,12 +80,6 @@ module Processing
       fail ArgumentError, 'takes 4 or 6 parameters'
     end
 
-    # explicitly provide 'processing.org' constrain instance method
-    # to return a float:- amt, low and high need to be floats
-    def constrain(amt, low, high)
-      (low..high).clip(amt)
-    end
-
     # Uses PImage class method under hood
     def blend_color(c1, c2, mode)
       Java::ProcessingCore::PImage.blendColor(c1, c2, mode)

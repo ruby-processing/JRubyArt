@@ -122,7 +122,15 @@ module Processing
     end
 
     def sketch_title(title)
-      surface.setTitle(title)
+      surface.set_title(title)
+    end
+    
+    def sketch_size(x, y)
+      surface.set_size(x, y)
+    end
+    
+    def resizable(arg = true)
+      surface.set_resizable(arg)
     end
 
     def post_initialize(_args)

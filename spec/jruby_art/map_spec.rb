@@ -163,3 +163,27 @@ describe 'lerp' do
     expect(lerp(start1, last1, x)).to eq 250
   end
 end
+
+describe 'constrain' do
+  it 'should return constrain(val, begin, end)' do
+    x = 15
+    start1, last1 = 0, 200
+    expect(constrain(x, start1, last1)).to eq 15
+  end
+end
+
+describe 'constrain' do
+  it 'should return constrain(val, begin, end)' do
+    x = 2500
+    start1, last1 = 0, 200
+    expect(constrain(x, start1, last1)).to eq 200
+  end
+end
+
+describe 'constrain' do
+  it 'should return constrain(val, begin, end)' do
+    x = -2500
+    start1, last1 = 0, 200
+    expect(constrain(x, start1, last1)).to eq 0
+  end
+end
