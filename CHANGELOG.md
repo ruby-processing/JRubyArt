@@ -1,5 +1,4 @@
-**v0.6.0** Tested processing-3.0b5 getting nearer processing release, `AABB` is
-now `AaBb` which avoids clashing with toxigem
+**v0.6.0** Tested processing-3.0b5 and using jruby-9.0.1.0 getting nearer processing release, `AABB` is now `AaBb` which avoids clashing with toxigem
 
 **v0.5.0** Tested with processing-3.0b4 more samples included, introducing `keyword` args and a 2D `AABB` implementation
 map1d, lerp, norm, p5map and constrained_map as module methods in a JRuby extension. Using jdk-8 source for lambda...
