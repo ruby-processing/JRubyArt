@@ -2,14 +2,14 @@
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
 ## Requirements
-A clean start for `jruby_art` based on [processing-3.0 beta](https://github.com/processing/processing/releases) and [jruby-9.0.0.0](http://blog.jruby.org/2015/07/jruby_9000/) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0).
+A clean start for `jruby_art` based on [processing-3.0 beta](https://github.com/processing/processing/releases) and [jruby-9.0.1.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0).
 ## Requirements
  
-A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.0.0` to download gem. 
+A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.1.0` to download gem. 
 
 `processing-3.0b5+`
 
-`jdk1.8.0_51+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
+`jdk1.8.0_60+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
@@ -32,11 +32,11 @@ sketchbook_path: /home/tux/sketchbook
 
 ```bash
  gem install jruby_art
- k9 setup install # installs jruby-complete-9.0.0.0
+ k9 setup install # installs jruby-complete-9.0.1.0
  k9 setup unpack_samples # downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
  k9 --nojruby run jwishy.rb # unless you have jruby-9.0.0.0 installed or config JRUBY: 'false'
- k9 run jwishy.rb # if you have jruby-9.0.0.0 installed or config JRUBY: 'false'
+ k9 run jwishy.rb # if you have jruby-9.0.1.0 installed or config JRUBY: 'false'
 ```
 ## Create sketches from built in templates
 ```bash
