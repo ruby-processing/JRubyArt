@@ -1,5 +1,5 @@
-# Axis aligned bounding box
-class AABB
+# Axis aligned bounding box class (AABB would clash with Toxicgem)
+class AaBb
   attr_reader :center, :extent
 
   def initialize(center:, extent:)

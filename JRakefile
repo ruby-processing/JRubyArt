@@ -28,7 +28,7 @@ if RUBY_PLATFORM =~ /java/
   Rake::JavaExtensionTask.new('monkstone') do |ext|
     jars = FileList['lib/*.jar']
     warn WARNING unless FileTest.exist? 'lib/video.jar'
-    ext.classpath = jars.map {|x| File.expand_path x}.join ':'
+    ext.classpath = jars.map { |x| File.expand_path x }.join ':'
     ext.name = 'rpextras'
     ext.debug = true
     ext.lib_dir = 'lib'
@@ -36,3 +36,4 @@ if RUBY_PLATFORM =~ /java/
     ext.target_version='1.8'
   end
 end
+
