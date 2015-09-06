@@ -14,11 +14,11 @@ module Processing
   # Include some core processing classes that we'd like to use:
   include_package 'processing.core'
   # Load vecmath, fastmath and mathtool modules
-  Java::MonkstoneArcball::ArcballLibrary.new.load(JRuby.runtime, false)
-  Java::MonkstoneVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
-  Java::MonkstoneVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
-  Java::MonkstoneFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
-  Java::Monkstone::MathToolLibrary.new.load(JRuby.runtime, false)
+  Java::MonkstoneArcball::ArcballLibrary.load(JRuby.runtime)
+  Java::MonkstoneVecmathVec2::Vec2Library.load(JRuby.runtime)
+  Java::MonkstoneVecmathVec3::Vec3Library.load(JRuby.runtime)
+  Java::MonkstoneFastmath::DeglutLibrary.load(JRuby.runtime)
+  Java::Monkstone::MathToolLibrary.load(JRuby.runtime)
   AppRender ||= Java::MonkstoneVecmath::AppRender
   ShapeRender ||= Java::MonkstoneVecmath::ShapeRender
 

@@ -19,7 +19,6 @@ package monkstone.vecmath.vec3;
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-import java.io.IOException;
 import org.jruby.Ruby;
 import org.jruby.RubyArray;
 import org.jruby.RubyBoolean;
@@ -44,9 +43,8 @@ public final class Vec3 extends RubyObject {
     /**
      *
      * @param runtime
-     * @throws IOException
      */
-    public static void createVec3(final Ruby runtime) throws IOException {
+    public static void createVec3(final Ruby runtime) {
         RubyClass vec3Cls = runtime.defineClass("Vec3D", runtime.getObject(), (Ruby runtime1, RubyClass rubyClass) -> new Vec3(runtime1, rubyClass));
         vec3Cls.defineAnnotatedMethods(Vec3.class);
     }
@@ -77,7 +75,6 @@ public final class Vec3 extends RubyObject {
      */
     public Vec3(Ruby runtime, RubyClass klass) {
         super(runtime, klass);
-
     }
 
     void init(ThreadContext context, IRubyObject[] args) {

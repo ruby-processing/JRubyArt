@@ -50,8 +50,7 @@ public class Vec2 extends RubyObject {
   */
   public static void createVec2(final Ruby runtime) {
     RubyClass vec2Cls = runtime.defineClass("Vec2D", runtime.getObject(), (Ruby runtime1, RubyClass rubyClass) -> new Vec2(runtime1, rubyClass));
-    vec2Cls.defineAnnotatedMethods(Vec2.class);
-    
+    vec2Cls.defineAnnotatedMethods(Vec2.class);    
   }
   
   /**
