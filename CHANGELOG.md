@@ -1,3 +1,5 @@
+**v0.7.0** Targetting processing-3.0b6 and using jruby-9.0.1.0 added a Gemfile for bundler fans, but I'm not sure how well it can work with the required compile step. Statically load JRubyArt jruby extensions.
+
 **v0.6.0** Tested processing-3.0b5 and using jruby-9.0.1.0 getting nearer processing release, `AABB` is now `AaBb` which avoids clashing with toxigem
 
 **v0.5.0** Tested with processing-3.0b4 more samples included, introducing `keyword` args and a 2D `AABB` implementation
