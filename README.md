@@ -35,7 +35,7 @@ sketchbook_path: /home/tux/sketchbook
  k9 setup install # installs jruby-complete-9.0.1.0
  k9 setup unpack_samples # downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --nojruby run jwishy.rb # unless you have jruby-9.0.0.0 installed or config JRUBY: 'false'
+ k9 --nojruby run jwishy.rb # unless you have jruby-9.0.1.0 installed or config JRUBY: 'false'
  k9 run jwishy.rb # if you have jruby-9.0.1.0 installed or config JRUBY: 'false'
 ```
 ## Create sketches from built in templates
