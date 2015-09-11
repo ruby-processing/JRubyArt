@@ -13,12 +13,12 @@ A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.1.0` to download gem.
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
-`processing video and sound libraries` _install from the processing-3.0 ide_
+`processing video and sound libraries` _best installed from the processing-3.0 ide_
 
 
 ## Configuration
 
-Config file is `config.yml` in `~/.jruby_art folder` so can co-exist with a ruby-processing install
+Config file is `config.yml` in the `~/.jruby_art folder` so can co-exist with a ruby-processing install
 
 ```yaml
 # YAML configuration file for jruby_art
