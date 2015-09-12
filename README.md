@@ -23,7 +23,7 @@ Config file is `config.yml` in the `~/.jruby_art folder` so can co-exist with a 
 ```yaml
 # YAML configuration file for jruby_art
 # K9_HOME: "/home/ruby2.2.0 ... /jruby_art" #windows users may need to set this
-PROCESSING_ROOT: /home/tux/processing-3.0b5
+PROCESSING_ROOT: /home/tux/processing-3.0b6
 # important sketch_book path may be different for processing-3.0
 sketchbook_path: /home/tux/sketchbook 
 ```
@@ -64,8 +64,8 @@ end
 # NB: changes for processing-3.0
 # size, full_screen, pixel_density and smooth should all be moved to settings (this is hidden 
 # to users of processing ide, but not for JRubyArt, or for Eclipse NetBeans users). The FX2D 
-# rendering mode is introduced, and is expected to replace JAVA2D (as default rendering mode) 
-# but not for processing-3.0b5
+# rendering mode was introduced, and was expected to replace JAVA2D (as default rendering mode) 
+# but may not now happen, and not for processing-3.0b6 in any case.
 def settings
   size 400, 300, FX2D
 end
