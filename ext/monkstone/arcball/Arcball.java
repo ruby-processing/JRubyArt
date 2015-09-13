@@ -29,7 +29,7 @@ import processing.event.MouseEvent;
 
 /**
  * Supports the Arcball and MouseWheel zoom manipulation of objects in
- * processing
+ * processing-3.0
  * 
 * @author Martin Prout
  */
@@ -60,11 +60,8 @@ public class Arcball {
      * @param radius double radius of arcball
      */
     public Arcball(PApplet parent, double center_x, double center_y, double radius) {
-        this.zoomWheelHandler = new WheelHandler() {
-            @Override
-            public void handleWheel(int delta) {
-                zoom += delta * 0.05;
-            }
+        this.zoomWheelHandler = (int delta) -> {
+            zoom += delta * 0.05;
         };
         this.parent = parent;
         this.center_x = center_x;
@@ -146,7 +143,7 @@ public class Arcball {
     }
 
     /**
-     *
+     * processing 'pre' reflection method gets called before draw
      */
     public void pre() {
         if (!camera) {
