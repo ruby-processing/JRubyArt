@@ -16,7 +16,18 @@ class Rp5Test < Minitest::Test
       end
     end
     assert_match(/ok/, out, 'Failed Basic Sketch')
- end
+  end
+
+  def test_on_top
+    out, _err_ = capture_io do
+      open('|../bin/k9 run on_top.rb', 'r') do |io|
+        while l = io.gets
+          puts(l.chop)
+        end
+      end
+    end
+    assert_match(/ok/, out, 'Failed On Top Sketch')
+  end
 
   def test_p2d
     out, _err_ = capture_io do

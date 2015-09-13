@@ -133,6 +133,10 @@ module Processing
       surface.set_resizable(arg)
     end
 
+    def on_top(arg = true)
+      surface.set_always_on_top(arg)
+    end
+
     def post_initialize(_args)
       nil
     end
