@@ -232,7 +232,15 @@ end
 describe 'Vec2D#heading' do
   it 'should return Vec2D#heading in radians' do
     a = Vec2D.new(1, 1)
-    expect(a.heading).to be_within(EPSILON).of(Math::PI / 4.0)
+    expect(a.heading).to be_within(EPSILON).of(Math::PI / 4.0)    
+  end
+end
+
+describe 'Vec2D#random' do
+  it 'should return Vec2D#random' do
+    a = Vec2D.random
+    expect(a).to be_instance_of Vec2D
+    expect(a.mag).to be_within(EPSILON).of(1.0)
   end
 end
 
@@ -409,6 +417,14 @@ describe 'Vec3D#set_mag positive block' do
   it 'should return Vec3D#set_mag' do
     a = Vec3D.new(1, 1, 1)
     expect(a.set_mag(Math.sqrt(48)) { true }).to eq Vec3D.new(4, 4, 4)
+  end
+end
+
+describe 'Vec3D#random' do
+  it 'should return Vec2D#random' do
+    a = Vec3D.random
+    expect(a).to be_instance_of Vec3D
+    expect(a.mag).to be_within(EPSILON).of(1.0)
   end
 end
 
