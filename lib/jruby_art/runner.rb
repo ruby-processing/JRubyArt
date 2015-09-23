@@ -255,7 +255,7 @@ module Processing
       if os == :mac
         data['PROCESSING_ROOT'] = '/Applications/Processing.app/Contents/Java'
       else
-        root = "#{ENV['HOME']}/processing-3.0b6"
+        root = "#{ENV['HOME']}/processing-3.0b7"
         data['PROCESSING_ROOT'] = root
       end
       data['JRUBY'] = 'true'

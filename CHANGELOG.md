@@ -1,3 +1,6 @@
+
+**v0.8.0** Require processing-3.0b7 and using jruby-9.0.1.0 replaced spec tests with minitest.
+
 **v0.7.0** Require processing-3.0b6 and using jruby-9.0.1.0 added a Gemfile for bundler fans, but I'm not sure how well it can work with the required compile step. Statically load JRubyArt jruby extensions. features `on_top` to keep display on top of course (implements `surface.setAlwaysOnTop(true);`).
 
 **v0.6.0** Tested processing-3.0b5 and using jruby-9.0.1.0 getting nearer processing release, `AABB` is now `AaBb` which avoids clashing with toxigem
