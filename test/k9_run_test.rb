@@ -9,7 +9,7 @@ class Rp5Test < Minitest::Test
 
   def test_normal
     out, _err_ = capture_io do
-      open('|../bin/k9 run basic.rb', 'r') do |io|
+      open('|../bin/k9 run sketches/basic.rb', 'r') do |io|
         while l = io.gets
           puts(l.chop)
         end
@@ -20,7 +20,7 @@ class Rp5Test < Minitest::Test
 
   def test_on_top
     out, _err_ = capture_io do
-      open('|../bin/k9 run on_top.rb', 'r') do |io|
+      open('|../bin/k9 run sketches/on_top.rb', 'r') do |io|
         while l = io.gets
           puts(l.chop)
         end
@@ -31,7 +31,7 @@ class Rp5Test < Minitest::Test
 
   def test_p2d
     out, _err_ = capture_io do
-      open('|../bin/k9 run p2d.rb', 'r') do |io|
+      open('|../bin/k9 run sketches/p2d.rb', 'r') do |io|
         while l = io.gets
           puts(l.chop)
         end
@@ -50,7 +50,7 @@ class Rp5Test < Minitest::Test
 
   def test_fx2d
     out, _err = capture_io do
-      open('|../bin/k9 run fx2d.rb', 'r') do |io|
+      open('|../bin/k9 run sketches/fx2d.rb', 'r') do |io|
         while l = io.gets
           puts(l.chop)
         end
@@ -60,7 +60,7 @@ class Rp5Test < Minitest::Test
 
   def test_p3d
     out, _err_ = capture_io do
-      open('|../bin/k9 run p3d.rb', 'r') do |io|
+      open('|../bin/k9 run sketches/p3d.rb', 'r') do |io|
         while l = io.gets
           puts(l.chop)
         end
@@ -71,7 +71,7 @@ class Rp5Test < Minitest::Test
 
   def test_graphics
     out, _err_ = capture_io do
-      open('|../bin/k9 run graphics.rb', 'r') do |io|
+      open('|../bin/k9 run sketches/graphics.rb', 'r') do |io|
         while l = io.gets
           puts(l.chop)
         end
@@ -82,7 +82,7 @@ class Rp5Test < Minitest::Test
 
   def test_setup_exception
     out, _err_ = capture_io do
-      open('|../bin/k9 run setup_ex.rb', 'r') do |io|
+      open('|../bin/k9 run sketches/setup_ex.rb', 'r') do |io|
         while l = io.gets
           puts(l.chop)
         end

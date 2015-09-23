@@ -18,13 +18,13 @@ module Processing
   NAKED_WRAP = <<-EOS
   class Sketch < Processing::App
     def setup
-      sketch_title 'Naked Sketch'
+      sketch_title 'Nude Sketch'
       %s
       no_loop
     end
 
     def settings
-      size(DEFAULT_WIDTH, DEFAULT_HEIGHT)
+      size(150, 150)
     end
   end
   EOS

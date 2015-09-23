@@ -47,10 +47,11 @@ end
 
 desc 'Test'
 task :test do
+  sh "jruby test/deglut_spec_test.rb"
   sh "jruby test/math_tool_test.rb"
   sh "jruby test/helper_methods_test.rb"
   sh "jruby test/aabb_spec_test.rb"
-  ruby "test/k9_test.rb"  	
+  ruby "test/k9_run_test.rb"  	
 end
 
 desc 'clean'
