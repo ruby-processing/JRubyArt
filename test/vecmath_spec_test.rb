@@ -75,6 +75,12 @@ class VecmathTest < Minitest::Test
     d = a / b
     assert_equal(c, d, 'Failed to divide vector by scalar')
   end
+  
+  def test_dot
+    a = Vec2D.new(3, 5)
+    b = Vec2D.new(6, 7)
+    assert_equal(a.dot(b), 53, 'Failed to dot product')
+  end
 
   def test_from_angle
     a = Vec2D.from_angle(Math::PI * 0.75)
@@ -89,7 +95,7 @@ class VecmathTest < Minitest::Test
 
   def test_assign_value
     a = Vec2D.new(3, 5)
-    a.x=23
+    a.x = 23
     assert_equal(a.x, 23, 'Failed to assign x value')
   end
 
@@ -186,7 +192,19 @@ class VecmathTest < Minitest::Test
     a = b.rotate(Math::PI / 2)
     assert_equal(a, Vec2D.new(-10, 20), 'Failed to rotate vector by scalar radians')
   end
+  
+  def test_hash_index
+    x, y = 10, 20
+    b = Vec2D.new(x, y)
+    assert_equal(b[:x], x, 'Failed to hash index')
+  end
 
+  def test_hash_set
+    x = 10
+    b = Vec2D.new
+    b[:x] = x
+    assert_equal(a, Vec2D.new(-10, 20), 'Failed to hash assign')
+  end
 
   def test_inspect
     a = Vec2D.new(3, 2.000000000000001)
@@ -299,12 +317,31 @@ class VecmathTest < Minitest::Test
   end
 
   def test_dist
-    a = Vec3D.new(3, 5)
-    b = Vec3D.new(6, 7)
-    assert_equal(a.dist(b), Math.sqrt(3.0**2 + 2**2), 'Failed to return distance between two vectors')
+    a = Vec3D.new(3, 5, 2)
+    b = Vec3D.new(6, 7, 1)
+    message = 'Failed to return distance between two vectors'
+    assert_equal(a.dist(b), Math.sqrt(3.0**2 + 2**2 + 1), message)
   end
-
-
+  
+  def test_dist_squared
+    a = Vec3D.new(3, 5, 2)
+    b = Vec3D.new(6, 7, 1)
+    message = 'Failed to return distance squared between two vectors'
+    assert_equal(a.dist_squared(b), 3.0**2 + 2**2 + 1, message)
+  end
+ 
+  def test_dot
+    a = Vec3D.new(10, 20, 0)
+    b = Vec3D.new(60, 80, 0)
+    assert_equal(a.dot(b), 2200.0, 'Failed to dot product')
+  end
+  
+  def test_cross
+    a = Vec3D.new(3, 5, 2)
+    b = Vec3D.new(6, 7, 1)
+    c = Vec3D.new(-9.0, 9.0, -9.0)
+    assert_equal(a.cross(b), c, 'Failed cross product')
+  end
 
   def test_set_mag
     a = Vec3D.new(1, 1)
@@ -380,5 +417,20 @@ class VecmathTest < Minitest::Test
     a = Vec3D.new(3.0, 5.0, 0)
     b = Vec3D.new(3.0, 5.0, 0)
     refute(a.equal?(b))
+  end
+  
+  def test_hash_key
+    x, y, z = 10, 20, 50
+    b = Vec3D.new(x, y, z)
+    assert_equal(b[:x], x, 'Failed hash key access')
+    assert_equal(b[:y], y, 'Failed hash key access')
+    assert_equal(b[:z], z, 'Failed hash key access')
+  end
+
+  def test_hash_set
+    x = 10
+    b = Vec3D.new
+    b[:x] = x
+    assert_equal(b, Vec3D.new(x, 0, 0), 'Failed to hash assign')
   end
 end
