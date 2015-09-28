@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   variables and hundreds of worked examples to get you started...
   EOS
   spec.summary = %q{Code as Art, Art as Code. Processing and Ruby are meant for each other.}
-  spec.homepage = "https://github.com/ruby-processing/JRubyArt"
+  spec.homepage = "https://ruby-processing.github.io/"
   spec.post_install_message = %q{Use 'k9 setup install' to install jruby-complete, and 'k9 setup check' to check config.}
   spec.license = 'MIT'
 
