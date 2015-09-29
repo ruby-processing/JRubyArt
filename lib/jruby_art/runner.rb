@@ -1,3 +1,4 @@
+
 require 'ostruct'
 require 'fileutils'
 require 'rbconfig'
@@ -255,7 +256,7 @@ module Processing
       if os == :mac
         data['PROCESSING_ROOT'] = '/Applications/Processing.app/Contents/Java'
       else
-        root = "#{ENV['HOME']}/processing-3.0b7"
+        root = "#{ENV['HOME']}/processing-3.0"
         data['PROCESSING_ROOT'] = root
       end
       data['JRUBY'] = 'true'

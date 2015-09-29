@@ -3,12 +3,12 @@
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
 ## Requirements
-A clean start for `jruby_art` based on [processing-3.0 beta](https://github.com/processing/processing/releases) and [jruby-9.0.1.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0).
+A clean start for `jruby_art` based on [processing-3.0](https://github.com/processing/processing/releases) and [jruby-9.0.1.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0).
 ## Requirements
  
 A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.1.0` to download gem. 
 
-`processing-3.0b7+`
+`processing-3.0`
 
 `jdk1.8.0_60+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
 
@@ -24,7 +24,7 @@ Config file is `config.yml` in the `~/.jruby_art folder` so can co-exist with a 
 ```yaml
 # YAML configuration file for jruby_art
 # K9_HOME: "/home/ruby2.2.0 ... /jruby_art" #windows users may need to set this
-PROCESSING_ROOT: /home/tux/processing-3.0b7
+PROCESSING_ROOT: /home/tux/processing-3.0
 # important sketch_book path may be different for processing-3.0
 sketchbook_path: /home/tux/sketchbook 
 ```
@@ -66,7 +66,7 @@ end
 # size, full_screen, pixel_density and smooth should all be moved to settings (this is hidden 
 # to users of processing ide, but not for JRubyArt, or for Eclipse NetBeans users). The FX2D 
 # rendering mode was introduced, and was expected to replace JAVA2D (as default rendering mode) 
-# but may not now happen, and not for processing-3.0b7 in any case.
+# but may not now happen, and not for processing-3.0 in any case.
 def settings
   size 400, 300, FX2D
 end
