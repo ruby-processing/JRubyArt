@@ -9,8 +9,8 @@ end
 
 def settings
   size %s, %s
+  # pixel_density(2) # here for hi-dpi displays only
   # smooth # here
-  # pixel_density(2) # for hi-dpi displays only
 end
 
 CODE
@@ -43,8 +43,8 @@ class %s < Processing::App
 
   def settings
     size %s, %s
+    # pixel_density(2) # here for hi-dpi displays only
     # smooth # here
-    # pixel_density(2) # for hi-dpi displays only
   end
 end
 CODE
