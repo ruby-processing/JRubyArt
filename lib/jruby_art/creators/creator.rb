@@ -8,8 +8,9 @@ def draw
 end
 
 def settings
-  size %s, %s, FX2D
+  size %s, %s
   # smooth # here
+  # pixel_density(2) # for hi-dpi displays only
 end
 
 CODE
@@ -41,8 +42,9 @@ class %s < Processing::App
   end
 
   def settings
-    size %s, %s, FX2D
+    size %s, %s
     # smooth # here
+    # pixel_density(2) # for hi-dpi displays only
   end
 end
 CODE
