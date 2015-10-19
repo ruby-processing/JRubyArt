@@ -1,120 +1,109 @@
 # Boids -- after Tom de Smedt.
 # See his Python version: http://nodebox.net/code/index.php/Boids
-# This is an example of how a pure-Ruby library can work.
-# -- omygawshkenas
-
+# This is an example of how a pure-Ruby library can work. Original for
+# ruby-processing Jeremy Ashkenas. Reworked, re-factored for JRubyArt 0.9+
+# by Martin Prout, features forwardable, keyword args, Vec3D and Vec2D. 
 class Boid
-  attr_accessor :boids, :x, :y, :z, :vx, :vy, :vz, :is_perching, :perch_time
+  attr_accessor :boids, :pos, :vel, :is_perching, :perch_time
 
-  def initialize(boids, x, y, z)
+  def initialize(boids, pos)
     @boids, @flock = boids, boids
-    @x, @y, @z = x, y, z
-    @vx, @vy, @vz = 0.0, 0.0, 0.0
+    @pos = pos
+    @vel = Vec3D.new
     @is_perching = false
     @perch_time = 0.0
   end
 
-  def cohesion(d = 100.0)
+  def cohesion(d:)
     # Boids gravitate towards the center of the flock,
     # Which is the averaged position of the rest of the boids.
-    cvx, cvy, cvz = 0.0, 0.0, 0.0
-    boids.reject { |bd| bd.equal? self }.each do |boid|
-      cvx, cvy, cvz = cvx + boid.x, cvy + boid.y, cvz + boid.z
+    vect = Vec3D.new
+    @boids.each do |boid|
+      vect += boid.pos unless boid == self
     end
-    count = boids.length - 1.0
-    cvx, cvy, cvz = cvx / count, cvy / count, cvz / count
-    [(cvx - x) / d, (cvy - y) / d, (cvz - z) / d]
+    count = @boids.length - 1.0
+    vect /= count
+    (vect - pos) / d
   end
 
-  def separation(radius = 10.0)
+  def separation(radius:)
     # Boids don't like to cuddle.
-    svx, svy, svz = 0.0, 0.0, 0.0
-    boids.reject { |bd| bd.equal? self }.each do |boid|
-      dvx, dvy, dvz = x - boid.x, y - boid.y, z - boid.z
-      svx += dvx if dvx.abs < radius
-      svy += dvy if dvy.abs < radius
-      svz += dvz if dvz.abs < radius
+    vect = Vec3D.new
+    @boids.each do |boid|
+      if boid != self
+        dv = pos - boid.pos
+        vect += dv if dv.mag < radius
+      end
     end
-    [svx, svy, svz]
+    vect
   end
 
-  def alignment(d = 5.0)
+  def alignment(d:)
     # Boids like to fly at the speed of traffic.
-    avx, avy, avz = 0.0, 0.0, 0.0
-    boids.reject { |bd| bd.equal? self }.each do |boid|
-      avx, avy, avz = avx + boid.vx, avy + boid.vy, avz + boid.vz
+    vect = Vec3D.new
+    @boids.each do |boid|
+      vect += boid.vel if boid != self
     end
-    count = boids.length - 1.0
-    avx, avy, avz = avx / count, avy / count, avz / count
-    [(avx - vx) / d, (avy - vy) / d, (avz - vz) / d]
+    count = @boids.length - 1.0
+    vect /= count
+    (vect - vel) / d
   end
 
-  def limit(max = 30.0)
+  def limit(max:)
     # Tweet, Tweet! The boid police will bust you for breaking the speed limit.
-    most = [@vx.abs, @vy.abs, @vz.abs].max
+    most = [vel.x.abs, vel.y.abs, vel.z.abs].max
     return if most < max
     scale = max / most.to_f
-    @vx *= scale
-    @vy *= scale
-    @vz *= scale
+    @vel *= scale
   end
 
   def angle
-    a = (Math.atan(@vy / @vx) * (180.0 / Math::PI)) + 360.0
-    a += 180.0 if @vx < 0.0
-    a
+    Vec2D.new(vel.x, vel.y).heading
   end
 
-  def goal(gx, gy, gz, d = 50.0)
+  def goal(target, d = 50.0)
     # Them boids is hungry.
-    [(gx - x) / d, (gy - y) / d, (gz - z) / d]
+    (target - pos) / d
   end
 end
 
 require 'forwardable'
 
-class Boids
+# The Boids class
+class Boids 
   include Enumerable
   extend Forwardable
   def_delegators(:@boids, :reject, :<<, :each, :shuffle!, :length, :next)
-
-  attr_accessor :boids, :x, :y, :w, :h,
-                :scattered, :has_goal, :flee
-
-  attr_reader :scatter, :scatter_time, :scatter_i,
-              :perch, :perch_y, :perch_t, :boids,
-              :goal_x, :goal_y, :goal_z
-
+  
+  attr_reader :has_goal
+  
   def initialize
     @boids = []
   end
-
-  def self.flock(n, x, y, w, h)
-    Boids.new.setup(n, x, y, w, h)
+ 
+  def self.flock(n:, x:, y:, w:, h:)
+    flock = Boids.new.setup(n, x, y, w, h)
+    flock.goal(target: Vec3D.new(w / 2, h / 2, 0))
   end
 
   def setup(n, x, y, w, h)
     n.times do
       dx, dy = rand(w), rand(h)
       z = rand(200.0)
-      self << Boid.new(self, x + dx, y + dy, z)
+      self << Boid.new(self, Vec3D.new(x + dx, y + dy, z))
     end
     @x, @y, @w, @h = x, y, w, h
-    init
-    self
-  end
-
-  def init
     @scattered = false
     @scatter = 0.005
     @scatter_time = 50.0
     @scatter_i = 0.0
     @perch = 1.0 # Lower this number to divebomb.
     @perch_y = h
-    @perch_t = -> { rand(25..75.0) }
+    @perch_time = -> { 25.0 + rand(50.0) }
     @has_goal = false
     @flee = false
-    @goal_x = @goal_y = @goal_z = 0.0
+    @goal = Vec3D.new
+    self
   end
 
   def scatter(chance = 0.005, frames = 50.0)
@@ -127,19 +116,20 @@ class Boids
   end
 
   def perch(ground = nil, chance = 1.0, frames = nil)
-    frames ||= -> { rand(25..75.0) }
+    frames ||= -> { 25.0 + rand(50.0) }
     ground ||= h
-    @perch, @perch_y, @perch_t = chance, ground, frames
+    @perch, @perch_y, @perch_time = chance, ground, frames
   end
 
   def no_perch
     @perch = 0.0
   end
 
-  def goal(gx, gy, gz, flee = false)
+  def goal(target:, flee: false)
     @has_goal = true
     @flee = flee
-    @goal_x, @goal_y, @goal_z = gx, gy, gz
+    @goal = target
+    self
   end
 
   def no_goal
@@ -148,37 +138,35 @@ class Boids
 
   def constrain
     # Put them boids in a cage.
-    dx, dy = w * 0.1, h * 0.1
+    dx, dy = @w * 0.1, @h * 0.1
     each do |b|
-      b.vx += rand(dx) if b.x < x - dx
-      b.vx += rand(dy) if b.y < y - dy
-      b.vx -= rand(dx) if b.x > x + w + dx
-      b.vy -= rand(dy) if b.y > y + h + dy
-      b.vz += 10.0 if b.z < 0.0
-      b.vz -= 10.0 if b.z > 100.0
-      next unless b.y > @perch_y && rand < @perch
-      b.y = @perch_y
-      b.vy = -(b.vy.abs) * 0.2
+      b.vel.x += rand(dx) if b.pos.x < @x - dx
+      b.vel.x += rand(dy) if b.pos.y < @y - dy
+      b.vel.x -= rand(dx) if b.pos.x > @x + @w + dx
+      b.vel.y -= rand(dy) if b.pos.y > @y + @h + dy
+      b.vel.z += 10.0 if b.pos.z < 0.0
+      b.vel.z -= 10.0 if b.pos.z > 100.0
+      next unless b.pos.y > @perch_y && rand < @perch
+      b.pos.y = @perch_y
+      b.vel.y = -(b.vel.y.abs) * 0.2
       b.is_perching = true
-      @perch_t.respond_to?(:call) ? b.perch_time = @perch_t.call : b.perch_time = @perch_t
+      @perch_time.respond_to?(:call) ? b.perch_time = @perch_time.call : b.perch_time = @perch_time
     end
   end
 
-  def update(opts = {}) # Just flutter, little boids ... just flutter away.
-    options = {
-      shuffled: true,     #  Shuffling keeps things flowing smooth.
-      cohesion: 100.0,
-      separation: 10.0,
-      alignment: 5.0,
-      goal: 20.0,
-      limit: 30.0
-    }
-    options.merge! opts
-    shuffle! if options[:shuffled]
-    m1 = 1.0   # cohesion
-    m2 = 1.0   # separation
-    m3 = 1.0   # alignment
-    m4 = 1.0   # goal
+  def update(goal: 20.0, limit: 30.0, **args)
+    shuffled = args.fetch(:shuffled, true)
+    cohesion = args.fetch(:cohesion, 100)
+    separation = args.fetch(:separation, 10)
+    alignment = args.fetch(:alignment, 5.0)
+
+    # Just flutter, little boids ... just flutter away.
+    # Shuffling keeps things flowing smooth.
+    shuffle! if shuffled
+    m1 = 1.0 # cohesion
+    m2 = 1.0 # separation
+    m3 = 1.0 # alignment
+    m4 = 1.0 # goal
     @scattered = true if !(@scattered) && rand < @scatter
     if @scattered
       m1 = -m1
@@ -189,7 +177,7 @@ class Boids
       @scattered = false
       @scatter_i = 0.0
     end
-    m4 = 0.0 unless @has_goal
+    m4 = 0.0 unless has_goal
     m4 = -m4 if @flee
     each do |b|
       if b.is_perching
@@ -200,17 +188,13 @@ class Boids
           b.is_perching = false
         end
       end
-      vx1, vy1, vz1 = *b.cohesion(options[:cohesion])
-      vx2, vy2, vz2 = *b.separation(options[:separation])
-      vx3, vy3, vz3 = *b.alignment(options[:alignment])
-      vx4, vy4, vz4 = b.goal(@goal_x, @goal_y, @goal_z, options[:goal])
-      b.vx += m1 * vx1 + m2 * vx2 + m3 * vx3 + m4 * vx4
-      b.vy += m1 * vy1 + m2 * vy2 + m3 * vy3 + m4 * vy4
-      b.vz += m1 * vz1 + m2 * vz2 + m3 * vz3 + m4 * vz4
-      b.limit(options[:limit])
-      b.x += b.vx
-      b.y += b.vy
-      b.z += b.vz
+      v1 = b.cohesion(d: cohesion)
+      v2 = b.separation(radius: separation)
+      v3 = b.alignment(d: alignment)
+      v4 = b.goal(@goal, goal)
+      b.vel += ((v1 * m1) + (v2 * m2) + (v3 * m3) + (v4 * m4))
+      b.limit(max: limit)
+      b.pos += b.vel
     end
     constrain
   end
