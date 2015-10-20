@@ -2,7 +2,7 @@
 # See his Python version: http://nodebox.net/code/index.php/Boids
 # This is an example of how a pure-Ruby library can work. Original for
 # ruby-processing Jeremy Ashkenas. Reworked, re-factored for JRubyArt 0.9+
-# by Martin Prout, features forwardable, keyword args, Vec3D and Vec2D. 
+# by Martin Prout, features forwardable, keyword args, Vec3D and Vec2D.
 class Boid
   attr_accessor :boids, :pos, :vel, :is_perching, :perch_time
 
@@ -70,17 +70,17 @@ end
 require 'forwardable'
 
 # The Boids class
-class Boids 
+class Boids
   include Enumerable
   extend Forwardable
   def_delegators(:@boids, :reject, :<<, :each, :shuffle!, :length, :next)
-  
-  attr_reader :has_goal
-  
+
+  attr_reader :has_goal, :perch, :perch_tm, :perch_y
+
   def initialize
     @boids = []
   end
- 
+
   def self.flock(n:, x:, y:, w:, h:)
     flock = Boids.new.setup(n, x, y, w, h)
     flock.goal(target: Vec3D.new(w / 2, h / 2, 0))
@@ -99,7 +99,7 @@ class Boids
     @scatter_i = 0.0
     @perch = 1.0 # Lower this number to divebomb.
     @perch_y = h
-    @perch_time = -> { 25.0 + rand(50.0) }
+    @perch_tm = -> { 25.0 + rand(50.0) }
     @has_goal = false
     @flee = false
     @goal = Vec3D.new
@@ -116,9 +116,9 @@ class Boids
   end
 
   def perch(ground = nil, chance = 1.0, frames = nil)
-    frames ||= -> { 25.0 + rand(50.0) }
-    ground ||= h
-    @perch, @perch_y, @perch_time = chance, ground, frames
+    @perch_tm = frames.nil? ? -> { 25.0 + rand(50.0) } : frames
+    @perch_y = ground.nil? ? @h : ground
+    @perch = chance
   end
 
   def no_perch
@@ -146,11 +146,11 @@ class Boids
       b.vel.y -= rand(dy) if b.pos.y > @y + @h + dy
       b.vel.z += 10.0 if b.pos.z < 0.0
       b.vel.z -= 10.0 if b.pos.z > 100.0
-      next unless b.pos.y > @perch_y && rand < @perch
-      b.pos.y = @perch_y
+      next unless b.pos.y > perch_y && rand < perch
+      b.pos.y = perch_y
       b.vel.y = -(b.vel.y.abs) * 0.2
       b.is_perching = true
-      @perch_time.respond_to?(:call) ? b.perch_time = @perch_time.call : b.perch_time = @perch_time
+      b.perch_time = perch_tm.respond_to?(:call) ? perch_tm.call : perch_tm
     end
   end
 
@@ -159,7 +159,6 @@ class Boids
     cohesion = args.fetch(:cohesion, 100)
     separation = args.fetch(:separation, 10)
     alignment = args.fetch(:alignment, 5.0)
-
     # Just flutter, little boids ... just flutter away.
     # Shuffling keeps things flowing smooth.
     shuffle! if shuffled
@@ -192,7 +191,8 @@ class Boids
       v2 = b.separation(radius: separation)
       v3 = b.alignment(d: alignment)
       v4 = b.goal(@goal, goal)
-      b.vel += ((v1 * m1) + (v2 * m2) + (v3 * m3) + (v4 * m4))
+      # NB: vector must precede scalar in '*' operation below
+      b.vel += (v1 * m1 + v2 * m2 + v3 * m3 + v4 * m4)
       b.limit(max: limit)
       b.pos += b.vel
     end
