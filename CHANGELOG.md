@@ -1,4 +1,6 @@
-**v0.9.0** Require processing-3.0 and using jruby-complete-9.0.3.0 (no 9.0.2.0 owing to snafu at jruby.org) use github.io for home. Re-factor boids to use Vec3D, Vec2D and keyword arguments.
+**v1.0.0** Using jruby-complete-9.0.3.0 (no 9.0.2.0 owing to snafu at jruby.org) use github.io for home. Re-factor boids to use Vec3D, Vec2D and keyword arguments.
+
+**v0.9.0** Require processing-3.0.
 
 **v0.8.0** Require processing-3.0b7 and using jruby-9.0.1.0 replaced spec tests with minitest.
 
