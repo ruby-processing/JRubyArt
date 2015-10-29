@@ -28,7 +28,7 @@ module Processing
 
     Common options:
     --nojruby:  use jruby-complete in place of an installed version of jruby
-    (Set [JRUBY: 'false'] in .k9rc to make using jruby-complete default)
+    (Set [JRUBY: 'false'] in .jruby_art/config.yml to make using jruby-complete default)
 
     Examples:
     k9 setup unpack_samples
@@ -38,7 +38,7 @@ module Processing
     k9 watch some_new_sketch.rb
 
     Everything Else:
-    http://wiki.github.com/monkstone/jruby_art-3.0
+    https://ruby-processing.github.io/
 
     EOS
 
@@ -143,12 +143,8 @@ module Processing
       root = '  PROCESSING_ROOT = Not Set!!!' unless root_exist
       root ||= "  PROCESSING_ROOT = #{Processing::RP_CONFIG['PROCESSING_ROOT']}"
       jruby = Processing::RP_CONFIG['JRUBY']
-      x_off = Processing::RP_CONFIG['X_OFF']
-      y_off = Processing::RP_CONFIG['Y_OFF']
       puts root
       puts "  JRUBY = #{jruby}" unless jruby.nil?
-      puts "  X_OFF = #{x_off}" unless x_off.nil?
-      puts "  Y_OFF = #{y_off}" unless y_off.nil?
       puts "  jruby-complete installed = #{installed}"
     end
 
@@ -165,10 +161,10 @@ module Processing
     private
 
     # Trade in this Ruby instance for a JRuby instance, loading in a starter
-    # script and passing it some arguments.Unless '--nojruby' is passed, the
+    # script and passing it some arguments. Unless '--nojruby' is passed, the
     # installed version of jruby is used instead of our vendored jarred one
     # (which is required for some sketches eg shaders). To use
-    # jruby-complete by default set JRUBY: false in ~/.k9rc config
+    # jruby-complete by default set JRUBY: false in ~/.jruby_art/config.yml
     # (but that will make using other gems in your sketches hard....)
     def spin_up(starter_script, sketch, args)
       runner = "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}"
