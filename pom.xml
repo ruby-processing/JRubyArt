@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.ruby-processing</groupId>
+  <artifactId>rp5extras</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+  <description>
+    rp5extras for JRubyArt
+  </description>
+
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+
+  <issueManagement>
+    <system>Github</system>
+    <url>https://github.com/ruby-processing/JRubyArt/issues</url>
+  </issueManagement>
+
+  <scm>
+    <connection>scm:git:git://github.com/ruby-processing/JRubyArt.git</connection>
+    <developerConnection>scm:git:git@github.com:ruby-processing/JRubyArt.git</developerConnection>
+    <url>https://github.com/ruby-processing/JRubyArt</url>
+  </scm>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+    <license>
+      <name>LGPL 2</name>
+      <url>http://www.gnu.org/licenses/lgpl-2.1-standalone.html</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>monkstone</id>
+      <name>Martin Prout</name>
+      <email>martin_p@lineone.net</email>
+    </developer>
+  </developers>
+  <dependencies>
+    <dependency>
+      <groupId>org.jruby</groupId>
+      <artifactId>jruby</artifactId>
+      <version>9.0.3.0</version>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>core</artifactId>
+      <scope>system</scope>
+      <version>3.0.1</version>
+      <systemPath>${processing.home}/core/library/core.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>video</artifactId>
+      <scope>system</scope>
+      <version>3.0.1</version>
+      <systemPath>${processing.sketchbook}/libraries/video/library/video.jar</systemPath>
+    </dependency>
+  </dependencies>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <!-- for Mac developers, non Archlinux and Windows can probably figure it out
+    <processing.home>/Applications/Processing.app/Contents/Java</processing.home> 
+    -->
+    <processing.home>/usr/share/processing</processing.home>
+    <!-- for Mac developers, non Archlinux and Windows can probably figure it out
+    <processing.sketchbook>${user.home}/Documents/Processing</processing.sketchbook> 
+    -->
+    <processing.sketchbook>${user.home}/sketchbook</processing.sketchbook>
+  </properties>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <finalName>rpextras</finalName>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-webdav-jackrabbit</artifactId>
+        <version>2.1</version>
+      </extension>
+    </extensions>
+    <plugins>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifestFile>MANIFEST.MF</manifestFile>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

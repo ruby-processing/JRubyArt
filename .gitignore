@@ -3,7 +3,7 @@
 /.config
 /coverage/
 /InstalledFiles
-/pkg/
+/target/
 /spec/reports/
 /test/tmp/
 /test/version_tmp/
@@ -15,7 +15,7 @@
 .dat*
 .repl_history
 build/
-
+MANIFEST.MF
 ## Documentation cache and generated files:
 /.yardoc/
 /_yardoc/

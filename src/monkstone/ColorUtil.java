@@ -29,18 +29,38 @@ public class ColorUtil {
         }
     }
 
+    /**
+     *
+     * @param hexstring
+     * @return
+     */
     static public int colorString(String hexstring) {
         return java.awt.Color.decode(hexstring).getRGB();
     }
 
+    /**
+     *
+     * @param hex
+     * @return
+     */
     static public float colorLong(double hex) {
         return (float) hex;
     }
     
+    /**
+     *
+     * @param hexlong
+     * @return
+     */
     static public int colorLong(long hexlong){
        return hexLong(hexlong);
     }
 
+    /**
+     *
+     * @param hex
+     * @return
+     */
     static public float colorDouble(double hex){
        return (float)hex;
     }
