@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.ruby-processing</groupId>
+  <groupId>ruby-processing</groupId>
   <artifactId>rp5extras</artifactId>
   <version>1.0</version>
   <packaging>jar</packaging>
@@ -22,7 +22,7 @@
 
   <scm>
     <connection>scm:git:git://github.com/ruby-processing/JRubyArt.git</connection>
-    <developerConnection>scm:git:git@github.com:ruby-processing/JRubyArt.git</developerConnection>
+    <developerConnection>scm:git:git@github.com/ruby-processing/JRubyArt.git</developerConnection>
     <url>https://github.com/ruby-processing/JRubyArt</url>
   </scm>
 
@@ -46,9 +46,9 @@
   </developers>
   <dependencies>
     <dependency>
-      <groupId>org.jruby</groupId>
-      <artifactId>jruby</artifactId>
-      <version>9.0.3.0</version>
+	    <groupId>org.jruby</groupId>
+	    <artifactId>jruby</artifactId>
+	    <version>9.0.4.0</version>
       <type>pom</type>
     </dependency>
     <dependency>
@@ -90,18 +90,6 @@
       </extension>
     </extensions>
     <plugins>
-      <plugin>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>2.2.1</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>
