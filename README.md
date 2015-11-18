@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 
 ## Requirements
-A clean start for `jruby_art` based on [processing-3.0](https://github.com/processing/processing/releases) and [jruby-9.0.4.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][]
+A clean start for `jruby_art` based on [processing-3.0](https://github.com/processing/processing/releases) and [jruby-9.0.4.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
  
 A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.3.0+` to download gem. 
