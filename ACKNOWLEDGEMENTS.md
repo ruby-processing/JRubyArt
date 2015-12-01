@@ -1,5 +1,5 @@
 # JRubyArt
-Depends on jruby, and processing, without them this project would not exist. Currently I see this as being a development branch for ruby-processing and many others were involved in developing that see [github][] for a complete list of contributors. This is "clean" fork so for history see [github] logs.
+Depends on jruby, and processing, without them this project would not exist. I see this as being a development of ruby-processing and many others were involved in developing that see [github][] for a complete list of contributors. This is fresh start so for ruby-processing history see [github] logs.
 
 ## JRuby
 
