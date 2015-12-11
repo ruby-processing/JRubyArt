@@ -5,10 +5,10 @@ require 'jruby_art/version'
 require 'rake'
 
 Gem::Specification.new do |spec|
-  spec.name = "jruby_art"
+  spec.name = 'jruby_art'
   spec.version = JRubyArt::VERSION
   spec.authors = %w(Jeremy\ Ashkenas Guillaume\ Pierronnet Martin\ Prout)
-  spec.email = "martin_p@lineone.net"
+  spec.email = 'martin_p@lineone.net'
   spec.description = <<-EOS
   JRubyArt is a ruby wrapper for the processing art framework.
   The current version supports processing-3.0, and uses jruby-9.0.3.0
@@ -29,12 +29,12 @@ Gem::Specification.new do |spec|
 
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 2.2'
-  spec.add_development_dependency "rake", "~> 10.4"
-  spec.add_development_dependency "minitest", "~> 5.8"
+  spec.add_development_dependency 'rake', '~> 10.4'
+  spec.add_development_dependency 'minitest', '~> 5.8'
+  spec.add_development_dependency 'maven', '~> 3.3', '>= 3.3.3'
   spec.requirements << 'A decent graphics card'
   spec.requirements << 'java runtime >= 1.8+'
   spec.requirements << 'processing = 3.0.1+'
-  spec.requirements << 'maven = 3.3.3'
 end
