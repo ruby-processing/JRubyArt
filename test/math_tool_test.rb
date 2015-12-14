@@ -11,8 +11,6 @@ Java::Monkstone::MathToolLibrary.new.load(JRuby.runtime, false)
 include Processing::HelperMethods
 include Processing::MathTool
 
-EPSILON ||= 1.0e-04
-
 Dir.chdir(File.dirname(__FILE__))
 
 class MathToolTest < Minitest::Test

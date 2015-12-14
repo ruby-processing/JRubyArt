@@ -1,6 +1,7 @@
 # require 'rpextras'
-
+#@todo fix how we call LIbrary Proxy
 LibraryProxy = Java::MonkstoneCore::AbstractLibrary
+
 
 # classes that inherit from Library are expected to implement
 # the abstract methods of processing.core.AbstractLibrary

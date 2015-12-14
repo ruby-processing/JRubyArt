@@ -5,16 +5,10 @@ require 'minitest/pride'
 
 require_relative '../lib/jruby_art/helper_methods'
 
-include Processing::HelperMethods
-
-EPSILON ||= 1.0e-04
-
 Java::Monkstone::MathToolLibrary.new.load(JRuby.runtime, false)
 
 include Processing::HelperMethods
 include Processing::MathTool
-
-EPSILON ||= 1.0e-04
 
 Dir.chdir(File.dirname(__FILE__))
 

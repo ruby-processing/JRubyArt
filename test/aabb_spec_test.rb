@@ -9,11 +9,10 @@ require_relative '../lib/jruby_art/helpers/aabb'
 Java::MonkstoneVecmathVec2::Vec2Library.new.load(JRuby.runtime, false)
 Java::MonkstoneVecmathVec3::Vec3Library.new.load(JRuby.runtime, false)
 
-EPSILON ||= 1.0e-04
-
 Dir.chdir(File.dirname(__FILE__))
 
 class MathToolTest < Minitest::Test
+  
   def test_aabb_new
     x, y  = 1.0000001, 1.01
     a = Vec2D.new(x, y)
@@ -32,4 +31,3 @@ class MathToolTest < Minitest::Test
     assert a.center == Vec2D.new
   end
 end
-

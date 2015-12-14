@@ -19,9 +19,10 @@ module Processing
   Java::MonkstoneVecmathVec3::Vec3Library.load(JRuby.runtime)
   Java::MonkstoneFastmath::DeglutLibrary.load(JRuby.runtime)
   Java::Monkstone::MathToolLibrary.load(JRuby.runtime)
-  AppRender ||= Java::MonkstoneVecmath::AppRender
-  ShapeRender ||= Java::MonkstoneVecmath::ShapeRender
-
+  module Render
+    java_import 'monkstone.vecmath.AppRender'
+    java_import 'monkstone.vecmath.ShapeRender'
+  end
   # Watch the definition of these methods, to make sure
   # that Processing is able to call them during events.
   METHODS_TO_ALIAS ||= {
@@ -36,7 +37,7 @@ module Processing
   }
   # All sketches extend this class
   class App < PApplet
-    include HelperMethods, Math, MathTool
+    include HelperMethods, Math, MathTool, Render
     # Alias some methods for familiarity for Shoes coders.
     # surface replaces :frame, but needs field_reader for access
     alias_method :oval, :ellipse

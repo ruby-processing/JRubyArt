@@ -8,11 +8,17 @@ require_relative '../lib/rpextras'
 Java::MonkstoneVecmathVec2::Vec2Library.load(JRuby.runtime)
 Java::MonkstoneVecmathVec3::Vec3Library.load(JRuby.runtime)
 
-EPSILON = 1.0e-04
+epsilon = 1.0e-04
 
 Dir.chdir(File.dirname(__FILE__))
 
 class VecmathTest < Minitest::Test
+  attr_reader :epsilon
+
+  def setup
+    @epsilon = 1.0e-04
+  end
+  
   def test_equals
     x, y = 1.0000001, 1.01
     a = Vec2D.new(x, y)
@@ -90,7 +96,7 @@ class VecmathTest < Minitest::Test
   def test_random
     a = Vec2D.random
     assert a.kind_of? Vec2D
-    assert_in_delta(a.mag, 1.0, EPSILON)
+    assert_in_delta(a.mag, 1.0, epsilon)
   end
 
   def test_assign_value
@@ -107,7 +113,7 @@ class VecmathTest < Minitest::Test
   def test_mag_variant
     a = Vec2D.new(3.0, 2)
     b = Math.sqrt(3.0**2 + 2**2)
-    assert_in_delta(a.mag, b, EPSILON, 'Failed to return magnitude of vector')
+    assert_in_delta(a.mag, b, epsilon, 'Failed to return magnitude of vector')
   end
 
   def test_mag_zero_one
@@ -172,18 +178,18 @@ class VecmathTest < Minitest::Test
   def test_normalize
     a = Vec2D.new(3, 5)
     b = a.normalize
-    assert_in_delta(b.mag, 1, EPSILON, 'Failed to return a normalized vector')
+    assert_in_delta(b.mag, 1, epsilon, 'Failed to return a normalized vector')
   end
 
   def test_normalize!
     a = Vec2D.new(3, 5)
     a.normalize!
-    assert_in_delta(a.mag, 1, EPSILON, 'Failed to return a normalized! vector')
+    assert_in_delta(a.mag, 1, epsilon, 'Failed to return a normalized! vector')
   end
 
   def test_heading
     a = Vec2D.new(1, 1)
-    assert_in_delta(a.heading, Math::PI / 4.0, EPSILON, 'Failed to return heading in radians')
+    assert_in_delta(a.heading, Math::PI / 4.0, epsilon, 'Failed to return heading in radians')
   end
 
   def test_rotate
@@ -291,7 +297,7 @@ class VecmathTest < Minitest::Test
   def test_random
     a = Vec3D.random
     assert a.kind_of? Vec3D
-    assert_in_delta(a.mag, 1.0, EPSILON)
+    assert_in_delta(a.mag, 1.0, epsilon)
   end
 
   def test_assign_value
@@ -308,7 +314,7 @@ class VecmathTest < Minitest::Test
   def test_mag_variant
     a = Vec3D.new(3.0, 2)
     b = Math.sqrt(3.0**2 + 2**2)
-    assert_in_delta(a.mag, b, EPSILON, 'Failed to return magnitude of vector')
+    assert_in_delta(a.mag, b, epsilon, 'Failed to return magnitude of vector')
   end
 
   def test_mag_zero_one
@@ -368,13 +374,13 @@ class VecmathTest < Minitest::Test
   def test_normalize
     a = Vec3D.new(3, 5)
     b = a.normalize
-    assert_in_delta(b.mag, 1, EPSILON, 'Failed to return a normalized vector')
+    assert_in_delta(b.mag, 1, epsilon, 'Failed to return a normalized vector')
   end
 
   def test_normalize!
     a = Vec3D.new(3, 5)
     a.normalize!
-    assert_in_delta(a.mag, 1, EPSILON, 'Failed to return a normalized! vector')
+    assert_in_delta(a.mag, 1, epsilon, 'Failed to return a normalized! vector')
   end
 
   def test_inspect
