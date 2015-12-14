@@ -1,3 +1,4 @@
+**v1.0.2** Various cleanups, favoring SHA256 over SHA1 to check jruby-complete
 
 **v1.0.1** Using jruby-complete-9.0.4.0, features reworked extension build using maven
 
