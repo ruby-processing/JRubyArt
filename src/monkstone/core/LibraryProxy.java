@@ -10,7 +10,7 @@ import static processing.core.PConstants.*;
  * PConstants should also be available from static import
  * @author Martin Prout
  */
-public abstract class AbstractLibrary {
+public abstract class LibraryProxy {
 
     private final processing.core.PApplet app;
 
@@ -23,7 +23,7 @@ public abstract class AbstractLibrary {
      *
      * @param app PApplet
      */
-    public AbstractLibrary(processing.core.PApplet app) {
+    public LibraryProxy(processing.core.PApplet app) {
         this.app = app;
         this.width = app.width;
         this.height = app.height;
