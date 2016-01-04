@@ -218,8 +218,8 @@ module Processing
       writer.save(template)
     end
   end
-  
-    # This class creates class wrapped sketches, with an optional render mode
+
+  # This class creates class wrapped sketches, with an optional render mode
   class EmacsSketch < Creator
     def emacs_template
       format(EMACS_BASIC, @name, @title, @width, @height, @name)

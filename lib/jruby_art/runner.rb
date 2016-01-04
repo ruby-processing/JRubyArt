@@ -64,7 +64,7 @@ module Processing
     def execute!
       case @options.action
       when 'run'    then run(@options.path, @options.args)
-      when 'live'   then live(@options.path, @options.args)  
+      when 'live'   then live(@options.path, @options.args)
       when 'watch'  then watch(@options.path, @options.args)
       when 'create' then create(@options.path, @options.args)
       when 'setup'  then setup(@options.path)
@@ -103,7 +103,7 @@ module Processing
       ensure_exists(sketch)
       spin_up('run.rb', sketch, args)
     end
-    
+
     # Just simply run a JRubyArt sketch.
     def live(sketch, args)
       ensure_exists(sketch)
@@ -221,11 +221,11 @@ module Processing
       warn "#{rcomplete} does not exist\nTry running `k9 setup install`"
       exit
     end
-    
+
     def libraries
       %w(video sound).map { |library| sketchbook_library(library) }.flatten
     end
-    
+
     def sketchbook_library(name)
       Dir["#{Processing::RP_CONFIG['sketchbook_path']}/libraries/#{name}/library/\*.jar"]
     end
@@ -252,7 +252,7 @@ module Processing
       if os == :mac
         data['PROCESSING_ROOT'] = '/Applications/Processing.app/Contents/Java'
       else
-        root = "#{ENV['HOME']}/processing-3.0"
+        root = "#{ENV['HOME']}/processing-3.0.1"
         data['PROCESSING_ROOT'] = root
       end
       data['JRUBY'] = 'true'

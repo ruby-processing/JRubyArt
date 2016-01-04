@@ -8,7 +8,7 @@ require_relative '../lib/rpextras'
 Java::MonkstoneVecmathVec2::Vec2Library.load(JRuby.runtime)
 Java::MonkstoneVecmathVec3::Vec3Library.load(JRuby.runtime)
 
-epsilon = 1.0e-04
+# epsilon = 1.0e-04
 
 Dir.chdir(File.dirname(__FILE__))
 
@@ -85,7 +85,12 @@ class VecmathTest < Minitest::Test
   def test_dot
     a = Vec2D.new(3, 5)
     b = Vec2D.new(6, 7)
-    assert_equal(a.dot(b), 53, 'Failed to dot product')
+    assert_in_delta(a.dot(b), 53, epsilon, 'Failed to dot product')
+  end
+
+  def test_self_dot
+    a = Vec2D.new(3, 5)
+    assert_in_delta(a.dot(a), 34, epsilon, 'Failed self dot product')
   end
 
   def test_from_angle
@@ -107,7 +112,7 @@ class VecmathTest < Minitest::Test
 
   def test_mag
     a = Vec2D.new(-3, -4)
-    assert_equal(a.mag, 5, 'Failed to return magnitude of vector')
+    assert_in_delta(a.mag, 5, epsilon, 'Failed to return magnitude of vector')
   end
 
   def test_mag_variant
@@ -118,13 +123,13 @@ class VecmathTest < Minitest::Test
 
   def test_mag_zero_one
     a = Vec2D.new(-1, 0)
-    assert_equal(a.mag, 1, 'Failed to return magnitude of vector')
+    assert_in_delta(a.mag, 1, epsilon, 'Failed to return magnitude of vector')
   end
 
   def test_dist
     a = Vec2D.new(3, 5)
     b = Vec2D.new(6, 7)
-    assert_equal(a.dist(b), Math.sqrt(3.0**2 + 2**2), 'Failed to return distance between two vectors')
+    assert_in_delta(a.dist(b), Math.sqrt(3.0**2 + 2**2), epsilon, 'Failed to return distance between two vectors')
   end
 
   def test_lerp
@@ -339,7 +344,12 @@ class VecmathTest < Minitest::Test
   def test_dot
     a = Vec3D.new(10, 20, 0)
     b = Vec3D.new(60, 80, 0)
-    assert_equal(a.dot(b), 2200.0, 'Failed to dot product')
+    assert_in_delta(a.dot(b), 2200.0, epsilon, 'Failed to dot product')
+  end
+
+  def test_self_dot
+    a = Vec3D.new(10, 20, 4)
+    assert_in_delta(a.dot(a), 516.0, epsilon, 'Failed to self dot product')
   end
   
   def test_cross

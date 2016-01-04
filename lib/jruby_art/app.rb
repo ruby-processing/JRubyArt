@@ -8,7 +8,7 @@ require_relative '../jruby_art/config'
 
 # A wrapper module for the processing App
 module Processing
-  Dir[format("%s/core/library/\*.jar", RP_CONFIG['PROCESSING_ROOT'])].each do |jar| 
+  Dir[format("%s/core/library/\*.jar", RP_CONFIG['PROCESSING_ROOT'])].each do |jar|
     require jar unless jar =~ /native/
   end
   # Include some core processing classes that we'd like to use:
@@ -125,11 +125,11 @@ module Processing
     def sketch_title(title)
       surface.set_title(title)
     end
-    
+
     def sketch_size(x, y)
       surface.set_size(x, y)
     end
-    
+
     def resizable(arg = true)
       surface.set_resizable(arg)
     end
@@ -148,7 +148,7 @@ module Processing
     def close
       control_panel.remove if respond_to?(:control_panel)
       surface.stopThread
-      surface.setVisible(false) if surface.isStopped()
+      surface.setVisible(false) if surface.isStopped
       dispose
     end
 

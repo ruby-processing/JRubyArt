@@ -1,8 +1,7 @@
-# The processing wrapper module
 require_relative '../jruby_art'
 
+# The processing wrapper module
 module Processing
-
   # Encapsulate library loader functionality as a class
   class LibraryLoader
     attr_reader :sketchbook_library_path
@@ -83,10 +82,10 @@ module Processing
       # for MacOSX, but does this even work, or does Mac return '64'?
       bits = 'universal'
       if java.lang.System.getProperty('sun.arch.data.model') == '32' ||
-        java.lang.System.getProperty('java.vm.name').index('32')
+         java.lang.System.getProperty('java.vm.name').index('32')
         bits = '32'
       elsif java.lang.System.getProperty('sun.arch.data.model') == '64' ||
-        java.lang.System.getProperty('java.vm.name').index('64')
+            java.lang.System.getProperty('java.vm.name').index('64')
         bits = '64' unless platform =~ /macosx/
       end
       [platform, platform + bits].map { |p| File.join(basename, p) }

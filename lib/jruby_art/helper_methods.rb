@@ -16,12 +16,12 @@ module Processing
       buf.end_draw
       buf
     end
-    
+
     def kamera(
-        eye: Vec3D.new(width / 2.0, height / 2.0, (height / 2.0) / tan(PI * 30.0 / 180.0)),
-        center: Vec3D.new(width / 2.0, height / 2.0, 0),
-        up: Vec3D.new(0, 1.0, 0))
-        camera(eye.x, eye.y, eye.z, center.x, center.y, center.z, up.x, up.y, up.z)
+      eye: Vec3D.new(width / 2.0, height / 2.0, (height / 2.0) / tan(PI * 30.0 / 180.0)),
+      center: Vec3D.new(width / 2.0, height / 2.0, 0),
+      up: Vec3D.new(0, 1.0, 0))
+      camera(eye.x, eye.y, eye.z, center.x, center.y, center.z, up.x, up.y, up.z)
     end
 
     # A nice method to run a given block for a grid.
@@ -59,14 +59,14 @@ module Processing
     # to return a float:- a, b and c need to be floats
 
     def min(*args)
-      args.min  #  { |a,b| a <=> b } optional block not reqd
+      args.min # { |a,b| a <=> b } optional block not reqd
     end
 
     # explicitly provide 'processing.org' max instance method
     # to return a float:- a, b and c need to be floats
 
     def max(*args)
-      args.max  #  { |a, b| a <=> b } optional block not reqd
+      args.max # { |a, b| a <=> b } optional block not reqd
     end
 
     # explicitly provide 'processing.org' dist instance method
