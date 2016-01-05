@@ -33,7 +33,6 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.2'
   spec.add_development_dependency 'rake', '~> 10.4'
   spec.add_development_dependency 'minitest', '~> 5.8'
-  spec.add_development_dependency 'maven', '~> 3.3', '>= 3.3.3'
   spec.requirements << 'A decent graphics card'
   spec.requirements << 'java runtime >= 1.8+'
   spec.requirements << 'processing = 3.0.1+'
