@@ -1,3 +1,6 @@
+
+**v1.0.3** Build now using processing-3.0.1 core and matching video jars from maven central (maven complains unstable, but processing.org are supposedly using it!)
+
 **v1.0.2** Various cleanups, favoring SHA256 over SHA1 to check jruby-complete
 
 **v1.0.1** Using jruby-complete-9.0.4.0, features reworked extension build using maven
