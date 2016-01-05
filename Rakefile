@@ -34,7 +34,7 @@ task :test do
   sh "jruby test/math_tool_test.rb"
   sh "jruby test/helper_methods_test.rb"
   sh "jruby test/aabb_spec_test.rb"
-  ruby "test/k9_run_test.rb"  	
+  # ruby "test/k9_run_test.rb" un-comment to run sketch tests
 end
 
 desc 'clean'
