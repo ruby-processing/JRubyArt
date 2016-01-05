@@ -6,5 +6,5 @@ rvm:
   - jruby-head
 
 jdk:
-  -oraclejdk8
+  - oraclejdk8
 
