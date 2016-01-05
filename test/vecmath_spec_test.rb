@@ -8,17 +8,17 @@ require_relative '../lib/rpextras'
 Java::MonkstoneVecmathVec2::Vec2Library.load(JRuby.runtime)
 Java::MonkstoneVecmathVec3::Vec3Library.load(JRuby.runtime)
 
-# epsilon = 1.0e-04
+
 
 Dir.chdir(File.dirname(__FILE__))
 
 class VecmathTest < Minitest::Test
-  attr_reader :epsilon
+
 
   def setup
-    @epsilon = 1.0e-04
+
   end
-  
+
   def test_equals
     x, y = 1.0000001, 1.01
     a = Vec2D.new(x, y)
@@ -81,16 +81,16 @@ class VecmathTest < Minitest::Test
     d = a / b
     assert_equal(c, d, 'Failed to divide vector by scalar')
   end
-  
+
   def test_dot
     a = Vec2D.new(3, 5)
     b = Vec2D.new(6, 7)
-    assert_in_delta(a.dot(b), 53, epsilon, 'Failed to dot product')
+    assert_in_epsilon(a.dot(b), 53, 0.001, 'Failed to dot product')
   end
 
   def test_self_dot
     a = Vec2D.new(3, 5)
-    assert_in_delta(a.dot(a), 34, epsilon, 'Failed self dot product')
+    assert_in_epsilon(a.dot(a), 34, 0.001, 'Failed self dot product')
   end
 
   def test_from_angle
@@ -101,7 +101,7 @@ class VecmathTest < Minitest::Test
   def test_random
     a = Vec2D.random
     assert a.kind_of? Vec2D
-    assert_in_delta(a.mag, 1.0, epsilon)
+    assert_in_epsilon(a.mag, 1.0)
   end
 
   def test_assign_value
@@ -112,24 +112,24 @@ class VecmathTest < Minitest::Test
 
   def test_mag
     a = Vec2D.new(-3, -4)
-    assert_in_delta(a.mag, 5, epsilon, 'Failed to return magnitude of vector')
+    assert_in_epsilon(a.mag, 5, 0.001,'Failed to return magnitude of vector')
   end
 
   def test_mag_variant
     a = Vec2D.new(3.0, 2)
     b = Math.sqrt(3.0**2 + 2**2)
-    assert_in_delta(a.mag, b, epsilon, 'Failed to return magnitude of vector')
+    assert_in_epsilon(a.mag, b, 0.001, 'Failed to return magnitude of vector')
   end
 
   def test_mag_zero_one
     a = Vec2D.new(-1, 0)
-    assert_in_delta(a.mag, 1, epsilon, 'Failed to return magnitude of vector')
+    assert_in_epsilon(a.mag, 1, 0.001, 'Failed to return magnitude of vector')
   end
 
   def test_dist
     a = Vec2D.new(3, 5)
     b = Vec2D.new(6, 7)
-    assert_in_delta(a.dist(b), Math.sqrt(3.0**2 + 2**2), epsilon, 'Failed to return distance between two vectors')
+    assert_in_epsilon(a.dist(b), Math.sqrt(3.0**2 + 2**2), 'Failed to return distance between two vectors')
   end
 
   def test_lerp
@@ -183,18 +183,18 @@ class VecmathTest < Minitest::Test
   def test_normalize
     a = Vec2D.new(3, 5)
     b = a.normalize
-    assert_in_delta(b.mag, 1, epsilon, 'Failed to return a normalized vector')
+    assert_in_epsilon(b.mag, 1, 0.001, 'Failed to return a normalized vector')
   end
 
   def test_normalize!
     a = Vec2D.new(3, 5)
     a.normalize!
-    assert_in_delta(a.mag, 1, epsilon, 'Failed to return a normalized! vector')
+    assert_in_epsilon(a.mag, 1, 0.001, 'Failed to return a normalized! vector')
   end
 
   def test_heading
     a = Vec2D.new(1, 1)
-    assert_in_delta(a.heading, Math::PI / 4.0, epsilon, 'Failed to return heading in radians')
+    assert_in_epsilon(a.heading, Math::PI / 4.0, 0.001, 'Failed to return heading in radians')
   end
 
   def test_rotate
@@ -203,7 +203,7 @@ class VecmathTest < Minitest::Test
     a = b.rotate(Math::PI / 2)
     assert_equal(a, Vec2D.new(-10, 20), 'Failed to rotate vector by scalar radians')
   end
-  
+
   def test_hash_index
     x, y = 10, 20
     b = Vec2D.new(x, y)
@@ -302,7 +302,7 @@ class VecmathTest < Minitest::Test
   def test_random
     a = Vec3D.random
     assert a.kind_of? Vec3D
-    assert_in_delta(a.mag, 1.0, epsilon)
+    assert_in_epsilon(a.mag, 1.0)
   end
 
   def test_assign_value
@@ -319,7 +319,7 @@ class VecmathTest < Minitest::Test
   def test_mag_variant
     a = Vec3D.new(3.0, 2)
     b = Math.sqrt(3.0**2 + 2**2)
-    assert_in_delta(a.mag, b, epsilon, 'Failed to return magnitude of vector')
+    assert_in_epsilon(a.mag, b, 0.001, 'Failed to return magnitude of vector')
   end
 
   def test_mag_zero_one
@@ -333,25 +333,25 @@ class VecmathTest < Minitest::Test
     message = 'Failed to return distance between two vectors'
     assert_equal(a.dist(b), Math.sqrt(3.0**2 + 2**2 + 1), message)
   end
-  
+
   def test_dist_squared
     a = Vec3D.new(3, 5, 2)
     b = Vec3D.new(6, 7, 1)
     message = 'Failed to return distance squared between two vectors'
     assert_equal(a.dist_squared(b), 3.0**2 + 2**2 + 1, message)
   end
- 
+
   def test_dot
     a = Vec3D.new(10, 20, 0)
     b = Vec3D.new(60, 80, 0)
-    assert_in_delta(a.dot(b), 2200.0, epsilon, 'Failed to dot product')
+    assert_in_epsilon(a.dot(b), 2200.0, 0.001, 'Failed to dot product')
   end
 
   def test_self_dot
     a = Vec3D.new(10, 20, 4)
-    assert_in_delta(a.dot(a), 516.0, epsilon, 'Failed to self dot product')
+    assert_in_epsilon(a.dot(a), 516.0, 0.001, 'Failed to self dot product')
   end
-  
+
   def test_cross
     a = Vec3D.new(3, 5, 2)
     b = Vec3D.new(6, 7, 1)
@@ -384,13 +384,13 @@ class VecmathTest < Minitest::Test
   def test_normalize
     a = Vec3D.new(3, 5)
     b = a.normalize
-    assert_in_delta(b.mag, 1, epsilon, 'Failed to return a normalized vector')
+    assert_in_epsilon(b.mag, 1, 0.001, 'Failed to return a normalized vector')
   end
 
   def test_normalize!
     a = Vec3D.new(3, 5)
     a.normalize!
-    assert_in_delta(a.mag, 1, epsilon, 'Failed to return a normalized! vector')
+    assert_in_epsilon(a.mag, 1, 0.001, 'Failed to return a normalized! vector')
   end
 
   def test_inspect
@@ -411,30 +411,30 @@ class VecmathTest < Minitest::Test
     expected = [Vec3D.new(1, 2), Vec3D.new(1, 2), Vec3D.new(10, 2), Vec3D.new(10, 2), Vec3D.new(1, 2), Vec3D.new(1, 2)]
     assert_equal(zipped, expected)
   end
-  
+
   def test_eql?
     a = Vec3D.new(3.0, 5.0, 0)
     b = Vec3D.new(3.0, 5.0, 0)
     assert(a.eql?(b))
   end
-  
+
   def test_not_eql?
     a = Vec3D.new(3.0, 5.0, 0)
     b = Vec3D.new(3.0, 5.000001, 0)
     refute(a.eql?(b))
   end
-  
+
   def test_equal?
     a = Vec3D.new(3.0, 5.0, 0)
     assert(a.equal?(a))
   end
-  
+
   def test_not_equal?
     a = Vec3D.new(3.0, 5.0, 0)
     b = Vec3D.new(3.0, 5.0, 0)
     refute(a.equal?(b))
   end
-  
+
   def test_hash_key
     x, y, z = 10, 20, 50
     b = Vec3D.new(x, y, z)

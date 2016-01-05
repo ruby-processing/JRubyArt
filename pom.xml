@@ -46,38 +46,26 @@
   </developers>
   <dependencies>
     <dependency>
-	    <groupId>org.jruby</groupId>
-	    <artifactId>jruby</artifactId>
-	    <version>9.0.4.0</version>
+      <groupId>org.jruby</groupId>
+      <artifactId>jruby</artifactId>
+      <version>9.0.4.0</version>
       <type>pom</type>
     </dependency>
     <dependency>
       <groupId>org.processing</groupId>
       <artifactId>core</artifactId>
-      <scope>system</scope>
       <version>3.0.1</version>
-      <systemPath>${processing.home}/core/library/core.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.processing</groupId>
       <artifactId>video</artifactId>
-      <scope>system</scope>
       <version>3.0.1</version>
-      <systemPath>${processing.sketchbook}/libraries/video/library/video.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <!-- for Mac developers, non Archlinux and Windows can probably figure it out
-    <processing.home>/Applications/Processing.app/Contents/Java</processing.home> 
-    -->
-    <processing.home>/usr/share/processing</processing.home>
-    <!-- for Mac developers, non Archlinux and Windows can probably figure it out
-    <processing.sketchbook>${user.home}/Documents/Processing</processing.sketchbook> 
-    -->
-    <processing.sketchbook>${user.home}/sketchbook</processing.sketchbook>
   </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>

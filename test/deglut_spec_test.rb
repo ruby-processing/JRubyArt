@@ -10,10 +10,9 @@ Java::MonkstoneFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
 Dir.chdir(File.dirname(__FILE__))
 
 class DeglutTest < Minitest::Test
-  attr_reader :epsilon, :to_radian
+  attr_reader :to_radian
 
   def setup
-    @epsilon = 1.0e-04
     @to_radian = Math::PI / 180
   end
 
@@ -21,10 +20,10 @@ class DeglutTest < Minitest::Test
     (-720..720).step(1) do |deg|
       sine = DegLut.sin(deg)
       deg_sin = Math.sin(deg * to_radian)
-      assert_in_delta(sine, deg_sin, epsilon)
+      assert_in_delta(sine, deg_sin)
       cosine = DegLut.cos(deg)
       deg_cos = Math.cos(deg * to_radian)
-      assert_in_delta(cosine, deg_cos, epsilon)
+      assert_in_delta(cosine, deg_cos)
     end
   end
 end
