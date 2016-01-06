@@ -18,29 +18,35 @@ end
 
 desc 'Build gem'
 task :gem do
-  sh "gem build jruby_art.gemspec" 
+  sh 'gem build jruby_art.gemspec' 
 end
 
 desc 'Compile'
 task :compile do
-  sh "mvn package"
-  sh "mv target/rpextras.jar lib"
+  sh 'mvn package'
+  sh 'mv target/rpextras.jar lib'
 end
 
 desc 'Test'
 task :test do
-  sh "jruby test/deglut_spec_test.rb"
-  sh "jruby test/vecmath_spec_test.rb"
-  sh "jruby test/math_tool_test.rb"
-  sh "jruby test/helper_methods_test.rb"
-  sh "jruby test/aabb_spec_test.rb"
-  # ruby "test/k9_run_test.rb" un-comment to run sketch tests
+  sh 'jruby test/deglut_spec_test.rb'
+  sh 'jruby test/vecmath_spec_test.rb'
+  sh 'jruby test/math_tool_test.rb'
+  sh 'jruby test/helper_methods_test.rb'
+  sh 'jruby test/aabb_spec_test.rb'
+  home = File.expand_path('~')
+  config = File.exist?(format('%s/.jruby_art/config.yml', home))
+  if config
+    ruby 'test/k9_run_test.rb'
+  else
+    warn format('You should create %s/.jruby_art/config.yml to run sketch tests', home)
+  end
 end
 
 desc 'clean'
 task :clean do
   Dir['./**/*.%w{jar gem}'].each do |path|
-    puts "Deleting #{path} ..."
+    puts 'Deleting #{path} ...'
     File.delete(path)
   end
   FileUtils.rm_rf('./target')
