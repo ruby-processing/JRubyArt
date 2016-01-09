@@ -1,5 +1,4 @@
-
-**v1.0.3** Build now using processing-3.0.1 core and matching video jars from maven central (maven complains unstable, but processing.org are supposedly using it!)
+**v1.0.3** Build now using processing-3.0.1 core and matching video jars from maven central and pom.rb build file (polyglot maven)
 
 **v1.0.2** Various cleanups, favoring SHA256 over SHA1 to check jruby-complete
 
