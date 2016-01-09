@@ -1,11 +1,13 @@
 require 'fileutils'
-project 'rp5extras', 'https://github.com/ruby-processing/JRuby' do
+project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
 
   model_version '4.0.0'
-  id 'monkstone:rp5extras', '1.0.3'
+  id 'ruby-processing:rp5extras', '1.0.3'
   packaging 'jar'
 
   description 'rp5extras for JRubyArt'
+
+  organization 'ruby-processing', 'https://ruby-processing.github.io'
 
   developer 'monkstone' do
     name 'Martin Prout'

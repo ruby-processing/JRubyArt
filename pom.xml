@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
 
-Do not edit auto generated
+AUTO GENERATED DO NOT EDIT (edit pom.rb instead)
 
 -->
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>monkstone</groupId>
+  <groupId>ruby-processing</groupId>
   <artifactId>rp5extras</artifactId>
   <version>1.0.3</version>
   <name>rp5extras</name>
   <description>rp5extras for JRubyArt</description>
-  <url>https://github.com/ruby-processing/JRuby</url>
+  <url>https://github.com/ruby-processing/JRubyArt</url>
+  <organization>
+    <name>ruby-processing</name>
+    <url>https://ruby-processing.github.io</url>
+  </organization>
   <developers>
     <developer>
       <id>monkstone</id>
