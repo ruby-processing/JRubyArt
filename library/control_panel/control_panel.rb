@@ -146,9 +146,9 @@ module ControlPanel
     def look_feel(lf)
       set_feel(lf)
     end
-    
+
     private
-    
+
     def set_feel(lf = 'metal')
       lafinfo = javax.swing.UIManager.getInstalledLookAndFeels
       laf = lafinfo.select do |info|
@@ -161,7 +161,7 @@ module ControlPanel
   # instance methods module
   module InstanceMethods
     def control_panel
-      @control_panel = ControlPanel::Panel.new unless @control_panel
+      @control_panel ||= ControlPanel::Panel.new
       return @control_panel unless block_given?
       yield(@control_panel)
       @control_panel.display
