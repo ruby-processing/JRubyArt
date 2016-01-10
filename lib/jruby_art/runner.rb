@@ -24,7 +24,7 @@ module Processing
     watch:            watch for changes on the file and relaunch it on the fly
     live:             run sketch and open a pry console bound to $app
     create [width height][mode][flag]: create a new sketch.
-    setup:            check setup, install jruby-complete, unpack samples
+    setup:            check / install / unpack_samples
 
     Common options:
     --nojruby:  use jruby-complete in place of an installed version of jruby
