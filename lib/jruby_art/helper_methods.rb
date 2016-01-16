@@ -71,13 +71,14 @@ module Processing
 
     # explicitly provide 'processing.org' dist instance method
     def dist(*args)
-      len = args.length
-      if len == 4
+      case args.length
+      when 4
         return dist2d(*args)
-      elsif len == 6
+      when 6
         return dist3d(*args)
+      else
+        fail ArgumentError, 'takes 4 or 6 parameters'
       end
-      fail ArgumentError, 'takes 4 or 6 parameters'
     end
 
     # Uses PImage class method under hood
@@ -161,15 +162,22 @@ module Processing
 
     private
 
+    FIXNUM_COL = -> (x) { x.is_a?(Fixnum) }
+    STRING_COL = -> (x) { x.is_a?(String) }
+    FLOAT_COL = -> (x) { x.is_a?(Float) }
     # parse single argument color int/double/String
     def hex_color(a)
-      if a.is_a?(Fixnum)
-        return Java::Monkstone::ColorUtil.colorLong(a)
-      elsif a.is_a?(String)
+      case a
+      when FIXNUM_COL
+        Java::Monkstone::ColorUtil.colorLong(a)
+      when STRING_COL
         return Java::Monkstone::ColorUtil.colorString(a) if a =~ /#\h+/
         fail StandardError, 'Dodgy Hexstring'
+      when FLOAT_COL
+        Java::Monkstone::ColorUtil.colorDouble(a)
+      else
+        fail StandardError, 'Dodgy Color Conversion'
       end
-      Java::Monkstone::ColorUtil.colorDouble(a)
     end
 
     def dist2d(*args)
