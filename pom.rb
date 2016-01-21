@@ -38,6 +38,8 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
     plugin( :compiler, '3.1',
           'source' =>  '1.8',
           'target' =>  '1.8' )
+    plugin( :javadoc, '2.10.3',
+          'link' =>  'http://processing.github.io/processing-javadocs/core' )
     plugin( :jar, '2.4',
             'archive' => {
               'manifestFile' => 'MANIFEST.MF'

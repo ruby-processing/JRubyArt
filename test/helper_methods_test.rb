@@ -23,16 +23,19 @@ class HelperMethodsTest < Minitest::Test
     assert hex_color(hexstring) == -3381760, 'hexadecimal string color'
     assert_raises(StandardError, 'Dodgy Hexstring') do
       hex_color(dodgy_hexstring)
-    end  
-  end 
-  
+    end
+    assert_raises(StandardError, 'Dodgy Color Conversion') do
+      hex_color([])
+    end
+  end
+
   def test_dist
     ax, ay, bx, by = 0, 0, 1.0, 1.0
     assert dist(ax, ay, bx, by) == Math.sqrt(2), '2D distance'
     by = 0.0
     assert dist(ax, ay, bx, by) == 1.0, 'when y dimension is zero'
     ax, ay, bx, by = 0, 0, 0.0, 0.0
-    assert dist(ax, ay, bx, by) == 0.0, 'when x and y dimension are zero' 
+    assert dist(ax, ay, bx, by) == 0.0, 'when x and y dimension are zero'
     ax, ay, bx, by = 1, 1, -2.0, -3.0
     assert dist(ax, ay, bx, by) == 5, 'classic triangle dimensions'
     ax, ay, bx, by, cx, cy = -1, -1, 100, 2.0, 3.0, 100
