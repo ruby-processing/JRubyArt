@@ -44,9 +44,9 @@ public final class Jvector {
 
     /**
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x double
+     * @param y double
+     * @param z double
      */
     public Jvector(double x, double y, double z) {
         this.x = x;
@@ -63,7 +63,7 @@ public final class Jvector {
 
     /**
      *
-     * @param vect
+     * @param vect Jvector
      */
     public Jvector(Jvector vect) {
         this(vect.x, vect.y, vect.z);
@@ -71,8 +71,8 @@ public final class Jvector {
 
     /**
      *
-     * @param other
-     * @return
+     * @param other Jvector
+     * @return result new Jvector
      */
     public Jvector sub(Jvector other) {
         return new Jvector(this.x - other.x, this.y - other.y, this.z - other.z);
@@ -80,8 +80,8 @@ public final class Jvector {
 
     /**
      *
-     * @param scalar
-     * @return
+     * @param scalar double
+     * @return result new Jvector
      */
     public Jvector mult(double scalar) {
         return new Jvector(this.x * scalar, this.y * scalar, this.z * scalar);
@@ -89,7 +89,7 @@ public final class Jvector {
 
     /**
      *
-     * @return
+     * @return mag double
      */
     public double mag() {
         return  Math.sqrt(x * x + y * y + z * z);
@@ -98,7 +98,7 @@ public final class Jvector {
     /**
      * The usual normalize
      *
-     * @return this
+     * @return this Jvector normalized
      */
     public Jvector normalize() {
         double mag =  Math.sqrt(x * x + y * y + z * z);
@@ -110,8 +110,8 @@ public final class Jvector {
 
     /**
      *
-     * @param other
-     * @return
+     * @param other Jvector
+     * @return product double
      */
     public double dot(Jvector other) {
         return x * other.x + y * other.y + z * other.z;
@@ -119,8 +119,8 @@ public final class Jvector {
 
     /**
      *
-     * @param other
-     * @return
+     * @param other Jvector
+     * @return cross product Jvector
      */
     public Jvector cross(Jvector other) {
         double xc = y * other.z - z * other.y;
@@ -131,8 +131,8 @@ public final class Jvector {
 
     /**
      *
-     * @param other
-     * @return
+     * @param other Jvector
+     * @return equals boolean
      */
     public boolean equals(Jvector other) {
         if (other instanceof Jvector) {
@@ -151,8 +151,8 @@ public final class Jvector {
 
     /**
      *
-     * @param obj
-     * @return
+     * @param obj Object
+     * @return equals boolean
      */
     @Override
     public boolean equals(Object obj) {
@@ -174,7 +174,7 @@ public final class Jvector {
 
     /**
      *
-     * @return
+     * @return hash int
      */
     @Override
     public int hashCode() {

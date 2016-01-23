@@ -22,7 +22,7 @@ public class Deglut extends RubyObject {
   *
   * @author Martin Prout <martin_p@lineone.net>
   */
-  static final double[] sinDegLut = new double[91];
+  static final double[] SIN_DEG_LUT = new double[91];
   /**
   *
   */
@@ -41,7 +41,7 @@ public class Deglut extends RubyObject {
   public static final void initTable() {
     if (initialized == false) {
       for (int i = 0; i <= NINETY; i++) {
-        sinDegLut[i] = Math.sin(TO_RADIANS * i);
+        SIN_DEG_LUT[i] = Math.sin(TO_RADIANS * i);
       }
       initialized = true;
     }
@@ -49,7 +49,7 @@ public class Deglut extends RubyObject {
     
   /**
   *
-  * @param runtime
+  * @param runtime Ruby
   */
   
   public static void createDeglut(final Ruby runtime){
@@ -60,8 +60,8 @@ public class Deglut extends RubyObject {
     
   /**
   *
-  * @param runtime
-  * @param klass
+  * @param runtime Ruby
+  * @param klass RubyClass
   */
   private Deglut(Ruby runtime, RubyClass klass) {
     super(runtime, klass);
@@ -69,10 +69,10 @@ public class Deglut extends RubyObject {
   
   /**
   *
-  * @param context
-  * @param klazz
-  * @param other
-  * @return
+  * @param context ThreadContext
+  * @param klazz IRubyObject
+  * @param other IRubyObject degrees
+  * @return sin IRubyObject
   */
   @JRubyMethod(name = "sin", meta = true)
   
@@ -83,18 +83,18 @@ public class Deglut extends RubyObject {
     }
     int theta = thet % FULL;
     int y = theta % NINETY;
-    double result = (theta < NINETY) ? sinDegLut[y] : (theta < 180)
-    ? sinDegLut[NINETY - y] : (theta < 270)
-    ? -sinDegLut[y] : -sinDegLut[NINETY - y];
+    double result = (theta < NINETY) ? SIN_DEG_LUT[y] : (theta < 180)
+    ? SIN_DEG_LUT[NINETY - y] : (theta < 270)
+    ? -SIN_DEG_LUT[y] : -SIN_DEG_LUT[NINETY - y];
     return context.getRuntime().newFloat(result);
   }
   
   /**
   *
-  * @param context
-  * @param klazz
-  * @param other
-  * @return
+  * @param context ThreadContext
+  * @param klazz IRubyObject
+  * @param other IRubyObject degrees
+  * @return cos IRubyObject
   */
   @JRubyMethod(name = "cos", meta = true)
   public static IRubyObject cos(ThreadContext context, IRubyObject klazz, IRubyObject other) {
@@ -104,9 +104,9 @@ public class Deglut extends RubyObject {
     }
     int theta = thet % FULL;
     int y = theta % NINETY;
-    double result = (theta < NINETY) ? sinDegLut[NINETY - y] : (theta < 180)
-    ? -sinDegLut[y] : (theta < 270)
-    ? -sinDegLut[NINETY - y] : sinDegLut[y];
+    double result = (theta < NINETY) ? SIN_DEG_LUT[NINETY - y] : (theta < 180)
+    ? -SIN_DEG_LUT[y] : (theta < 270)
+    ? -SIN_DEG_LUT[NINETY - y] : SIN_DEG_LUT[y];
     return context.getRuntime().newFloat(result);
   }  
 }

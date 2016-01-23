@@ -63,7 +63,7 @@ public abstract class LibraryProxy {
 
     /**
      * Simple signature for background hides need to call app
-     * @param col
+     * @param col int
      */
     public void background(int col) {
         this.app.background(col);
@@ -71,7 +71,7 @@ public abstract class LibraryProxy {
 
     /**
      * Simple signature for fill hides need to call app
-     * @param col
+     * @param col int
      */
     public void fill(int col) {
         this.app.fill(col);
@@ -79,7 +79,7 @@ public abstract class LibraryProxy {
 
     /**
      * Simple signature for stroke hides need to call app
-     * @param col
+     * @param col int
      */
     public void stroke(int col) {
         this.app.stroke(col);
@@ -87,7 +87,7 @@ public abstract class LibraryProxy {
 
     /**
      * Access applet if we must
-     * @return
+     * @return applet PApplet
      */
     public processing.core.PApplet app() {
         return this.app;

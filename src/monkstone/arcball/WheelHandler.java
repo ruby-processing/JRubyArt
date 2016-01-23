@@ -29,7 +29,7 @@ package monkstone.arcball;
 public interface WheelHandler { 
     /**
      * 
-     * @param amount 
+     * @param amount int
      */   
 
     public void handleWheel(final int amount);

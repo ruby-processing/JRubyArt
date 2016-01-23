@@ -20,7 +20,7 @@ public class Rarcball extends RubyObject {
 
     /**
      *
-     * @param runtime
+     * @param runtime Ruby
      */
     public static void createArcBall(final Ruby runtime) {
         RubyModule processing = runtime.defineModule("Processing");
@@ -30,8 +30,8 @@ public class Rarcball extends RubyObject {
 
     /**
      *
-     * @param runtime
-     * @param metaClass
+     * @param runtime Ruby
+     * @param metaClass RubyClass
      */
     public Rarcball(Ruby runtime, RubyClass metaClass) {
         super(runtime, metaClass);
@@ -39,8 +39,8 @@ public class Rarcball extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param self
+     * @param context ThreadContext
+     * @param self IRubyObject
      * @param args optional (no args jx = 0, jy = 0)
      */
     @JRubyMethod(name = "init", meta = true, rest = true, required = 1, optional = 3)

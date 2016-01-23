@@ -23,17 +23,16 @@ public class MathToolLibrary implements Library{
   
     /**
      *
-     * @param runtime
+     * @param runtime Ruby
      */
     public static void load(final Ruby runtime) {
         MathTool.createMathTool(runtime);
     }
     
     /**
-     *
-     * @param runtime
-     * @param wrap
-     * @throws java.io.IOException
+     * 
+     * @param runtime Ruby
+     * @param wrap boolean
      */
     @Override
     public void load(final Ruby runtime, boolean wrap) throws IOException {

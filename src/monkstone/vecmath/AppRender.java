@@ -12,7 +12,7 @@ public class AppRender implements JRender {
 
     /**
      *
-     * @param app
+     * @param app PApplet
      */
     public AppRender(final PApplet app) {
         this.app = app;
@@ -20,8 +20,8 @@ public class AppRender implements JRender {
 
     /**
      *
-     * @param x
-     * @param y
+     * @param x double
+     * @param y double
      */
     @Override
     public void vertex(double x, double y) {
@@ -30,8 +30,8 @@ public class AppRender implements JRender {
     
     /**
      *
-     * @param x
-     * @param y
+     * @param x double
+     * @param y double
      */
     @Override
     public void curveVertex(double x, double y) {
@@ -40,9 +40,9 @@ public class AppRender implements JRender {
 
     /**
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x double
+     * @param y double
+     * @param z double
      */
     @Override
     public void vertex(double x, double y, double z) {
@@ -51,9 +51,9 @@ public class AppRender implements JRender {
 
     /**
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x double
+     * @param y double
+     * @param z double
      */
     @Override
     public void normal(double x, double y, double z) {
@@ -62,11 +62,11 @@ public class AppRender implements JRender {
 
     /**
      *
-     * @param x
-     * @param y
-     * @param z
-     * @param u
-     * @param v
+     * @param x double
+     * @param y double
+     * @param z double
+     * @param u double
+     * @param v double
      */
     @Override
     public void vertex(double x, double y, double z, double u, double v) {
@@ -75,13 +75,12 @@ public class AppRender implements JRender {
     
     /**
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x double
+     * @param y double
+     * @param z double
      */
     @Override
     public void curveVertex(double x, double y, double z) {
         app.curveVertex((float) x, (float) y, (float) z);
     }
-
 }

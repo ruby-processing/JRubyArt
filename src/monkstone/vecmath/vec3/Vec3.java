@@ -42,7 +42,7 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param runtime
+     * @param runtime Ruby
      */
     public static void createVec3(final Ruby runtime) {
         RubyClass vec3Cls = runtime.defineClass("Vec3D", runtime.getObject(), (Ruby runtime1, RubyClass rubyClass) -> new Vec3(runtime1, rubyClass));
@@ -56,8 +56,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param klazz
+     * @param context ThreadContext 
+     * @param klazz IRubyObject
      * @param args optional (no args jx = 0, jy = 0, jz = 0) (2 args jz = 0)
      * @return new Vec3 object (ruby)
      */
@@ -70,8 +70,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param runtime
-     * @param klass
+     * @param runtime Ruby
+     * @param klass RubyClass
      */
     public Vec3(Ruby runtime, RubyClass klass) {
         super(runtime, klass);
@@ -90,8 +90,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @return
+     * @param context ThreadContext 
+     * @return x IRubyObject
      */
     @JRubyMethod(name = "x")
 
@@ -101,8 +101,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @return
+     * @param context ThreadContext 
+     * @return y IRubyObject
      */
     @JRubyMethod(name = "y")
 
@@ -112,8 +112,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @return
+     * @param context ThreadContext 
+     * @return z IRubyObject
      */
     @JRubyMethod(name = "z")
     public IRubyObject getZ(ThreadContext context) {
@@ -122,9 +122,9 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
-     * @return
+     * @param context ThreadContext
+     * @param other IRubyObject
+     * @return x IRubyObject
      */
     @JRubyMethod(name = "x=")
 
@@ -135,9 +135,9 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
-     * @return
+     * @param context ThreadContext
+     * @param other IRubyObject
+     * @return y IRubyObject
      */
     @JRubyMethod(name = "y=")
 
@@ -148,9 +148,9 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
-     * @return
+     * @param context ThreadContext
+     * @param other IRubyObject
+     * @return z IRubyObject
      */
     @JRubyMethod(name = "z=")
     public IRubyObject setZ(ThreadContext context, IRubyObject other) {
@@ -160,7 +160,7 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
+     * @param context ThreadContext
      * @param key as symbol
      * @return value float
      */
@@ -184,7 +184,7 @@ public final class Vec3 extends RubyObject {
     }
 
     /**
-     * @param context
+     * @param context ThreadContext
      * @param key as symbol
      * @param value as float
      * @return value float
@@ -211,9 +211,9 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
-     * @return
+     * @param context ThreadContext
+     * @param other IRubyObject
+     * @return distance float
      */
     @JRubyMethod(name = "dist", required = 1)
 
@@ -230,9 +230,9 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
-     * @return
+     * @param context ThreadContext
+     * @param other IRubyObject
+     * @return distance squared float
      */
     @JRubyMethod(name = "dist_squared", required = 1)
 
@@ -249,10 +249,12 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
-     * @return
+     * 
+     * @param context ThreadContext
+     * @param other IRubyObject
+     * @return cross product IRubyObject
      */
+
     @JRubyMethod(name = "cross", required = 1)
 
     public IRubyObject cross(ThreadContext context, IRubyObject other) {
@@ -273,9 +275,9 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
-     * @return
+     * @param context ThreadContext
+     * @param other IRubyObject
+     * @return dot product IRubyObject
      */
     @JRubyMethod(name = "dot", required = 1)
 
@@ -292,8 +294,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
+     * @param context ThreadContext
+     * @param other IRubyObject
      * @return new Vec3 object (ruby)
      */
     @JRubyMethod(name = "+", required = 1)
@@ -309,8 +311,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
+     * @param context ThreadContext
+     * @param other IRubyObject
      * @return new Vec3 object (ruby)
      */
     @JRubyMethod(name = "-")
@@ -331,8 +333,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
+     * @param context ThreadContext
+     * @param other IRubyObject
      * @return new Vec3 object (ruby)
      */
     @JRubyMethod(name = "*", required = 1)
@@ -348,8 +350,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
+     * @param context ThreadContext
+     * @param other IRubyObject
      * @return new Vec3 object (ruby)
      */
     @JRubyMethod(name = "/", required = 1)
@@ -368,8 +370,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @return
+     * @param context ThreadContext
+     * @return magnitude squared IRubyObject
      */
     @JRubyMethod(name = "mag_squared")
 
@@ -379,8 +381,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @return
+     * @param context ThreadContext
+     * @return magnitude IRubyObject
      */
     @JRubyMethod(name = "mag")
 
@@ -392,10 +394,10 @@ public final class Vec3 extends RubyObject {
      * Call yield if block given, do nothing if yield == false else set_mag to
      * given scalar
      *
-     * @param context
+     * @param context ThreadContext
      * @param scalar double value to set
      * @param block should return a boolean (optional)
-     * @return
+     * @return magnitude IRubyObject
      */
     @JRubyMethod(name = "set_mag")
 
@@ -417,7 +419,7 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
+     * @param context ThreadContext
      * @return this as a ruby object
      */
     @JRubyMethod(name = "normalize!")
@@ -435,8 +437,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @return new Vec3 object (ruby)
+     * @param context ThreadContext
+     * @return new normalized Vec3D object (ruby)
      */
     @JRubyMethod(name = "normalize")
 
@@ -458,9 +460,9 @@ public final class Vec3 extends RubyObject {
  /**
   * Example of a regular ruby class method 
   *
-  * @param context
-  * @param klazz
-  * @return new Vec2 object (ruby)
+  * @param context ThreadContext
+  * @param klazz IRubyObject 
+  * @return new random Vec3D object (ruby)
   */
   @JRubyMethod(name = "random", meta = true)
     
@@ -479,9 +481,9 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
-     * @return
+     * @param context ThreadContext
+     * @param other IRubyObject another Vec3D
+     * @return angle IRubyObject in radians
      */
     @JRubyMethod(name = "angle_between")
 
@@ -512,8 +514,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @return
+     * @param context ThreadContext
+     * @return IRubyObject copy
      */
     @JRubyMethod(name = {"copy", "dup"})
 
@@ -527,8 +529,8 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @return
+     * @param context ThreadContext
+     * @return IRubyObject array of float
      */
     @JRubyMethod(name = "to_a")
 
@@ -541,9 +543,9 @@ public final class Vec3 extends RubyObject {
     }
 
     /**
-     *
-     * @param context
-     * @param object
+     * To vertex
+     * @param context ThreadContext
+     * @param object IRubyObject vertex renderer
      */
     @JRubyMethod(name = "to_vertex")
 
@@ -553,9 +555,9 @@ public final class Vec3 extends RubyObject {
     }
 
     /**
-     *
-     * @param context
-     * @param object
+     * To curve vertex
+     * @param context ThreadContext
+     * @param object IRubyObject vertex renderer
      */
     @JRubyMethod(name = "to_curve_vertex")
 
@@ -565,9 +567,9 @@ public final class Vec3 extends RubyObject {
     }
 
     /**
-     *
-     * @param context
-     * @param args
+     * Sends this Vec3D as a processing vertex uv
+     * @param context ThreadContext
+     * @param args IRubyObject[]
      */
     @JRubyMethod(name = "to_vertex_uv", rest = true)
 
@@ -580,9 +582,9 @@ public final class Vec3 extends RubyObject {
     }
 
     /**
-     *
-     * @param context
-     * @param object
+     * Sends this Vec3D as a processing normal
+     * @param context ThreadContext
+     * @param object IRubyObject vertex renderer
      */
     @JRubyMethod(name = "to_normal")
 
@@ -594,8 +596,8 @@ public final class Vec3 extends RubyObject {
     /**
      * For jruby-9000 we alias to inspect
      *
-     * @param context
-     * @return
+     * @param context ThreadContext
+     * @return IRubyObject to_s
      */
     @JRubyMethod(name = {"to_s", "inspect"})
 
@@ -604,8 +606,8 @@ public final class Vec3 extends RubyObject {
     }
 
     /**
-     *
-     * @return
+     * Java hash
+     * @return hash int
      */
     @Override
     public int hashCode() {
@@ -617,9 +619,9 @@ public final class Vec3 extends RubyObject {
     }
 
     /**
-     *
-     * @param obj
-     * @return
+     * Java Equals
+     * @param obj Object
+     * @return result boolean
      */
     @Override
     public boolean equals(Object obj) {
@@ -638,9 +640,9 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
-     * @return
+     * @param context ThreadContext
+     * @param other IRubyObject
+     * @return result IRubyObject as boolean
      */
     @JRubyMethod(name = "eql?", required = 1)
 
@@ -660,9 +662,9 @@ public final class Vec3 extends RubyObject {
 
     /**
      *
-     * @param context
-     * @param other
-     * @return
+     * @param context ThreadContext
+     * @param other IRubyObject
+     * @return result IRubyObject as boolean
      */
     @JRubyMethod(name = "==", required = 1)
 

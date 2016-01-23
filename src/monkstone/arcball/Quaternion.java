@@ -41,10 +41,10 @@ public final class Quaternion {
 
     /**
      * 
-     * @param w
-     * @param x
-     * @param y
-     * @param z
+     * @param w double
+     * @param x double
+     * @param y double
+     * @param z double
      */
     public Quaternion(double w, double x, double y, double z) {
         this.w = w;
@@ -65,7 +65,7 @@ public final class Quaternion {
 
     /**
      * 
-     * @param w scalar 
+     * @param w scalar double
      * @param v custom Vector class
      */
     public void set(double w, Jvector v) {
@@ -77,7 +77,7 @@ public final class Quaternion {
 
     /**
      * 
-     * @param q
+     * @param q Quaternion
      */
     public void set(Quaternion q) {
         w = q.w;
@@ -88,9 +88,9 @@ public final class Quaternion {
 
     /**
      * 
-     * @param q1
-     * @param q2
-     * @return
+     * @param q1 Quaternion
+     * @param q2 Quaternion
+     * @return new Quaternion
      */
     public static Quaternion mult(Quaternion q1, Quaternion q2) {
         double w = q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z;
@@ -102,7 +102,7 @@ public final class Quaternion {
     
     /**
      * Transform this Quaternion into an angle (radians) and an axis vector, about 
-     * which to rotate (avoids NaN by setting sa to 1.0F when sa < epsilon)
+     * which to rotate (avoids NaN by setting sa to 1.0F when sa &lt; epsilon)
      * @return a new double[] where a0 = angle and a1 .. a3 are axis vector
      */
 

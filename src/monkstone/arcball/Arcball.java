@@ -79,7 +79,7 @@ public class Arcball {
     /**
      * Default centered arcball and half width or half height whichever smaller
      *
-     * @param parent
+     * @param parent PApplet
      *
      */
     public Arcball(PApplet parent) {
@@ -93,7 +93,7 @@ public class Arcball {
     /**
      * mouse event to register
      *
-     * @param e
+     * @param e MouseEvent
      */
     public void mouseEvent(MouseEvent e) {
         int x = e.getX();
@@ -120,7 +120,7 @@ public class Arcball {
     /**
      * key event to register
      *
-     * @param e
+     * @param e KeyEvent
      */
     public void keyEvent(processing.event.KeyEvent e) {
         if (e.getAction() != KeyEvent.PRESS) {
@@ -156,7 +156,7 @@ public class Arcball {
      * May or may not be required for use in Web Applet it works so why worry as
      * used by Jonathan Feinberg peasycam, and that works OK
      *
-     * @param active
+     * @param active boolean
      */
     public void setActive(boolean active) {
         if (active != isActive) {
@@ -188,8 +188,8 @@ public class Arcball {
      * Returns either the Jvector of mouse position mapped to a sphere or the
      * constrained version (when constrained to one axis)
      *
-     * @param x
-     * @param y
+     * @param x double
+     * @param y double
      * @return mouse coordinate mapped to unit sphere
      */
     public Jvector mouse2sphere(double x, double y) {
@@ -209,9 +209,9 @@ public class Arcball {
     /**
      * Returns the Jvector if the axis is constrained
      *
-     * @param vector
-     * @param axis
-     * @return
+     * @param vector Jvector
+     * @param axis Jvector
+     * @return constrained axis Jvector
      */
     public Jvector constrainVector(Jvector vector, Jvector axis) {
         Jvector res = vector.sub(axis.mult(axis.dot(vector)));
@@ -221,7 +221,7 @@ public class Arcball {
     /**
      * Constrain rotation to this axis
      *
-     * @param axis
+     * @param axis Constrain
      */
     public void constrain(Constrain axis) {
         this.axis = axis;
@@ -230,7 +230,7 @@ public class Arcball {
     /**
      * Rotate the parent sketch according to the quaternion
      *
-     * @param q
+     * @param q Quaternion
      */
     public void applyQuaternion2Matrix(Quaternion q) {
         // instead of transforming q into a matrix and applying it...
@@ -247,8 +247,8 @@ public class Arcball {
 
     /**
      *
-     * @param obj
-     * @return
+     * @param obj Object
+     * @return a boolean
      */
     @Override
     public boolean equals(Object obj) {
@@ -273,7 +273,7 @@ public class Arcball {
 
     /**
      *
-     * @return
+     * @return hash int
      */
     @Override
     public int hashCode() {

@@ -12,7 +12,7 @@ public class ShapeRender implements JRender {
 
     /**
      *
-     * @param shape
+     * @param shape PShape
      */
     public ShapeRender(final PShape shape) {
         this.shape = shape;
@@ -21,8 +21,8 @@ public class ShapeRender implements JRender {
 
     /**
      *
-     * @param x
-     * @param y
+     * @param x double
+     * @param y double
      */
     @Override
     public void vertex(double x, double y) {
@@ -31,8 +31,8 @@ public class ShapeRender implements JRender {
     
     /**
      *
-     * @param x
-     * @param y
+     * @param x double
+     * @param y double
      */
     @Override
     public void curveVertex(double x, double y) {
@@ -41,9 +41,9 @@ public class ShapeRender implements JRender {
 
     /**
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x double
+     * @param y double
+     * @param z double
      */
     @Override
     public void vertex(double x, double y, double z) {
@@ -52,9 +52,9 @@ public class ShapeRender implements JRender {
 
     /**
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x double
+     * @param y double
+     * @param z double
      */
     @Override
     public void normal(double x, double y, double z) {
@@ -63,11 +63,11 @@ public class ShapeRender implements JRender {
 
     /**
      *
-     * @param x
-     * @param y
-     * @param z
-     * @param u
-     * @param v
+     * @param x double
+     * @param y double
+     * @param z double
+     * @param u double
+     * @param v double
      */
     @Override
     public void vertex(double x, double y, double z, double u, double v) {
@@ -76,9 +76,9 @@ public class ShapeRender implements JRender {
     
     /**
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x double
+     * @param y double
+     * @param z double
      */
     @Override
     public void curveVertex(double x, double y, double z) {

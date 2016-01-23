@@ -20,6 +20,8 @@ public class ColorUtil {
    /**
      * Returns hex long as a positive int unless greater than Integer.MAX_VALUE
      * else return the complement as a negative integer or something like that
+     * @param hexlong long
+     * @return rgb int
      */
     static final int hexLong(long hexlong) {
         long SPLIT = Integer.MAX_VALUE + 1;
@@ -32,8 +34,8 @@ public class ColorUtil {
 
     /**
      *
-     * @param hexstring
-     * @return
+     * @param hexstring String
+     * @return rgb int
      */
     static public int colorString(String hexstring) {
         return java.awt.Color.decode(hexstring).getRGB();
@@ -41,8 +43,8 @@ public class ColorUtil {
 
     /**
      *
-     * @param hex
-     * @return
+     * @param hex double
+     * @return hex float
      */
     static public float colorLong(double hex) {
         return (float) hex;
@@ -50,8 +52,8 @@ public class ColorUtil {
     
     /**
      *
-     * @param hexlong
-     * @return
+     * @param hexlong long
+     * @return hexlong int
      */
     static public int colorLong(long hexlong){
        return hexLong(hexlong);
@@ -59,8 +61,8 @@ public class ColorUtil {
 
     /**
      *
-     * @param hex
-     * @return
+     * @param hex double
+     * @return hex float
      */
     static public float colorDouble(double hex){
        return (float)hex;

@@ -12,7 +12,7 @@ public class Vec3Library implements Library {
   
     /**
      *
-     * @param runtime
+     * @param runtime Ruby
      */
     public static void load(final Ruby runtime) {
         Vec3.createVec3(runtime);
@@ -21,9 +21,8 @@ public class Vec3Library implements Library {
 
     /**
      *
-     * @param runtime
-     * @param wrap
-     * @throws IOException
+     * @param runtime Ruby
+     * @param wrap boolean
      */
     @Override
     public void load(final Ruby runtime, boolean wrap) throws IOException {

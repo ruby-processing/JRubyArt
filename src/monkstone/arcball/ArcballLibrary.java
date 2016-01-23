@@ -12,7 +12,7 @@ public class ArcballLibrary implements Library {
   
     /**
      *
-     * @param runtime
+     * @param runtime Ruby
      */
     public static void load(final Ruby runtime) {
         Rarcball.createArcBall(runtime);
@@ -20,9 +20,8 @@ public class ArcballLibrary implements Library {
 
     /**
      *
-     * @param runtime
-     * @param wrap
-     * @throws IOException
+     * @param runtime Ruby
+     * @param wrap boolean
      */
     @Override
     public void load(final Ruby runtime, boolean wrap) throws IOException {
