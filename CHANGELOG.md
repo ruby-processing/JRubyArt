@@ -1,4 +1,4 @@
-**v1.0.4** Adding javadoc, with links to jruby.api and processing.api
+**v1.0.4** Using jruby-complete-9.0.5.0. Adding javadoc, with links to jruby.api and processing.api
 
 **v1.0.3** Build now using processing-3.0.1 core and matching video jars from maven central and pom.rb build file (polyglot maven), furthermore using maven-wrapper so maven version isn't even required see mvnw and mvwm.bat and .mvn/maven-wrapper.properties. The pom.xml is not needed but included for completness.
 **v1.0.2** Various cleanups, favoring SHA256 over SHA1 to check jruby-complete
