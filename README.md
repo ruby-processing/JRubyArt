@@ -5,18 +5,18 @@
 ![Travis status](https://travis-ci.org/ruby-processing/JRubyArt.svg)
 
 ## Requirements
-A clean start for `jruby_art` based on [processing-3.0.1](https://github.com/processing/processing/releases) and [jruby-9.0.5.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
+A clean start for `jruby_art` based on [processing-3.0.2](https://github.com/processing/processing/releases) and [jruby-9.0.5.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
  
 A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.3.0+` to download gem. 
 
-`processing-3.0.1`
+`processing-3.0.2`
 
-`jdk1.8.0_60+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
+`jdk1.8.0_74+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
-`processing video and sound libraries` _best installed from the processing-3.0.1 ide_
+`processing video and sound libraries` _best installed from the processing-3.0.2 ide_
 
 
 ## Configuration
@@ -26,7 +26,7 @@ Config file is `config.yml` in the `~/.jruby_art folder` so can co-exist with a 
 ```yaml
 # YAML configuration file for jruby_art
 # K9_HOME: "/home/ruby2.2.0 ... /jruby_art" #windows users may need to set this
-PROCESSING_ROOT: /home/tux/processing-3.0.1
+PROCESSING_ROOT: /home/tux/processing-3.0.2
 # important sketch_book path may be different for processing-3.0
 sketchbook_path: /home/tux/sketchbook 
 ```
