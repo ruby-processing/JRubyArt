@@ -32,6 +32,7 @@ end
 CODE
 
 CLASS_BASIC = <<-CODE
+# encoding: utf-8
 class %s < Processing::App
   def setup
     sketch_title '%s'
@@ -50,6 +51,7 @@ end
 CODE
 
 EMACS_BASIC = <<-CODE
+# encoding: utf-8
 require 'jruby_art'
 require 'jruby_art/app'
 
@@ -74,6 +76,7 @@ end
 CODE
 
 CLASS_MODE = <<-CODE
+# encoding: utf-8
 class %s < Processing::App
   def setup
     sketch_title '%s'
@@ -91,6 +94,7 @@ end
 CODE
 
 EMACS_MODE = <<-CODE
+# encoding: utf-8
 require 'jruby_art'
 require 'jruby_art/app'
 

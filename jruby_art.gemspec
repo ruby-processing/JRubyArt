@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email = 'martin_p@lineone.net'
   spec.description = <<-EOS
   JRubyArt is a ruby wrapper for the processing art framework.
-  The current version supports processing-3.0.1, and uses jruby-9.0.5.0
+  The current version supports processing-3.0.2, and uses jruby-9.0.5.0
   as the glue between ruby and java. You can use both processing libraries and ruby
   gems in your sketches. Features create/run/watch/live modes. The "watch" mode,
   provides a nice REPL-ish way to work on your processing sketches. Includes:-
