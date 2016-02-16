@@ -1,3 +1,23 @@
+/* 
+ * Copyright (c) 2015-16 Martin Prout
+ * 
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
 package monkstone.fastmath;
 
 import org.jruby.Ruby;
@@ -26,7 +46,7 @@ public class Deglut extends RubyObject {
   /**
   *
   */
-  public static final double TO_RADIANS = (double) (Math.PI / 180);
+  public static final double TO_RADIANS = Math.PI / 180;
   /**
   *
   */
@@ -34,9 +54,10 @@ public class Deglut extends RubyObject {
   
   private final static int NINETY = 90;
   private final static int FULL = 360;
+    private static final long serialVersionUID = -1466528933765940101L;
   
   /**
-  * Initialise sin table with values (first quadrant only)
+  * Initialize sin table with values (first quadrant only)
   */
   public static final void initTable() {
     if (initialized == false) {

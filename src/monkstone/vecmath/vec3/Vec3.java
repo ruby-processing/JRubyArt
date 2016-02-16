@@ -1,6 +1,6 @@
 package monkstone.vecmath.vec3;
 /* 
- * Copyright (c) 2015 Martin Prout
+ * Copyright (c) 2015-16 Martin Prout
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -40,6 +40,8 @@ import monkstone.vecmath.JRender;
 @JRubyClass(name = "Vec3D")
 public final class Vec3 extends RubyObject {
 
+    private static final long serialVersionUID = 4563517343762009867L;
+
     /**
      *
      * @param runtime Ruby
@@ -50,9 +52,9 @@ public final class Vec3 extends RubyObject {
     }
 
     static final double EPSILON = 9.999999747378752e-05; // matches processing.org EPSILON
-    private double jx = 0;
-    private double jy = 0;
-    private double jz = 0;
+    double jx = 0;
+    double jy = 0;
+    double jz = 0;
 
     /**
      *

@@ -23,6 +23,7 @@ public class Vec2Library implements Library{
      *
      * @param runtime Ruby
      * @param wrap boolean
+     * @throws java.io.IOException
      */
     @Override
     public void load(final Ruby runtime, boolean wrap) throws IOException {

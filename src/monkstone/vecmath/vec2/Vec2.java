@@ -1,7 +1,7 @@
 package monkstone.vecmath.vec2;
 
 /* 
-* Copyright (c) 2015 Martin Prout
+* Copyright (c) 2015-16 Martin Prout
 * 
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -42,6 +42,8 @@ import monkstone.vecmath.JRender;
 public class Vec2 extends RubyObject {
 
     static final double EPSILON = 9.999999747378752e-05; // matches processing.org EPSILON
+    private static final long serialVersionUID = -2950154560223211646L;
+
     private double jx = 0;
     private double jy = 0;
 
@@ -455,8 +457,7 @@ public class Vec2 extends RubyObject {
     }
 
     /**
-     * Example of a regular ruby class method Use Math rather than RadLut
-     * here!!!
+     * Example of a regular ruby class method 
      *
      * @param context ThreadContext
      * @param klazz IRubyObject 
