@@ -8,7 +8,7 @@ Text inside XML comment tags will not be shown in your report.
 
 ### Environment
 
-Ensure that you are using the recommended versions of processing, jruby (`jruby -v`) and java (`java -version`) 
+Ensure that you are using the recommended versions of processing(`k9 setup check`), jruby (`jruby -v`) and java (`java -version`) 
 Provide JRubyArt version that you are using (`k9 --version`)
 Provide your operating system and platform (e.g. `uname -a`, and/or `java -version` output if relevant)
 
