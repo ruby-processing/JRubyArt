@@ -41,11 +41,11 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
              :version => '3.0.2',
              :system_path => '${processing.sketchbook}/library/video.jar' )
   jar( 'org.processing:video',
-         :groupId => 'processing.org',
-         :artifactId => 'processing.video',
+         :group_id => 'processing.org',
+         :artifact_id => 'processing.video',
          :scope => 'system',
          :version => '3.0.2',
-	       :systemPath => '${processing.home}/core/library/core.jar')
+	       :system_path => '${processing.home}/core/library/core.jar')
   plugin_management do
     plugin :resources, '2.6'
     plugin :dependency, '2.8'
