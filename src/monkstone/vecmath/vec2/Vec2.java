@@ -55,6 +55,14 @@ public class Vec2 extends RubyObject {
         RubyClass vec2Cls = runtime.defineClass("Vec2D", runtime.getObject(), (Ruby runtime1, RubyClass rubyClass) -> new Vec2(runtime1, rubyClass));
         vec2Cls.defineAnnotatedMethods(Vec2.class);
     }
+    
+    public double javax(){
+        return jx;
+    }
+    
+    public double javay(){
+        return jy;
+    }
 
     /**
      *
