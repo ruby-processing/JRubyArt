@@ -40,7 +40,7 @@ DO NOT MODIFIY - GENERATED CODE
   </issueManagement>
   <properties>
     <processing.api>http://processing.github.io/processing-javadocs/core/</processing.api>
-    <processing.sketchbook>${user.home}/sketchbook3/libraries/video/</processing.sketchbook>
+    <processing.sketchbook>${user.home}/sketchbook/libraries/video/</processing.sketchbook>
     <polyglot.dump.pom>pom.xml</polyglot.dump.pom>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
