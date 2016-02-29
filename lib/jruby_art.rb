@@ -1,3 +1,5 @@
+# encoding: utf-8
+# frozen_string_literal: false
 # JRubyArt is for Code Art.
 # Send suggestions, ideas, and hate-mail to mamba2928 [at] gmail.com
 # Also, send samples and libraries.

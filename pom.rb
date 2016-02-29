@@ -1,3 +1,6 @@
+# encoding: utf-8
+# frozen_string_literal: false
+
 require 'fileutils'
 project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
 
@@ -24,7 +27,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
   )
 
   properties(
-    'processing.sketchbook' => '${user.home}/sketchbook3/libraries/video/',
+    'processing.sketchbook' => '${user.home}/sketchbook/libraries/video/',
     'processing.home' => '/usr/share/processing',
     'maven.compiler.source' => '1.8',
     'project.build.sourceEncoding' => 'UTF-8',

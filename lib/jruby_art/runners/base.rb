@@ -1,5 +1,5 @@
-# -*- encoding : utf-8 -*-
-
+# encoding: utf-8
+# frozen_string_literal: false
 SKETCH_PATH ||= ARGV.shift
 SKETCH_ROOT ||= File.dirname(SKETCH_PATH)
 

@@ -1,3 +1,6 @@
+# encoding: utf-8
+# frozen_string_literal: false
+
 require 'forwardable'
 
 # Avoid the monkey patching of String for underscore/titleize/humanize

@@ -1,3 +1,5 @@
+# encoding: utf-8
+# frozen_string_literal: false
 # A pry shell for live coding.
 # Will start with your sketch.
 require_relative 'base'

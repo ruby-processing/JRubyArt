@@ -1,3 +1,6 @@
+# encoding: utf-8
+# frozen_string_literal: false
+
 BASIC = <<-CODE
 def setup
   sketch_title '%s'
@@ -33,6 +36,7 @@ CODE
 
 CLASS_BASIC = <<-CODE
 # encoding: utf-8
+# frozen_string_literal: false
 class %s < Processing::App
   def setup
     sketch_title '%s'
@@ -52,6 +56,7 @@ CODE
 
 EMACS_BASIC = <<-CODE
 # encoding: utf-8
+# frozen_string_literal: false
 require 'jruby_art'
 require 'jruby_art/app'
 
@@ -77,6 +82,7 @@ CODE
 
 CLASS_MODE = <<-CODE
 # encoding: utf-8
+# frozen_string_literal: false
 class %s < Processing::App
   def setup
     sketch_title '%s'
@@ -95,6 +101,7 @@ CODE
 
 EMACS_MODE = <<-CODE
 # encoding: utf-8
+# frozen_string_literal: false
 require 'jruby_art'
 require 'jruby_art/app'
 
@@ -119,6 +126,8 @@ end
 CODE
 
 INNER = <<-CODE
+# encoding: utf-8
+# frozen_string_literal: false
 class %s
   include Processing::Proxy
 

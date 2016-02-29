@@ -1,3 +1,6 @@
+# encoding: utf-8
+# frozen_string_literal: false
+
 require 'java'
 require_relative '../rpextras'
 require_relative '../jruby_art/helper_methods'

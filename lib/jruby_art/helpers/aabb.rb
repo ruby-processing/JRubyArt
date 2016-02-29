@@ -1,3 +1,6 @@
+# encoding: utf-8
+# frozen_string_literal: false
+
 # Axis aligned bounding box class (AABB would clash with Toxicgem)
 class AaBb
   attr_reader :center, :extent
