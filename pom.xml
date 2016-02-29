@@ -40,11 +40,11 @@ DO NOT MODIFIY - GENERATED CODE
   </issueManagement>
   <properties>
     <processing.api>http://processing.github.io/processing-javadocs/core/</processing.api>
-    <processing.sketchbook>${user.home}/sketchbook/libraries/video/</processing.sketchbook>
+    <processing.sketchbook>${user.home}/sketchbook3/libraries/video/</processing.sketchbook>
     <polyglot.dump.pom>pom.xml</polyglot.dump.pom>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <processing.home>/usr/share/processing</processing.home>
+    <processing.home>/home/tux/processing-3.0.2</processing.home>
     <jruby.api>http://jruby.org/apidocs/</jruby.api>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
@@ -60,14 +60,14 @@ DO NOT MODIFIY - GENERATED CODE
       <artifactId>core</artifactId>
       <version>3.0.2</version>
       <scope>system</scope>
-      <systemPath>${processing.sketchbook}/library/video.jar</systemPath>
+      <systemPath>${processing.home}/core/library/core.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.processing</groupId>
       <artifactId>video</artifactId>
-      <version>3.0.2</version>
+      <version>1.0.1</version>
       <scope>system</scope>
-      <systemPath>${processing.home}/core/library/core.jar</systemPath>
+      <systemPath>${processing.sketchbook}/library/video.jar</systemPath>
     </dependency>
   </dependencies>
   <build>
