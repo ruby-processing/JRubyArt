@@ -28,7 +28,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
 
   properties(
     'processing.sketchbook' => '${user.home}/sketchbook3/libraries/video/',
-    'processing.home' => '/home/tux/processing-3.0.2',
+    'processing.home' => '${user.home}/processing-3.0.2',
     'maven.compiler.source' => '1.8',
     'project.build.sourceEncoding' => 'UTF-8',
     'maven.compiler.target' => '1.8',

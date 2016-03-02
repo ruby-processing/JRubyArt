@@ -44,7 +44,7 @@ DO NOT MODIFIY - GENERATED CODE
     <polyglot.dump.pom>pom.xml</polyglot.dump.pom>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <processing.home>/home/tux/processing-3.0.2</processing.home>
+    <processing.home>${user.home}/processing-3.0.2</processing.home>
     <jruby.api>http://jruby.org/apidocs/</jruby.api>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
