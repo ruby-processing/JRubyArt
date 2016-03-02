@@ -70,7 +70,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
     plugin(
       :jar, '2.6',
       archive: {
-        'manifestFile' => 'MANIFEST.MF'
+        manifestFile: 'MANIFEST.MF' # camel case reqd
       }
     )
   end
