@@ -59,8 +59,8 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
     plugin :dependency, '2.8'
     plugin(
       :compiler, '3.3',
-      'source' =>  '1.8',
-      'target' =>  '1.8'
+      'source' => '${maven.compiler.source}',
+      'target' => '${maven.compiler.target}'
     )
     plugin(
       :javadoc, '2.10.3',
