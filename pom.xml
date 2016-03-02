@@ -96,7 +96,7 @@ DO NOT MODIFIY - GENERATED CODE
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>2.10.3</version>
           <configuration>
-            <detectOfflineLinks>false</detectOfflineLinks>
+            <detect_offline_links>false</detect_offline_links>
             <links>
               <link>${processing.api}</link>
               <link>${jruby.api}</link>

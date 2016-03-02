@@ -59,17 +59,17 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
     plugin :dependency, '2.8'
     plugin(
       :compiler, '3.3',
-      'source' => '${maven.compiler.source}',
-      'target' => '${maven.compiler.target}'
+      source: '${maven.compiler.source}',
+      target: '${maven.compiler.target}'
     )
     plugin(
       :javadoc, '2.10.3',
-      'detectOfflineLinks' => 'false',
-      'links' => ['${processing.api}', '${jruby.api}']
+      detect_offline_links: 'false',
+      links: ['${processing.api}', '${jruby.api}']
     )
     plugin(
       :jar, '2.6',
-      'archive' => {
+      archive: {
         'manifestFile' => 'MANIFEST.MF'
       }
     )
