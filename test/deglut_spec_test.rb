@@ -5,7 +5,7 @@ require 'minitest/pride'
 
 require_relative '../lib/rpextras'
 
-Java::MonkstoneFastmath::DeglutLibrary.new.load(JRuby.runtime, false)
+Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
 
 Dir.chdir(File.dirname(__FILE__))
 

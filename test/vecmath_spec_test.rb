@@ -5,9 +5,7 @@ require 'minitest/pride'
 
 require_relative '../lib/rpextras'
 
-Java::MonkstoneVecmathVec2::Vec2Library.load(JRuby.runtime)
-Java::MonkstoneVecmathVec3::Vec3Library.load(JRuby.runtime)
-
+Java::Monkstone::JRLibrary.load(JRuby.runtime)
 
 
 Dir.chdir(File.dirname(__FILE__))

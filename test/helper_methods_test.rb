@@ -5,7 +5,7 @@ require 'minitest/pride'
 
 require_relative '../lib/jruby_art/helper_methods'
 
-Java::Monkstone::MathToolLibrary.new.load(JRuby.runtime, false)
+Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
 
 include Processing::HelperMethods
 include Processing::MathTool
