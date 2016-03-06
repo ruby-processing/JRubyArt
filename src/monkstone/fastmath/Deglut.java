@@ -24,7 +24,7 @@ import org.jruby.Ruby;
 import org.jruby.RubyClass;
 import org.jruby.RubyModule;
 import org.jruby.RubyObject;
-import org.jruby.anno.JRubyClass;
+import org.jruby.anno.JRubyModule;
 import org.jruby.anno.JRubyMethod;
 import org.jruby.runtime.ThreadContext;
 import org.jruby.runtime.builtin.IRubyObject;
@@ -33,7 +33,7 @@ import org.jruby.runtime.builtin.IRubyObject;
 *
 * @author Martin Prout
 */
-@JRubyClass(name = "DegLut")
+@JRubyModule(name = "DegLut")
 public class Deglut extends RubyObject {
   
   /**
@@ -54,7 +54,7 @@ public class Deglut extends RubyObject {
   
   private final static int NINETY = 90;
   private final static int FULL = 360;
-    private static final long serialVersionUID = -1466528933765940101L;
+  private static final long serialVersionUID = -1466528933765940101L;
   
   /**
   * Initialize sin table with values (first quadrant only)
@@ -91,13 +91,13 @@ public class Deglut extends RubyObject {
   /**
   *
   * @param context ThreadContext
-  * @param klazz IRubyObject
+  * @param recv IRubyObject
   * @param other IRubyObject degrees
   * @return sin IRubyObject
   */
-  @JRubyMethod(name = "sin", meta = true)
+  @JRubyMethod(name = "sin", module = true)
   
-  public static IRubyObject sin(ThreadContext context, IRubyObject klazz, IRubyObject other) {
+  public static IRubyObject sin(ThreadContext context, IRubyObject recv, IRubyObject other) {
     int thet = (Integer) other.toJava(Integer.class);
     while (thet < 0) {
       thet += FULL; // Needed because negative modulus plays badly in java
@@ -113,12 +113,12 @@ public class Deglut extends RubyObject {
   /**
   *
   * @param context ThreadContext
-  * @param klazz IRubyObject
+  * @param recv IRubyObject
   * @param other IRubyObject degrees
   * @return cos IRubyObject
   */
-  @JRubyMethod(name = "cos", meta = true)
-  public static IRubyObject cos(ThreadContext context, IRubyObject klazz, IRubyObject other) {
+  @JRubyMethod(name = "cos", module = true)
+  public static IRubyObject cos(ThreadContext context, IRubyObject recv, IRubyObject other) {
     int thet = (Integer) other.toJava(Integer.class);
     while (thet < 0) {
       thet += FULL; // Needed because negative modulus plays badly in java
