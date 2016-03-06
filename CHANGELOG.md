@@ -1,5 +1,5 @@
 
-**v1.0.5** This version prefers processing-3.0.2 as the most recent version, and should be matched with oracle `jdk1.8.0_74+` for JavaFX fixes otherwise stick with processing-3.0.1, which masks JavaFX inversion issue
+**v1.0.5** This version prefers processing-3.0.2 as the most recent version, and should be matched with oracle `jdk1.8.0_74+` for JavaFX fixes, or OpenJDK-8 and the latest OpenJFX otherwise stick with processing-3.0.1, which masks JavaFX inversion issue
 
 **v1.0.4** Using jruby-complete-9.0.5.0. Adding javadoc, with links to jruby.api and processing.api
 **v1.0.3** Build now using processing-3.0.1 core and matching video jars from maven central and pom.rb build file (polyglot maven), furthermore using maven-wrapper so maven version isn't even required see mvnw and mvwm.bat and .mvn/maven-wrapper.properties. The pom.xml is not needed but included for completness.
