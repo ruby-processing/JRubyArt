@@ -23,7 +23,6 @@ package monkstone.fastmath;
 import org.jruby.Ruby;
 import org.jruby.RubyClass;
 import org.jruby.RubyModule;
-import org.jruby.RubyObject;
 import org.jruby.anno.JRubyModule;
 import org.jruby.anno.JRubyMethod;
 import org.jruby.runtime.ThreadContext;
@@ -34,7 +33,7 @@ import org.jruby.runtime.builtin.IRubyObject;
 * @author Martin Prout
 */
 @JRubyModule(name = "DegLut")
-public class Deglut extends RubyObject {
+public class Deglut {
   
   /**
   * Lookup table for degree cosine/sine, has a fixed precision 1.0
@@ -79,15 +78,7 @@ public class Deglut extends RubyObject {
     Deglut.initTable();
   }
     
-  /**
-  *
-  * @param runtime Ruby
-  * @param klass RubyClass
-  */
-  private Deglut(Ruby runtime, RubyClass klass) {
-    super(runtime, klass);
-  }
-  
+ 
   /**
   *
   * @param context ThreadContext
