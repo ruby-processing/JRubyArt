@@ -3,14 +3,13 @@
 
 require 'forwardable'
 
-# Avoid the monkey patching of String for underscore/titleize/humanize
 class StringExtra
   extend Forwardable
-  def_delegators(:@string, *String.public_instance_methods(false))
-  def initialize(str = 'no_name')
-    @string = (str.length > 60) ? 'long_name' : str
+  def_delegators :@str, :upcase, :capitalize, :length, :downcase, :gsub 
+  def initialize(str)
+    @str = str
   end
-
+  
   def titleize
     gsub(/::/, '/')
       .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
@@ -33,4 +32,15 @@ class StringExtra
       .tr('-', '_')
       .downcase
   end
+  
+  def camelize(first_letter_in_uppercase = true)
+    if first_letter_in_uppercase
+      @str.gsub(%r{/(.?)}) { '::' + Regexp.last_match[1].upcase }
+        .gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
+    else
+      @str[0] + camelize[1..-1]
+    end
+  end
 end
+
+

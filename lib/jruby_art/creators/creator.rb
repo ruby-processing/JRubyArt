@@ -137,7 +137,6 @@ CODE
 # processing wrapper module
 module Processing
   require_relative '../helpers/string_extra'
-  require_relative '../helpers/camel_string'
   # Write file to disk
   class SketchWriter
     attr_reader :file
@@ -222,7 +221,7 @@ module Processing
       main_file = File.basename(path, '.rb') # allow uneeded extension input
       # Check to make sure that the main file doesn't exist already
       already_exist(path)
-      @name = CamelString.new(main_file).camelize
+      @name = StringExtra.new(main_file).camelize
       writer = SketchWriter.new(main_file)
       @title = StringExtra.new(main_file).titleize
       @width, @height = args[0], args[1]
@@ -247,7 +246,7 @@ module Processing
       main_file = File.basename(path, '.rb') # allow uneeded extension input
       # Check to make sure that the main file doesn't exist already
       already_exist(path)
-      @name = CamelString.new(main_file).camelize
+      @name = StringExtra.new(main_file).camelize
       writer = SketchWriter.new(main_file)
       @title = StringExtra.new(main_file).titleize
       @width, @height = args[0], args[1]
