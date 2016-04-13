@@ -20,10 +20,9 @@
 package monkstone.slider;
 
 import processing.core.PApplet;
-import processing.core.PConstants;
-import static processing.core.PConstants.*;
+import processing.event.MouseEvent;
 
-public class SliderBar {
+public abstract class SliderBar {
 
     int MIN_BAR_WIDTH = 10;
     int MAX_BAR_WIDTH = 30;
@@ -50,32 +49,8 @@ public class SliderBar {
     short wheelCount = 0;
     float vMin = 0;
     float vMax = 15;
-    boolean horizontal = true;
-    private final PApplet applet;
-    private final WheelHandler scrollWheelHandler;
-    /**
-     *
-     * @param outer
-     * @param x top left position x
-     * @param y left top position y
-     * @param length width or height
-     * @param beginRange start range
-     * @param endRange end range
-     * @param label widget label/ID
-     */
-    public SliderBar(final PApplet outer, int x, int y, int length, float beginRange, float endRange, String label) {
-        this.applet = outer;
-        this.scrollWheelHandler = (short delta) -> {
-            changeWithWheel(delta);
-        };
-        setActive(true);
-        pX = x;
-        pY = y;
-        pW = length;
-        pH = 10;
-        ID = label;
-        limits(beginRange, endRange);
-    }
+    PApplet applet;
+    WheelHandler scrollWheelHandler;
 
     /**
      *
@@ -83,10 +58,6 @@ public class SliderBar {
      */
     public float value() {
         return pValue;
-    }
-
-    public void vertical() {
-        horizontal = false;
     }
 
     /**
@@ -101,7 +72,7 @@ public class SliderBar {
         }
     }
 
-    private void limits(float iv, float fv) {
+    final void limits(float iv, float fv) {
         vMin = iv;
         vMax = fv;
         SliderBar.this.setValue(iv);
@@ -166,14 +137,6 @@ public class SliderBar {
     }
 
     /**
-     *
-     * @param col color of the bar
-     */
-    public void sliderColor(int col) {
-
-    }
-
-    /**
      * @param back color of the bar
      * @param fill background color of the slider
      */
@@ -182,17 +145,7 @@ public class SliderBar {
         sliderFill = fill;
     }
 
-    private boolean mouseOver() {
-        boolean result = false;
-        if (horizontal) {
-            if (applet.mouseX >= pX && applet.mouseX <= pX + pW && applet.mouseY >= pY && applet.mouseY <= pY + pH) {
-                result = true;
-            }
-        } else if (applet.mouseX >= pX && applet.mouseX <= pX + pH && applet.mouseY >= pY && applet.mouseY <= pY + pW) {
-            result = true;
-        }
-        return result;
-    }
+    abstract boolean mouseOver();
 
     private void setActive(boolean active) {
         if (active) {
@@ -205,139 +158,36 @@ public class SliderBar {
         }
     }
 
-    private void displayText() {
-        String lFormat = "%d";
-        if (displayLabel) {
-            applet.fill(labelColor);
-            applet.textSize(labelSize);
-            applet.textAlign(PConstants.CENTER);
-            if (horizontal) {
-                applet.text(Integer.toString((int) pValue), pX + pW / 2, pY + pH / 2 + labelSize / 2 - 2);
-            } else {
-                applet.pushMatrix();
-                applet.translate(pX + pH / 2, pY + pW / 2);
-                applet.rotate(HALF_PI);
-                applet.text(Integer.toString((int) pValue), 0, 0 + labelSize / 2 - 2);
-                applet.popMatrix();
-            }
-        }
-        if (displayValue) {
-            applet.textSize(numberSize);
-            applet.fill(numbersColor);
-            if (horizontal) {
-                applet.textAlign(PConstants.LEFT);
-                applet.text(String.format(lFormat, (int) vMin), pX, pY - numberSize / 2);
-                applet.textAlign(PConstants.RIGHT);
-                applet.text(String.format(lFormat, (int) vMax), pX + pW, pY - numberSize / 2);
-            } else {
-                applet.pushMatrix();
-                applet.textAlign(PConstants.RIGHT);
-                applet.translate(pX - numberSize / 2, pY);
-                applet.rotate(HALF_PI);
-                applet.text(String.format(lFormat, (int) vMax), 0, 0);
-                applet.popMatrix();
-                applet.pushMatrix();
-                applet.textAlign(PConstants.LEFT);
-                applet.translate(pX - numberSize / 2, pY + pW);
-                applet.rotate(HALF_PI);
-                applet.text(String.format(lFormat, (int) vMin), 0, 0);
-                applet.popMatrix();
-            }
-        }
-    }
+    abstract void displayText();
 
-    private void drawVertical() {
-        if (backgroundVisible) {
-            applet.fill(sliderBack);
-            applet.rect(pX, pY, pH, pW);
-        }
-        applet.fill(sliderFill);
-        applet.rect(pX, pY + pW, pH, pScaled - pW);
-    }
-
-    private void drawHorizontal() {
-        if (backgroundVisible) {
-            applet.fill(sliderBack);
-            applet.rect(pX, pY, pW, pH);
-        }
-        applet.fill(sliderFill);
-        applet.rect(pX, pY, pScaled, pH);
-    }
+    abstract void drawGui();
 
     public void draw() {
         applet.pushStyle();
         applet.noStroke();
-        if (horizontal) {
-            drawHorizontal();
-        } else {
-            drawVertical();
-        }
+        drawGui();
         displayText();
         applet.popStyle();
         change();
     }
 
-    public void mouseEvent(processing.event.MouseEvent evt) {
-        if (evt.getAction() == processing.event.MouseEvent.WHEEL) {
+    public void mouseEvent(MouseEvent evt) {
+        if (evt.getAction() == MouseEvent.WHEEL) {
             if (scrollWheelHandler != null) {
-                    scrollWheelHandler.handleWheel((short) evt.getCount());
+                scrollWheelHandler.handleWheel((short) evt.getCount());
             }
-        }        
+        }
     }
 
     /**
      *
      * @param value
      */
-    public void setValue(float value) {
-        if (value > vMax) {
-            value = vMax;
-        }
-        if (value < vMin) {
-            value = vMin;
-        }
-        pValue = value;
-        if (horizontal) {
-            pScaled = map(pValue, vMin, vMax, 0, pW);
-        } else {
-            pScaled = map(pValue, vMin, vMax, pW, 0);
-        }
-    }
+    public abstract void setValue(float value);
 
-    private void checkKeyboard() {
-        if (mouseOver()) {
-            if (applet.mousePressed && applet.mouseButton == PConstants.LEFT) {
-                if (horizontal) {
-                    pValue = constrainMap(applet.mouseX - pX, 0, pW, vMin, vMax);
-                } else {
-                    pValue = constrainMap(applet.mouseY - pY, pW, 0, vMin, vMax);
-                }
-            }
-            if (applet.keyPressed && pressOnlyOnce) {
-                if (applet.keyCode == PConstants.LEFT || applet.keyCode == PConstants.DOWN) {
-                    pValue--;
-                }
-                if (applet.keyCode == PConstants.RIGHT || applet.keyCode == PConstants.UP) {
-                    pValue++;
-                }
-                if (pValue > vMax) {
-                    pValue = vMax;
-                } else {
-                    pValue = (pValue < vMin) ? vMin : pValue;
-                }
-                pressOnlyOnce = false;
-            }
-            deBounce(5);
-            if (horizontal) {
-                pScaled = map(pValue, vMin, vMax, 0, pW);
-            } else {
-                pScaled = map(pValue, vMin, vMax, pW, 0);
-            }
-        }
-    }
+    abstract void checkKeyboard();
 
-    private void change() {
-        
+    void change() {
         checkKeyboard();
     }
 
@@ -353,23 +203,9 @@ public class SliderBar {
      *
      * @param delta
      */
-    public void changeWithWheel(int delta) {
-        if (!mouseOver()) {
-            return;
-        }
-        if (!horizontal) {
-            delta = -delta;
-        }
-        if (applet.keyPressed && applet.keyCode == PConstants.SHIFT) {
-            delta = delta * (int) (vMax / 10);
-        }
-        if (applet.keyPressed && applet.keyCode == PConstants.CONTROL) {
-            delta = delta * (int) (vMax / 4);
-        }
-        setValue(pValue + delta);
-    }
+    abstract void changeWithWheel(int delta);
 
-    private void deBounce(int n) {
+    void deBounce(int n) {
         if (pressOnlyOnce) {
         } else if (deb++ > n) {
             deb = 0;
@@ -377,11 +213,11 @@ public class SliderBar {
         }
     }
 
-    private float map(float val, float begIn, float endIn, float beginOut, float endOut) {
+    protected float map(float val, float begIn, float endIn, float beginOut, float endOut) {
         return (beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn)));
     }
 
-    private int constrainMap(double val, double begIn, double endIn, double beginOut, double endOut) {
+    protected int constrainMap(double val, double begIn, double endIn, double beginOut, double endOut) {
         double max = Math.max(begIn, endIn);
         double min = Math.min(begIn, endIn);
         if (val < min) {
@@ -391,20 +227,9 @@ public class SliderBar {
             val = max;
         }
         return (int) ((beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn))));
-
     }
 
     public void dispose() {
         setActive(false);
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        String geomF = "SliderBar.new(%d, %d, %d, %.2f, %.2f, \"%s\")";
-        return String.format(geomF, pX, pY, pW, vMin, vMax, ID);
     }
 }
