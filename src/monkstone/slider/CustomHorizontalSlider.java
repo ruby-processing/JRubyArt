@@ -21,9 +21,8 @@ package monkstone.slider;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
-import static processing.core.PConstants.*;
 
-public class VerticalSliderBar extends SliderBar {
+public class CustomHorizontalSlider extends SliderBar {
 
     /**
      *
@@ -35,7 +34,7 @@ public class VerticalSliderBar extends SliderBar {
      * @param endRange end range
      * @param label widget label/ID
      */
-    public VerticalSliderBar(final PApplet outer, int x, int y, int length, float beginRange, float endRange, String label) {
+    public CustomHorizontalSlider(final PApplet outer, int x, int y, int length, float beginRange, float endRange, String label) {
         this.applet = outer;
         this.scrollWheelHandler = (short delta) -> {
             changeWithWheel(delta);
@@ -51,7 +50,7 @@ public class VerticalSliderBar extends SliderBar {
 
     @Override
     boolean mouseOver() {
-        return (applet.mouseX >= pX && applet.mouseX <= pX + pH && applet.mouseY >= pY && applet.mouseY <= pY + pW);
+        return (applet.mouseX >= pX && applet.mouseX <= pX + pW && applet.mouseY >= pY && applet.mouseY <= pY + pH);
     }
 
     private void setActive(boolean active) {
@@ -72,39 +71,27 @@ public class VerticalSliderBar extends SliderBar {
             applet.fill(labelColor);
             applet.textSize(labelSize);
             applet.textAlign(PConstants.CENTER);
-            applet.pushMatrix();
-            applet.translate(pX + pH / 2, pY + pW / 2);
-            applet.rotate(HALF_PI);
-            applet.text(Integer.toString((int) pValue), 0, 0 + labelSize / 2 - 2);
-            applet.popMatrix();
+            applet.text(Integer.toString((int) pValue), pX + pW / 2, pY + pH / 2 + labelSize / 2 - 2);
         }
         if (displayValue) {
             applet.textSize(numberSize);
             applet.fill(numbersColor);
-            applet.pushMatrix();
-            applet.textAlign(PConstants.RIGHT);
-            applet.translate(pX - numberSize / 2, pY);
-            applet.rotate(HALF_PI);
-            applet.text(String.format(lFormat, (int) vMax), 0, 0);
-            applet.popMatrix();
-            applet.pushMatrix();
             applet.textAlign(PConstants.LEFT);
-            applet.translate(pX - numberSize / 2, pY + pW);
-            applet.rotate(HALF_PI);
-            applet.text(String.format(lFormat, (int) vMin), 0, 0);
-            applet.popMatrix();
+            applet.text(String.format(lFormat, (int) vMin), pX, pY - numberSize / 2);
+            applet.textAlign(PConstants.RIGHT);
+            applet.text(String.format(lFormat, (int) vMax), pX + pW, pY - numberSize / 2);
         }
     }
-
+    
     @Override
     void drawGui() {
         if (backgroundVisible) {
             applet.fill(sliderBack);
-            applet.rect(pX, pY, pH, pW);
+            applet.rect(pX, pY, pW, pH);
         }
         applet.fill(sliderFill);
-        applet.rect(pX, pY + pW, pH, pScaled - pW);
-    }
+        applet.rect(pX, pY, pScaled, pH);
+    }    
 
     /**
      *
@@ -119,14 +106,14 @@ public class VerticalSliderBar extends SliderBar {
             value = vMin;
         }
         pValue = value;
-        pScaled = map(pValue, vMin, vMax, pW, 0);
+        pScaled = map(pValue, vMin, vMax, 0, pW);
     }
 
     @Override
     void checkKeyboard() {
         if (mouseOver()) {
             if (applet.mousePressed && applet.mouseButton == PConstants.LEFT) {
-                pValue = constrainMap(applet.mouseY - pY, pW, 0, vMin, vMax);
+                pValue = constrainMap(applet.mouseX - pX, 0, pW, vMin, vMax);
             }
             if (applet.keyPressed && pressOnlyOnce) {
                 if (applet.keyCode == PConstants.LEFT || applet.keyCode == PConstants.DOWN) {
@@ -143,7 +130,7 @@ public class VerticalSliderBar extends SliderBar {
                 pressOnlyOnce = false;
             }
             deBounce(5);
-            pScaled = map(pValue, vMin, vMax, pW, 0);
+            pScaled = map(pValue, vMin, vMax, 0, pW);
         }
     }
 
@@ -162,17 +149,16 @@ public class VerticalSliderBar extends SliderBar {
         if (applet.keyPressed && applet.keyCode == PConstants.CONTROL) {
             delta = delta * (int) (vMax / 4);
         }
-        setValue(pValue - delta);
+        setValue(pValue + delta);
     }
-
+    
     /**
      *
      * @return
      */
     @Override
     public String toString() {
-        String geomF = "VerticalSliderBar.new(%d, %d, %d, %.2f, %.2f, \"%s\")";
+        String geomF = "HorizontalSliderBar.new(%d, %d, %d, %.2f, %.2f, \"%s\")";
         return String.format(geomF, pX, pY, pW, vMin, vMax, ID);
     }
-
 }

@@ -21,65 +21,76 @@ package monkstone.slider;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
+import static processing.core.PConstants.HALF_PI;
 
-public class HorizontalSliderBar extends SliderBar {
+public class SimpleVerticalSlider extends SimpleSlider {
+    
+    final int SPACING = 20;
+    final int TOP_SPC = SPACING * 2;
+    final int BOTTOM_SPC = SPACING * 4;    
 
     /**
      *
      * @param outer
-     * @param x top left position x
-     * @param y left top position y
-     * @param length width or height
      * @param beginRange start range
      * @param endRange end range
-     * @param label widget label/ID
+     * @param initial
+     * @param count
      */
-    public HorizontalSliderBar(final PApplet outer, int x, int y, int length, float beginRange, float endRange, String label) {
-        this.applet = outer;
-        this.scrollWheelHandler = (short delta) -> {
-            changeWithWheel(delta);
-        };
+    public SimpleVerticalSlider(final PApplet outer, float beginRange, float endRange, float initial, int count) {
+        this.applet = outer;     
         setActive(true);
-        pX = x;
-        pY = y;
-        pW = length;
+        pX = outer.width  - (TOP_SPC + count * SPACING);
+        pY = TOP_SPC;
+        pW = outer.height - BOTTOM_SPC;
         pH = 10;
-        ID = label;
+        ID = Integer.toString(count + 1);
         limits(beginRange, endRange);
+        
     }
 
-    @Override
+   @Override
     boolean mouseOver() {
-        return (applet.mouseX >= pX && applet.mouseX <= pX + pW && applet.mouseY >= pY && applet.mouseY <= pY + pH);
+        return (applet.mouseX >= pX && applet.mouseX <= pX + pH && applet.mouseY >= pY && applet.mouseY <= pY + pW);
     }
 
     private void setActive(boolean active) {
         if (active) {
             applet.registerMethod("dispose", this);
             applet.registerMethod("draw", this);
-            applet.registerMethod("mouseEvent", this);
         } else {
-            applet.unregisterMethod("draw", this);
-            applet.unregisterMethod("mouseEvent", this);
+            applet.unregisterMethod("draw", this);            
         }
     }
 
-    @Override
+@Override
     void displayText() {
         String lFormat = "%d";
         if (displayLabel) {
             applet.fill(labelColor);
             applet.textSize(labelSize);
             applet.textAlign(PConstants.CENTER);
-            applet.text(Integer.toString((int) pValue), pX + pW / 2, pY + pH / 2 + labelSize / 2 - 2);
+            applet.pushMatrix();
+            applet.translate(pX + pH / 2, pY + pW / 2);
+            applet.rotate(HALF_PI);
+            applet.text(Integer.toString((int) pValue), 0, 0 + labelSize / 2 - 2);
+            applet.popMatrix();
         }
         if (displayValue) {
             applet.textSize(numberSize);
             applet.fill(numbersColor);
-            applet.textAlign(PConstants.LEFT);
-            applet.text(String.format(lFormat, (int) vMin), pX, pY - numberSize / 2);
+            applet.pushMatrix();
             applet.textAlign(PConstants.RIGHT);
-            applet.text(String.format(lFormat, (int) vMax), pX + pW, pY - numberSize / 2);
+            applet.translate(pX - numberSize / 2, pY);
+            applet.rotate(HALF_PI);
+            applet.text(String.format(lFormat, (int) vMax), 0, 0);
+            applet.popMatrix();
+            applet.pushMatrix();
+            applet.textAlign(PConstants.LEFT);
+            applet.translate(pX - numberSize / 2, pY + pW);
+            applet.rotate(HALF_PI);
+            applet.text(String.format(lFormat, (int) vMin), 0, 0);
+            applet.popMatrix();
         }
     }
     
@@ -87,11 +98,13 @@ public class HorizontalSliderBar extends SliderBar {
     void drawGui() {
         if (backgroundVisible) {
             applet.fill(sliderBack);
-            applet.rect(pX, pY, pW, pH);
+            applet.rect(pX, pY, pH, pW);
         }
         applet.fill(sliderFill);
-        applet.rect(pX, pY, pScaled, pH);
-    }    
+        applet.ellipse(pX + pH / 2, pY + pScaled, 10, 10);
+    }
+    
+    
 
     /**
      *
@@ -106,14 +119,14 @@ public class HorizontalSliderBar extends SliderBar {
             value = vMin;
         }
         pValue = value;
-        pScaled = map(pValue, vMin, vMax, 0, pW);
+        pScaled = map(pValue, vMin, vMax, pW, 0);
     }
 
     @Override
     void checkKeyboard() {
         if (mouseOver()) {
             if (applet.mousePressed && applet.mouseButton == PConstants.LEFT) {
-                pValue = constrainMap(applet.mouseX - pX, 0, pW, vMin, vMax);
+                pValue = constrainMap(applet.mouseY - pY, pW, 0, vMin, vMax);
             }
             if (applet.keyPressed && pressOnlyOnce) {
                 if (applet.keyCode == PConstants.LEFT || applet.keyCode == PConstants.DOWN) {
@@ -130,35 +143,17 @@ public class HorizontalSliderBar extends SliderBar {
                 pressOnlyOnce = false;
             }
             deBounce(5);
-            pScaled = map(pValue, vMin, vMax, 0, pW);
+            pScaled = map(pValue, vMin, vMax, pW, 0);
         }
     }
-
-    /**
-     *
-     * @param delta
-     */
-    @Override
-    public void changeWithWheel(int delta) {
-        if (!mouseOver()) {
-            return;
-        }
-        if (applet.keyPressed && applet.keyCode == PConstants.SHIFT) {
-            delta = delta * (int) (vMax / 10);
-        }
-        if (applet.keyPressed && applet.keyCode == PConstants.CONTROL) {
-            delta = delta * (int) (vMax / 4);
-        }
-        setValue(pValue + delta);
-    }
-    
+   
     /**
      *
      * @return
      */
     @Override
     public String toString() {
-        String geomF = "HorizontalSliderBar.new(%d, %d, %d, %.2f, %.2f, \"%s\")";
+        String geomF = "SimpleHSliderBar.new(%d, %d, %d, %.2f, %.2f, \"%s\")";
         return String.format(geomF, pX, pY, pW, vMin, vMax, ID);
     }
 }

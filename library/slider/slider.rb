@@ -3,14 +3,14 @@
 # Here's a little library for quickly hooking up in sketch sliders.
 # Copyright (c) 2016 Martin Prout.
 
-java_import 'monkstone.slider.HorizontalSliderBar'
-java_import 'monkstone.slider.VerticalSliderBar'
+java_import 'monkstone.slider.CustomHorizontalSlider'
+java_import 'monkstone.slider.CustomVerticalSlider'
 
 module Slider
   def self.slider(app:, x:, y:, name:, **opts)
     options = default.merge opts
     if options[:vertical]
-      slider = VerticalSliderBar.new(
+      slider = CustomVerticalSlider.new(
         app,
         x,
         y,
@@ -20,7 +20,7 @@ module Slider
         name
     )
     else
-      slider = HorizontalSliderBar.new(
+      slider = CustomHorizontalSlider.new(
         app,
         x,
         y,

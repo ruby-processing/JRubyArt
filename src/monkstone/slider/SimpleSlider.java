@@ -17,13 +17,16 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+
 package monkstone.slider;
 
 import processing.core.PApplet;
-import processing.event.MouseEvent;
 
-public abstract class SliderBar implements Slider {
-
+/**
+ *
+ * @author Martin Prout
+ */
+public abstract class SimpleSlider implements Slider {
     int MIN_BAR_WIDTH = 10;
     int MAX_BAR_WIDTH = 30;
     int sliderBack = 0xff909090;
@@ -50,37 +53,26 @@ public abstract class SliderBar implements Slider {
     float vMin = 0;
     float vMax = 15;
     PApplet applet;
-    WheelHandler scrollWheelHandler;
 
-    /**
-     *
-     * @return
-     */
-    public float value() {
-        return pValue;
-    }
+    abstract void displayText();
 
-    /**
-     *
-     * @param w
-     */
-    public void barWidth(int w) {
-        if (w < MIN_BAR_WIDTH) {
-            pH = MIN_BAR_WIDTH;
-        } else {
-            pH = (w > MAX_BAR_WIDTH) ? MAX_BAR_WIDTH : w;
-        }
-    }
+    abstract void drawGui();
 
-    final void limits(float iv, float fv) {
-        vMin = iv;
-        vMax = fv;
-        SliderBar.this.setValue(iv);
+    
+    @Override
+    public void draw() {
+        applet.pushStyle();
+        applet.noStroke();
+        drawGui();
+        displayText();
+        applet.popStyle();
+        change();
     }
 
     /**
      *
      */
+    
     @Override
     public void showLabel() {
         displayLabel = true;
@@ -89,6 +81,7 @@ public abstract class SliderBar implements Slider {
     /**
      *
      */
+    
     @Override
     public void hideLabel() {
         displayLabel = false;
@@ -97,6 +90,7 @@ public abstract class SliderBar implements Slider {
     /**
      *
      */
+    
     @Override
     public void showNumbers() {
         displayValue = true;
@@ -110,17 +104,14 @@ public abstract class SliderBar implements Slider {
         displayValue = false;
     }
 
-    /**
-     *
-     * @param b
-     */
-    public void externalBorder(int b) {
-        externalBorder = b;
+    void change() {
+        checkKeyboard();
     }
 
     /**
      *
      */
+    
     @Override
     public void hideBackground() {
         backgroundVisible = false;
@@ -128,91 +119,35 @@ public abstract class SliderBar implements Slider {
 
     /**
      *
+     * @return
      */
-    public void showBackground() {
-        backgroundVisible = true;
+    
+    @Override
+    public float readValue() {
+        return pValue;
+    }
+
+    abstract boolean mouseOver();
+
+    protected float map(float val, float begIn, float endIn, float beginOut, float endOut) {
+        return (beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn)));
+    }
+
+    final void limits(float iv, float fv) {
+        vMin = iv;
+        vMax = fv;
+        setValue(iv);
     }
 
     /**
      *
      * @param s
      */
+    
     @Override
     public void labelSize(int s) {
         labelSize = (s < 4) ? 4 : s;
     }
-
-    /**
-     * @param back color of the bar
-     * @param fill background color of the slider
-     */
-    public void widgetColors(int back, int fill) {
-        sliderBack = back;
-        sliderFill = fill;
-    }
-
-    abstract boolean mouseOver();
-
-    private void setActive(boolean active) {
-        if (active) {
-            applet.registerMethod("dispose", this);
-            applet.registerMethod("draw", this);
-            applet.registerMethod("mouseEvent", this);
-        } else {
-            applet.unregisterMethod("draw", this);
-            applet.unregisterMethod("mouseEvent", this);
-        }
-    }
-
-    abstract void displayText();
-
-    abstract void drawGui();
-
-    @Override
-    public void draw() {
-        applet.pushStyle();
-        applet.noStroke();
-        drawGui();
-        displayText();
-        applet.popStyle();
-        change();
-    }
-
-    public void mouseEvent(MouseEvent evt) {
-        if (evt.getAction() == MouseEvent.WHEEL) {
-            if (scrollWheelHandler != null) {
-                scrollWheelHandler.handleWheel((short) evt.getCount());
-            }
-        }
-    }
-
-    /**
-     *
-     * @param value
-     */
-    @Override
-    public abstract void setValue(float value);
-
-    abstract void checkKeyboard();
-
-    void change() {
-        checkKeyboard();
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public float readValue() {
-        return pValue;
-    }
-
-    /**
-     *
-     * @param delta
-     */
-    abstract void changeWithWheel(int delta);
 
     void deBounce(int n) {
         if (pressOnlyOnce) {
@@ -222,9 +157,8 @@ public abstract class SliderBar implements Slider {
         }
     }
 
-    protected float map(float val, float begIn, float endIn, float beginOut, float endOut) {
-        return (beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn)));
-    }
+    abstract void checkKeyboard();
+
 
     protected int constrainMap(double val, double begIn, double endIn, double beginOut, double endOut) {
         double max = Math.max(begIn, endIn);
@@ -238,6 +172,16 @@ public abstract class SliderBar implements Slider {
         return (int) ((beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn))));
     }
 
+    private void setActive(boolean active) {
+        if (active) {
+            applet.registerMethod("dispose", this);
+            applet.registerMethod("draw", this);
+        } else {
+            applet.unregisterMethod("draw", this);
+        }
+    }
+
+    
     @Override
     public void dispose() {
         setActive(false);
