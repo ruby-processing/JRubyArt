@@ -1,3 +1,4 @@
+**v1.0.6** Experimental support for an in sketch slider, examples now featuring Joshua Davis hype library.
 
 **v1.0.5** This version prefers processing-3.0.2 as the most recent version, and should be matched with oracle `jdk1.8.0_74+` for JavaFX fixes, or OpenJDK-8 and the latest OpenJFX otherwise stick with processing-3.0.1, which masks JavaFX inversion issue
 
@@ -22,7 +23,6 @@ map1d, lerp, norm, p5map and `constrained_map` as module methods in a JRuby exte
 **v0.4.2** Tested with processing-3.0b2 color helper method refactored to use a jruby extension
 
 **v0.4.1** Implement a `live` mode with `pry`
-
 
 **v0.4.0** Update to jruby-9.0.0.0 we can revert to using require to load jars first release tested with processing-3.0a11 on linux
 
