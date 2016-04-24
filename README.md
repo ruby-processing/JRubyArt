@@ -12,7 +12,7 @@ A suitable version of ruby (MRI ruby > 2.1 or `jruby-9.0.3.0+` to download gem.
 
 `processing-3.0.2`
 
-`jdk1.8.0_74+` can be openjdk with OpenJFX _a separate download works on ArchLinux_ probably safer to go with the Oracle version, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
+`jdk1.8.0_77+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
@@ -25,7 +25,7 @@ Config file is `config.yml` in the `~/.jruby_art folder` so can co-exist with a 
 
 ```yaml
 # YAML configuration file for jruby_art
-# K9_HOME: "/home/ruby2.2.0 ... /jruby_art" #windows users may need to set this
+# K9_HOME: "/home/ruby2.3.0 ... /jruby_art" #windows users may need to set this
 PROCESSING_ROOT: /home/tux/processing-3.0.2
 # important sketch_book path may be different for processing-3.0
 sketchbook_path: /home/tux/sketchbook 
