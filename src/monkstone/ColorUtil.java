@@ -40,6 +40,20 @@ public class ColorUtil {
     static public int colorString(String hexstring) {
         return java.awt.Color.decode(hexstring).getRGB();
     }
+    
+    /**
+     *
+     * @param web Array of web (hex) String
+     * @return array of color int according to java
+     */
+    
+    static public int[] webArray(String[] web){
+        int[] result = new int[web.length];
+        for (int i = 0; i < web.length; i++ ){
+            result[i] = java.awt.Color.decode(web[i]).getRGB();
+        }
+        return result;
+    }
 
     /**
      *
