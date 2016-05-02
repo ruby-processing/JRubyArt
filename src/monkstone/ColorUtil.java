@@ -36,7 +36,6 @@ public class ColorUtil {
     }
 
     /**
-     * Used in the creation of a %w(a b c) where a, b, c are raw web strings
      * @param hexstring String
      * @return rgb int
      */
@@ -56,6 +55,24 @@ public class ColorUtil {
             result[i] = java.awt.Color.decode(web[i]).getRGB();
         }
         return result;
+    }
+    
+   /**
+    * Return a ruby string of the form "%w(a b c)" where a, b, c
+    * are raw web strings. This string can be used in ruby code.
+    * @param hex int array
+    * @return String for use in ruby
+    */
+    static public String rubyString(int[] hex){
+        StringBuilder result = new StringBuilder("%w(");
+        for (int i = 0; i < hex.length; i++ ){
+            result.append(String.format("#%06X", (0xFFFFFF & hex[i])));
+            if (i < hex.length - 1){
+                result.append(' ');
+            }
+        }
+        result.append(")\n");
+        return result.toString();
     }
 
     /**

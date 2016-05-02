@@ -50,6 +50,10 @@ module Processing
     def web_to_color_array(web)
       Java::Monkstone::ColorUtil.webArray(web)
     end
+    
+    def int_to_ruby_colors(hex)
+      Java::Monkstone::ColorUtil.rubyString(hex)
+    end  
 
     # Overrides Processing convenience function thread, which takes a String
     # arg (for a function) to more rubylike version, takes a block...
