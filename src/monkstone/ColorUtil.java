@@ -36,7 +36,7 @@ public class ColorUtil {
     }
 
     /**
-     *
+     * Used in the creation of a %w(a b c) where a, b, c are raw web strings
      * @param hexstring String
      * @return rgb int
      */
