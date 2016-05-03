@@ -5,7 +5,7 @@ require 'fileutils'
 project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
 
   model_version '4.0.0'
-  id 'ruby-processing:rp5extras', '1.0.5'
+  id 'ruby-processing:rp5extras', '1.0.7'
   packaging 'jar'
 
   description 'rp5extras for JRubyArt'
