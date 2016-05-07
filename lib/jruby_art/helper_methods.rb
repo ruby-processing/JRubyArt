@@ -27,7 +27,7 @@ module Processing
     end
     
     def perspektiv(
-      fov: PI / 3.0,
+      fov: Math::PI / 3.0,
       aspect_ratio: width.to_f / height,
       near_z: (height / 20.0) / tan(fov / 2.0),
       far_z: (height * 5) / tan(fov / 2.0))
