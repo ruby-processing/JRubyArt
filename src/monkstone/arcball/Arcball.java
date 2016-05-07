@@ -101,6 +101,21 @@ public class Arcball {
     }
 
     /**
+     * Default centered arcball and half width or half height whichever smaller
+     *
+     * @param parent PApplet
+     * @param axis Constrain
+     *
+     */
+    public Arcball(PApplet parent, Constrain axis) {
+        // this(parent, parent.width / 2.0f, parent.height / 2.0f, Math.min(parent.width, parent.height) * 0.5f);
+        this(parent, 0f, 0f, Math.min(parent.width, parent.height) * 0.8f);
+        parent.camera(parent.width / 2.0f, parent.height / 2.0f, (parent.height * DEPTH), 0, 0, 0, 0, 1.0f, 0);
+        camera = true;
+        this.axis = axis; // constrain to this axis of rotation
+    }
+
+    /**
      * mouse event to register
      *
      * @param e MouseEvent

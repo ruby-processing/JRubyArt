@@ -60,7 +60,7 @@ public class Rarcball extends RubyObject {
     }
 
     /**
-     *
+     * Initialize a new instance of Arcball (without Constrain)
      * @param context ThreadContext
      * @param self IRubyObject
      * @param args optional (no args jx = 0, jy = 0)
@@ -85,6 +85,27 @@ public class Rarcball extends RubyObject {
         if (count == 1) {
             PApplet parent = (PApplet) args[0].toJava(PApplet.class);
             new Arcball(parent).setActive(true);
+        }        
+    }
+
+    /**
+     * Initialize a new instance of Arcball with Constrain, default to YAXIS
+     * @param context ThreadContext
+     * @param self IRubyObject
+     * @param args optional (no args Constrain = YAXIS)
+     */
+    @JRubyMethod(name = "constrain", meta = true, rest = true, required = 1, optional = 1)
+
+    public static void constrain(ThreadContext context, IRubyObject self, IRubyObject args[]) {
+        int count = Arity.checkArgumentCount(context.getRuntime(), args, 1, 4);
+        if (count == 2) {
+            PApplet parent = (PApplet) args[0].toJava(PApplet.class);
+            Constrain axis = (Constrain) args[1].toJava(Constrain.class);
+            new Arcball(parent, axis).setActive(true);
+        }
+        if (count == 1) {
+            PApplet parent = (PApplet) args[0].toJava(PApplet.class);
+            new Arcball(parent, Constrain.YAXIS).setActive(true);
         }        
     }
 }
