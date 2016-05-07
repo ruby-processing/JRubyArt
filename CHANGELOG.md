@@ -1,5 +1,6 @@
-**v1.0.7** Added tool to efficiently convert an Array of web colour Strings to and Array of color int (should be used by users of hype library, that uses of web strings in most of its examples). Update to use jruby-complete-9.1.0.0.
+**v1.0.8** Exposed Constrain functionality for ArcBall, added literate prespektive method.
 
+**v1.0.7** Added tool to efficiently convert an Array of web colour Strings to and Array of color int (should be used by users of hype library, that uses of web strings in most of its examples). Update to use jruby-complete-9.1.0.0.
 **v1.0.6** Experimental support for an in sketch slider, examples now featuring Joshua Davis hype library.
 **v1.0.5** This version prefers processing-3.0.2 as the most recent version, and should be matched with oracle `jdk1.8.0_74+` for JavaFX fixes, or OpenJDK-8 and the latest OpenJFX otherwise stick with processing-3.0.1, which masks JavaFX inversion issue
 
