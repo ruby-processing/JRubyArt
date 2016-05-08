@@ -49,6 +49,11 @@ module Processing
     def lerp_color(*args)
       args.length > 3 ? self.class.lerp_color(*args) : super(*args)
     end
+    
+    # hue, sat, brightness in range 0..1.0 returns RGB color int
+    def hsb_color(hue, sat, brightness)
+      Java::Monkstone::ColorUtil.hsbToRgB(hue, sat, brightness)
+    end
 
     def color(*args)
       return super(*args) unless args.length == 1
