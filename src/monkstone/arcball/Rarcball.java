@@ -24,6 +24,7 @@ import org.jruby.Ruby;
 import org.jruby.RubyClass;
 import org.jruby.RubyModule;
 import org.jruby.RubyObject;
+import org.jruby.RubySymbol;
 import org.jruby.anno.JRubyClass;
 import org.jruby.anno.JRubyMethod;
 import org.jruby.runtime.Arity;
@@ -89,23 +90,27 @@ public class Rarcball extends RubyObject {
     }
 
     /**
-     * Initialize a new instance of Arcball with Constrain, default to YAXIS
-     * @param context ThreadContext
-     * @param self IRubyObject
-     * @param args optional (no args Constrain = YAXIS)
+     *
+     * @param context
+     * @param self
+     * @param args optional (no args jx = 0, jy = 0)
      */
     @JRubyMethod(name = "constrain", meta = true, rest = true, required = 1, optional = 1)
 
     public static void constrain(ThreadContext context, IRubyObject self, IRubyObject args[]) {
-        int count = Arity.checkArgumentCount(context.getRuntime(), args, 1, 4);
+        int count = Arity.checkArgumentCount(context.getRuntime(), args, 1, 2);
+        RubySymbol zaxis = RubySymbol.newSymbol(context.getRuntime(), "zaxis");
+        RubySymbol xaxis = RubySymbol.newSymbol(context.getRuntime(), "xaxis");
+        PApplet parent = (PApplet) args[0].toJava(PApplet.class);
         if (count == 2) {
-            PApplet parent = (PApplet) args[0].toJava(PApplet.class);
-            Constrain axis = (Constrain) args[1].toJava(Constrain.class);
-            new Arcball(parent, axis).setActive(true);
-        }
-        if (count == 1) {
-            PApplet parent = (PApplet) args[0].toJava(PApplet.class);
+            if (xaxis == args[1]) {
+                new Arcball(parent, Constrain.XAXIS).setActive(true);
+            }
+            if (zaxis == args[1]) {
+                new Arcball(parent, Constrain.ZAXIS).setActive(true);
+            }
+        } else {
             new Arcball(parent, Constrain.YAXIS).setActive(true);
-        }        
+        }
     }
 }

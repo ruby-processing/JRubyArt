@@ -108,11 +108,11 @@ public class Arcball {
      *
      */
     public Arcball(PApplet parent, Constrain axis) {
-        // this(parent, parent.width / 2.0f, parent.height / 2.0f, Math.min(parent.width, parent.height) * 0.5f);
+        // this(parent, axis, parent.width / 2.0f, parent.height / 2.0f, Math.min(parent.width, parent.height) * 0.5f);
         this(parent, 0f, 0f, Math.min(parent.width, parent.height) * 0.8f);
         parent.camera(parent.width / 2.0f, parent.height / 2.0f, (parent.height * DEPTH), 0, 0, 0, 0, 1.0f, 0);
         camera = true;
-        this.axis = axis; // constrain to this axis of rotation
+        this.axis = axis; // custom constrain...
     }
 
     /**
