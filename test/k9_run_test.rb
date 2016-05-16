@@ -17,6 +17,17 @@ class Rp5Test < Minitest::Test
     assert_match(/ok/, out, 'Failed Basic Sketch')
   end
 
+  def test_sketch_path
+    out, _err_ = capture_io do
+      open('|../bin/k9 run sketches/sketch_path.rb', 'r') do |io|
+        while l = io.gets
+          puts(l.chop)
+        end
+      end
+    end
+    assert_match('/home/sid/radical/test', out, 'Failed Sketch Path Sketch')
+  end
+
   def test_on_top
     out, _err_ = capture_io do
       open('|../bin/k9 run sketches/on_top.rb', 'r') do |io|

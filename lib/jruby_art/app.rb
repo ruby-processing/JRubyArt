@@ -125,6 +125,11 @@ module Processing
       surface.set_title(title)
     end
 
+    def sketchPath(spath = nil)
+      return super() if spath.nil?
+      super(spath)
+    end
+
     def sketch_size(x, y)
       surface.set_size(x, y)
     end
