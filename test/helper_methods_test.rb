@@ -8,13 +8,13 @@ require_relative '../lib/jruby_art/helper_methods'
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
 
 include Processing::HelperMethods
-include Processing::MathTool
+include MathTool
 
 Dir.chdir(File.dirname(__FILE__))
 
 class HelperMethodsTest < Minitest::Test
  def test_hex_color
-   col_double = 0.5
+    col_double = 0.5
     hexcolor = 0xFFCC6600
     dodgy_hexstring = '*56666'
     hexstring = '#CC6600'

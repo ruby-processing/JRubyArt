@@ -11,12 +11,11 @@
 package monkstone;
 
 import org.jruby.Ruby;
-import org.jruby.RubyClass;
 import org.jruby.RubyFloat;
 import org.jruby.RubyModule;
-import org.jruby.RubyObject;
 import org.jruby.RubyRange;
 import org.jruby.anno.JRubyMethod;
+import org.jruby.anno.JRubyModule;
 import org.jruby.runtime.ThreadContext;
 import org.jruby.runtime.builtin.IRubyObject;
 
@@ -24,19 +23,17 @@ import org.jruby.runtime.builtin.IRubyObject;
  *
  * @author Martin Prout
  */
-
-public class MathTool extends RubyObject {
-
-    private static final long serialVersionUID = 4427564758225746633L;
-
-    /**
-     *
-     * @param runtime Ruby
-     */
-    public static void createMathTool(Ruby runtime) {
-        RubyModule processing = runtime.defineModule("Processing");
-        RubyModule module = processing.defineModuleUnder("MathTool");
-        module.defineAnnotatedMethods(MathTool.class);
+@JRubyModule(name = "MathTool") 
+public class MathToolModule {    
+    
+   /**
+    *
+    * @param runtime Ruby
+    */
+  
+    public static void createMathToolModule(Ruby runtime) {
+        RubyModule mtModule = runtime.defineModule("MathTool");
+        mtModule.defineAnnotatedMethods(MathToolModule.class);
     }
 
     /**
@@ -185,14 +182,5 @@ public class MathTool extends RubyObject {
         } else {
             return args[1];
         }
-    }
-    
-    /**
-     *
-     * @param runtime Ruby
-     * @param metaClass RubyClass
-     */
-    public MathTool(Ruby runtime, RubyClass metaClass) {
-        super(runtime, metaClass);
     }
 }
