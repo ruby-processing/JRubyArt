@@ -25,7 +25,7 @@ class Rp5Test < Minitest::Test
         end
       end
     end
-    assert_match('/home/sid/radical/test', out, 'Failed Sketch Path Sketch')
+    assert_match('/home/tux/JRubyArt/test', out, 'Failed Sketch Path Sketch')
   end
 
   def test_on_top
