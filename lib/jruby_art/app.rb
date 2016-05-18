@@ -2,6 +2,7 @@
 # frozen_string_literal: false
 
 require 'java'
+# require 'jruby/core_ext'
 require_relative '../rpextras'
 require_relative '../jruby_art/helper_methods'
 require_relative '../jruby_art/helpers/aabb'
@@ -89,16 +90,15 @@ module Processing
     def library_loaded?(library_name)
       self.class.library_loaded?(library_name)
     end
-
+   
     # Since processing-3.0 you should prefer setting the sketch width and
     # height and renderer using the size method in the settings loop of the
     # sketch (as with vanilla processing) but is hidden see created java.
     # Options are no longer relevant, define post_initialize method to use
     # custom options (see Sandi Metz POODR)
 
-    def initialize(options = {})
+    def initialize
       super()
-      post_initialize(options) # for anyone wishing to pass options
       $app = self
       proxy_java_fields
       mix_proxy_into_inner_classes
@@ -111,6 +111,11 @@ module Processing
       # NB: this is the processing runSketch() method as used by processing.py
       run_sketch
     end
+    
+    def self.start(options = {})
+      App.sketch_class.new
+    end
+
 
     def size(*args)
       w, h, mode = *args
@@ -182,6 +187,7 @@ module Processing
         java_import format('processing.opengl.%s', klass)
       end
     end
+    # become_java!
   end # Processing::App
 
   # @HACK purists may prefer 'forwardable' to the use of Proxy

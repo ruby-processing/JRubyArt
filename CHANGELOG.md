@@ -1,16 +1,21 @@
-**v1.0.8** Exposed Constrain functionality for ArcBall, added literate prespektive method.
+**v1.0.8** Exposed Constrain functionality for ArcBall, added literate perspektive method. No longer trying to expose `sketchPath` variable (that was private since recent changes to vanilla processing), but provided an overloaded `sketchPath` method. Re-factor `MathTool` module class (jruby extension) to a simpler more correct form. Recommending the use of latest processing-3.1.1.
 
 **v1.0.7** Added tool to efficiently convert an Array of web colour Strings to and Array of color int (should be used by users of hype library, that uses of web strings in most of its examples). Update to use jruby-complete-9.1.0.0.
+
 **v1.0.6** Experimental support for an in sketch slider, examples now featuring Joshua Davis hype library.
+
 **v1.0.5** This version prefers processing-3.0.2 as the most recent version, and should be matched with oracle `jdk1.8.0_74+` for JavaFX fixes, or OpenJDK-8 and the latest OpenJFX otherwise stick with processing-3.0.1, which masks JavaFX inversion issue
 
 **v1.0.4** Using jruby-complete-9.0.5.0. Adding javadoc, with links to jruby.api and processing.api
+
 **v1.0.3** Build now using processing-3.0.1 core and matching video jars from maven central and pom.rb build file (polyglot maven), furthermore using maven-wrapper so maven version isn't even required see mvnw and mvwm.bat and .mvn/maven-wrapper.properties. The pom.xml is not needed but included for completness.
+
 **v1.0.2** Various cleanups, favoring SHA256 over SHA1 to check jruby-complete
 
 **v1.0.1** Using jruby-complete-9.0.4.0, features reworked extension build using maven
 
 **v1.0.0** Using jruby-complete-9.0.3.0 (no 9.0.2.0 owing to snafu at jruby.org) use github.io for home. Re-factor boids to use Vec3D, Vec2D and keyword arguments.
+
 **v0.9.0** Require processing-3.0.
 
 **v0.8.0** Require processing-3.0b7 and using jruby-9.0.1.0 replaced spec tests with minitest.
