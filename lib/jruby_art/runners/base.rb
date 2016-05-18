@@ -36,12 +36,12 @@ module Processing
     no_methods = source.match(/^[^#]*(def\s+setup|def\s+draw)/).nil?
     if wrapped
       load SKETCH_PATH
-      Processing::App.start unless $app
+      Processing::App.sketch_class.new unless $app
       return
     end
     code = no_methods ? format(NAKED_WRAP, source) : format(BARE_WRAP, source)
     Object.class_eval code, SKETCH_PATH, -1
-    Processing::App.start
+    Processing::App.sketch_class.new unless $app
   end
 
   # Read in the sketch source code. Needs to work both online and offline.

@@ -112,11 +112,6 @@ module Processing
       run_sketch
     end
     
-    def self.start(options = {})
-      App.sketch_class.new
-    end
-
-
     def size(*args)
       w, h, mode = *args
       @width ||= w
