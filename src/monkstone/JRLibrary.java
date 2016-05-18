@@ -16,6 +16,7 @@ import monkstone.fastmath.Deglut;
 import monkstone.vecmath.vec2.Vec2;
 import monkstone.vecmath.vec3.Vec3;
 import org.jruby.Ruby;
+
 import org.jruby.runtime.load.Library;
 
 
@@ -30,9 +31,9 @@ public class JRLibrary implements Library{
      * @param runtime Ruby
      */
     public static void load(final Ruby runtime) {
-        MathTool.createMathTool(runtime);
-        Rarcball.createArcBall(runtime);
         Deglut.createDeglut(runtime);
+        MathToolModule.createMathToolModule(runtime);
+        Rarcball.createArcBall(runtime);        
         Vec2.createVec2(runtime);
         Vec3.createVec3(runtime);
     }
