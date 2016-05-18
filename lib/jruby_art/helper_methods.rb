@@ -119,7 +119,7 @@ module Processing
     # Proxy over a list of Java declared fields that have the same name as
     # some methods. Add to this list as needed.
     def proxy_java_fields
-      fields = %w(sketchPath key frameRate mousePressed keyPressed)
+      fields = %w(key frameRate mousePressed keyPressed)
       methods  = fields.map { |field| java_class.declared_field(field) }
       @declared_fields = Hash[fields.zip(methods)]
     end

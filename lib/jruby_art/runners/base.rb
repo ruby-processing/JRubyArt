@@ -1,7 +1,7 @@
 # encoding: utf-8
 # frozen_string_literal: false
 SKETCH_PATH ||= ARGV.shift
-SKETCH_ROOT ||= File.dirname(SKETCH_PATH)
+SKETCH_ROOT ||= File.absolute_path(File.dirname(SKETCH_PATH))
 
 # we can safely require app.rb as we are using a jruby runtime
 require_relative '../app'
@@ -41,7 +41,7 @@ module Processing
     end
     code = no_methods ? format(NAKED_WRAP, source) : format(BARE_WRAP, source)
     Object.class_eval code, SKETCH_PATH, -1
-    Processing::App.sketch_class.new
+    Processing::App.sketch_class.new unless $app
   end
 
   # Read in the sketch source code. Needs to work both online and offline.
