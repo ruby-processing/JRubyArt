@@ -130,6 +130,10 @@ module Processing
       super(spath)
     end
 
+    def data_path(dat)
+      "#{SKETCH_ROOT}/data/#{dat}"	    
+    end
+
     def sketch_size(x, y)
       surface.set_size(x, y)
     end
