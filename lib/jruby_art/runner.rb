@@ -201,7 +201,6 @@ module Processing
     def discover_java_args(sketch)
       arg_file = "#{File.dirname(sketch)}/data/java_args.txt"
       args = []
-      args += dock_icon
       if FileTest.exist?(arg_file)
         args += File.read(arg_file).split(/\s+/)
       elsif Processing::RP_CONFIG['java_args']
@@ -259,17 +258,6 @@ module Processing
       end
       data['JRUBY'] = 'true'
       open(path, 'w:UTF-8') { |f| f.write(data.to_yaml) }
-    end
-
-    # On the Mac, we can display a fat, shiny ruby in the Dock.
-    def dock_icon
-      @os ||= host_os
-      icon = []
-      if os == :mac
-        icon << '-Xdock:name=JRubyArt'
-        icon << "-Xdock:icon=#{K9_ROOT}/lib/templates/application/Contents/Resources/sketch.icns"
-      end
-      icon
     end
   end # class Runner
 end # module Processing
