@@ -131,7 +131,7 @@ module Processing
     end
 
     def data_path(dat)
-      "#{SKETCH_ROOT}/data/#{dat}"	    
+      File.join(SKETCH_ROOT, 'data', dat)	    
     end
 
     def sketch_size(x, y)
