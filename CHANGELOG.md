@@ -1,4 +1,4 @@
-**v1.0.9** Implementing `data_path` using ruby, this does away with file permission issue when loading data, hence no requirement for `--no-jruby` flag only downside need to wrap data filename with `data_path('filename')` but should fix macosx data path issue?
+**v1.0.9** Implementing `data_path` using ruby, this does away with file permission issue when loading data, hence no requirement for `--no-jruby` flag only downside need to wrap data filename with `data_path('filename')` but should fix macosx data path issue? Update to jruby-complete-9.1.1.0.
 
 **v1.0.8** Exposed Constrain functionality for ArcBall, added literate perspektive method. No longer trying to expose `sketchPath` variable (that was private since recent changes to vanilla processing), but provided an overloaded `sketchPath` method. Re-factor `MathTool` module class (jruby extension) to a simpler more correct form. Recommending the use of latest processing-3.1.1.
 **v1.0.7** Added tool to efficiently convert an Array of web colour Strings to and Array of color int (should be used by users of hype library, that uses of web strings in most of its examples). Update to use jruby-complete-9.1.0.0.
@@ -9,7 +9,7 @@
 
 **v1.0.4** Using jruby-complete-9.0.5.0. Adding javadoc, with links to jruby.api and processing.api
 
-**v1.0.3** Build now using processing-3.0.1 core and matching video jars from maven central and pom.rb build file (polyglot maven), furthermore using maven-wrapper so maven version isn't even required see mvnw and mvwm.bat and .mvn/maven-wrapper.properties. The pom.xml is not needed but included for completness.
+**v1.0.3** Build now using processing-3.0.1 core and matching video jars from maven central and pom.rb build file (polyglot maven), furthermore using maven-wrapper so maven version is not even required see mvnw and mvwm.bat and .mvn/maven-wrapper.properties. The pom.xml is not needed but included for completness.
 
 **v1.0.2** Various cleanups, favoring SHA256 over SHA1 to check jruby-complete
 
