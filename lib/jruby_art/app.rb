@@ -125,13 +125,15 @@ module Processing
       surface.set_title(title)
     end
 
-    def sketchPath(spath = nil)
+    def sketch_path(spath = nil)
       return super() if spath.nil?
       super(spath)
     end
 
     def data_path(dat)
-      File.join(SKETCH_ROOT, 'data', dat)	    
+      dat_root = File.join(SKETCH_ROOT, 'data')
+      Dir.mkdir(dat_root) unless File.exist?(dat_root)    
+      File.join(dat_root, dat)	    
     end
 
     def sketch_size(x, y)

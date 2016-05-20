@@ -136,11 +136,6 @@ module Processing
       @java_self ||= to_java(Java::ProcessingCore::PApplet)
     end
 
-    # Get the sketch path
-    def sketch_path
-      @declared_fields['sketchPath'].value(java_self)
-    end
-
     # Fields that should be made accessible as under_scored.
     define_method(:mouse_x) { mouseX }
 
