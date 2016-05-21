@@ -9,7 +9,7 @@ WARNING = <<-EOS
 EOS
 
 JRUBYC_VERSION     = '9.1.1.0'
-EXAMPLES           = '1.8'
+EXAMPLES           = '1.0'
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os'] 
 
@@ -59,9 +59,9 @@ file_name = (MAC_OR_LINUX.nil?) ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
 file file_name do
   begin
     if MAC_OR_LINUX.nil?
-      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
-    else
       sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"
+    else
+      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
     end
   rescue
     warn(WARNING)
@@ -78,4 +78,4 @@ task :copy_examples => file_name do
   sh "rm -r #{HOME_DIR}/k9_samples" if File.exist? "#{HOME_DIR}/k9_samples"
   sh "cp -r samples4ruby-processing3-#{EXAMPLES} #{HOME_DIR}/k9_samples"  
   sh "rm -r samples4ruby-processing3-#{EXAMPLES}"
-end  
+end
