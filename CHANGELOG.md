@@ -1,5 +1,6 @@
-**v1.0.8** Exposed Constrain functionality for ArcBall, added literate perspektive method. No longer trying to expose `sketchPath` variable (that was private since recent changes to vanilla processing), but provided an overloaded `sketchPath` method. Re-factor `MathTool` module class (jruby extension) to a simpler more correct form. Recommending the use of latest processing-3.1.1.
+**v1.1.0** Using ruby to implement the `data_path` wrapper (to avoid java permission issues). Any macosx users that have problems with accessing the local data folders should use this wrapper within `load_image`, `load_shader` etc or provide the absolute path to the data file eg `File.absolute_path('data/image.png')`. Using the `data_path` wrapper or providing the absolute data path also may fix the permission issue that required the `--no-jruby` flag (tested on linux). Includes update to jruby-complete-9.1.1.0.
 
+**v1.0.8** Exposed Constrain functionality for ArcBall, added literate perspektive method. No longer trying to expose `sketchPath` variable (that was private since recent changes to vanilla processing), but provided an overloaded `sketchPath` method. Re-factor `MathTool` module class (jruby extension) to a simpler more correct form. Recommending the use of latest processing-3.1.1.
 **v1.0.7** Added tool to efficiently convert an Array of web colour Strings to and Array of color int (should be used by users of hype library, that uses of web strings in most of its examples). Update to use jruby-complete-9.1.0.0.
 
 **v1.0.6** Experimental support for an in sketch slider, examples now featuring Joshua Davis hype library.
@@ -8,7 +9,7 @@
 
 **v1.0.4** Using jruby-complete-9.0.5.0. Adding javadoc, with links to jruby.api and processing.api
 
-**v1.0.3** Build now using processing-3.0.1 core and matching video jars from maven central and pom.rb build file (polyglot maven), furthermore using maven-wrapper so maven version isn't even required see mvnw and mvwm.bat and .mvn/maven-wrapper.properties. The pom.xml is not needed but included for completness.
+**v1.0.3** Build now using processing-3.0.1 core and matching video jars from maven central and pom.rb build file (polyglot maven), furthermore using maven-wrapper so maven version is not even required see mvnw and mvwm.bat and .mvn/maven-wrapper.properties. The pom.xml is not needed but included for completness.
 
 **v1.0.2** Various cleanups, favoring SHA256 over SHA1 to check jruby-complete
 
