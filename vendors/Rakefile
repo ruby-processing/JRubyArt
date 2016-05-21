@@ -76,6 +76,6 @@ task :copy_examples => file_name do
     sh "tar xzvf #{EXAMPLES}.tar.gz" 
   end
   sh "rm -r #{HOME_DIR}/k9_samples" if File.exist? "#{HOME_DIR}/k9_samples"
-  sh "cp -r samples4ruby-processing3-#{EXAMPLES} #{HOME_DIR}/k9_samples"  
-  sh "rm -r samples4ruby-processing3-#{EXAMPLES}"
+  sh "cp -r JRubyArt-examples-#{EXAMPLES} #{HOME_DIR}/k9_samples"  
+  sh "rm -r JRubyArt-examples-#{EXAMPLES}"
 end
