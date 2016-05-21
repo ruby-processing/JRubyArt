@@ -59,9 +59,9 @@ file_name = (MAC_OR_LINUX.nil?) ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
 file file_name do
   begin
     if MAC_OR_LINUX.nil?
-      sh "wget https://github.com/ruby-processing/samples4ruby-processing3/archive/#{EXAMPLES}.zip"
+      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
     else
-      sh "wget https://github.com/ruby-processing/samples4ruby-processing3/archive/#{EXAMPLES}.tar.gz"
+      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"
     end
   rescue
     warn(WARNING)
