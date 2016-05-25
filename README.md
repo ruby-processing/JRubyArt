@@ -88,7 +88,7 @@ k9 live sketch.rb # pry is bound to $app # needs `jruby -S gem install pry`
 ```
 ## Example sketches
 
-[Worked Examples](https://github.com/ruby-processing/samples4ruby-processing3) more to follow, feel free to add your own, especially ruby-2.1+ syntax now we can. These can now be downloaded using `k9 setup unpack_samples` please move existing k9_samples.
+[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) more to follow, feel free to add your own, especially ruby-2.1+ syntax now we can. These can now be downloaded using `k9 setup unpack_samples` please move existing k9_samples.
 
 ## Conversion Tool
 
