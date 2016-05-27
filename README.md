@@ -6,7 +6,7 @@
 A clean start for `jruby_art` that works best with the latest version of [processing-3.1.1](https://github.com/processing/processing/releases) and [jruby-9.1.0.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
  
-A suitable version of ruby (MRI ruby > 2.2 or `jruby-9.1.0.0+`) to download gem. 
+A suitable version of ruby (MRI ruby > 2.2 or `jruby-9.1.2.0+`) to download gem. 
 
 `processing-3.1.1`
 
@@ -33,11 +33,11 @@ sketchbook_path: /home/tux/sketchbook
 
 ```bash
  gem install jruby_art
- k9 setup install # installs jruby-complete-9.1.0.0
+ k9 setup install # installs jruby-complete-9.1.2.0
  k9 setup unpack_samples # downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --nojruby run jwishy.rb # unless you have jruby-9.1.0.0 installed or config JRUBY: 'false'
- k9 run jwishy.rb # if you have jruby-9.1.0.0 installed or config JRUBY: 'false'
+ k9 --nojruby run jwishy.rb # unless you have jruby-9.1.2.0 installed or config JRUBY: 'false'
+ k9 run jwishy.rb # if you have jruby-9.1.2.0 installed or config JRUBY: 'false'
 ```
 ## Create sketches from built in templates
 ```bash
@@ -51,7 +51,7 @@ k9 create ted 200 200 p2d --emacs     # class wrapped P2D sketch ted.rb for emac
 
 ## Simple Sketch
 ```ruby
-# :sketch_title belongs in setup it is a convenience method of jruby_art-3.0
+# :sketch_title belongs in setup it is a convenience method of jruby_art-3.0+
 def setup
   sketch_title 'My Sketch'
 end
