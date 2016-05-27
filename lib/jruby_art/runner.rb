@@ -164,10 +164,9 @@ module Processing
 
     # Trade in this Ruby instance for a JRuby instance, loading in a starter
     # script and passing it some arguments. Unless '--nojruby' is passed, the
-    # installed version of jruby is used instead of our vendored jarred one
-    # (which is required for some sketches eg shaders). To use
+    # installed version of jruby is used instead of our vendored one. To use
     # jruby-complete by default set JRUBY: false in ~/.jruby_art/config.yml
-    # (but that will make using other gems in your sketches hard....)
+    # (however that might make using other gems in your sketches hard....)
     def spin_up(starter_script, sketch, args)
       runner = "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}"
       @options.nojruby = true if Processing::RP_CONFIG['JRUBY'] == 'false'
