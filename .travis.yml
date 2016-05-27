@@ -3,7 +3,7 @@ sudo: false
 language: ruby
 
 rvm: 
-  - jruby-head
+  - jruby-9.1.1.0
 
 jdk:
   - oraclejdk8
