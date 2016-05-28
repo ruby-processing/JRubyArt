@@ -3,7 +3,7 @@ sudo: false
 rvm: 
   - jruby-9.0.5.0
 jdk:
-  - openjdk8
+  - oraclejdk8
 os:
   - linux
 
