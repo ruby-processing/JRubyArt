@@ -1,10 +1,9 @@
-sudo: false
-
 language: ruby
-
+sudo: false
 rvm: 
   - jruby-9.0.5.0
-
 jdk:
-  - oraclejdk8
+  - openjdk8
+os:
+  - linux
 
