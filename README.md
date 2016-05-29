@@ -1,6 +1,7 @@
 
 # JRubyArt
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
+![Travis CI](https://travis-ci.org/ruby-processing/JRubyArt.svg)
 
 ## Requirements
 A clean start for `jruby_art` that works best with the latest version of [processing-3.1.1](https://github.com/processing/processing/releases) and [jruby-9.1.2.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
