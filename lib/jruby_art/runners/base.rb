@@ -1,5 +1,6 @@
 # encoding: utf-8
 # frozen_string_literal: false
+
 SKETCH_PATH ||= ARGV.shift
 SKETCH_ROOT ||= File.absolute_path(File.dirname(SKETCH_PATH))
 

@@ -2,11 +2,9 @@
 # frozen_string_literal: false
 
 require 'java'
-# require 'jruby/core_ext'
 require_relative '../rpextras'
 require_relative '../jruby_art/helper_methods'
 require_relative '../jruby_art/helpers/aabb'
-require_relative '../jruby_art/helpers/string_extra'
 require_relative '../jruby_art/library_loader'
 require_relative '../jruby_art/config'
 
@@ -188,7 +186,6 @@ module Processing
         java_import format('processing.opengl.%s', klass)
       end
     end
-    # become_java!
   end # Processing::App
 
   # @HACK purists may prefer 'forwardable' to the use of Proxy

@@ -137,11 +137,12 @@ CODE
 # processing wrapper module
 module Processing
   require_relative '../helpers/string_extra'
+  using StringExtra
   # Write file to disk
   class SketchWriter
     attr_reader :file
     def initialize(path)
-      underscore = StringExtra.new(path).underscore
+      underscore = path.underscore
       @file = "#{File.dirname(path)}/#{underscore}.rb"
     end
 
@@ -157,7 +158,7 @@ module Processing
     ALL_DIGITS = /\A\d+\Z/
 
     def already_exist(path)
-      underscore = StringExtra.new(path).underscore
+      underscore = path.underscore
       new_file = "#{File.dirname(path)}/#{underscore}.rb"
       return if !FileTest.exist?(path) && !FileTest.exist?(new_file)
       puts 'That file already exists!'
@@ -197,7 +198,7 @@ module Processing
       already_exist(path)
       main_file = File.basename(path, '.rb') # allow uneeded extension input
       writer = SketchWriter.new(main_file)
-      @title = StringExtra.new(main_file).titleize
+      @title = main_file.titleize
       @width = args[0]
       @height = args[1]
       @mode = args[2].upcase unless args[2].nil?
@@ -221,9 +222,9 @@ module Processing
       main_file = File.basename(path, '.rb') # allow uneeded extension input
       # Check to make sure that the main file doesn't exist already
       already_exist(path)
-      @name = StringExtra.new(main_file).camelize
+      @name = main_file.camelize
       writer = SketchWriter.new(main_file)
-      @title = StringExtra.new(main_file).titleize
+      @title = main_file.titleize
       @width, @height = args[0], args[1]
       @mode = args[2].upcase unless args[2].nil?
       template = @mode.nil? ? class_template : class_template_mode
@@ -246,9 +247,9 @@ module Processing
       main_file = File.basename(path, '.rb') # allow uneeded extension input
       # Check to make sure that the main file doesn't exist already
       already_exist(path)
-      @name = StringExtra.new(main_file).camelize
+      @name = main_file.camelize
       writer = SketchWriter.new(main_file)
-      @title = StringExtra.new(main_file).titleize
+      @title = main_file.titleize
       @width, @height = args[0], args[1]
       @mode = args[2].upcase unless args[2].nil?
       template = @mode.nil? ? emacs_template : emacs_template_mode
