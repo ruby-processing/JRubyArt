@@ -6,6 +6,7 @@ require 'fileutils'
 require 'rbconfig'
 require_relative '../jruby_art/config'
 require_relative '../jruby_art/version'
+require_relative '../jruby_art/installer'
 
 # processing wrapper module
 module Processing
@@ -120,40 +121,19 @@ module Processing
     end
 
     def setup(choice)
-      proc_root = FileTest.exist?("#{ENV['HOME']}/.jruby_art/config.yml")
+      # proc_root = FileTest.exist?("#{ENV['HOME']}/.jruby_art/config.yml")
+      installer = Installer.new(root: K9_ROOT, os: host_os, jruby: true)
       case choice
       when /check/
-        check(proc_root, FileTest.exist?("#{K9_ROOT}/lib/ruby/jruby-complete.jar"))
+        installer.check
       when /install/
-        install(proc_root)
+        installer.install
       when /unpack_samples/
-        system "cd #{K9_ROOT}/vendors && rake unpack_samples"
+        installer.install_examples
       else
         puts 'Usage: k9 setup [check | install | unpack_samples]'
       end
-    end
-
-    def install(root_exist)
-      system "cd #{K9_ROOT}/vendors && rake"
-      return if root_exist
-      set_processing_root
-      warn 'PROCESSING_ROOT set optimistically, run check to confirm'
-    end
-
-    def check(root_exist, installed)
-      show_version
-      root = '  PROCESSING_ROOT = Not Set!!!' unless root_exist
-      root ||= "  PROCESSING_ROOT = #{Processing::RP_CONFIG['PROCESSING_ROOT']}"
-      jruby = Processing::RP_CONFIG['JRUBY']
-      puts root
-      puts "  JRUBY = #{jruby}" unless jruby.nil?
-      puts "  jruby-complete installed = #{installed}"
-    end
-
-    # Display the current version of JRubyArt.
-    def show_version
-      puts format('JRubyArt version %s', JRubyArt::VERSION)
-    end
+    end    
 
     # Show the standard help/usage message.
     def show_help
