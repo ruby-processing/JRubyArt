@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: false
 
 require 'ostruct'
@@ -121,7 +120,6 @@ module Processing
     end
 
     def setup(choice)
-      # proc_root = FileTest.exist?("#{ENV['HOME']}/.jruby_art/config.yml")
       installer = Installer.new(root: K9_ROOT, os: host_os, jruby: true)
       case choice
       when /check/
@@ -133,7 +131,7 @@ module Processing
       else
         puts 'Usage: k9 setup [check | install | unpack_samples]'
       end
-    end    
+    end
 
     # Show the standard help/usage message.
     def show_help
@@ -221,22 +219,6 @@ module Processing
         raise "unknown os: #{detect_os.inspect}" if Regexp.last_match.nil?
         :windows
       end
-    end
-
-    # Optimistically set processing root
-    def set_processing_root
-      require 'psych'
-      @os ||= host_os
-      data = {}
-      path = File.expand_path("#{ENV['HOME']}/.jruby_art/config.yml")
-      if os == :mac
-        data['PROCESSING_ROOT'] = '/Applications/Processing.app/Contents/Java'
-      else
-        root = "#{ENV['HOME']}/processing-3.1.1"
-        data['PROCESSING_ROOT'] = root
-      end
-      data['JRUBY'] = 'true'
-      open(path, 'w:UTF-8') { |f| f.write(data.to_yaml) }
     end
   end # class Runner
 end # module Processing
