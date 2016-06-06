@@ -1,9 +1,8 @@
-# encoding: utf-8
 # frozen_string_literal: false
 
 BASIC = <<-CODE
 def setup
-  sketch_title '%s'
+sketch_title '%s'
 end
 
 def draw
@@ -11,16 +10,16 @@ def draw
 end
 
 def settings
-  size %s, %s
-  # pixel_density(2) # here for hi-dpi displays only
-  # smooth # here
+size %s, %s
+# pixel_density(2) # here for hi-dpi displays only
+# smooth # here
 end
 
 CODE
 
 BASIC_MODE = <<-CODE
 def setup
-  sketch_title '%s'
+sketch_title '%s'
 end
 
 def draw
@@ -28,8 +27,8 @@ def draw
 end
 
 def settings
-  size %s, %s, %s
-  # smooth # here
+size %s, %s, %s
+# smooth # here
 end
 
 CODE
@@ -38,19 +37,19 @@ CLASS_BASIC = <<-CODE
 # encoding: utf-8
 # frozen_string_literal: false
 class %s < Processing::App
-  def setup
-    sketch_title '%s'
-  end
+def setup
+sketch_title '%s'
+end
 
-  def draw
+def draw
 
-  end
+end
 
-  def settings
-    size %s, %s
-    # pixel_density(2) # here for hi-dpi displays only
-    # smooth # here
-  end
+def settings
+size %s, %s
+# pixel_density(2) # here for hi-dpi displays only
+# smooth # here
+end
 end
 CODE
 
@@ -63,18 +62,18 @@ require 'jruby_art/app'
 Processing::App::SKETCH_PATH = __FILE__
 
 class %s < Processing::App
-  def setup
-    sketch_title '%s'
-  end
+def setup
+sketch_title '%s'
+end
 
-  def draw
+def draw
 
-  end
+end
 
-  def settings
-    size %s, %s
-    # smooth # here
-  end
+def settings
+size %s, %s
+# smooth # here
+end
 end
 
 %s.new unless defined? $app
@@ -84,18 +83,18 @@ CLASS_MODE = <<-CODE
 # encoding: utf-8
 # frozen_string_literal: false
 class %s < Processing::App
-  def setup
-    sketch_title '%s'
-  end
+def setup
+sketch_title '%s'
+end
 
-  def draw
+def draw
 
-  end
+end
 
-  def settings
-    size %s, %s, %s
-    # smooth # here
-  end
+def settings
+size %s, %s, %s
+# smooth # here
+end
 end
 CODE
 
@@ -108,18 +107,18 @@ require 'jruby_art/app'
 Processing::App::SKETCH_PATH = __FILE__
 
 class %s < Processing::App
-  def setup
-    sketch_title '%s'
-  end
+def setup
+sketch_title '%s'
+end
 
-  def draw
+def draw
 
-  end
+end
 
-  def settings
-    size %s, %s, %s
-    # smooth # here
-  end
+def settings
+size %s, %s, %s
+# smooth # here
+end
 end
 
 %s.new unless defined? $app
@@ -129,18 +128,19 @@ INNER = <<-CODE
 # encoding: utf-8
 # frozen_string_literal: false
 class %s
-  include Processing::Proxy
+include Processing::Proxy
 
 end
 CODE
 
-# processing wrapper module
-module Processing
+# creator wrapper module using StringExtra
+module Creator
   require_relative '../helpers/string_extra'
   using StringExtra
   # Write file to disk
   class SketchWriter
     attr_reader :file
+
     def initialize(path)
       underscore = path.underscore
       @file = "#{File.dirname(path)}/#{underscore}.rb"
@@ -154,9 +154,8 @@ module Processing
   end
 
   # An abstract class providing common methods for real creators
-  class Creator
+  class Base
     ALL_DIGITS = /\A\d+\Z/
-
     def already_exist(path)
       underscore = path.underscore
       new_file = "#{File.dirname(path)}/#{underscore}.rb"
@@ -182,7 +181,7 @@ module Processing
   end
 
   # This class creates bare sketches, with an optional render mode
-  class BasicSketch < Creator
+  class BasicSketch < Base
     # Create a blank sketch, given a path.
     def basic_template
       format(BASIC, @title, @width, @height)
@@ -208,7 +207,7 @@ module Processing
   end
 
   # This class creates class wrapped sketches, with an optional render mode
-  class ClassSketch < Creator
+  class ClassSketch < Base
     def class_template
       format(CLASS_BASIC, @name, @title, @width, @height)
     end
@@ -216,6 +215,7 @@ module Processing
     def class_template_mode
       format(CLASS_MODE, @name, @title, @width, @height, @mode)
     end
+
     # Create a class wrapped sketch, given a path.
     def create!(path, args)
       return usage if /\?/ =~ path || /--help/ =~ path
@@ -233,7 +233,7 @@ module Processing
   end
 
   # This class creates class wrapped sketches, with an optional render mode
-  class EmacsSketch < Creator
+  class EmacsSketch < Base
     def emacs_template
       format(EMACS_BASIC, @name, @title, @width, @height, @name)
     end
@@ -258,10 +258,11 @@ module Processing
   end
 
   # This class creates a pseudo 'java inner class' of the sketch
-  class Inner < Creator
+  class InnerSketch < Base
     def inner_class_template
       format(INNER, @name)
     end
+
     # Create a pseudo inner class, given a path.
     def create!(path, _args_)
       return usage if /\?/ =~ path || /--help/ =~ path

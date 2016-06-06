@@ -12,8 +12,7 @@ module StringExtra
       gsub(/_id$/, '').tr('_', ' ').capitalize
     end
 
-    def camelize(first_letter_uppercase = true)
-      return first + camelize[1..-1] unless first_letter_uppercase
+    def camelize
       gsub(%r{/\/(.?)/}) { '::' + Regexp.last_match[1].upcase }
         .gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
     end

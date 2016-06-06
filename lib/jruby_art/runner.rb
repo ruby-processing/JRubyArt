@@ -94,10 +94,10 @@ module Processing
     # boilerplate filled out.
     def create(sketch, args)
       require_relative '../jruby_art/creators/creator'
-      return Processing::Inner.new.create!(sketch, args) if @options.inner
-      return Processing::ClassSketch.new.create!(sketch, args) if @options.wrap
-      return Processing::EmacsSketch.new.create!(sketch, args) if @options.emacs
-      Processing::BasicSketch.new.create!(sketch, args)
+      return Creator::Inner.new.create!(sketch, args) if @options.inner
+      return Creator::ClassSketch.new.create!(sketch, args) if @options.wrap
+      return Creator::EmacsSketch.new.create!(sketch, args) if @options.emacs
+      Creator::BasicSketch.new.create!(sketch, args)
     end
 
     # Just simply run a JRubyArt sketch.
@@ -238,7 +238,7 @@ module Processing
       when /solaris|bsd/ then :unix
       else
         WIN_PATTERNS.find { |r| detect_os =~ r }
-        fail "unknown os: #{detect_os.inspect}" if Regexp.last_match.nil?
+        raise "unknown os: #{detect_os.inspect}" if Regexp.last_match.nil?
         :windows
       end
     end
