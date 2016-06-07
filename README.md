@@ -20,7 +20,7 @@ processing `video` and `sound-1.3.2+` libraries _best installed from the process
 
 ## Configuration
 
-Config file is `config.yml` in the `~/.jruby_art folder` so can co-exist with a ruby-processing install
+You can if you wish leave configuration to the `new` autoconfig tool (delete existing config to do this). The config file is `config.yml` in the `~/.jruby_art folder`, the autoconfig gets run on `k9 setup install` expected to just work on `macosx`, output may need tuning on `windows` / `linux` check with `k9 setup check` (run both after gem installfor both)
 
 ```yaml
 # YAML configuration file for jruby_art
@@ -37,8 +37,8 @@ sketchbook_path: /home/tux/sketchbook
  k9 setup install # installs jruby-complete-9.1.2.0
  k9 setup unpack_samples # downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --nojruby run jwishy.rb # unless you have jruby-9.1.2.0 installed or config JRUBY: 'false'
  k9 run jwishy.rb # if you have jruby-9.1.2.0 installed or config JRUBY: 'false'
+ k9 --nojruby run jwishy.rb # to use jruby-complete unless you have set JRUBY: 'false' in config
 ```
 ## Create sketches from built in templates
 ```bash
@@ -73,11 +73,8 @@ def settings
 end
 ```
 ## Run Sketch
-`k9 run sketch.rb`
-or
-`k9 --nojruby run sketch.rb`
-
-be prepared to KILL the odd java process (that doesn't exit cleanly all the time), watch seems now to work
+See above
+be prepared to `KILL` the odd java process (ie when sketch does not exit cleanly)
 
 ## Watch sketches
 ```bash

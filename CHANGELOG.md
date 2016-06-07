@@ -1,3 +1,6 @@
+
+**v1.1.2** Refactor `runner.rb` to `runner.rb` and `installer.rb`. The `Installer` class has the role of installing `jruby-complete`, the examples and providing `setup check` functionality. Refactored and improved default `config.yml` tool, all should make it easier for `collaborators/successors` to follow the code. 
+
 **v1.1.1** Even more `data_path` fixes in examples, update to jruby-complete-9.1.2.0
 
 **v1.1.0** Using ruby to implement the `data_path` wrapper (to avoid java permission issues). Any macosx users that have problems with accessing the local data folders should use this wrapper within `load_image`, `load_shader` etc or provide the absolute path to the data file eg `File.absolute_path('data/image.png')`. Using the `data_path` wrapper or providing the absolute data path also may fix the permission issue that required the `--no-jruby` flag (tested on linux). Includes update to jruby-complete-9.1.1.0.
