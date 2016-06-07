@@ -6,6 +6,7 @@ require 'rbconfig'
 require_relative '../jruby_art/config'
 require_relative '../jruby_art/version'
 require_relative '../jruby_art/installer'
+require_relative '../jruby_art/args'
 
 # processing wrapper module
 module Processing
@@ -148,10 +149,10 @@ module Processing
     def spin_up(starter_script, sketch, args)
       runner = "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}"
       @options.nojruby = true if Processing::RP_CONFIG['JRUBY'] == 'false'
-      java_args = discover_java_args(sketch)
+      java_args = JavaArgs.new(SKETCH_ROOT)
       if @options.nojruby
         command = ['java',
-                   java_args,
+                   java_args.java,
                    '-cp',
                    jruby_complete,
                    'org.jruby.Main',
@@ -160,7 +161,7 @@ module Processing
                    args].flatten
       else
         command = ['jruby',
-                   java_args,
+                   java_args.jruby,
                    runner,
                    sketch,
                    args].flatten
@@ -171,21 +172,7 @@ module Processing
       rescue Java::JavaLang::ClassNotFoundException
       end
     end
-
-    # If you need to pass in arguments to Java, such as the ones on this page:
-    # http://docs.oracle.com/javase/1.5.0/docs/tooldocs/windows/java.html
-    # add them to a java_args.txt in your data directory next to your sketch.
-    def discover_java_args(sketch)
-      arg_file = "#{File.dirname(sketch)}/data/java_args.txt"
-      args = []
-      if FileTest.exist?(arg_file)
-        args += File.read(arg_file).split(/\s+/)
-      elsif Processing::RP_CONFIG['java_args']
-        args += Processing::RP_CONFIG['java_args'].split(/\s+/)
-      end
-      args.map! { |arg| "-J#{arg}" } unless @options.nojruby
-      args
-    end
+     
 
     # NB: We really do mean to use 'and' not '&&' for flow control purposes
 

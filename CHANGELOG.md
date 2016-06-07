@@ -1,5 +1,5 @@
 
-**v1.1.2** Refactor `runner.rb` to `runner.rb` and `installer.rb`. The `Installer` class has the role of installing `jruby-complete`, the examples and providing `setup check` functionality. Refactored and improved default `config.yml` tool, all should make it easier for `collaborators/successors` to follow the code. 
+**v1.1.2** Refactor `runner.rb` to `runner.rb`, `args.rb` and `installer.rb`. The `Installer` class has the role of installing `jruby-complete`, the examples and providing `setup check` functionality. Refactored and improved default `config.yml` tool, all should make it easier for `collaborators/successors` to follow the code. 
 
 **v1.1.1** Even more `data_path` fixes in examples, update to jruby-complete-9.1.2.0
 
