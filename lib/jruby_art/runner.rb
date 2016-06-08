@@ -122,7 +122,7 @@ module Processing
 
     def setup(choice)      
       return Check.new(K9_ROOT, host_os).install if choice =~ /check/
-      return JRubyComplete.new(K9_ROOT, host_os).install if choice if choice =~ /install/
+      return JRubyComplete.new(K9_ROOT, host_os).install if choice =~ /install/
       return UnpackSamples.new(K9_ROOT, host_os).install if choice =~ /unpack_sample/
       Installer.new(K9_ROOT, host_os).install        
     end
