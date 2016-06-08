@@ -4,14 +4,14 @@ require 'yaml'
 VERSION = '3.1.1' # processing version
 
 class Installer
-  attr_reader :os, :jruby, :sketch, :gem_root
-  def initialize(os: :linux, jruby: true, root:)
+  attr_reader :os, :sketch, :gem_root, :home
+  def initialize(os: :linux, root:)
     @os = os
-    @jruby = jruby
     @gem_root = root
-    @sketch = "#{ENV['HOME']}/sketchbook" if os == :linux
-    @sketch = "#{ENV['HOME']}/My Documents/Processing" if os == :windows
-    @sketch = "#{ENV['HOME']}/Documents/Processing" if os == :mac
+    @home = ENV['HOME']
+    @sketch = "#{home}/sketchbook" if os == :linux
+    @sketch = "#{home}/My Documents/Processing" if os == :windows
+    @sketch = "#{home}/Documents/Processing" if os == :mac
   end
 
   def install
@@ -28,15 +28,15 @@ class Installer
   # Optimistically set processing root
   def set_processing_root
     require 'psych'
-    folder = File.expand_path("#{ENV['HOME']}/.jruby_art")
+    folder = File.expand_path("#{home}/.jruby_art")
     Dir.mkdir(folder) unless File.exist? folder
     path = File.join(folder, 'config.yml')
-    proot = "#{ENV['HOME']}/processing-#{VERSION}"
+    proot = "#{home}/processing-#{VERSION}"
     proot = "/Java/Processing-#{VERSION}" if os == :windows
     proot = "/Applications/Processing.app/Contents/Java" if os == :mac
     data = {
       'PROCESSING_ROOT' => proot,
-      'JRUBY' => jruby.to_s,
+      'JRUBY' => true.to_s,
       'sketchbook_path' => sketch,
       'MAX_WATCH' => '20'
     }
@@ -49,7 +49,7 @@ class Installer
   end
 
   def config
-    k9config = File.expand_path("#{ENV['HOME']}/.jruby_art/config.yml")
+    k9config = File.expand_path("#{home}/.jruby_art/config.yml")
     return nil unless File.exist? k9config
     YAML.load_file(k9config)
   end

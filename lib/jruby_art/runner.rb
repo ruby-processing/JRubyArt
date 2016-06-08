@@ -121,7 +121,7 @@ module Processing
     end
 
     def setup(choice)
-      installer = Installer.new(root: K9_ROOT, os: host_os, jruby: true)
+      installer = Installer.new(root: K9_ROOT, os: host_os)
       case choice
       when /check/
         installer.check
