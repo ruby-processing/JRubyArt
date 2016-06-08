@@ -6,7 +6,7 @@ require 'rbconfig'
 require_relative '../jruby_art/config'
 require_relative '../jruby_art/version'
 require_relative '../jruby_art/installer'
-require_relative '../jruby_art/args'
+require_relative '../jruby_art/java_args'
 
 # processing wrapper module
 module Processing
