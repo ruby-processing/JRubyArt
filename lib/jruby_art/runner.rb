@@ -118,20 +118,13 @@ module Processing
     def watch(sketch, args)
       ensure_exists(sketch)
       spin_up('watch.rb', sketch, args)
-    end
+    end      
 
-    def setup(choice)
-      installer = Installer.new(root: K9_ROOT, os: host_os)
-      case choice
-      when /check/
-        installer.check
-      when /install/
-        installer.install
-      when /unpack_samples/
-        installer.install_examples
-      else
-        puts 'Usage: k9 setup [check | install | unpack_samples]'
-      end
+    def setup(choice)      
+      return Check.new(K9_ROOT, host_os).install if choice =~ /check/
+      return JRubyComplete.new(K9_ROOT, host_os).install if choice if choice =~ /install/
+      return UnpackSamples.new(K9_ROOT, host_os).install if choice =~ /unpack_sample/
+      Installer.new(K9_ROOT, host_os).install        
     end
 
     # Show the standard help/usage message.
@@ -171,8 +164,7 @@ module Processing
         # exec replaces the Ruby process with the JRuby one.
       rescue Java::JavaLang::ClassNotFoundException
       end
-    end
-     
+    end     
 
     # NB: We really do mean to use 'and' not '&&' for flow control purposes
 

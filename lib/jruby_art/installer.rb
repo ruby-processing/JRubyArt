@@ -3,9 +3,10 @@ require 'yaml'
 
 VERSION = '3.1.1' # processing version
 
+# Abstract Installer class
 class Installer
   attr_reader :os, :sketch, :gem_root, :home
-  def initialize(os: :linux, root:)
+  def initialize(root, os)
     @os = os
     @gem_root = root
     @home = ENV['HOME']
@@ -13,18 +14,7 @@ class Installer
     @sketch = "#{home}/My Documents/Processing" if os == :windows
     @sketch = "#{home}/Documents/Processing" if os == :mac
   end
-
-  def install
-    system "cd #{gem_root}/vendors && rake"
-    return if root_exist?
-    set_processing_root
-    warn 'PROCESSING_ROOT set optimistically, run check to confirm'
-  end
-
-  def install_examples
-    system "cd #{gem_root}/vendors && rake unpack_samples"
-  end
-
+  
   # Optimistically set processing root
   def set_processing_root
     require 'psych'
@@ -40,22 +30,36 @@ class Installer
       'sketchbook_path' => sketch,
       'MAX_WATCH' => '20'
     }
-    open(path, 'w:UTF-8') { |f| f.write(data.to_yaml) }
+    open(path, 'w:UTF-8') { |file| file.write(data.to_yaml) }
   end
-
+  
   def root_exist?
     return false if config.nil?
     File.exist? config['PROCESSING_ROOT']
   end
-
+  
   def config
     k9config = File.expand_path("#{home}/.jruby_art/config.yml")
     return nil unless File.exist? k9config
     YAML.load_file(k9config)
   end
+  
+  # in place of default installer class
+  def install
+    puts 'Usage: k9 setup [check | install | unpack_samples]'
+  end
+  
+  # Display the current version of JRubyArt.
+  def show_version
+    puts format('JRubyArt version %s', JRubyArt::VERSION)
+  end
+end
 
-  def check
+# Configuration checker
+class Check < Installer 
+  def install
     show_version
+    return super unless config
     installed = File.exist? File.join(gem_root, 'lib/ruby/jruby-complete.jar')
     proot = '  PROCESSING_ROOT = Not Set!!!' unless root_exist?
     proot ||= "  PROCESSING_ROOT = #{config['PROCESSING_ROOT']}"
@@ -68,9 +72,21 @@ class Installer
     puts sketchbook
     puts max_watch
   end
+end
 
-  # Display the current version of JRubyArt.
-  def show_version
-    puts format('JRubyArt version %s', JRubyArt::VERSION)
+# Examples Installer
+class UnpackSamples < Installer
+  def install
+    system "cd #{gem_root}/vendors && rake unpack_samples"
+  end
+end
+
+# JRuby-Complete installer
+class JRubyComplete < Installer
+  def install
+    system "cd #{gem_root}/vendors && rake"
+    return if root_exist?
+    set_processing_root
+    warn 'PROCESSING_ROOT set optimistically, run check to confirm'
   end
 end
