@@ -2,7 +2,7 @@
 # frozen_string_literal: false
 
 require_relative '../jruby_art'
-
+require_relative 'sketchbook'
 # The processing wrapper module
 module Processing
   # Encapsulate library loader functionality as a class
@@ -10,7 +10,7 @@ module Processing
     attr_reader :sketchbook_library_path
 
     def initialize
-      @sketchbook_library_path = File.join(find_sketchbook_path, 'libraries')
+      @sketchbook_library_path = File.join(Sketchbook.find_path, 'libraries')
       @loaded_libraries = Hash.new(false)
     end
 
@@ -117,27 +117,6 @@ module Processing
         end
       end
       nil
-    end
-
-    def find_sketchbook_path
-      preferences_paths = []
-      sketchbook_paths = []
-      sketchbook_path = Processing::RP_CONFIG.fetch('sketchbook_path', false)
-      return sketchbook_path if sketchbook_path
-      [
-        "'Application Data/Processing'", 'AppData/Roaming/Processing',
-        'Library/Processing', 'Documents/Processing',
-        '.processing', 'sketchbook'
-      ].each do |prefix|
-        spath = format('%s/%s', ENV['HOME'], prefix)
-        pref_path = format('%s/preferences.txt', spath)
-        preferences_paths << pref_path if FileTest.file?(pref_path)
-        sketchbook_paths << spath if FileTest.directory?(spath)
-      end
-      return sketchbook_paths.first if preferences_paths.empty?
-      lines = IO.readlines(preferences_paths.first)
-      matchedline = lines.grep(/^sketchbook/).first
-      matchedline[/=(.+)/].delete('=')
-    end
+    end    
   end
 end
