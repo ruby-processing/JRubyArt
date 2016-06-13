@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015-16 Martin Prout
+ * Copyright (c) 2016 Martin Prout
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,26 +17,28 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+package monkstone.filechooser;
 
-package monkstone.videoevent;
-import processing.video.Movie;
-import processing.video.Capture;
+import java.io.File;
+
 /**
  * This interface makes it easier/possible to use the reflection methods
- * from Movie and Capture classes in Processing::App in JRubyArt
+ * selectInput
+ * def setup
+ *   java_signature 'void selectInput(String, String)'
+ *   selectInput('Select a file to process:', 'fileSelected')
+ * end
+ *
+ * def fileSelected(selection)
+ *   if selection.nil?
+ *     puts 'Window was closed or the user hit cancel.'
+ *   else
+ *     puts format('User selected %s', selection.get_absolute_path)
+ *   end
+ * end
  * @author Martin Prout
  */
-public interface VideoInterface {
-    /**
-     * Used to implement reflection method in PApplet
-     * @see processing.video.Movie
-     * @param movie Movie
-     */
-    public void movieEvent(Movie movie);
-    /**
-     * Used to implement reflection method in PApplet
-     * @see processing.video.Capture
-     * @param capture Capture
-     */
-    public void captureEvent(Capture capture);    
+public interface Chooser {
+    
+    public void fileSelected(File selection);
 }

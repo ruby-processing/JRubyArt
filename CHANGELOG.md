@@ -1,5 +1,5 @@
 
-**v1.1.2** Refactor `runner.rb` to `runner.rb`, `args.rb` and `installer.rb`. The `Installer` classes have the role of installing `jruby-complete`, the examples and providing `setup check` functionality. Refactored and improved default `config.yml` tool, all should make it easier for `collaborators/successors` to follow the code. Refactored `Vec2D` and `Vec3D` `==` and `eql?` methods.
+**v1.1.2** Refactor `runner.rb` to `runner.rb`, `args.rb` and `installer.rb`. The `Installer` classes have the role of installing `jruby-complete`, the examples and providing `setup check` functionality. Refactored and improved default `config.yml` tool, all should make it easier for `collaborators/successors` to follow the code. Refactored `Vec2D` and `Vec3D` `==` and `eql?` methods. New `chooser` library makes it possible to use `selectInput` reflection method.
 
 **v1.1.1** Even more `data_path` fixes in examples, update to jruby-complete-9.1.2.0
 
