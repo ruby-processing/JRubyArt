@@ -22,7 +22,6 @@ package monkstone.vecmath.vec2;
 
 import org.jruby.Ruby;
 import org.jruby.RubyArray;
-import org.jruby.RubyBoolean;
 import org.jruby.RubyClass;
 import org.jruby.RubyObject;
 import org.jruby.RubySymbol;
@@ -654,12 +653,16 @@ public class Vec2 extends RubyObject {
      */
     @Override
     public boolean equals(Object obj) {
+        if (obj == this){
+          return true;
+        }
         if (obj instanceof Vec2) {
             final Vec2 other = (Vec2) obj;
-            if (!((Double) this.jx).equals(other.jx)) {
-                return false;
-            }
-            return ((Double) this.jy).equals(other.jy);
+            if ((Double.compare(jx,(Double)other.jx) == 0)
+                && (Double.compare(jy,(Double)other.jy) == 0))
+            {
+                return true;
+            }            
         }
         return false;
     }
@@ -673,14 +676,18 @@ public class Vec2 extends RubyObject {
     @JRubyMethod(name = "eql?", required = 1)
     public IRubyObject eql_p(ThreadContext context, IRubyObject other) {
         Ruby runtime = context.getRuntime();
+        if (other == this){
+            return runtime.newBoolean(true);
+        }
         if (other instanceof Vec2) {
             Vec2 v = (Vec2) other.toJava(Vec2.class);
-            if (!((Double) this.jx).equals(v.jx)) {
-                return RubyBoolean.newBoolean(runtime, false);
-            }
-            return RubyBoolean.newBoolean(runtime, ((Double) this.jy).equals(v.jy));
+             if ((Double.compare(jx,(Double)v.jx) == 0)
+                && (Double.compare(jy,(Double)v.jy) == 0))
+            {
+                return runtime.newBoolean(true);
+            }            
         }
-        return RubyBoolean.newBoolean(runtime, false);
+        return runtime.newBoolean(false);
     }
 
     /**
@@ -694,16 +701,18 @@ public class Vec2 extends RubyObject {
     @Override
     public IRubyObject op_equal(ThreadContext context, IRubyObject other) {
         Ruby runtime = context.getRuntime();
+        if (other == this){
+            return runtime.newBoolean(true);                                   
+        }
         if (other instanceof Vec2) {
             Vec2 v = (Vec2) other.toJava(Vec2.class);
             double diff = jx - v.jx;
             if ((diff < 0 ? -diff : diff) > Vec2.EPSILON) {
-                return RubyBoolean.newBoolean(runtime, false);
+                return runtime.newBoolean(false);
             }
             diff = jy - v.jy;
-            boolean result = ((diff < 0 ? -diff : diff) < Vec2.EPSILON);
-            return RubyBoolean.newBoolean(runtime, result);
+            return runtime.newBoolean((diff < 0 ? -diff : diff) < Vec2.EPSILON);
         }
-        return RubyBoolean.newBoolean(runtime, false);
+        return runtime.newBoolean(false);
     }
 }
