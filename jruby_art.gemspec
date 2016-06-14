@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.name = 'jruby_art'
   spec.version = JRubyArt::VERSION
   spec.authors = %w(Jeremy\ Ashkenas Guillaume\ Pierronnet Martin\ Prout)
-  spec.email = 'martin_p@lineone.net'
+  spec.email = 'mamba2928@yahoo.co.uk'
   spec.description = <<-EOS
   JRubyArt is a ruby wrapper for the processing art framework.
   This version supports processing-3.1.1, and uses jruby-9.1.2.0  as the glue 
