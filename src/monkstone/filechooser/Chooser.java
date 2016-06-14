@@ -29,7 +29,7 @@ import java.io.File;
  *   selectInput('Select a file to process:', 'fileSelected')
  * end
  *
- * def fileSelected(selection)
+ * def file_selected(selection)
  *   if selection.nil?
  *     puts 'Window was closed or the user hit cancel.'
  *   else
@@ -40,5 +40,5 @@ import java.io.File;
  */
 public interface Chooser {
     
-    public void fileSelected(File selection);
+    public void file_selected(File selection);
 }
