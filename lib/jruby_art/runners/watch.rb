@@ -69,7 +69,7 @@ module Processing
       @files = Dir.glob(File.join(SKETCH_ROOT, '**/*.{rb,glsl}'))
       count = @files.length
       max_watch = RP_CONFIG.fetch('MAX_WATCH', 20)
-      return unless count > max_watch
+      return unless count > max_watch.to_i
       warn format(WATCH_MESSAGE, max_watch, count)
       abort
     end
