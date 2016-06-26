@@ -12,7 +12,7 @@ class JavaOpts
       @jvm_opts += Processing::RP_CONFIG['java_args'].split(/\s+/)
     end
   end
-  
+
   # wrap java args for jruby
   def jruby
     return [] if jvm_opts.length == 0

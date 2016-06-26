@@ -118,20 +118,20 @@ module Processing
     def watch(sketch, args)
       ensure_exists(sketch)
       spin_up('watch.rb', sketch, args)
-    end      
+    end
 
-    def setup(choice)      
+    def setup(choice)
       return Check.new(K9_ROOT, host_os).install if choice =~ /check/
       return JRubyComplete.new(K9_ROOT, host_os).install if choice =~ /install/
       return UnpackSamples.new(K9_ROOT, host_os).install if choice =~ /unpack_sample/
-      Installer.new(K9_ROOT, host_os).install        
+      Installer.new(K9_ROOT, host_os).install
     end
 
     # Show the standard help/usage message.
     def show_help
       puts HELP_MESSAGE
     end
-    
+
     def show_version
       puts format('JRubyArt version %s', JRubyArt::VERSION)
     end
@@ -168,7 +168,7 @@ module Processing
         # exec replaces the Ruby process with the JRuby one.
       rescue Java::JavaLang::ClassNotFoundException
       end
-    end     
+    end
 
     # NB: We really do mean to use 'and' not '&&' for flow control purposes
 
@@ -201,7 +201,7 @@ module Processing
         WIN_PATTERNS.find { |r| detect_os =~ r }
         raise "unknown os: #{detect_os.inspect}" if Regexp.last_match.nil?
         :windows
-      end     
+      end
     end
   end # class Runner
 end # module Processing
