@@ -6,7 +6,7 @@ require 'rbconfig'
 require_relative '../jruby_art/config'
 require_relative '../jruby_art/version'
 require_relative '../jruby_art/installer'
-require_relative '../jruby_art/java_args'
+require_relative '../jruby_art/java_opts'
 
 # processing wrapper module
 module Processing
@@ -131,6 +131,10 @@ module Processing
     def show_help
       puts HELP_MESSAGE
     end
+    
+    def show_version
+      puts format('JRubyArt version %s', JRubyArt::VERSION)
+    end
 
     private
 
@@ -142,10 +146,10 @@ module Processing
     def spin_up(starter_script, sketch, args)
       runner = "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}"
       @options.nojruby = true if Processing::RP_CONFIG['JRUBY'] == 'false'
-      java_args = JavaArgs.new(SKETCH_ROOT)
+      opts = JavaOpts.new(SKETCH_ROOT)
       if @options.nojruby
         command = ['java',
-                   java_args.java,
+                   opts.jvm_opts,
                    '-cp',
                    jruby_complete,
                    'org.jruby.Main',
@@ -154,7 +158,7 @@ module Processing
                    args].flatten
       else
         command = ['jruby',
-                   java_args.jruby,
+                   opts.jruby,
                    runner,
                    sketch,
                    args].flatten
@@ -197,7 +201,7 @@ module Processing
         WIN_PATTERNS.find { |r| detect_os =~ r }
         raise "unknown os: #{detect_os.inspect}" if Regexp.last_match.nil?
         :windows
-      end
+      end     
     end
   end # class Runner
 end # module Processing
