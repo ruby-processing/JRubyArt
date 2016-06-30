@@ -2,7 +2,7 @@
 
 BASIC = <<-CODE
 def setup
-sketch_title '%s'
+  sketch_title '%s'
 end
 
 def draw
@@ -10,16 +10,16 @@ def draw
 end
 
 def settings
-size %s, %s
-# pixel_density(2) # here for hi-dpi displays only
-# smooth # here
+  size %s, %s
+  # pixel_density(2) # here for hi-dpi displays only
+  # smooth # here
 end
 
 CODE
 
 BASIC_MODE = <<-CODE
 def setup
-sketch_title '%s'
+  sketch_title '%s'
 end
 
 def draw
@@ -27,8 +27,8 @@ def draw
 end
 
 def settings
-size %s, %s, %s
-# smooth # here
+  size %s, %s, %s
+  # smooth # here
 end
 
 CODE
@@ -37,19 +37,19 @@ CLASS_BASIC = <<-CODE
 # encoding: utf-8
 # frozen_string_literal: false
 class %s < Processing::App
-def setup
-sketch_title '%s'
-end
+  def setup
+    sketch_title '%s'
+  end
 
-def draw
+  def draw
 
-end
+  end
 
-def settings
-size %s, %s
-# pixel_density(2) # here for hi-dpi displays only
-# smooth # here
-end
+  def settings
+    size %s, %s
+    # pixel_density(2) # here for hi-dpi displays only
+    # smooth # here
+  end
 end
 CODE
 
@@ -59,21 +59,21 @@ EMACS_BASIC = <<-CODE
 require 'jruby_art'
 require 'jruby_art/app'
 
-Processing::App::SKETCH_PATH = __FILE__
+Processing::App::SKETCH_PATH = __FILE__.freeze
 
 class %s < Processing::App
-def setup
-sketch_title '%s'
-end
+  def setup
+    sketch_title '%s'
+  end
 
-def draw
+  def draw
 
-end
+  end
 
-def settings
-size %s, %s
-# smooth # here
-end
+  def settings
+    size %s, %s
+    # smooth # here
+  end
 end
 
 %s.new unless defined? $app
@@ -83,18 +83,18 @@ CLASS_MODE = <<-CODE
 # encoding: utf-8
 # frozen_string_literal: false
 class %s < Processing::App
-def setup
-sketch_title '%s'
-end
+  def setup
+    sketch_title '%s'
+  end
 
-def draw
+  def draw
 
-end
+  end
 
-def settings
-size %s, %s, %s
-# smooth # here
-end
+  def settings
+    size %s, %s, %s
+    # smooth # here
+  end
 end
 CODE
 
@@ -104,21 +104,21 @@ EMACS_MODE = <<-CODE
 require 'jruby_art'
 require 'jruby_art/app'
 
-Processing::App::SKETCH_PATH = __FILE__
+Processing::App::SKETCH_PATH = __FILE__.freeze
 
 class %s < Processing::App
-def setup
-sketch_title '%s'
-end
+  def setup
+    sketch_title '%s'
+  end
 
-def draw
+  def draw
 
-end
+  end
 
-def settings
-size %s, %s, %s
-# smooth # here
-end
+  def settings
+    size %s, %s, %s
+    # smooth # here
+  end
 end
 
 %s.new unless defined? $app
@@ -128,7 +128,7 @@ INNER = <<-CODE
 # encoding: utf-8
 # frozen_string_literal: false
 class %s
-include Processing::Proxy
+  include Processing::Proxy
 
 end
 CODE
@@ -136,13 +136,12 @@ CODE
 # creator wrapper module using StringExtra
 module Creator
   require_relative '../helpers/string_extra'
-  using StringExtra
   # Write file to disk
   class SketchWriter
     attr_reader :file
 
     def initialize(path)
-      underscore = path.underscore
+      underscore = StringExtra.new(path).underscore
       @file = "#{File.dirname(path)}/#{underscore}.rb"
     end
 
@@ -157,7 +156,7 @@ module Creator
   class Base
     ALL_DIGITS = /\A\d+\Z/
     def already_exist(path)
-      underscore = path.underscore
+      underscore = StringExtra.new(path).underscore
       new_file = "#{File.dirname(path)}/#{underscore}.rb"
       return if !FileTest.exist?(path) && !FileTest.exist?(new_file)
       puts 'That file already exists!'
@@ -197,7 +196,7 @@ module Creator
       already_exist(path)
       main_file = File.basename(path, '.rb') # allow uneeded extension input
       writer = SketchWriter.new(main_file)
-      @title = main_file.titleize
+      @title = StringExtra.new(main_file).titleize
       @width = args[0]
       @height = args[1]
       @mode = args[2].upcase unless args[2].nil?
@@ -222,9 +221,9 @@ module Creator
       main_file = File.basename(path, '.rb') # allow uneeded extension input
       # Check to make sure that the main file doesn't exist already
       already_exist(path)
-      @name = main_file.camelize
+      @name = StringExtra.new(main_file).camelize
       writer = SketchWriter.new(main_file)
-      @title = main_file.titleize
+      @title = StringExtra.new(main_file).titleize
       @width, @height = args[0], args[1]
       @mode = args[2].upcase unless args[2].nil?
       template = @mode.nil? ? class_template : class_template_mode
@@ -247,9 +246,9 @@ module Creator
       main_file = File.basename(path, '.rb') # allow uneeded extension input
       # Check to make sure that the main file doesn't exist already
       already_exist(path)
-      @name = main_file.camelize
+      @name = StringExtra.new(main_file).camelize
       writer = SketchWriter.new(main_file)
-      @title = main_file.titleize
+      @title = StringExtra.new(main_file).titleize
       @width, @height = args[0], args[1]
       @mode = args[2].upcase unless args[2].nil?
       template = @mode.nil? ? emacs_template : emacs_template_mode
