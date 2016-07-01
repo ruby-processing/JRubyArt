@@ -1,21 +1,21 @@
 # frozen_string_literal: false
 # class to parse java_args.txt or java_args in config.yml
 class JavaOpts
-  attr_reader :jvm_opts
+  attr_reader :opts
 
   def initialize(sketch_root)
     arg_file = File.join(sketch_root, 'data/java_args.txt')
-    @jvm_opts = []
-    if FileTest.exist?(arg_file)
-      @jvm_opts += File.read(arg_file).split(/\s+/)
-    elsif Processing::RP_CONFIG['java_args']
-      @jvm_opts += Processing::RP_CONFIG['java_args'].split(/\s+/)
+    @opts = []
+    @opts += File.read(arg_file).split(/\s+/) if FileTest.exist?(arg_file)
+    if opts.empty? && Processing::RP_CONFIG.fetch('java_args', false)
+      @opts += Processing::RP_CONFIG['java_args'].split(/\s+/)
     end
   end
+end
 
-  # wrap java args for jruby
-  def jruby
-    return [] if jvm_opts.length == 0
-    jvm_opts.map { |arg| "-J#{arg}" }
+# wrap args to pass through to jvm from jruby
+class JRubyOpts < JavaOpts
+  def opts
+    super.map { |arg| "-J#{arg}" }
   end
 end

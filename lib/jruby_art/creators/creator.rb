@@ -199,9 +199,9 @@ module Creator
       @title = StringExtra.new(main_file).titleize
       @width = args[0]
       @height = args[1]
-      @mode = args[2].upcase unless args[2].nil?
-      template = @mode.nil? ? basic_template : basic_template_mode
-      writer.save(template)
+      return writer.save(basic_template) if args[2].nil?
+      @mode = args[2].upcase
+      writer.save(basic_template_mode)
     end
   end
 

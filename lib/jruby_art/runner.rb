@@ -146,10 +146,10 @@ module Processing
     def spin_up(starter_script, sketch, args)
       runner = "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}"
       @options.nojruby = true if Processing::RP_CONFIG['JRUBY'] == 'false'
-      opts = JavaOpts.new(SKETCH_ROOT)
       if @options.nojruby
+        opts = JavaOpts.new(SKETCH_ROOT).opts
         command = ['java',
-                   opts.jvm_opts,
+                   opts,
                    '-cp',
                    jruby_complete,
                    'org.jruby.Main',
@@ -157,8 +157,9 @@ module Processing
                    sketch,
                    args].flatten
       else
+        opts = JRubyOpts.new(SKETCH_ROOT).opts
         command = ['jruby',
-                   opts.jruby,
+                   opts,
                    runner,
                    sketch,
                    args].flatten
