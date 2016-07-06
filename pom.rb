@@ -36,23 +36,23 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
   )
 
   pom 'org.jruby:jruby:9.1.2.0'
-  jar 'org.processing:core:3.1'
+  jar 'org.processing:core:3.1.1'
   jar 'org.processing:video:3.0.2'
   plugin_management do
     plugin :resources, '2.6'
     plugin :dependency, '2.8'
     plugin(
-      :compiler, '3.3',
+      :compiler, '3.5.1',
       source: '${maven.compiler.source}',
       target: '${maven.compiler.target}'
     )
     plugin(
-      :javadoc, '2.10.3',
+      :javadoc, '2.10.4',
       detect_offline_links: 'false',
       links: ['${processing.api}', '${jruby.api}']
     )
     plugin(
-      :jar, '2.6',
+      :jar, '3.0.2',
       archive: {
         manifestFile: 'MANIFEST.MF' # camel case reqd
       }

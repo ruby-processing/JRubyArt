@@ -56,7 +56,7 @@ DO NOT MODIFIY - GENERATED CODE
     <dependency>
       <groupId>org.processing</groupId>
       <artifactId>core</artifactId>
-      <version>3.1</version>
+      <version>3.1.1</version>
     </dependency>
     <dependency>
       <groupId>org.processing</groupId>
@@ -80,7 +80,7 @@ DO NOT MODIFIY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.3</version>
+          <version>3.5.1</version>
           <configuration>
             <source>${maven.compiler.source}</source>
             <target>${maven.compiler.target}</target>
@@ -88,7 +88,7 @@ DO NOT MODIFIY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.10.3</version>
+          <version>2.10.4</version>
           <configuration>
             <detect_offline_links>false</detect_offline_links>
             <links>
@@ -99,7 +99,7 @@ DO NOT MODIFIY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>2.6</version>
+          <version>3.0.2</version>
           <configuration>
             <archive>
               <manifestFile>MANIFEST.MF</manifestFile>
