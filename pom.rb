@@ -14,7 +14,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
 
   developer 'monkstone' do
     name 'Martin Prout'
-    email 'martin_p@lineone.net'
+    email 'mamba2928@yahoo.co.uk'
     roles 'developer'
   end
 
