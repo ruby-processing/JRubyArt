@@ -158,6 +158,7 @@ module Processing
       surface.stopThread
       surface.setVisible(false) if surface.isStopped
       dispose
+      $app = nil
     end
 
     def exit

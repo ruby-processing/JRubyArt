@@ -68,7 +68,7 @@ module Processing
     def reload_files_to_watch
       @files = Dir.glob(File.join(SKETCH_ROOT, '**/*.{rb,glsl}'))
       count = @files.length
-      max_watch = RP_CONFIG.fetch('MAX_WATCH', 20)
+      max_watch = RP_CONFIG.fetch('MAX_WATCH', 32)
       return unless count > max_watch.to_i
       warn format(WATCH_MESSAGE, max_watch, count)
       abort
