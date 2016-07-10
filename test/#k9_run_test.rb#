@@ -101,3 +101,4 @@ class Rp5Test < Minitest::Test
     assert out.index("undefined method `unknown_method'"), 'Failed to raise exception?'
   end
 end
+rake
