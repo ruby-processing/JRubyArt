@@ -64,12 +64,16 @@ class Check < Installer
     proot = '  PROCESSING_ROOT = Not Set!!!' unless root_exist?
     proot ||= "  PROCESSING_ROOT = #{config['PROCESSING_ROOT']}"
     sketchbook = "  sketchbook_path = #{config['sketchbook_path']}"
+    template = "  template = #{config['template']}"
+    java_args = "  java_args = #{config['java_args']}"
     max_watch = "  MAX_WATCH = #{config['MAX_WATCH']}"
     jruby = config['JRUBY']
     puts proot
     puts "  JRUBY = #{jruby}" unless jruby.nil?
     puts "  jruby-complete installed = #{installed}"
     puts sketchbook
+    puts template
+    puts java_args
     puts max_watch
   end
 end

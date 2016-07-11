@@ -5,7 +5,7 @@ require 'fileutils'
 require 'rbconfig'
 require_relative '../jruby_art/config'
 require_relative '../jruby_art/version'
-require_relative '../jruby_art/installer'
+
 require_relative '../jruby_art/java_opts'
 
 # processing wrapper module
@@ -65,7 +65,7 @@ module Processing
         end
         
         options[:check] = false
-        opts.on('-i', '--install', 'Prints configuration') do
+        opts.on('-?', '--check', 'Prints configuration') do
           options[:check] = true
         end
         
@@ -95,21 +95,10 @@ module Processing
       @filename = argc.shift
     end
     
-    # Create a fresh JRubyArt filename, with the necessary
-    # boilerplate filled out.
-    def create
-      require_relative '../jruby_art/creators/creator'
-      Creator::BasicSketch.new.create!(filename, argc)
-    end
-    
-    def create_emacs
-      require_relative '../jruby_art/creators/creator'
-      Creator::BasicSketch.new.create!(filename, argc)
-    end
-    
-    def create_wrap
-      require_relative '../jruby_art/creators/creator'
-      Creator::BasicSketch.new.create!(filename, argc)
+    def create      
+      require_relative '../jruby_art/creators/sketch_writer'
+      config = Processing::RP_CONFIG.fetch('template', 'basic')
+      SketchWriter.new(filename, argc).create!(config)
     end
     
     # Just simply run a JRubyArt filename.
@@ -132,11 +121,13 @@ module Processing
     end
     
     def install
+      require_relative '../jruby_art/installer'
       JRubyComplete.new(K9_ROOT, host_os).install
       UnpackSamples.new(K9_ROOT, host_os).install
     end
     
     def check
+      require_relative '../jruby_art/installer'
       Check.new(K9_ROOT, host_os).install
     end
     
