@@ -43,6 +43,7 @@ module Processing
       run_sketch if options[:run]
       watch_sketch if options[:watch]
       create if options[:create]
+      check if options[:check]
       install if options[:install]
     end
     
