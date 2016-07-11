@@ -38,7 +38,6 @@ end
 
 CODE
 
-
 METHOD = <<-CODE
 def %s
   %s
@@ -48,6 +47,7 @@ CODE
 
 require_relative '../helpers/string_extra'
 
+# Sketch writer class
 class SketchWriter
   attr_reader :file, :args, :sketch, :name
 
@@ -57,7 +57,7 @@ class SketchWriter
     underscore = StringExtra.new(path).underscore
     @file = format('%s/%s.rb', File.dirname(path), underscore)
   end
-  
+
   def create!(type)
     case type
     when /bare/
@@ -69,7 +69,7 @@ class SketchWriter
     end
     save(sketch)
   end
-  
+
   def save(sketch)
     File.open(file, 'w+') do |f|
       f.write(sketch)
@@ -77,6 +77,7 @@ class SketchWriter
   end
 end
 
+# Sketch class
 class Sketch
   def bare(name = 'sketch', args = [])
     [settings(args), setup(name), draw].join
@@ -89,7 +90,13 @@ class Sketch
 
   def emacs(name = 'sketch', args = [])
     class_name = StringExtra.new(name).camelize
-    format(EMACS, class_name, size(args[0], args[1], args[2]), name(name), class_name)
+    format(
+      EMACS,
+      class_name,
+      size(args[0], args[1], args[2]),
+      name(name),
+      class_name
+    )
   end
 
   def size(width = 200, height = 200, mode = nil)
@@ -99,7 +106,11 @@ class Sketch
 
   def settings(args = [])
     return format(METHOD, 'settings', size) if args.empty?
-    return format(METHOD, 'settings', size(args[0], args[1])) if args.length == 2
+    return format(
+      METHOD,
+      'settings',
+      size(args[0], args[1])
+    ) if args.length == 2
     format(METHOD, 'settings', size(args[0], args[1], args[2]))
   end
 
@@ -108,7 +119,7 @@ class Sketch
   end
 
   def setup(title)
-    return format(METHOD, 'setup', name(title))
+    format(METHOD, 'setup', name(title))
   end
 
   def draw
