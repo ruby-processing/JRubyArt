@@ -77,8 +77,13 @@ module Processing
         end
         
         options[:run] = false
-        opts.on('-r', '--run', 'Run the filename using jruby-complete') do
+        opts.on('-r', '--run', 'Run the sketch') do
           options[:run] = true
+        end
+        
+        options[:live] = false
+        opts.on('-l', '--live', 'As above, with pry console bound to $app') do
+          options[:live] = true
         end
         
         options[:create] = false
