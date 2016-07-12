@@ -164,8 +164,8 @@ module Processing
                    jruby_complete,
                    'org.jruby.Main',
                    runner,
-                   sketch,
-                   args].flatten
+                   filename,
+                   argc].flatten
       else
         opts = JRubyOpts.new(SKETCH_ROOT).opts
         command = ['jruby',
