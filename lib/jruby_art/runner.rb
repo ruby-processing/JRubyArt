@@ -42,6 +42,7 @@ module Processing
       show_version if options[:version]
       run_sketch if options[:run]
       watch_sketch if options[:watch]
+      live if options[:live]
       create if options[:create]
       check if options[:check]
       install if options[:install]
@@ -144,18 +145,30 @@ module Processing
     private
     
     # Trade in this Ruby instance for a JRuby instance, loading in a starter
-    # script and passing it some arguments. Unless '--nojruby' is passed, the
-    # installed version of jruby is used instead of our vendored one. To use
-    # jruby-complete by default set JRUBY: false in ~/.jruby_art/config.yml
-    # (however that might make using other gems in your sketches hard....)
+    # script and passing it some arguments. Unless you set JRUBY: false in 
+    # ~/.jruby_art/config.yml, an installed version of jruby is used instead 
+    # of our vendored one. Note the use of jruby-complete might make using 
+    # other gems in your sketches hard (but not impossible)....
     def spin_up(starter_script, filename, argc)
-      runner = "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}"
-      opts = JRubyOpts.new(SKETCH_ROOT).opts
-      command = ['jruby',
-      opts,
-      runner,
-      filename,
-      argc].flatten
+      runner = "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}"      
+      if Processing::RP_CONFIG.fetch('JRUBY', 'true') == 'false'
+        opts = JavaOpts.new(SKETCH_ROOT).opts
+        command = ['java',
+                   opts,
+                   '-cp',
+                   jruby_complete,
+                   'org.jruby.Main',
+                   runner,
+                   sketch,
+                   args].flatten
+      else
+        opts = JRubyOpts.new(SKETCH_ROOT).opts
+        command = ['jruby',
+        opts,
+        runner,
+        filename,
+        argc].flatten
+      end
       begin
         exec(*command)
         # exec replaces the Ruby process with the JRuby one.
