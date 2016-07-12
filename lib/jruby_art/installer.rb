@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 require 'yaml'
 
-VERSION = '3.1.1' # processing version
+VERSION = '3.1.1'.freeze # processing version
 
 # Abstract Installer class
 class Installer
@@ -14,7 +14,7 @@ class Installer
     @sketch = "#{home}/My Documents/Processing" if os == :windows
     @sketch = "#{home}/Documents/Processing" if os == :mac
   end
-  
+
   # Optimistically set processing root
   def set_processing_root
     require 'psych'
@@ -29,23 +29,23 @@ class Installer
     data = settings.zip(values).to_h
     open(path, 'w:UTF-8') { |file| file.write(data.to_yaml) }
   end
-  
+
   def root_exist?
     return false if config.nil?
     File.exist? config['PROCESSING_ROOT']
   end
-  
+
   def config
     k9config = File.expand_path("#{home}/.jruby_art/config.yml")
     return nil unless File.exist? k9config
     YAML.load_file(k9config)
   end
-  
+
   # in place of default installer class
   def install
     puts 'Usage: k9 setup [check | install | unpack_samples]'
   end
-  
+
   # Display the current version of JRubyArt.
   def show_version
     puts format('JRubyArt version %s', JRubyArt::VERSION)
@@ -53,7 +53,7 @@ class Installer
 end
 
 # Configuration checker
-class Check < Installer 
+class Check < Installer
   def install
     show_version
     return super unless config

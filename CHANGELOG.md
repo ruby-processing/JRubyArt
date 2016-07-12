@@ -1,4 +1,6 @@
 
+**v1.2.0.pre** Use optparse to parse command line options, and related re-factoring.
+
 **v1.1.3** Revert using String refinements in `creator.rb`. Refactor java options to `java_opts.rb`.
 
 **v1.1.2** Refactor `runner.rb` to `runner.rb`, `args.rb` and `installer.rb`. The `Installer` classes have the role of installing `jruby-complete`, the examples and providing `setup check` functionality. Refactored and improved default `config.yml` tool, all should make it easier for `collaborators/successors` to follow the code. Refactored `Vec2D` and `Vec3D` `==` and `eql?` methods. New `chooser` library makes it possible to use `select_input` reflection method.
