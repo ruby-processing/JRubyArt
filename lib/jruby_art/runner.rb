@@ -87,7 +87,7 @@ module Processing
         end
         
         options[:create] = false
-        opts.on('-c', '--create', 'Create new bare filename outline') do
+        opts.on('-c', '--create', 'Create new outline sketch') do
           options[:create] = true
         end        
         
@@ -104,7 +104,7 @@ module Processing
     
     def create      
       require_relative '../jruby_art/creators/sketch_writer'
-      config = Processing::RP_CONFIG.fetch('template', 'basic')
+      config = Processing::RP_CONFIG.fetch('template', 'bare')
       SketchWriter.new(filename, argc).create!(config)
     end
     
@@ -156,7 +156,7 @@ module Processing
     # other gems in your sketches hard (but not impossible)....
     def spin_up(starter_script, filename, argc)
       runner = "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}"      
-      if Processing::RP_CONFIG.fetch('JRUBY', 'true') == 'false'
+      unless Processing::RP_CONFIG.fetch('JRUBY', true)
         opts = JavaOpts.new(SKETCH_ROOT).opts
         command = ['java',
                    opts,

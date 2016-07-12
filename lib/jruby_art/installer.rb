@@ -24,12 +24,9 @@ class Installer
     proot = "#{home}/processing-#{VERSION}"
     proot = "/Java/Processing-#{VERSION}" if os == :windows
     proot = "/Applications/Processing.app/Contents/Java" if os == :mac
-    data = {
-      'PROCESSING_ROOT' => proot,
-      'JRUBY' => true.to_s,
-      'sketchbook_path' => sketch,
-      'MAX_WATCH' => '20'
-    }
+    settings = %i(PROCESSING_ROOT JRUBY sketchbook_path template MAX_WATCH)
+    values = [proot, true, sketch, 'bare', 32]
+    data = settings.zip(values).to_h
     open(path, 'w:UTF-8') { |file| file.write(data.to_yaml) }
   end
   
@@ -67,7 +64,7 @@ class Check < Installer
     template = "  template = #{config['template']}"
     java_args = "  java_args = #{config['java_args']}"
     max_watch = "  MAX_WATCH = #{config['MAX_WATCH']}"
-    jruby = config['JRUBY']
+    jruby = config.fetch('JRUBY', true)
     puts proot
     puts "  JRUBY = #{jruby}" unless jruby.nil?
     puts "  jruby-complete installed = #{installed}"

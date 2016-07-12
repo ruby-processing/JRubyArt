@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   EOS
   spec.summary = %q{Code as Art, Art as Code. Processing and Ruby are meant for each other.}
   spec.homepage = "https://ruby-processing.github.io/"
-  spec.post_install_message = %q{Use 'k9 setup install' to install jruby-complete, and 'k9 setup check' to check config.}
+  spec.post_install_message = %q{Use 'k9 --install' to install jruby-complete, and 'k9 --check' to check config.}
   spec.license = 'MIT'
 
   spec.files = FileList['bin/**/*', 'lib/**/*', 'library/**/*', 'samples/**/*', 'vendors/Rakefile'].exclude(/jar/).to_a
