@@ -24,7 +24,7 @@ class Installer
     proot = "#{home}/processing-#{VERSION}"
     proot = "/Java/Processing-#{VERSION}" if os == :windows
     proot = "/Applications/Processing.app/Contents/Java" if os == :mac
-    settings = %i(PROCESSING_ROOT JRUBY sketchbook_path template MAX_WATCH)
+    settings = %w(PROCESSING_ROOT JRUBY sketchbook_path template MAX_WATCH)
     values = [proot, true, sketch, 'bare', 32]
     data = settings.zip(values).to_h
     open(path, 'w:UTF-8') { |file| file.write(data.to_yaml) }
