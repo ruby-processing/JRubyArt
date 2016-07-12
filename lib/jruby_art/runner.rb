@@ -71,6 +71,11 @@ module Processing
           options[:check] = true
         end
         
+        options[:app] = false
+        opts.on('-a', '--app', 'Export as app NOT IMPLEMENTED YET') do
+          options[:export] = true
+        end  
+        
         options[:watch] = false
         opts.on('-w', '--watch', 'Watch/run the sketch') do
           options[:watch] = true
@@ -106,6 +111,12 @@ module Processing
       require_relative '../jruby_art/creators/sketch_writer'
       config = Processing::RP_CONFIG.fetch('template', 'bare')
       SketchWriter.new(filename, argc).create!(config)
+    end
+    
+    # Export as app not implemented
+    def export
+    ensure_exists(filename)
+      puts 'Not implemented yet'
     end
     
     # Just simply run a JRubyArt filename.
