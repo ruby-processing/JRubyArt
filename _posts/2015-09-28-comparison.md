@@ -22,7 +22,7 @@ th{
 |binary        |rp5                |k9               |
 |java          |jdk-7              |jdk-8            |
 |version       |processing-2.2.1   |processing-3.1.1+|
-|ruby          |1.9.3              |2.2              |
+|ruby          |1.9.3              |2.2+             |
 |ArcBall       |library            |built-in         |
 |Vec2D         |library            |built-in         |
 |Vec3D         |library            |built-in         |
@@ -31,11 +31,11 @@ th{
 |App Export    |Yes                |No               |
 |Live mode     |Yes                |Yes              |
 |Watch mode    |Yes                |Yes              |
-|`--nojruby`   |see below          |see below        |
+|`--nojruby`   |see below          |JRUBY: false     |
 |settings      |no                 |see below        |
 
 
-For ruby-processing the `--nojruby` flag (or running with jruby-complete) is required to run a number of sketches eg `shader` and `load_image`. This was true for JRubyArt before version 1.1.0, unless the `absolute path` was provided, since jruby_art-1.1.0 you can use the `data_path` wrapper to return the absolute path for the `data` folder [see here][here]. 
+For ruby-processing the `--nojruby` flag (or running with jruby-complete) is required to run a number of sketches eg `shader` and `load_image`. This was true for JRubyArt before version 1.1.0, unless the `absolute path` was provided, since jruby_art-1.1.0 you should use the `data_path` wrapper to return the absolute path for the `data` folder [see here][here]. To use jruby-complete since JRubyArt-1.2.0 you need to set `JRUBY: false` in config.yml.
 
 Introduced for processing-3.0 is the `settings` method, but this is hidden for users of the [processing ide][settings]. This is where `size` belongs or `full_screen`, also you should set `smooth` and `pixel_density` here. Retina users can make use of their hi-dpi display by setting `pixel_density(2)`, NB: size should be first line of `settings`, and if used `pixel_density(2)` should be next.
 
