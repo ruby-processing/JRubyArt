@@ -19,10 +19,11 @@ package monkstone.vecmath.vec3;
 * License along with this library; if not, write to the Free Software
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-
 import org.jruby.Ruby;
 import org.jruby.RubyArray;
 import org.jruby.RubyClass;
+import org.jruby.RubyFixnum;
+import org.jruby.RubyFloat;
 import org.jruby.RubyObject;
 import org.jruby.RubySymbol;
 import org.jruby.anno.JRubyClass;
@@ -83,11 +84,14 @@ public final class Vec3 extends RubyObject {
     void init(ThreadContext context, IRubyObject[] args) {
         int count = Arity.checkArgumentCount(context.getRuntime(), args, Arity.OPTIONAL.getValue(), 3);
         if (count >= 2) {
-            jx = (Double) args[0].toJava(Double.class);
-            jy = (Double) args[1].toJava(Double.class);
+            jx = (args[0] instanceof RubyFloat)
+                    ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
+            jy = (args[1] instanceof RubyFloat)
+                    ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
         }
         if (count == 3) {
-            jz = (Double) args[2].toJava(Double.class);
+            jz = (args[2] instanceof RubyFloat)
+                    ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
         }
     }
 
@@ -132,8 +136,12 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "x=")
 
     public IRubyObject setX(ThreadContext context, IRubyObject other) {
-        jx = (Double) other.toJava(Double.class);
-        return context.getRuntime().newFloat(jx);
+        if (other instanceof RubyFloat) {
+            jx = ((RubyFloat) other).getValue();
+        } else {
+            jx = ((RubyFixnum) other).getDoubleValue();
+        }
+        return other;
     }
 
     /**
@@ -145,8 +153,12 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "y=")
 
     public IRubyObject setY(ThreadContext context, IRubyObject other) {
-        jy = (Double) other.toJava(Double.class);
-        return context.getRuntime().newFloat(jy);
+        if (other instanceof RubyFloat) {
+            jy = ((RubyFloat) other).getValue();
+        } else {
+            jy = ((RubyFixnum) other).getDoubleValue();
+        }
+        return other;
     }
 
     /**
@@ -157,8 +169,12 @@ public final class Vec3 extends RubyObject {
      */
     @JRubyMethod(name = "z=")
     public IRubyObject setZ(ThreadContext context, IRubyObject other) {
-        jz = (Double) other.toJava(Double.class);
-        return context.getRuntime().newFloat(jz);
+        if (other instanceof RubyFloat) {
+            jz = ((RubyFloat) other).getValue();
+        } else {
+            jz = ((RubyFixnum) other).getDoubleValue();
+        }
+        return other;
     }
 
     /**
@@ -198,11 +214,14 @@ public final class Vec3 extends RubyObject {
         Ruby runtime = context.getRuntime();
         if (key instanceof RubySymbol) {
             if (key == RubySymbol.newSymbol(runtime, "x")) {
-                jx = (Double) value.toJava(Double.class);
+                jx = (value instanceof RubyFloat)
+                        ? ((RubyFloat) value).getValue() : ((RubyFixnum) value).getDoubleValue();
             } else if (key == RubySymbol.newSymbol(runtime, "y")) {
-                jy = (Double) value.toJava(Double.class);
+                jy = (value instanceof RubyFloat)
+                        ? ((RubyFloat) value).getValue() : ((RubyFixnum) value).getDoubleValue();
             } else if (key == RubySymbol.newSymbol(runtime, "z")) {
-                jz = (Double) value.toJava(Double.class);
+                jz = (value instanceof RubyFloat)
+                        ? ((RubyFloat) value).getValue() : ((RubyFixnum) value).getDoubleValue();
             } else {
                 throw runtime.newIndexError("invalid key");
             }
@@ -336,38 +355,40 @@ public final class Vec3 extends RubyObject {
     /**
      *
      * @param context ThreadContext
-     * @param other IRubyObject
+     * @param scalar IRubyObject
      * @return new Vec3 object (ruby)
      */
     @JRubyMethod(name = "*", required = 1)
 
-    public IRubyObject op_mul(ThreadContext context, IRubyObject other) {
+    public IRubyObject op_mul(ThreadContext context, IRubyObject scalar) {
         Ruby runtime = context.getRuntime();
-        double scalar = (Double) other.toJava(Double.class);
+        double multi = (scalar instanceof RubyFloat)
+                ? ((RubyFloat) scalar).getValue() : ((RubyFixnum) scalar).getDoubleValue();
         return Vec3.rbNew(context, this.getMetaClass(), new IRubyObject[]{
-            runtime.newFloat(jx * scalar),
-            runtime.newFloat(jy * scalar),
-            runtime.newFloat(jz * scalar)});
+            runtime.newFloat(jx * multi),
+            runtime.newFloat(jy * multi),
+            runtime.newFloat(jz * multi)});
     }
 
     /**
      *
      * @param context ThreadContext
-     * @param other IRubyObject
+     * @param scalar IRubyObject
      * @return new Vec3 object (ruby)
      */
     @JRubyMethod(name = "/", required = 1)
 
-    public IRubyObject op_div(ThreadContext context, IRubyObject other) {
+    public IRubyObject op_div(ThreadContext context, IRubyObject scalar) {
         Ruby runtime = context.getRuntime();
-        double scalar = (Double) other.toJava(Double.class);
-        if (Math.abs(scalar) < Vec3.EPSILON) {
+        double divisor = (scalar instanceof RubyFloat)
+                ? ((RubyFloat) scalar).getValue() : ((RubyFixnum) scalar).getDoubleValue();
+        if (Math.abs(divisor) < Vec3.EPSILON) {
             return this;
         }
         return Vec3.rbNew(context, this.getMetaClass(), new IRubyObject[]{
-            runtime.newFloat(jx / scalar),
-            runtime.newFloat(jy / scalar),
-            runtime.newFloat(jz / scalar)});
+            runtime.newFloat(jx / divisor),
+            runtime.newFloat(jy / divisor),
+            runtime.newFloat(jz / divisor)});
     }
 
     /**
@@ -409,7 +430,8 @@ public final class Vec3 extends RubyObject {
                 return this;
             }
         }
-        double new_mag = (Double) scalar.toJava(Double.class);
+        double new_mag = (scalar instanceof RubyFloat)
+                ? ((RubyFloat) scalar).getValue() : ((RubyFixnum) scalar).getDoubleValue();
         double current = Math.sqrt(jx * jx + jy * jy + jz * jz);
         if (current > EPSILON) {
             jx *= new_mag / current;
@@ -583,8 +605,10 @@ public final class Vec3 extends RubyObject {
         double u = 0;
         double v = 0;
         if (count == 3) {
-            u = (Double) args[1].toJava(Double.class);
-            v = (Double) args[2].toJava(Double.class);
+            u = (args[1] instanceof RubyFloat)
+                    ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
+            v = (args[2] instanceof RubyFloat)
+                    ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
         }
         if (count == 2) {
             Vec2 texture = (Vec2) args[1].toJava(Vec2.class);
