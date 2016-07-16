@@ -88,7 +88,7 @@ public class Vec2 extends RubyObject {
     }
 
     void init(ThreadContext context, IRubyObject[] args) {
-        if (Arity.checkArgumentCount(context.getRuntime(), args, Arity.OPTIONAL.getValue(), 2) == 2) {
+        if (Arity.checkArgumentCount(context.runtime, args, Arity.OPTIONAL.getValue(), 2) == 2) {
             jx = (args[0] instanceof RubyFloat)
                     ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
             jy = (args[1] instanceof RubyFloat)
@@ -104,7 +104,7 @@ public class Vec2 extends RubyObject {
     @JRubyMethod(name = "x")
 
     public IRubyObject getX(ThreadContext context) {
-        return context.getRuntime().newFloat(jx);
+        return context.runtime.newFloat(jx);
     }
 
     /**
@@ -115,7 +115,7 @@ public class Vec2 extends RubyObject {
     @JRubyMethod(name = "y")
 
     public IRubyObject getY(ThreadContext context) {
-        return context.getRuntime().newFloat(jy);
+        return context.runtime.newFloat(jy);
     }
 
     /**
@@ -127,7 +127,7 @@ public class Vec2 extends RubyObject {
     @JRubyMethod(name = "[]", required = 1)
 
     public IRubyObject aref(ThreadContext context, IRubyObject key) {
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         if (key instanceof RubySymbol) {
             if (key == RubySymbol.newSymbol(runtime, "x")) {
                 return runtime.newFloat(jx);
@@ -150,7 +150,7 @@ public class Vec2 extends RubyObject {
     @JRubyMethod(name = "[]=")
 
     public IRubyObject aset(ThreadContext context, IRubyObject key, IRubyObject value) {
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         if (key instanceof RubySymbol) {
             if (key == RubySymbol.newSymbol(runtime, "x")) {
                 return runtime.newFloat(jx);
@@ -207,7 +207,7 @@ public class Vec2 extends RubyObject {
 
     public IRubyObject dist(ThreadContext context, IRubyObject other) {
         Vec2 b = null;
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         if (other instanceof Vec2) {
             b = (Vec2) other.toJava(Vec2.class);
         } else {
@@ -227,7 +227,7 @@ public class Vec2 extends RubyObject {
 
     public IRubyObject cross(ThreadContext context, IRubyObject other) {
         Vec2 b = null;
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         if (other instanceof Vec2) {
             b = (Vec2) other.toJava(Vec2.class);
         } else {
@@ -246,7 +246,7 @@ public class Vec2 extends RubyObject {
 
     public IRubyObject dot(ThreadContext context, IRubyObject other) {
         Vec2 b = null;
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         if (other instanceof Vec2) {
             b = (Vec2) other.toJava(Vec2.class);
         } else {
@@ -265,7 +265,7 @@ public class Vec2 extends RubyObject {
 
     public IRubyObject op_plus(ThreadContext context, IRubyObject other) {
         Vec2 b = null;
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         if (other instanceof Vec2) {
             b = (Vec2) other.toJava(Vec2.class);
         } else {
@@ -286,7 +286,7 @@ public class Vec2 extends RubyObject {
 
     public IRubyObject op_minus(ThreadContext context, IRubyObject other) {
         Vec2 b = null;
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         if (other instanceof Vec2) {
             b = (Vec2) other.toJava(Vec2.class);
         } else {
@@ -306,7 +306,7 @@ public class Vec2 extends RubyObject {
     @JRubyMethod(name = "*")
 
     public IRubyObject op_mul(ThreadContext context, IRubyObject other) {
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         double scalar = (other instanceof RubyFloat)
                 ? ((RubyFloat) other).getValue() : ((RubyFixnum) other).getDoubleValue();
         return Vec2.rbNew(context, this.getMetaClass(),
@@ -323,7 +323,7 @@ public class Vec2 extends RubyObject {
     @JRubyMethod(name = "/", required = 1)
 
     public IRubyObject op_div(ThreadContext context, IRubyObject other) {
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         double scalar = (other instanceof RubyFloat)
                 ? ((RubyFloat) other).getValue() : ((RubyFixnum) other).getDoubleValue();
         if (Math.abs(scalar) < Vec2.EPSILON) {
@@ -341,7 +341,7 @@ public class Vec2 extends RubyObject {
      */
     @JRubyMethod(name = "heading")
     public IRubyObject heading(ThreadContext context) {
-        return context.getRuntime().newFloat(Math.atan2(jy, jx));
+        return context.runtime.newFloat(Math.atan2(jy, jx));
     }
 
     /**
@@ -363,7 +363,7 @@ public class Vec2 extends RubyObject {
                 result = Math.abs(jx);
             }
         }
-        return context.getRuntime().newFloat(result);
+        return context.runtime.newFloat(result);
     }
 
     /**
@@ -437,7 +437,7 @@ public class Vec2 extends RubyObject {
 
     public IRubyObject normalize(ThreadContext context) {
         double mag = 0;
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         if (Math.abs(jx) > EPSILON && Math.abs(jy) > EPSILON) {
             mag = Math.hypot(jx, jy);
         } else {
@@ -467,7 +467,7 @@ public class Vec2 extends RubyObject {
      */
     @JRubyMethod(name = "from_angle", meta = true)
     public static IRubyObject from_angle(ThreadContext context, IRubyObject klazz, IRubyObject scalar) {
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         double angle = (scalar instanceof RubyFloat)
                 ? ((RubyFloat) scalar).getValue() : ((RubyFixnum) scalar).getDoubleValue();
         return Vec2.rbNew(context, klazz, new IRubyObject[]{
@@ -484,7 +484,7 @@ public class Vec2 extends RubyObject {
      */
     @JRubyMethod(name = "random", meta = true)
     public static IRubyObject random_direction(ThreadContext context, IRubyObject klazz) {
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         double angle = Math.random() * Math.PI * 2;
         return Vec2.rbNew(context, klazz, new IRubyObject[]{
             runtime.newFloat(Math.cos(angle)),
@@ -516,7 +516,7 @@ public class Vec2 extends RubyObject {
      */
     @JRubyMethod(name = "rotate")
     public IRubyObject rotate(ThreadContext context, IRubyObject scalar) {
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         double theta = (scalar instanceof RubyFloat)
                 ? ((RubyFloat) scalar).getValue() : ((RubyFixnum) scalar).getDoubleValue();
         IRubyObject[] ary = new IRubyObject[]{
@@ -533,7 +533,7 @@ public class Vec2 extends RubyObject {
      */
     @JRubyMethod(name = "lerp", rest = true)
     public IRubyObject lerp(ThreadContext context, IRubyObject[] args) {
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         Arity.checkArgumentCount(runtime, args, 2, 2);
         Vec2 vec = (Vec2) args[0].toJava(Vec2.class);
         double scalar = (args[1] instanceof RubyFloat)
@@ -553,7 +553,7 @@ public class Vec2 extends RubyObject {
      */
     @JRubyMethod(name = "lerp!", rest = true)
     public IRubyObject lerp_bang(ThreadContext context, IRubyObject[] args) {
-        Arity.checkArgumentCount(context.getRuntime(), args, 2, 2);
+        Arity.checkArgumentCount(context.runtime, args, 2, 2);
         Vec2 vec = (Vec2) args[0].toJava(Vec2.class);
         double scalar = (args[1] instanceof RubyFloat)
                 ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
@@ -574,7 +574,7 @@ public class Vec2 extends RubyObject {
 
     public IRubyObject angleBetween(ThreadContext context, IRubyObject other) {
         Vec2 vec = null;
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         if (other instanceof Vec2) {
             vec = (Vec2) other.toJava(Vec2.class);
         } else {
@@ -606,7 +606,7 @@ public class Vec2 extends RubyObject {
 
     public IRubyObject toArray(ThreadContext context) {
         Ruby runtime = context.runtime;
-        return RubyArray.newArray(context.getRuntime(), new IRubyObject[]{
+        return RubyArray.newArray(runtime, new IRubyObject[]{
             runtime.newFloat(jx),
             runtime.newFloat(jy)});
     }
@@ -648,7 +648,7 @@ public class Vec2 extends RubyObject {
     @JRubyMethod(name = {"to_s", "inspect"})
 
     public IRubyObject to_s(ThreadContext context) {
-        return context.getRuntime().newString(String.format("Vec2D(x = %4.4f, y = %4.4f)", jx, jy));
+        return context.runtime.newString(String.format("Vec2D(x = %4.4f, y = %4.4f)", jx, jy));
     }
 
     /**
@@ -693,7 +693,7 @@ public class Vec2 extends RubyObject {
      */
     @JRubyMethod(name = "eql?", required = 1)
     public IRubyObject eql_p(ThreadContext context, IRubyObject other) {
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         if (other == this) {
             return runtime.newBoolean(true);
         }
@@ -717,7 +717,7 @@ public class Vec2 extends RubyObject {
 
     @Override
     public IRubyObject op_equal(ThreadContext context, IRubyObject other) {
-        Ruby runtime = context.getRuntime();
+        Ruby runtime = context.runtime;
         if (other == this) {
             return runtime.newBoolean(true);
         }

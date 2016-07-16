@@ -21,7 +21,7 @@
 package monkstone.fastmath;
 
 import org.jruby.Ruby;
-import org.jruby.RubyClass;
+import org.jruby.RubyInteger;
 import org.jruby.RubyModule;
 import org.jruby.anno.JRubyModule;
 import org.jruby.anno.JRubyMethod;
@@ -89,7 +89,7 @@ public class Deglut {
   @JRubyMethod(name = "sin", module = true)
   
   public static IRubyObject sin(ThreadContext context, IRubyObject recv, IRubyObject other) {
-    int thet = (Integer) other.toJava(Integer.class);
+    int thet = (int) ((RubyInteger)other).getLongValue();
     while (thet < 0) {
       thet += FULL; // Needed because negative modulus plays badly in java
     }
@@ -98,7 +98,7 @@ public class Deglut {
     double result = (theta < NINETY) ? SIN_DEG_LUT[y] : (theta < 180)
     ? SIN_DEG_LUT[NINETY - y] : (theta < 270)
     ? -SIN_DEG_LUT[y] : -SIN_DEG_LUT[NINETY - y];
-    return context.getRuntime().newFloat(result);
+    return context.runtime.newFloat(result);
   }
   
   /**
@@ -110,7 +110,7 @@ public class Deglut {
   */
   @JRubyMethod(name = "cos", module = true)
   public static IRubyObject cos(ThreadContext context, IRubyObject recv, IRubyObject other) {
-    int thet = (Integer) other.toJava(Integer.class);
+    int thet = (int) ((RubyInteger)other).getLongValue();
     while (thet < 0) {
       thet += FULL; // Needed because negative modulus plays badly in java
     }
@@ -119,6 +119,6 @@ public class Deglut {
     double result = (theta < NINETY) ? SIN_DEG_LUT[NINETY - y] : (theta < 180)
     ? -SIN_DEG_LUT[y] : (theta < 270)
     ? -SIN_DEG_LUT[NINETY - y] : SIN_DEG_LUT[y];
-    return context.getRuntime().newFloat(result);
+    return context.runtime.newFloat(result);
   }  
 }
