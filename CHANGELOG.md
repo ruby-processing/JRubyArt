@@ -1,5 +1,5 @@
 
-**v1.2.0.pre** Use optparse to parse command line options, and related re-factoring.
+**v1.2.0.pre** Use optparse to parse command line options, and related re-factoring. Avoid casting to java Double and Integer and using `to_java` for primitives in jruby extensions.
 
 **v1.1.3** Revert using String refinements in `creator.rb`. Refactor java options to `java_opts.rb`.
 
