@@ -25,9 +25,9 @@ You can if you wish leave configuration to the `new` autoconfig tool (delete exi
 ```yaml
 # YAML configuration file for jruby_art
 # K9_HOME: "/home/ruby2.3.0 ... /jruby_art" # windows users may need to set this
-PROCESSING_ROOT: /home/tux/processing-3.1.1 # typical linux shown
+PROCESSING_ROOT: "/home/tux/processing-3.1.1" # typical linux shown
 # important sketch_book path may be different for processing-3.0
-sketchbook_path: /home/tux/sketchbook 
+sketchbook_path: "/home/tux/sketchbook" 
 template: emacs
 ```
 
@@ -83,7 +83,7 @@ k9 --live sketch.rb # pry is bound to $app # needs `jruby -S gem install pry`
 ```
 ## Example sketches
 
-[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) more to follow, feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --unpack_samples` please move existing k9_samples.
+[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) more to follow, feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --install` please move existing `k9_samples` if you wish to keep them.
 
 ## Conversion Tool
 
