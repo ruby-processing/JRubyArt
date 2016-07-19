@@ -47,10 +47,10 @@ sudo pacman -S processing # installs processing-3.1.1  (community)
 
 Configure in `~/.jruby_art/config.yml`:-
 {% highlight bash %}
-PROCESSING_ROOT: /usr/share/processing
-sketchbook_path: /home/tux/sketchbook
+PROCESSING_ROOT: "/usr/share/processing"
+sketchbook_path: "/home/tux/sketchbook"
 MAX_WATCH: 30
-JRUBY: 'true'
+JRUBY: true
 {% endhighlight %}
 
 Install JRubyArt 
@@ -91,10 +91,11 @@ sudo update-alternatives --config jruby # to configure if required
 
 Configure in `~/.jruby_art/config.yml`:-
 {% highlight bash %}
-PROCESSING_ROOT: /home/tux/processing-3.1.1 # `substitute` user for `tux`
-sketchbook_path: /home/tux/sketchbook
+PROCESSING_ROOT: "/home/tux/processing-3.1.1" # `substitute` user for `tux`
+sketchbook_path: "/home/tux/sketchbook"
 MAX_WATCH: 30
-JRUBY: 'true'
+JRUBY: true
+template: bare
 {% endhighlight %}
 
 Otherwise you can check to see what platforms are officially supported [here][platforms].
@@ -115,8 +116,8 @@ Download Processing-3.1.1 from the [official website][official] and install, pre
 
 Configure in `~/.jruby_art/config.yml`:-
 {% highlight bash %}
-PROCESSING_ROOT: '/home/tux/processing-3.1.1' # `substitute` user for `tux`
-sketchbook_path: '/home/tux/sketchbook'
+PROCESSING_ROOT: "/home/tux/processing-3.1.1" # `substitute` user for `tux`
+sketchbook_path: "/home/tux/sketchbook"
 MAX_WATCH: 30
 JRUBY: false
 template: bare
@@ -125,18 +126,10 @@ template: bare
 If using `rvm` or `rbenv` make sure you are using ruby2.2+
 {% highlight bash %}
 gem install jruby_art
-k9 setup install # installs jruby-complete
+k9 --install # installs jruby-complete, and examples
 {% endhighlight %}
 
 NB: you may find that you are unable to use gems in your sketches unless you have used jruby to install them.
-
-__Finishing up__
-
-Install the samples
- 
-{% highlight bash %}
-k9 setup unpack_samples # downloads and unpacks samples requires wget
-{% endhighlight %}
 
 ### Running examples
 
