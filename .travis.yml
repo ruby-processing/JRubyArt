@@ -6,7 +6,7 @@ addons:
       -oracle-java8-installer
 
 rvm: 
-  - jruby-head
+  - jruby-9.1.2.0
 jdk:
   - oraclejdk8
 os:

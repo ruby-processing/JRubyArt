@@ -22,6 +22,8 @@ package monkstone.arcball;
 
 import org.jruby.Ruby;
 import org.jruby.RubyClass;
+import org.jruby.RubyFloat;
+import org.jruby.RubyFixnum;
 import org.jruby.RubyModule;
 import org.jruby.RubyObject;
 import org.jruby.RubySymbol;
@@ -69,18 +71,23 @@ public class Rarcball extends RubyObject {
     @JRubyMethod(name = "init", meta = true, rest = true, required = 1, optional = 3)
 
     public static void init(ThreadContext context, IRubyObject self, IRubyObject args[]) {
-        int count = Arity.checkArgumentCount(context.getRuntime(), args, 1, 4);
+        int count = Arity.checkArgumentCount(context.runtime, args, 1, 4);
         if (count == 4) {
             PApplet parent = (PApplet) args[0].toJava(PApplet.class);
-            double cx = (double) args[1].toJava(Double.class);
-            double cy = (double) args[2].toJava(Double.class);
-            double radius = (double) args[3].toJava(Double.class);
+            double cx = (args[1] instanceof RubyFloat)
+                    ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
+            double cy = (args[2] instanceof RubyFloat)
+                    ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
+            double radius = (args[3] instanceof RubyFloat)
+                    ? ((RubyFloat) args[3]).getValue() : ((RubyFixnum) args[3]).getDoubleValue();
             new Arcball(parent, cx, cy, radius).setActive(true);
         }
         if (count == 3) {
             PApplet parent = (PApplet) args[0].toJava(PApplet.class);
-            double cx = (double) args[1].toJava(Double.class);
-            double cy = (double) args[2].toJava(Double.class);
+            double cx = (args[1] instanceof RubyFloat)
+                    ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
+            double cy = (args[2] instanceof RubyFloat)
+                    ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
             new Arcball(parent, cx, cy, parent.width * 0.8f).setActive(true);
         }
         if (count == 1) {
@@ -98,9 +105,9 @@ public class Rarcball extends RubyObject {
     @JRubyMethod(name = "constrain", meta = true, rest = true, required = 1, optional = 1)
 
     public static void constrain(ThreadContext context, IRubyObject self, IRubyObject args[]) {
-        int count = Arity.checkArgumentCount(context.getRuntime(), args, 1, 2);
-        RubySymbol zaxis = RubySymbol.newSymbol(context.getRuntime(), "zaxis");
-        RubySymbol xaxis = RubySymbol.newSymbol(context.getRuntime(), "xaxis");
+        int count = Arity.checkArgumentCount(context.runtime, args, 1, 2);
+        RubySymbol zaxis = RubySymbol.newSymbol(context.runtime, "zaxis");
+        RubySymbol xaxis = RubySymbol.newSymbol(context.runtime, "xaxis");
         PApplet parent = (PApplet) args[0].toJava(PApplet.class);
         if (count == 2) {
             if (xaxis == args[1]) {
