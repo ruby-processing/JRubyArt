@@ -20,39 +20,36 @@ processing `video` and `sound-1.3.2+` libraries _best installed from the process
 
 ## Configuration
 
-You can if you wish leave configuration to the `new` autoconfig tool (delete existing config to do this). The config file is `config.yml` in the `~/.jruby_art folder`, the autoconfig gets run on `k9 setup install` expected to just work on `macosx`, output may need tuning on `windows` / `linux` check with `k9 setup check` (run both after gem install for both)
+You can if you wish leave configuration to the `new` autoconfig tool (delete existing config to do this). The config file is `config.yml` in the `~/.jruby_art folder`, the autoconfig gets run on `k9 --install` expected to just work on `macosx`, output may need tuning on `windows` / `linux` check with `k9 --check` (run both after gem install for both)
 
 ```yaml
 # YAML configuration file for jruby_art
-# K9_HOME: "/home/ruby2.3.0 ... /jruby_art" #windows users may need to set this
+# K9_HOME: "/home/ruby2.3.0 ... /jruby_art" # windows users may need to set this
 PROCESSING_ROOT: /home/tux/processing-3.1.1 # typical linux shown
 # important sketch_book path may be different for processing-3.0
 sketchbook_path: /home/tux/sketchbook 
+template: emacs
 ```
 
 ## Install Steps (assumes you have requirements above) 
 
 ```bash
  gem install jruby_art
- k9 setup install # installs jruby-complete-9.1.2.0
- k9 setup unpack_samples # downloads and installs samples to ~/k9_samples
+ k9 --install # installs jruby-complete-9.1.2.0 and downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 run jwishy.rb # if you have jruby-9.1.2.0 installed or config JRUBY: 'false'
- k9 --nojruby run jwishy.rb # to use jruby-complete unless you have set JRUBY: 'false' in config
+ k9 --run jwishy.rb # if you have jruby-9.1.2.0 installed or config `JRUBY: false`
+ # to use jruby-complete set `JRUBY: false` in config
 ```
 ## Create sketches from built in templates
 ```bash
-k9 create fred 200 200                # basic sketch fred.rb
-k9 create fred 200 200 p2d            # basic P2D sketch fred.rb
-k9 create fred 200 200 --wrap         # class wrapped sketch fred.rb
-k9 create fred 200 200 p2d --wrap     # class wrapped P2D sketch fred.rb
-k9 create ted 200 200 --emacs         # class wrapped sketch ted.rb for emacs / netbeans
-k9 create ted 200 200 p2d --emacs     # class wrapped P2D sketch ted.rb for emacs / netbeans
+k9 --create fred 200 200                # basic sketch fred.rb
+k9 --create fred 200 200 p2d            # basic P2D sketch fred.rb
 ```
+To create either a `class` wrapped sketch or `emacs` sketch set `template: class` or `template: emacs` in config.yml
 
 ## Simple Sketch
 ```ruby
-# :sketch_title belongs in setup it is a convenience method of jruby_art-3.0+
+# :sketch_title belongs in --it is a convenience method of jruby_art-3.0+
 def setup
   sketch_title 'My Sketch'
 end
@@ -78,15 +75,15 @@ be prepared to `KILL` the odd java process (ie when sketch does not exit cleanly
 
 ## Watch sketches
 ```bash
-k9 watch sketch.rb # don't try and change render mode, or use FX2D render mode during watch yet
+k9 --watch sketch.rb # don't try and change render mode, or use FX2D render mode during watch yet
 ```
 ## Open pry console on sketch
 ```bash
-k9 live sketch.rb # pry is bound to $app # needs `jruby -S gem install pry`
+k9 --live sketch.rb # pry is bound to $app # needs `jruby -S gem install pry`
 ```
 ## Example sketches
 
-[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) more to follow, feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 setup unpack_samples` please move existing k9_samples.
+[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) more to follow, feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --unpack_samples` please move existing k9_samples.
 
 ## Conversion Tool
 
