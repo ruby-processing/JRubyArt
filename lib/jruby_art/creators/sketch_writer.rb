@@ -45,7 +45,7 @@ end
 
 CODE
 
-require_relative '../helpers/string_extra'
+# require_relative '../helpers/string_extra'
 
 # Sketch writer class
 class SketchWriter
@@ -54,8 +54,7 @@ class SketchWriter
   def initialize(path, args)
     @args = args
     @name = path
-    underscore = StringExtra.new(path).underscore
-    @file = format('%s/%s.rb', File.dirname(path), underscore)
+    @file = format('%s/%s.rb', File.dirname(path), path)
   end
 
   def create!(type)
@@ -84,24 +83,24 @@ class Sketch
   end
 
   def class_wrapped(name = 'sketch', args = [])
-    class_name = StringExtra.new(name).camelize
-    format(CLASS, class_name, size(args[0], args[1], args[2]), name(name))
+    class_name = name.split('_').map(&:capitalize).join('')
+    format(CLASS, class_name, size(args[0].to_i, args[1].to_i, args[2]), name(name))
   end
 
   def emacs(name = 'sketch', args = [])
-    class_name = StringExtra.new(name).camelize
+    class_name = name.split('_').map(&:capitalize).join('')
     format(
       EMACS,
       class_name,
-      size(args[0], args[1], args[2]),
+      size(args[0].to_i, args[1].to_i, args[2]),
       name(name),
       class_name
     )
   end
 
   def size(width = 200, height = 200, mode = nil)
-    return format('size %s, %s', width, height) if mode.nil?
-    format('size %s, %s, %s', width, height, mode.upcase)
+    return format('size %d, %d', width, height) if mode.nil?
+    format('size %d, %d, %s', width, height, mode.upcase)
   end
 
   def settings(args = [])
@@ -109,13 +108,14 @@ class Sketch
     return format(
       METHOD,
       'settings',
-      size(args[0], args[1])
+      size(args[0].to_i, args[1].to_i)
     ) if args.length == 2
-    format(METHOD, 'settings', size(args[0], args[1], args[2]))
+    format(METHOD, 'settings', size(args[0].to_i, args[1].to_i, args[2]))
   end
 
   def name(title = 'Sketch')
-    format("sketch_title '%s'", StringExtra.new(title).humanize)
+    format("sketch_title '%s'", title.split('_').map(&:capitalize).join(' '))
+
   end
 
   def setup(title)

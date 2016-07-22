@@ -30,7 +30,7 @@ module Processing
     # Kicks off a thread to watch the sketch, reloading JRubyArt
     # and restarting the sketch whenever it changes.
     def start_watching
-      start_runner
+      start_original
       Kernel.loop do
         if @files.find { |file| FileTest.exist?(file) && File.stat(file).mtime > @time }
           puts 'reloading sketch...'
@@ -54,15 +54,20 @@ module Processing
       warn format(wformat, File.basename(SKETCH_PATH))
       puts format(tformat, e.backtrace.join("\n\t"))
     end
-
-    def start_runner
-      @runner.kill if @runner && @runner.alive?
-      @runner = nil
+    
+    def start_original
       @runner = Thread.start do
         report_errors do
           Processing.load_and_run_sketch
         end
       end
+    end
+
+    def start_runner
+      @runner.kill if @runner && @runner.alive?
+      @runner.join
+      @runner = nil
+      start_original
     end
 
     def reload_files_to_watch
