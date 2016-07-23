@@ -1,48 +1,43 @@
-EMACS = <<-CODE
-# frozen_string_literal: false
-require 'jruby_art'
-require 'jruby_art/app'
-
-Processing::App::SKETCH_PATH = __FILE__.freeze
-
-class %s < Processing::App
-  def settings
+EMACS = <<~CODE
+  # frozen_string_literal: false
+  require 'jruby_art'
+  require 'jruby_art/app'
+  
+  Processing::App::SKETCH_PATH = __FILE__.freeze
+  
+  class %s < Processing::App
+    def settings
+      %s
+    end
+  
+    def setup
+      %s
+    end
+  
     %s
   end
-
-  def setup
-    %s
-  end
-
-  def draw
-  end
-end
-
-%s.new unless defined? $app
-
+  
+  %s.new unless defined? $app
 CODE
 
-CLASS = <<-CODE
-class %s < Processing::App
-  def settings
+CLASS = <<~CODE
+  class %s < Processing::App
+    def settings
+      %s
+    end
+  
+    def setup
+      %s
+    end
+  
     %s
   end
-
-  def setup
-    %s
-  end
-
-  def draw
-  end
-end
-
 CODE
 
-METHOD = <<-CODE
-def %s
-  %s
-end
-
+METHOD = <<~CODE
+  def %s
+    %s
+  end
 CODE
 
 # require_relative '../helpers/string_extra'
@@ -83,17 +78,24 @@ class Sketch
   end
 
   def class_wrapped(name = 'sketch', args = [])
-    class_name = name.split('_').map(&:capitalize).join('')
-    format(CLASS, class_name, size(args[0].to_i, args[1].to_i, args[2]), name(name))
+    class_name = name.split('_').collect(&:capitalize).join
+    format(CLASS, class_name, size(
+      args[0].to_i, 
+      args[1].to_i, 
+      args[2]), 
+      title(name),
+      draw
+    )
   end
 
   def emacs(name = 'sketch', args = [])
-    class_name = name.split('_').map(&:capitalize).join('')
+    class_name = name.split('_').collect(&:capitalize).join
     format(
       EMACS,
       class_name,
       size(args[0].to_i, args[1].to_i, args[2]),
-      name(name),
+      title(name),
+      draw,
       class_name
     )
   end
@@ -113,16 +115,19 @@ class Sketch
     format(METHOD, 'settings', size(args[0].to_i, args[1].to_i, args[2]))
   end
 
-  def name(title = 'Sketch')
-    format("sketch_title '%s'", title.split('_').map(&:capitalize).join(' '))
-
+  def title(name = 'Sketch')
+    format("sketch_title '%s'", name.split('_').collect(&:capitalize).join(' '))
   end
 
-  def setup(title)
-    format(METHOD, 'setup', name(title))
+  def setup(name)
+    format(METHOD, 'setup', title(name))
   end
 
   def draw
-    format(METHOD, 'draw', '')
+    code = <<~DRAW
+    def draw
+        
+    end
+    DRAW
   end
 end
