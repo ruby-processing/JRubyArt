@@ -70,7 +70,7 @@ class SketchWriterTest < Minitest::Test
     name = 'fred_sketch'
     size = %w(200 200 p2d)
     result = BARE.split(/\n/, -1)
-    sketch = Sketch.new.bare(name, size)
+    sketch = ::Sketch.new.bare(name, size)
     sketch.each_with_index do |line, i|
       assert_equal result[i], line
     end
@@ -80,7 +80,7 @@ class SketchWriterTest < Minitest::Test
     name = 'fred_sketch'
     size = %w(200 200)
     result = CLASS_SKETCH.split(/\n/, -1)
-    class_lines = Sketch.new.class_wrapped(name, size)
+    class_lines = ::Sketch.new.class_wrapped(name, size)
     class_lines.each_with_index do |line, i|
       assert_equal result[i], line
     end
@@ -90,7 +90,7 @@ class SketchWriterTest < Minitest::Test
     name = 'fred_sketch'
     size = %w(200 200)
     result = EMACS.split(/\n/, -1)
-    class_lines = Sketch.new.emacs(name, size)
+    class_lines = ::Sketch.new.emacs(name, size)
         class_lines.each_with_index do |line, i|
       assert_equal result[i], line
     end

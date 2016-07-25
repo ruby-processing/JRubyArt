@@ -107,7 +107,7 @@ module Processing
     def create
       require_relative '../jruby_art/creators/sketch_writer'
       config = Processing::RP_CONFIG.fetch('template', 'bare')
-      SketchWriter.new(filename, argc).create!(config)
+      SketchWriter.new(File.basename(filename, '.rb'), argc).create!(config)
     end
 
     # Export as app not implemented
