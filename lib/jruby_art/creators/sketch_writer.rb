@@ -1,57 +1,15 @@
-EMACS = <<~CODE
-  # frozen_string_literal: false
-  require 'jruby_art'
-  require 'jruby_art/app'
-  
-  Processing::App::SKETCH_PATH = __FILE__.freeze
-  
-  class %s < Processing::App
-    def settings
-      %s
-    end
-  
-    def setup
-      %s
-    end
-  
-    %s
-  end
-  
-  %s.new unless defined? $app
-CODE
+# frozen_string_literal: false
 
-CLASS = <<~CODE
-  class %s < Processing::App
-    def settings
-      %s
-    end
-  
-    def setup
-      %s
-    end
-  
-    %s
-  end
-CODE
-
-METHOD = <<~CODE
-  def %s
-    %s
-  end
-CODE
-
-# require_relative '../helpers/string_extra'
-
-# Sketch writer class
-class SketchWriter
+# Sketch class
+class SketchWriter  
   attr_reader :file, :args, :sketch, :name
-
+  
   def initialize(path, args)
     @args = args
     @name = path
     @file = format('%s/%s.rb', File.dirname(path), path)
   end
-
+  
   def create!(type)
     case type
     when /bare/
@@ -63,71 +21,69 @@ class SketchWriter
     end
     save(sketch)
   end
-
+  
   def save(sketch)
-    File.open(file, 'w+') do |f|
-      f.write(sketch)
-    end
+    File.open(file, 'w+') { |f| f.write sketch.join("\n") }
   end
 end
-
-# Sketch class
+  
+# The sketch class creates an array of formatted sketch lines  
 class Sketch
-  def bare(name = 'sketch', args = [])
-    [settings(args), setup(name), draw].join
+  
+  def bare(name, args)
+    mode = (args.length == 3) ? format(', %s', args[2].upcase) : ''
+    size = args.empty? ? 'size 200, 200' : format('size %d, %d%s', args[0].to_i, args[1].to_i, mode)
+    lines = []
+    lines.concat method_lines('settings', size, '')
+    lines << ''
+    sketch_title = name.split('_').collect(&:capitalize).join(' ')
+    lines.concat method_lines('setup', format("sketch_title '%s'", sketch_title), '')
+    lines << ''
+    lines.concat method_lines('draw', '', '')
   end
 
-  def class_wrapped(name = 'sketch', args = [])
+  def wrapped(name, args)
+    mode = (args.length == 3) ? format(', %s', args[2].upcase) : ''
+    size = args.empty? ? 'size 200, 200' : format('size %d, %d%s', args[0].to_i, args[1].to_i, mode)
+    lines = []
     class_name = name.split('_').collect(&:capitalize).join
-    format(CLASS, class_name, size(
-      args[0].to_i, 
-      args[1].to_i, 
-      args[2]), 
-      title(name),
-      draw
-    )
+    lines << format('class %s < Processing::App', class_name)
+    lines.concat method_lines('settings', size, '  ')
+    lines << ''
+    sketch_title = name.split('_').collect(&:capitalize).join(' ')
+    lines.concat method_lines('setup', format("sketch_title '%s'", sketch_title), '  ')
+    lines << ''
+    lines.concat method_lines('draw', '', '  ')
+    lines << 'end'
   end
 
-  def emacs(name = 'sketch', args = [])
+  def class_wrapped(name, args)
+    lines = []
+    lines << '# frozen_string_literal: false'
+    lines << ''
+    lines.concat wrapped(name, args)
+  end
+
+  def emacs(name, args)
+    lines = []
+    lines << '# frozen_string_literal: false'
+    lines << "require 'jruby_art'"
+    lines << "require 'jruby_art/app'"
+    lines << ''
+    lines << 'Processing::App::SKETCH_PATH = __FILE__.freeze'
+    lines << ''
     class_name = name.split('_').collect(&:capitalize).join
-    format(
-      EMACS,
-      class_name,
-      size(args[0].to_i, args[1].to_i, args[2]),
-      title(name),
-      draw,
-      class_name
-    )
+    lines.concat wrapped(name, args)
+    lines << ''
+    lines << format('%s.new unless defined? $app', class_name)
   end
 
-  def size(width = 200, height = 200, mode = nil)
-    return format('size %d, %d', width, height) if mode.nil?
-    format('size %d, %d, %s', width, height, mode.upcase)
-  end
+  private
 
-  def settings(args = [])
-    return format(METHOD, 'settings', size) if args.empty?
-    return format(
-      METHOD,
-      'settings',
-      size(args[0].to_i, args[1].to_i)
-    ) if args.length == 2
-    format(METHOD, 'settings', size(args[0].to_i, args[1].to_i, args[2]))
-  end
-
-  def title(name = 'Sketch')
-    format("sketch_title '%s'", name.split('_').collect(&:capitalize).join(' '))
-  end
-
-  def setup(name)
-    format(METHOD, 'setup', title(name))
-  end
-
-  def draw
-    code = <<~DRAW
-    def draw
-        
-    end
-    DRAW
+  def method_lines(name, content, indent)
+    one = format('%sdef %s', indent, name)
+    two = content.empty? ? '' : format('  %s%s', indent, content)
+    three = format('%send', indent)
+    [one, two, three]
   end
 end
