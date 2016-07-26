@@ -65,6 +65,13 @@ end
 CODE
 
 class SketchWriterTest < Minitest::Test
+  def test_parameter_new
+    param = SketchParameters.new(name: 'fred_sketch', args: %w(200 200 p2d))
+    assert_equal "sketch_title 'Fred Sketch'", param.sketch_title
+    assert_equal 'size 200, 200, P2D', param.sketch_size
+    assert_equal 'FredSketch', param.class_name
+  end
+
   def test_bare
     param = SketchParameters.new(name: 'fred_sketch', args: %w(200 200 p2d))
     result = BARE.split(/\n/, -1)
@@ -73,7 +80,7 @@ class SketchWriterTest < Minitest::Test
       assert_equal result[i], line
     end
   end
-  
+
   def test_class
     param = SketchParameters.new(name: 'fred_sketch', args: %w(200 200))
     result = CLASS_SKETCH.split(/\n/, -1)
@@ -82,7 +89,7 @@ class SketchWriterTest < Minitest::Test
       assert_equal result[i], line
     end
   end
-  
+
   def test_emacs
     param = SketchParameters.new(name: 'fred_sketch', args: %w(200 200))
     result = EMACS.split(/\n/, -1)
