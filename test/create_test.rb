@@ -14,7 +14,7 @@ Processing::App::SKETCH_PATH = __FILE__.freeze
 
 class FredSketch < Processing::App
   def settings
-    size 200, 200
+    size 200, 200, P2D
   end
 
   def setup
@@ -35,7 +35,7 @@ CLASS_SKETCH = <<~CODE
 
 class FredSketch < Processing::App
   def settings
-    size 200, 200
+    size 200, 200, P2D
   end
 
   def setup
@@ -62,9 +62,22 @@ def draw
 
 end
 
+
+
 CODE
 
 class SketchWriterTest < Minitest::Test
+  ParamMethods = Struct.new(:name, :class_name, :sketch_title, :sketch_size)
+  
+  def setup
+    @param = ParamMethods.new(
+      'fred_sketch',
+      'FredSketch',
+      "sketch_title 'Fred Sketch'",
+      'size 200, 200, P2D'
+    )
+  end
+
   def test_parameter_new
     param = SketchParameters.new(name: 'fred_sketch', args: %w(200 200 p2d))
     assert_equal "sketch_title 'Fred Sketch'", param.sketch_title
@@ -73,27 +86,24 @@ class SketchWriterTest < Minitest::Test
   end
 
   def test_bare
-    param = SketchParameters.new(name: 'fred_sketch', args: %w(200 200 p2d))
     result = BARE.split(/\n/, -1)
-    sketch = Sketch.new.bare(param)
+    sketch = Sketch.new.bare(@param)
     sketch.each_with_index do |line, i|
       assert_equal result[i], line
     end
   end
 
   def test_class
-    param = SketchParameters.new(name: 'fred_sketch', args: %w(200 200))
     result = CLASS_SKETCH.split(/\n/, -1)
-    class_lines = Sketch.new.class_wrapped(param)
+    class_lines = Sketch.new.class_wrapped(@param)
     class_lines.each_with_index do |line, i|
       assert_equal result[i], line
     end
   end
 
   def test_emacs
-    param = SketchParameters.new(name: 'fred_sketch', args: %w(200 200))
     result = EMACS.split(/\n/, -1)
-    class_lines = Sketch.new.emacs(param)
+    class_lines = Sketch.new.emacs(@param)
     class_lines.each_with_index do |line, i|
       assert_equal result[i], line
     end
