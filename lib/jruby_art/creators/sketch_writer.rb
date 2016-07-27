@@ -25,39 +25,42 @@ end
 
 # The file writer knows different types
 class SketchWriter
-  attr_reader :file, :sketch, :param
+  attr_reader :file, :param
 
   def initialize(path, args)
     @param = SketchParameters.new(name: path, args: args)
     @file = format('%s/%s.rb', File.dirname(path), path)
   end
 
-  def create!(type)
-    case type
-    when /bare/
-      @sketch = Sketch.new.bare(param)
-    when /class/
-      @sketch = Sketch.new.class_wrapped(param)
-    when /emacs/
-      @sketch = Sketch.new.emacs(param)
-    end
-    save(sketch)
-  end
-
-  def save(sketch)
+  def write(creator)
+    sketch = creator.code(param)
     File.open(file, 'w+') { |f| f.write sketch.join("\n") }
   end
 end
 
-# The sketch class creates an array of formatted sketch lines
+# Implements method_lines
 class Sketch
-  def bare(param)
+  def method_lines(name, content, indent)
+    one = format('%sdef %s', indent, name)
+    two = content.empty? ? '' : format('  %s%s', indent, content)
+    three = format('%send', indent)
+    return [one, two, three] if /draw/ =~ name
+    [one, two, three, '']
+  end
+end
+
+# The sketch class creates an array of formatted sketch lines
+class BareSketch < Sketch
+  def code(param)
     lines = []
     lines.concat method_lines('settings', param.sketch_size, '')
     lines.concat method_lines('setup', param.sketch_title, '')
     lines.concat method_lines('draw', '', '')
   end
+end
 
+# A class wrapping module
+module Wrap
   def wrapped(param)
     lines = []
     class_name = param.name.split('_').collect(&:capitalize).join
@@ -67,16 +70,24 @@ class Sketch
     lines.concat method_lines('draw', '', '  ')
     lines << 'end'
   end
+end
 
-  def class_wrapped(param)
+# A simple class wrapped sketch
+class ClassSketch < Sketch
+  include Wrap
+  def code(param)
     lines = [
       '# frozen_string_literal: false',
       ''
     ]
     lines.concat wrapped(param)
   end
+end
 
-  def emacs(param)
+# A sketch that will run with jruby, for emacs etc
+class EmacsSketch < Sketch
+  include Wrap
+  def code(param)
     lines = [
       '# frozen_string_literal: false',
       "require 'jruby_art'",
@@ -88,15 +99,5 @@ class Sketch
     lines.concat wrapped(param)
     lines << ''
     lines << format('%s.new unless defined? $app', param.class_name)
-  end
-
-  private
-
-  def method_lines(name, content, indent)
-    one = format('%sdef %s', indent, name)
-    two = content.empty? ? '' : format('  %s%s', indent, content)
-    three = format('%send', indent)
-    return [one, two, three] if /draw/ =~ name
-    [one, two, three, '']
   end
 end

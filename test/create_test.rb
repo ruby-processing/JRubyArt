@@ -87,7 +87,7 @@ class SketchWriterTest < Minitest::Test
 
   def test_bare
     result = BARE.split(/\n/, -1)
-    sketch = Sketch.new.bare(@param)
+    sketch = BareSketch.new.code(@param)
     sketch.each_with_index do |line, i|
       assert_equal result[i], line
     end
@@ -95,7 +95,7 @@ class SketchWriterTest < Minitest::Test
 
   def test_class
     result = CLASS_SKETCH.split(/\n/, -1)
-    class_lines = Sketch.new.class_wrapped(@param)
+    class_lines = ClassSketch.new.code(@param)
     class_lines.each_with_index do |line, i|
       assert_equal result[i], line
     end
@@ -103,7 +103,7 @@ class SketchWriterTest < Minitest::Test
 
   def test_emacs
     result = EMACS.split(/\n/, -1)
-    class_lines = Sketch.new.emacs(@param)
+    class_lines = EmacsSketch.new.code(@param)
     class_lines.each_with_index do |line, i|
       assert_equal result[i], line
     end
