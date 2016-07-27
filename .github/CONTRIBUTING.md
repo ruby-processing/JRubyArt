@@ -4,7 +4,7 @@ In the spirit of [free software][free-sw], **everyone** is encouraged to help im
 Here are some ways *you* can contribute:
 
 * by reporting bugs
-* by suggesting/implementing new features ( _export to ruboto would be cool_ )
+* by suggesting/implementing new features ( _running sketches from the atom editor would be cool_ )
 * by writing or editing documentation ( _expert Windows users could help write install instructions_ )
 * by contributing examples ( _show your creativity, or translate someone elses masterpiece_ )
 * by refactoring examples to be more rubyfied
