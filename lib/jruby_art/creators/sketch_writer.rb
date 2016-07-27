@@ -1,5 +1,5 @@
 # frozen_string_literal: false
-# SketchParamters class
+# The SketchParameters class knows how to format, size, title & class name
 class SketchParameters
   attr_reader :name, :args
   def initialize(name:, args:)
@@ -23,7 +23,7 @@ class SketchParameters
   end
 end
 
-# The file writer knows different types
+# The file writer can write a sketch when given instance of Sketch type
 class SketchWriter
   attr_reader :file, :param
 
@@ -38,7 +38,7 @@ class SketchWriter
   end
 end
 
-# Implements method_lines
+# Implements method_lines, omits blank line after draw
 class Sketch
   def method_lines(name, content, indent)
     one = format('%sdef %s', indent, name)
@@ -59,12 +59,11 @@ class BareSketch < Sketch
   end
 end
 
-# A class wrapping module
+# A class wrapping module (used by ClassSketch and Emacs Sketch)
 module Wrap
   def wrapped(param)
-    lines = []
-    class_name = param.name.split('_').collect(&:capitalize).join
-    lines << format('class %s < Processing::App', class_name)
+    lines = []    
+    lines << format('class %s < Processing::App', param.class_name)
     lines.concat method_lines('settings', param.sketch_size, '  ')
     lines.concat method_lines('setup', param.sketch_title, '  ')
     lines.concat method_lines('draw', '', '  ')
