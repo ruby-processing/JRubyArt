@@ -17,7 +17,7 @@ class SketchParameters
   end
 
   def sketch_size
-    mode = args.length == 3 ? format(', %s', args[2].upcase) : ''
+    mode = args.length == 3 ? format(', %s', args[2].upcase) : BLANK
     return 'size 200, 200' if args.empty?
     format('size %d, %d%s', args[0].to_i, args[1].to_i, mode)
   end
@@ -38,65 +38,67 @@ class SketchWriter
   end
 end
 
-# Implements method_lines, omits blank line after draw
+# Implements methods and class_methods omits blank line after draw
+# uses private method_lines to format method lines
 class Sketch
+  BLANK ||= ''.freeze
+  INDENT ||= '  '.freeze
+
+  def methods(param, indent)
+    lines = []
+    lines.concat method_lines('settings', param.sketch_size, indent)
+    lines.concat method_lines('setup', param.sketch_title, indent)
+    lines.concat method_lines('draw', BLANK, indent)
+  end
+
+  def class_methods(param)
+    lines = [format('class %s < Processing::App', param.class_name)]
+    lines.concat methods(param, INDENT)
+    lines << 'end'
+  end
+
+  private
+
   def method_lines(name, content, indent)
     one = format('%sdef %s', indent, name)
-    two = content.empty? ? '' : format('  %s%s', indent, content)
+    two = content.empty? ? BLANK : format('  %s%s', indent, content)
     three = format('%send', indent)
     return [one, two, three] if /draw/ =~ name
-    [one, two, three, '']
+    [one, two, three, BLANK]
   end
 end
 
 # The sketch class creates an array of formatted sketch lines
 class BareSketch < Sketch
   def code(param)
-    lines = []
-    lines.concat method_lines('settings', param.sketch_size, '')
-    lines.concat method_lines('setup', param.sketch_title, '')
-    lines.concat method_lines('draw', '', '')
-  end
-end
-
-# A class wrapping module (used by ClassSketch and Emacs Sketch)
-module Wrap
-  def wrapped(param)
-    lines = []    
-    lines << format('class %s < Processing::App', param.class_name)
-    lines.concat method_lines('settings', param.sketch_size, '  ')
-    lines.concat method_lines('setup', param.sketch_title, '  ')
-    lines.concat method_lines('draw', '', '  ')
-    lines << 'end'
+    methods(param, BLANK)
   end
 end
 
 # A simple class wrapped sketch
 class ClassSketch < Sketch
-  include Wrap
   def code(param)
     lines = [
       '# frozen_string_literal: false',
-      ''
+      BLANK
     ]
-    lines.concat wrapped(param)
+    lines.concat class_methods(param)
   end
 end
 
 # A sketch that will run with jruby, for emacs etc
 class EmacsSketch < Sketch
-  include Wrap
   def code(param)
     lines = [
       '# frozen_string_literal: false',
       "require 'jruby_art'",
       "require 'jruby_art/app'",
-      '',
+      BLANK,
       'Processing::App::SKETCH_PATH = __FILE__.freeze',
-      ''
+      BLANK
     ]
-    lines.concat wrapped(param)
-    lines << ''
+    lines.concat class_methods(param)
+    lines << BLANK
     lines << format('%s.new unless defined? $app', param.class_name)
   end
 end
