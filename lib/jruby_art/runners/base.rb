@@ -10,13 +10,13 @@ require_relative '../app'
 # More processing module
 module Processing
   # For use with "bare" sketches that don't want to define a class or methods
-  BARE_WRAP = <<-EOS
+  BARE_WRAP = <<~EOS
   class Sketch < Processing::App
     %s
   end
   EOS
 
-  NAKED_WRAP = <<-EOS
+  NAKED_WRAP = <<~EOS
   class Sketch < Processing::App
     def setup
       sketch_title 'Nude Sketch'
