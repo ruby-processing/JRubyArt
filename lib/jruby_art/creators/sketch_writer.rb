@@ -78,10 +78,7 @@ end
 # A simple class wrapped sketch
 class ClassSketch < Sketch
   def code(param)
-    lines = [
-      '# frozen_string_literal: false',
-      BLANK
-    ]
+    lines = ['# frozen_string_literal: false', BLANK]
     lines.concat class_methods(param)
   end
 end
