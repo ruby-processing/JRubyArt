@@ -2,7 +2,8 @@
 # frozen_string_literal: false
 
 require_relative '../jruby_art'
-require_relative 'sketchbook'
+require_relative 'config'
+# require_relative 'sketchbook'
 # The processing wrapper module
 module Processing
   # Encapsulate library loader functionality as a class
@@ -10,7 +11,7 @@ module Processing
     attr_reader :sketchbook_library_path
 
     def initialize
-      @sketchbook_library_path = File.join(Sketchbook.find_path, 'libraries')
+      @sketchbook_library_path = File.join(Processing::RP_CONFIG['sketchbook_path'], 'libraries')
       @loaded_libraries = Hash.new(false)
     end
 

@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: false
 # processing module wrapper
 require_relative '../rpextras'
@@ -22,15 +21,17 @@ module Processing
     def kamera(
       eye: Vec3D.new(width / 2.0, height / 2.0, (height / 2.0) / tan(PI * 30.0 / 180.0)),
       center: Vec3D.new(width / 2.0, height / 2.0, 0),
-      up: Vec3D.new(0, 1.0, 0))
+      up: Vec3D.new(0, 1.0, 0)
+    )
       camera(eye.x, eye.y, eye.z, center.x, center.y, center.z, up.x, up.y, up.z)
     end
-    
+
     def perspektiv(
       fov: Math::PI / 3.0,
       aspect_ratio: width.to_f / height,
       near_z: (height / 20.0) / tan(fov / 2.0),
-      far_z: (height * 5) / tan(fov / 2.0))
+      far_z: (height * 5) / tan(fov / 2.0)
+    )
       perspective(fov, aspect_ratio, near_z, far_z)
     end
 
@@ -49,7 +50,7 @@ module Processing
     def lerp_color(*args)
       args.length > 3 ? self.class.lerp_color(*args) : super(*args)
     end
-    
+
     # hue, sat, brightness in range 0..1.0 returns RGB color int
     def hsb_color(hue, sat, brightness)
       Java::Monkstone::ColorUtil.hsbToRgB(hue, sat, brightness)
@@ -59,14 +60,14 @@ module Processing
       return super(*args) unless args.length == 1
       super(hex_color(args[0]))
     end
-    
+
     def web_to_color_array(web)
       Java::Monkstone::ColorUtil.webArray(web)
     end
-    
+
     def int_to_ruby_colors(hex)
       Java::Monkstone::ColorUtil.rubyString(hex)
-    end  
+    end
 
     # Overrides Processing convenience function thread, which takes a String
     # arg (for a function) to more rubylike version, takes a block...
@@ -74,7 +75,7 @@ module Processing
       if block_given?
         Thread.new(&block)
       else
-        fail ArgumentError, 'thread must be called with a block', caller
+        raise ArgumentError, 'thread must be called with a block', caller
       end
     end
 
@@ -100,7 +101,7 @@ module Processing
       when 6
         return dist3d(*args)
       else
-        fail ArgumentError, 'takes 4 or 6 parameters'
+        raise ArgumentError, 'takes 4 or 6 parameters'
       end
     end
 
@@ -112,7 +113,7 @@ module Processing
     # There's just so many functions in Processing,
     # Here's a convenient way to look for them.
     def find_method(method_name)
-      reg = Regexp.new("#{method_name}", true)
+      reg = Regexp.new(method_name.to_s, true)
       methods.sort.select { |meth| reg.match(meth) }
     end
 
@@ -120,7 +121,7 @@ module Processing
     # some methods. Add to this list as needed.
     def proxy_java_fields
       fields = %w(key frameRate mousePressed keyPressed)
-      methods  = fields.map { |field| java_class.declared_field(field) }
+      methods = fields.map { |field| java_class.declared_field(field) }
       @declared_fields = Hash[fields.zip(methods)]
     end
 
@@ -190,11 +191,11 @@ module Processing
         Java::Monkstone::ColorUtil.colorLong(a)
       when STRING_COL
         return Java::Monkstone::ColorUtil.colorString(a) if a =~ /#\h+/
-        fail StandardError, 'Dodgy Hexstring'
+        raise StandardError, 'Dodgy Hexstring'
       when FLOAT_COL
         Java::Monkstone::ColorUtil.colorDouble(a)
       else
-        fail StandardError, 'Dodgy Color Conversion'
+        raise StandardError, 'Dodgy Color Conversion'
       end
     end
 
