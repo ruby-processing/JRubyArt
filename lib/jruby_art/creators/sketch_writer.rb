@@ -17,7 +17,7 @@ class SketchParameters
   end
 
   def sketch_size
-    mode = args.length == 3 ? format(', %s', args[2].upcase) : BLANK
+    mode = args.length == 3 ? format(', %s', args[2].upcase) : ''
     return 'size 200, 200' if args.empty?
     format('size %d, %d%s', args[0].to_i, args[1].to_i, mode)
   end
