@@ -146,9 +146,11 @@ k9 --run monjori.rb # run the Monjori sketch with jruby-complete
 
 ### Creating your own sketch
 
+All we ask is that you obey the ruby filename convention (ie snakecase) and we can create a template sketch for you as follows:-
+
 {% highlight bash %}
-k9 --create fred 200 200 # creates a bare sketch fred.rb (see below)
-vim fred.rb # other editors are available
+k9 --create fred_sketch 200 200 # creates a bare sketch fred_sketch.rb (see below)
+vim fred_sketch.rb # other editors are available
 :!k9 -r % # from vim runs the sketch 
 {% endhighlight %}
 
@@ -156,7 +158,7 @@ You may want to try other [development environments][editor] eg emacs or even ne
 
 {% highlight ruby %}
 def setup
-  sketch_title 'Fred'
+  sketch_title 'Fred Sketch'
 end
 
 def draw
@@ -168,6 +170,8 @@ def settings
   # smooth # here
 end
 {% endhighlight %}
+
+PS: `k9 -c fred` also works with a bare template defaults, to `size 200 200`
 
 Read more about using the [processing api here][api]
 
