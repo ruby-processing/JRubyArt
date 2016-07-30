@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 require 'yaml'
 
-VERSION = '3.1.1'.freeze # processing version
+VERSION = '3.1.2'.freeze # processing version
 
 # Abstract Installer class
 class Installer
@@ -49,6 +49,7 @@ class Installer
   # Display the current version of JRubyArt.
   def show_version
     puts format('JRubyArt version %s', JRubyArt::VERSION)
+    puts format('Expected Processing version %s', VERSION)
   end
 end
 

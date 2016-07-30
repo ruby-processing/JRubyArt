@@ -10,9 +10,9 @@ A clean start for `jruby_art` that works best with the latest version of [proces
  
 A suitable version of ruby (MRI ruby > 2.2 or `jruby-9.1.2.0+`) to download gem. 
 
-`processing-3.1.1`
+`processing-3.1.2`
 
-`jdk1.8.0_92+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
+`jdk1.8.0_102+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
@@ -26,7 +26,7 @@ You can if you wish leave configuration to the `new` autoconfig tool (delete exi
 ```yaml
 # YAML configuration file for jruby_art
 # K9_HOME: "/home/ruby2.3.0 ... /jruby_art" # windows users may need to set this
-PROCESSING_ROOT: "/home/tux/processing-3.1.1" # typical linux shown
+PROCESSING_ROOT: "/home/tux/processing-3.1.2" # typical linux shown
 # important sketch_book path may be different for processing-3.0
 sketchbook_path: "/home/tux/sketchbook" 
 template: emacs
@@ -65,7 +65,7 @@ end
 # size, full_screen, pixel_density and smooth should all be moved to settings (this is hidden 
 # to users of processing ide, but not for JRubyArt, or for Eclipse NetBeans users). The FX2D 
 # rendering mode was introduced, and was expected to replace JAVA2D (as default rendering mode) 
-# but may not now happen, and not for processing-3.1.1 in any case.
+# but may not now happen, and not for processing-3.1.2 in any case.
 def settings
   size 400, 300
 end
