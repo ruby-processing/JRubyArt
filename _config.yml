@@ -1,6 +1,5 @@
 # Site settings
 port: 4000
-highlighter: pygments
 title: JRubyArt (Code as Art)
 email: mamba2928@yahoo.co.uk
 description: > # this means to ignore newlines until "baseurl:"
@@ -16,7 +15,6 @@ github_username:  monkstone
 
 syntax-highlighting:
   enabled: true
-  css: syntax.css        
 # Build settings
 markdown: kramdown
 gems:
