@@ -8,7 +8,7 @@ description: > # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 regenerate: true
 urls:
-  bugs: http://github.com/ruby-processing/jruby_art/issues
+  bugs: https://github.com/ruby-processing/jruby_art/issues
   wiki: https://github.com/ruby-processing/JRubyArt/wiki
   github: https://github.com/ruby-processing/jruby_art
 twitter_username: monkstoneT
