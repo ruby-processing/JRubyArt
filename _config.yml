@@ -1,17 +1,16 @@
 # Site settings
 port: 4000
+highlighter: pygments
 title: JRubyArt (Code as Art)
 email: mamba2928@yahoo.co.uk
 description: > # this means to ignore newlines until "baseurl:"
-  JRubyArt is a ruby wrapper for processing-3.1.1+ For processing-2.2.1, use
-  ruby-processing.
+   JRubyArt is a ruby wrapper for processing-3.1.1+ For processing-2.2.1, use
+   ruby-processing.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: https://ruby-processing.github.io/JRubyArt
-regenerate: true
+url: "http://ruby-processing.github.io/JRubyArt"
 urls:
-  bugs: https://github.com/ruby-processing/JRubyArt/issues
-  wiki: https://github.com/ruby-processing/JRubyArt/wiki
-  github: https://github.com/ruby-processing/JRubyArt
+  bugs: http://github.com/ruby-processing/JRubyArt/issues
+  github: http://github.com/ruby-processing/JRubyArt/
 twitter_username: monkstoneT
 github_username:  monkstone
 
@@ -21,4 +20,5 @@ syntax-highlighting:
 # Build settings
 markdown: kramdown
 gems:
-  - jekyll-sitemap
+  - jekyll-sitemap  
+
