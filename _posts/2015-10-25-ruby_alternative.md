@@ -58,4 +58,4 @@ For example of `kamera` usage see my [blog][blog]. To use `selectInput` see link
 [time]:https://monkstone.github.io/_posts/time
 [timestamp]:https://monkstone.github.io/_posts/timestamp
 [clock]:https://github.com/ruby-processing/samples4ruby-processing3/blob/master/processing_app/library/fastmath/clock.rb
-[blog]:http://monkstone.github.io/_posts/kamera/
+[blog]:https://monkstone.github.io/_posts/kamera/
