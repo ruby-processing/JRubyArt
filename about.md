@@ -10,10 +10,10 @@ In general where there is a choice of using a java (processing) method or a regu
 
 See also my [blog][blog] for more code ideas.
   
-[jruby]: http://jruby.org
+[jruby]: https://jruby.org
 [processing]: https://processing.org
 
 [jruby_art]: https://ruby-processing.github.io/index.html
 [color]: https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/color/creating.rb
 [map1d]: https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/arrays/array.rb
-[blog]:http://monkstone.github.io/
+[blog]:https://monkstone.github.io/
