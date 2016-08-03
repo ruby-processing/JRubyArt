@@ -10,7 +10,7 @@ regenerate: true
 urls:
   bugs: https://github.com/ruby-processing/JRubyArt/issues
   wiki: https://github.com/ruby-processing/JRubyArt/wiki
-  github: https://github.com/ruby-processing/JRubyArt
+  github: https://ruby-processing.github.io/JRubyArt
 twitter_username: monkstoneT
 github_username:  monkstone
 
