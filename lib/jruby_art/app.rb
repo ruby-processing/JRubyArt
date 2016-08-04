@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: false
 
 require 'java'
@@ -38,10 +37,10 @@ module Processing
     include HelperMethods, Math, MathTool, Render
     # Alias some methods for familiarity for Shoes coders.
     # surface replaces :frame, but needs field_reader for access
-    alias_method :oval, :ellipse
-    alias_method :stroke_width, :stroke_weight
-    alias_method :rgb, :color
-    alias_method :gray, :color
+    alias oval ellipse
+    alias stroke_width stroke_weight
+    alias rgb color
+    alias gray color
     field_reader :surface
 
     def sketch_class
@@ -63,7 +62,7 @@ module Processing
         library_loader ||= LibraryLoader.new
         library_loader.load_library(*args)
       end
-      alias_method :load_library, :load_libraries
+      alias load_library load_libraries
 
       def library_loaded?(library_name)
         library_loader.library_loaded?(library_name)
@@ -193,6 +192,10 @@ module Processing
   # Importing PConstants here to access the processing constants
   module Proxy
     include Math, HelperMethods, Java::ProcessingCore::PConstants
+
+    def respond_to_missing?(name, include_private = false)
+      $app.respond_to?(name) || super
+    end
 
     def method_missing(name, *args)
       return $app.send(name, *args) if $app && $app.respond_to?(name)
