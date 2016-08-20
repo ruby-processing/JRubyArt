@@ -6,7 +6,7 @@ description: > # this means to ignore newlines until "baseurl:"
    JRubyArt is a ruby wrapper for processing-3.1.1+ For processing-2.2.1, use
    ruby-processing.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://ruby-processing.github.io/JRubyArt"
+url: "https://ruby-processing.github.io/JRubyArt"
 urls:
   bugs: http://github.com/ruby-processing/JRubyArt/issues
   github: http://github.com/ruby-processing/JRubyArt/
