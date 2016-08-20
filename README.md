@@ -5,18 +5,18 @@
 See [alternative website](http://ruby-processing.github.io/) for versions before JRubyArt-1.2.0, if it matters to you download a copy because it will soon be replaced with learning JRubyArt content or similar...
 
 ## Requirements
-A clean start for `jruby_art` that works best with the latest version of [processing-3.1.1](https://github.com/processing/processing/releases) and [jruby-9.1.2.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
+A clean start for `jruby_art` that works best with the latest version of [processing-3.2.1](https://github.com/processing/processing/releases) and [jruby-9.1.2.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
  
 A suitable version of ruby (MRI ruby > 2.2 or `jruby-9.1.2.0+`) to download gem. 
 
-`processing-3.1.2`
+`processing-3.2.1`
 
 `jdk1.8.0_102+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
-processing `video` and `sound-1.3.2+` libraries _best installed from the processing-3.1 ide_
+processing `video` and `sound-1.3.2+` libraries _best installed from the processing-3.2.1 ide_
 
 
 ## Configuration
@@ -26,7 +26,7 @@ You can if you wish leave configuration to the `new` autoconfig tool (delete exi
 ```yaml
 # YAML configuration file for jruby_art
 # K9_HOME: "/home/ruby2.3.0 ... /jruby_art" # windows users may need to set this
-PROCESSING_ROOT: "/home/tux/processing-3.1.2" # typical linux shown
+PROCESSING_ROOT: "/home/tux/processing-3.2.1" # typical linux shown
 # important sketch_book path may be different for processing-3.0
 sketchbook_path: "/home/tux/sketchbook" 
 template: emacs
