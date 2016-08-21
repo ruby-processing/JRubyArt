@@ -40,4 +40,4 @@ For ruby-processing the `--nojruby` flag (or running with jruby-complete) is req
 Introduced for processing-3.0 is the `settings` method, but this is hidden for users of the [processing ide][settings]. This is where `size` belongs or `full_screen`, also you should set `smooth` and `pixel_density` here. Retina users can make use of their hi-dpi display by setting `pixel_density(2)`, NB: size should be first line of `settings`, and if used `pixel_density(2)` should be next.
 
 [settings]:https://processing.org/reference/settings_.html
-[here]:{{ site.github.url }}/data_path/
+[here]:{{site.github.url}}/data_path/

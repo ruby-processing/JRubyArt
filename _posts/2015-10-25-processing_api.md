@@ -15,14 +15,14 @@ class TrianglesGoneWild < Processing::App
     size 600, 600
     smooth 8
   end
-  
+
   def setup
     sketch_title 'Triangles Gone Wild'
     color_mode RGB, 1.0
     frame_rate 30
     fill 0.8, 0.6
   end
-  
+
   def draw
     triangle(rand(width), rand(height), rand(width), rand(height), rand(width), rand(height))
   end
@@ -58,9 +58,9 @@ Because of this method madness, `Processing::App` has a convenience method for s
 Also prefer [`Vec2D`][vec2] and [`Vec3D`][vec3] to [`PVector`][pvector] follow links for reference. Also you can/should use `data_path` to wrap filenames (JRubyArt uses ruby to access the absolute_path of files in the sketch data folder, this avoids the file permission issues of the vanilla-processing method).
 
 [api]:https://processing.org/reference/index.html
-[vec2]:{{ site.url }}/classes/vec2d/
-[vec3]:{{ site.url }}/classes/vec3d/
-[alternatives]:{{ site.url }}/alternatives/
+[vec2]:{{site.github.url}}/classes/vec2d/
+[vec3]:{{site.github.url}}/classes/vec3d/
+[alternatives]:{{site.github.url}}/alternatives/
 [pvector]:https://processing.org/reference/PVector.html
 [Math]:https://ruby-doc.org/core-2.2.2/Math.html
 [core]:https://ruby-doc.org/core-2.2.3/
