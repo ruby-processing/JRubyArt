@@ -35,7 +35,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
     'jruby.api' => 'http://jruby.org/apidocs/'
   )
 
-  pom 'org.jruby:jruby:9.1.2.0'
+  pom 'org.jruby:jruby:9.1.3.0'
   jar 'org.processing:core:3.2.1'
   jar 'org.processing:video:3.0.2'
   plugin_management do
