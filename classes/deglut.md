@@ -9,9 +9,9 @@ Deglut is a fast math module that does sin and cos for integer degrees
 Methods:-
 {% highlight ruby %}
 # Returns sine from integer degree input (uses look up table)
-Deglut.sin(deg)
+DegLut.sin(deg)
 # Returns cosine from integer degree input (uses look up table)
-Deglut.cos(deg)
+DegLut.cos(deg)
 {% endhighlight %}
 
 Example Usages: [Analog Clock][clock], [Function Grapher][grapher]
