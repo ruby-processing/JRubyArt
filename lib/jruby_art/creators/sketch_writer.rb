@@ -32,8 +32,9 @@ class SketchWriter
     @file = format('%s/%s.rb', File.dirname(path), path)
   end
 
-  def write(creator)
-    sketch = creator.code(param)
+  def write
+    template = SketchTemplate.template
+    sketch = template.code(param)
     File.open(file, 'w+') { |f| f.write sketch.join("\n") }
   end
 end
@@ -65,6 +66,20 @@ class Sketch
     three = format('%send', indent)
     return [one, two, three] if /draw/ =~ name
     [one, two, three, BLANK]
+  end
+end
+
+# Switch templates on config
+class SketchTemplate
+  def self.template
+    case Processing::RP_CONFIG.fetch('template', 'bare')
+    when /bare/
+      return BareSketch.new
+    when /class/
+      return ClassSketch.new
+    when /emacs/
+      return EmacsSketch.new
+    end
   end
 end
 
