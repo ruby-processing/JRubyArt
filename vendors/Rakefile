@@ -1,17 +1,17 @@
 require 'rake/clean'
 
-WARNING = <<-EOS 
+WARNING = <<-EOS
    WARNING: you may not have wget installed, you could just download
-   the correct version of jruby-complete to the vendors folder, and 
+   the correct version of jruby-complete to the vendors folder, and
    re-run k9 setup install instead of installing wget. Some systems
    may also require 'sudo' access to install, NB: this is untested....
-      
+
 EOS
 
-JRUBYC_VERSION     = '9.1.4.0'
-EXAMPLES           = '1.4'
+JRUBYC_VERSION     = '9.1.5.0'
+EXAMPLES           = '1.5'
 HOME_DIR = ENV['HOME']
-MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os'] 
+MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
 
 CLOBBER.include("jruby-complete-#{JRUBYC_VERSION}.jar")
 
@@ -23,11 +23,11 @@ task :download => ["jruby-complete-#{JRUBYC_VERSION}.jar"]
 
 file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   begin
-    sh "wget https://s3.amazonaws.com/jruby.org/downloads/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar"    
+    sh "wget https://s3.amazonaws.com/jruby.org/downloads/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar"
   rescue
     warn(WARNING)
   end
-  check_sha256("jruby-complete-#{JRUBYC_VERSION}.jar", "a042931f5088dca7007985d6a2178af31cbc26aadb64ee10c3fa25f432c68505")
+  check_sha256("jruby-complete-#{JRUBYC_VERSION}.jar", "7711fe1d09bb98727a43f5aaef5ea3a205500568bc2fa718cb7ef77dd3800519")
 end
 
 directory "../lib/ruby"
@@ -73,9 +73,9 @@ task :copy_examples => file_name do
   if MAC_OR_LINUX.nil?
     sh "unzip #{EXAMPLES}.zip"
   else
-    sh "tar xzvf #{EXAMPLES}.tar.gz" 
+    sh "tar xzvf #{EXAMPLES}.tar.gz"
   end
   sh "rm -r #{HOME_DIR}/k9_samples" if File.exist? "#{HOME_DIR}/k9_samples"
-  sh "cp -r JRubyArt-examples-#{EXAMPLES} #{HOME_DIR}/k9_samples"  
+  sh "cp -r JRubyArt-examples-#{EXAMPLES} #{HOME_DIR}/k9_samples"
   sh "rm -r JRubyArt-examples-#{EXAMPLES}"
 end
