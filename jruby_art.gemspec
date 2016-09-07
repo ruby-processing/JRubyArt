@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 2.3'
-  spec.add_development_dependency 'rake', '~> 11.1'
+  spec.add_development_dependency 'rake', '~> 11.2'
   spec.add_development_dependency 'minitest', '~> 5.8'
   spec.requirements << 'A decent graphics card'
   spec.requirements << 'java runtime >= 1.8.0_102+'
