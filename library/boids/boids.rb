@@ -5,7 +5,8 @@
 # ruby-processing Jeremy Ashkenas. Reworked, re-factored for JRubyArt 0.9+
 # by Martin Prout, features forwardable, keyword args, Vec3D and Vec2D.
 class Boid
-  attr_reader :boids, :pos, :vel, :is_perching, :perch_time
+  attr_reader :boids
+  attr_accessor :vel, :pos, :is_perching, :perch_time
   def initialize(boids, pos)
     @boids, @flock = boids, boids
     @pos = pos
@@ -83,7 +84,7 @@ class Boids
 
   def self.flock(n:, x:, y:, w:, h:)
     flock = Boids.new.setup(n, x, y, w, h)
-    flock.goal(target: Vec3D.new(w / 2, h / 2, 0))
+    flock.reset_goal(Vec3D.new(w / 2, h / 2, 0))
   end
 
   def setup(n, x, y, w, h)
@@ -125,7 +126,14 @@ class Boids
     @perch = 0.0
   end
 
-  def goal(target:, flee: false)
+  def reset_goal(target)
+    @has_goal = true
+    @flee = false
+    @goal = target
+    self
+  end
+
+  def goal(target:, flee:)
     @has_goal = true
     @flee = flee
     @goal = target
