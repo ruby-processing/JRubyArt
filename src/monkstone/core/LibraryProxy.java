@@ -47,17 +47,39 @@ public abstract class LibraryProxy {
      * processing PApplet post loop (called after draw)
      */
     public abstract void post();
+    
+    /**
+     * Extending classes must implement  this gives access to, by reflection,
+     * processing PApplet key events
+     * @param event KeyEvent
+     */
+    public abstract void keyEvent(processing.event.KeyEvent event);
+    
+    /**
+     * Extending classes must implement  this gives access to, by reflection,
+     * processing PApplet mouse events
+     * @param event MouseEvent
+     */
+    public abstract void mouseEvent(processing.event.MouseEvent event);
 
+    /**
+     * Register or unregister reflection methods
+     * @param active 
+     */
     private void setActive(boolean active) {
         if (active) {
             this.app.registerMethod("pre", this);
             this.app.registerMethod("draw", this);
             this.app.registerMethod("post", this);
             this.app.registerMethod("dispose", this);
+            this.app.registerMethod("mouseEvent", this);
+            this.app.registerMethod("keyEvent", this);
         } else {
             this.app.unregisterMethod("pre", this);
             this.app.unregisterMethod("draw", this);
             this.app.unregisterMethod("post", this);
+            this.app.unregisterMethod("mouseEvent", this);
+            this.app.unregisterMethod("keyEvent", this);
         }
     }
 
