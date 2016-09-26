@@ -183,7 +183,7 @@ public class Arcball {
      *
      * @param active boolean
      */
-    public void setActive(boolean active) {
+    final void setActive(boolean active) {
         if (active != isActive) {
             isActive = active;
             if (active) {
