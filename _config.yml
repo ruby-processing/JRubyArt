@@ -12,7 +12,17 @@ urls:
   github: http://github.com/ruby-processing/JRubyArt/
 twitter_username: monkstoneT
 github_username:  monkstone
-
+include: [collections]
+collections:
+  classes:
+    output: true
+    permalink: /classes/:path
+  editors:
+    output: true
+    permalink: /editors/:path
+  k9methods:
+    output: true
+    permalink: /methods/:path
 syntax-highlighting:
   enabled: true
 # Build settings
