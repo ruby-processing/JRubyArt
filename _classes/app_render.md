@@ -1,10 +1,7 @@
 ---
 layout: post
 title:  "AppRender and ShapeRender"
-date:   2015-12-09 20:57:00
-categories: jruby_art update
 keywords: to_vertex, Vec3D, Vec2D, AppRender, ShapeRender
-permalink: /app_render/
 ---
 Vec2D and Vec3D classes can be efficiently rendered as both PApplet vertices, and PShape vertices using AppRender and ShapeRender utility classes. To use the AppRender renderer you should create a single instance in the processing setup see below example:-
 
@@ -91,6 +88,6 @@ mesh.end_shape
 
 The above snippet is taken from the [glsl_heighmap_noise.rb sketch][glsl], for another example of the advanced use of the ShapeRender class see the [trefoil sketch][trefoil]. Warning if you are using ShapeRender inside a custom class you need to prefix it with the sketch class name `Sketch::` for bare sketches, see [wiggle_pshape][wiggling] sketch.
 
-[glsl]:https://github.com/ruby-processing/samples4ruby-processing3/blob/master/processing_app/topics/shaders/glsl_heightmap_noise.rb
-[trefoil]:https://github.com/ruby-processing/samples4ruby-processing3/blob/master/processing_app/demos/graphics/trefoil.rb
-[wiggling]:https://github.com/ruby-processing/samples4ruby-processing3/blob/master/processing_app/library/vecmath/vec2d/wiggle_pshape.rb
+[glsl]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/topics/shaders/glsl_heightmap_noise.rb
+[trefoil]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/demos/graphics/trefoil.rb
+[wiggling]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec2d/wiggle_pshape.rb
