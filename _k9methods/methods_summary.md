@@ -69,9 +69,9 @@ map1d
 p5map
 {% endhighlight %}
 
-[bezier]:https://github.com/ruby-processing/samples4ruby-processing3/blob/master/processing_app/basics/form/bezier_ellipse.rb
-[brick_tower]:https://github.com/ruby-processing/samples4ruby-processing3/blob/master/processing_app/basics/form/brick_tower.rb
-[mandelbrot]:https://github.com/ruby-processing/samples4ruby-processing3/blob/master/contributed/mandelbrot.rb
-[conway]:https://github.com/ruby-processing/samples4ruby-processing3/blob/master/processing_app/topics/shaders/conway.rb
-[color]:https://github.com/ruby-processing/samples4ruby-processing3/blob/master/processing_app/basics/color/creating.rb
-[blend_color]:https://github.com/ruby-processing/samples4ruby-processing3/blob/master/processing_app/basics/color/blend_color.rb
+[bezier]:https://github.com/ruby-processing/JRubyArt-examples/blob/masterprocessing_app/basics/form/bezier_ellipse.rb
+[brick_tower]:https://github.com/ruby-processing/JRubyArt-examples/blob/masterprocessing_app/basics/form/brick_tower.rb
+[mandelbrot]:https://github.com/ruby-processing/JRubyArt-examples/blob/mastercontributed/mandelbrot.rb
+[conway]:https://github.com/ruby-processing/JRubyArt-examples/blob/masterprocessing_app/topics/shaders/conway.rb
+[color]:https://github.com/ruby-processing/JRubyArt-examples/blob/masterprocessing_app/basics/color/creating.rb
+[blend_color]:https://github.com/ruby-processing/JRubyArt-examples/blob/masterprocessing_app/basics/color/blend_color.rb
