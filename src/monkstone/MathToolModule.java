@@ -45,7 +45,7 @@ public class MathToolModule {
      */
     @JRubyMethod(name = "map1d", rest = true, module = true)
     public static IRubyObject mapOneD(ThreadContext context, IRubyObject recv, IRubyObject[] args) {
-        double value = (args[0] instanceof RubyFloat) 
+        double value = (args[0] instanceof RubyFloat)
                 ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
         RubyRange r1 = (RubyRange) args[1];
         RubyRange r2 = (RubyRange) args[2];
@@ -83,10 +83,10 @@ public class MathToolModule {
         double max = Math.max(first1, last1);
         double min = Math.min(first1, last1);
         if (value < min) {
-            value = min;
+            return mapMt(context, min, first1, last1, first2, last2);
         }
         if (value > max) {
-            value = max;
+            return mapMt(context, max, first1, last1, first2, last2);
         }
         return mapMt(context, value, first1, last1, first2, last2);
     }
@@ -167,10 +167,10 @@ public class MathToolModule {
         double max = Math.max(start, stop);
         double min = Math.min(start, stop);
         if (value < min) {
-            value = min;
+            return mapMt(context, min, start, stop, 0, 1.0);
         }
         if (value > max) {
-            value = max;
+            return mapMt(context, max, start, stop, 0, 1.0);
         }
         return mapMt(context, value, start, stop, 0, 1.0);
     }
