@@ -23,6 +23,9 @@ collections:
   k9methods:
     output: true
     permalink: /methods/:path
+  gems:
+    output: true
+    permalink: /gems/:path
 syntax-highlighting:
   enabled: true
 # Build settings

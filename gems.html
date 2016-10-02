@@ -1,0 +1,9 @@
+---
+layout: page
+title: Gems
+---
+{% for gem in site.gems %}
+	<div class="gem">
+		<h2><a href="{{ gem.url | prepend: site.github.url }}">{{ gem.title }}</a></h2>
+	</div>
+{% endfor %}
