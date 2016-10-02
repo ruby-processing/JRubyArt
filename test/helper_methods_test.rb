@@ -31,20 +31,20 @@ class HelperMethodsTest < Minitest::Test
 
   def test_dist
     ax, ay, bx, by = 0, 0, 1.0, 1.0
-    assert dist(ax, ay, bx, by) == Math.sqrt(2), '2D distance'
+    assert_in_epsilon(dist(ax, ay, bx, by), Math.sqrt(2), epsilon = 0.0001, msg = '2D distance')
     by = 0.0
-    assert dist(ax, ay, bx, by) == 1.0, 'when y dimension is zero'
+    assert_in_epsilon(dist(ax, ay, bx, by), 1.0, epsilon = 0.0001, msg = 'when y dimension is zero')
     ax, ay, bx, by = 0, 0, 0.0, 0.0
-    assert dist(ax, ay, bx, by) == 0.0, 'when x and y dimension are zero'
+    assert_in_epsilon(dist(ax, ay, bx, by), 0.0, epsilon = 0.0001, msg = 'when x and y dimension are zero')
     ax, ay, bx, by = 1, 1, -2.0, -3.0
-    assert dist(ax, ay, bx, by) == 5, 'classic triangle dimensions'
+    assert_in_epsilon(dist(ax, ay, bx, by), 5.0, epsilon = 0.0001, msg = 'classic triangle dimensions')
     ax, ay, bx, by, cx, cy = -1, -1, 100, 2.0, 3.0, 100
-    assert dist(ax, ay, bx, by, cx, cy) == 5, 'classic triangle dimensions'
+    assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), 5.0, epsilon = 0.0001, msg = 'classic triangle dimensions')
     ax, ay, bx, by, cx, cy = 0, 0, -1.0, -1.0, 0, 0
-    assert dist(ax, ay, bx, by, cx, cy) == Math.sqrt(2)
+    assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), Math.sqrt(2), epsilon = 0.0001, msg = '2D distance')
     ax, ay, bx, by, cx, cy = 0, 0, 0.0, 0.0, 0, 0
-    assert dist(ax, ay, bx, by, cx, cy) == 0.0
+    assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), 0.0)
     ax, ay, bx, by, cx, cy = 0, 0, 1.0, 0.0, 0, 0
-    assert dist(ax, ay, bx, by, cx, cy) == 1.0, 'when x and z dimension are zero'
+    assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), 1.0, epsilon = 0.0001, msg = 'when x and z dimension are zero')
   end
 end

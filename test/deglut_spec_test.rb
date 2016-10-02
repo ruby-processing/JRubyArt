@@ -23,7 +23,7 @@ class DeglutTest < Minitest::Test
       assert_in_delta(sine, deg_sin)
       cosine = DegLut.cos(deg)
       deg_cos = Math.cos(deg * to_radian)
-      assert_in_delta(cosine, deg_cos)
+      assert_in_delta(cosine, deg_cos, delta = 0.000001)
     end
   end
 end
