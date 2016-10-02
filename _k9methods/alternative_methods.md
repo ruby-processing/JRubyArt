@@ -50,9 +50,9 @@ Here is a list of ruby alternatives to some 'processing' convenience methods; wh
 
 For examples of using time in sketches see [learning JRubyArt blog][time], [timestamp][timestamp] and this [clock sketch][clock].
 
-For example of `kamera` usage see my [blog][blog]. To use `selectInput` see link to `File Chooser` in page header.
+For example of `kamera` usage see [kamera][kamera]. To use `selectInput` see link to `File Chooser` in page header.
 
-[time]:https://monkstone.github.io/_posts/time
-[timestamp]:https://monkstone.github.io/_posts/timestamp
+[time]:https://monkstone.github.io/time
+[timestamp]:https://monkstone.github.io/timestamp/
 [clock]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/fastmath/clock.rb
-[blog]:https://monkstone.github.io/_posts/kamera/
+[kamera]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/camera/kmove_eye.rb
