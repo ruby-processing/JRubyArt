@@ -61,5 +61,5 @@ Also prefer [`Vec2D`][vec2] and [`Vec3D`][vec3] to [`PVector`][pvector] follow l
 [pvector]:https://processing.org/reference/PVector.html
 [Math]:https://ruby-doc.org/core-2.2.2/Math.html
 [core]:https://ruby-doc.org/core-2.2.3/
-[sketches]:https://github.com/ruby-processing/samples4ruby-processing3
+[sketches]:https://github.com/ruby-processing/JRubyArt-examples/
 [settings]:https://processing.org/reference/settings_.html
