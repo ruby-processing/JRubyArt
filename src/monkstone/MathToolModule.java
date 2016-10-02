@@ -167,17 +167,10 @@ public class MathToolModule {
         double max = Math.max(start, stop);
         double min = Math.min(start, stop);
         if (value < min) {
-<<<<<<< HEAD
-            value = min;
-        }
-        if (value > max) {
-            value = max;
-=======
             return mapMt(context, min, start, stop, 0, 1.0);
         }
         if (value > max) {
             return mapMt(context, max, start, stop, 0, 1.0);
->>>>>>> b501fc57c07166463e8cab84e4ca69a325f6508e
         }
         return mapMt(context, value, start, stop, 0, 1.0);
     }
