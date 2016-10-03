@@ -1,0 +1,18 @@
+---
+layout: page
+title: Libraries
+---
+{% for library in site.libraries %}
+	<div class="library">
+		<h2><a href="{{ library.url | prepend: site.github.url }}">{{ library.title }}</a></h2>
+	</div>
+{% endfor %}
+
+<h3>Library Types</h3>
+<ol>
+<li>Builtin pure ruby eg boids</li>
+<li>Builtin wrapping java eg video_event</li>
+<li>Custom pure ruby</li>
+<li>Custom java (see also pbox2d gem)</li>
+<li>Regular processing libraries (see also gems for toxiclibs etc)</li>
+</ol>
