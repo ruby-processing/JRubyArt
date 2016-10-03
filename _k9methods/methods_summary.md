@@ -26,7 +26,7 @@ hsb_color(hue, sat, bright) # where args are ruby float
 {% endhighlight %}
 
 ### web_to_color_array method
-A convenience method that converts an array of web color strings to and array of 'color' int. Particularly useful when working with the Joshua Davis Processing-HYPE library.
+A convenience method that converts an array of web color strings to an array of 'color' int. Particularly useful when working with the Joshua Davis Processing-HYPE library.
 {% highlight ruby %}
 WEB = %w(#CC6600 #CC9900 #FFFFFF).freeze
 web_to_color_array(WEB)
