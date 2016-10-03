@@ -52,4 +52,4 @@ def draw
 ```
 ![JWishy]({{site.github.url}}/assets/jwishy.png)
 
-See also [penrose](https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec2d/penrose.rb) and [bezier playground](https://github.com/ruby-processing/JRubyArt-examples/blob/master/contributed/bezier_playground.rb) sketches.
+See also [penrose](https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec2d/penrose.rb) and [bezier playground](https://github.com/ruby-processing/JRubyArt-examples/blob/master/contributed/bezier_playground.rb) sketches. See ruby code [here](https://github.com/ruby-processing/JRubyArt/blob/master/library/control_panel/control_panel.rb).
