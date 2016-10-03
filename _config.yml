@@ -26,6 +26,9 @@ collections:
   gems:
     output: true
     permalink: /gems/:path
+  libraries:
+    output: true
+    permalink: /libraries/:path    
 syntax-highlighting:
   enabled: true
 # Build settings
