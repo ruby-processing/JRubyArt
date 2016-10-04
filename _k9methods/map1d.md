@@ -5,7 +5,7 @@ title:  "map1d in detail"
 
 ### Name ###
 
-`map1d` _NB: a new name was chosen because `map` is already part of ruby syntax_
+`map1d` _NB: a new name was chosen because `map` has another meaning in ruby_ and we anticipate a possible `map2d` or even `map3d`.
 
 ### Examples ###
 
@@ -16,14 +16,11 @@ m = map1d(value, (0..100), (0..width))
 ellipse(m, height / 2, 10, 10)
 {% endhighlight %}
 
-<img src="/assets/map1d.png" />
-
 {% highlight ruby %}
 value = 110
 m = map1d(value, (0..100), (-20..-10))
 puts(m)  # Prints '-9.0'
 {% endhighlight %}
-
 
 Regular sketch
 

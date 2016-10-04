@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Alternative ruby methods"
+title:  "alternative ruby methods"
 ---
 <style>
 table{

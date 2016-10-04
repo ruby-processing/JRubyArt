@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "The data_path wrapper"
+title:  "data_path"
 date:   2016-05-23 05:04:00
 categories: jruby_art update
 permalink: /data_path/
