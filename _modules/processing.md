@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "App"
-keywords: App, PApplet
+title:  "Processing"
+keywords: Processing, module
 ---
 The `App` class (`Processing::App`) is a subclass of `PApplet`, and one way or another your JRubyArt sketch inherits from `Processing::App`, it is just not obvious in a `nude` or `bare` JRubyArt sketch.  Unless you explicitly create your own Sketch class, the default is to create an instance of `Sketch < Processing::App` as below. What a bare sketch would look like when wrapped prior to eval.
 
