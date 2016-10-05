@@ -28,9 +28,17 @@ collections:
     permalink: /gems/:path
   libraries:
     output: true
-    permalink: /libraries/:path    
+    permalink: /libraries/:path
+  modules:
+    output: true
+    permalink: /modules/:path
+  magic:
+    output: true
+    permalink: /magic/:path
+    
 syntax-highlighting:
   enabled: true
+
 # Build settings
 markdown: kramdown
 gems:

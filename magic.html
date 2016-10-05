@@ -1,0 +1,10 @@
+---
+layout: page
+title: Magic
+---
+
+{% for spell in site.magic %}
+	<div class="spell">
+		<h2><a href="{{ spell.url | prepend: site.github.url }}">{{ spell.title }}</a></h2>
+	</div>
+{% endfor %}

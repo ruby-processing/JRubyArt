@@ -1,0 +1,9 @@
+---
+layout: page
+title: Modules
+---
+{% for module in site.modules %}
+	<div class="module">
+		<h2><a href="{{ module.url | prepend: site.github.url }}">{{ module.title }}</a></h2>
+	</div>
+{% endfor %}
