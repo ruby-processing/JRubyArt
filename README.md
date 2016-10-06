@@ -5,10 +5,10 @@
 Versions before JRubyArt-1.2.0, are unsupported, please update, preferably to latest version...
 
 ## Requirements
-A clean start for `jruby_art` that works best with the latest version of [processing-3.2.1](https://github.com/processing/processing/releases) and [jruby-9.1.4.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
+A clean start for `jruby_art` that works best with the latest version of [processing-3.2.1](https://github.com/processing/processing/releases) and [jruby-9.1.5.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
  
-A suitable version of ruby (MRI ruby > 2.2 or `jruby-9.1.4.0+`) to download gem. 
+A suitable version of ruby (MRI ruby > 2.2 or `jruby-9.1.5.0+`) to download gem. 
 
 `processing-3.2.1`
 
