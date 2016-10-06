@@ -1,9 +1,7 @@
 ---
 layout: post
-title:  "JRubyArt with atom"
-date:   2016-08-20 08:07:00
-categories: jruby_art update
-permalink: /atom/
+title:  "Atom"
+permalink: /atom
 keywords: ide, ruby, jruby_art, atom
 ---
 ### Install Atom ###
@@ -25,7 +23,7 @@ Tough luck if you want the 32 bit version on debian linux
 
 From the atom editor install the `atom-k9` package by [Martin Prout (monkstone)][atom-k9]
 
-While you are at install the `language-jruby-art` package [also by Martin Prout][language] for code snippets (including a `bare` JRubYArt sketch)
+While you are at install the `language-jruby-art` package [also by Martin Prout][language] for code snippets (including a `bare` JRubyArt sketch)
 
 ### Running Sketches ###
 

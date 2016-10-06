@@ -2,6 +2,7 @@
 layout: post
 title:  "Emacs"
 keywords: editor, ide, ruby, jruby_art, emacs
+permalink: /emacs/
 ---
 
 By contributor Jeremy Laviole (aka [poqudrof](https://github.com/poqudrof))
