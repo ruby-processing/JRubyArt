@@ -14,10 +14,10 @@ Simply loading in the code for a library via `load_library` may not be enough to
 load_library 'minim'
 java_import 'ddf.minim'
 java_import 'ddf.minim.analysis'
-include_package 'ddf' # may also be use to "import the ddf package"
+include_package 'ddf' # can also be use to "import the ddf package"
 ```
 
- Some libraries use Java's reflective capacities to try and invoke methods on your sketch. If the methods that they're looking for happen to be defined in Ruby alone, Java won't be able to find them. Better support for this sort of thing may be forthcoming in a future JRuby releases, but for now you'll either need to patch the library to stop using [reflection][reflection] on the sketch, or insert a thin Java interface. For example, the [Carnivore][carnivore] library uses reflection to try and find a `packetEvent()` method on the sketch. An appropriate fix is to create, compile and jar-up a java interface, and then include it into your sketch. See also how we implement a native [FileChooser][magic] (_reflection can be a pain, and those processing guys seem to be dead keen on it_).
+ Some libraries use Java's reflective capacities to try and invoke methods on your sketch. If the methods that they're looking for happen to be defined in Ruby alone, Java won't be able to find them. Better support for this sort of thing may be forthcoming in a future JRuby releases, but for now you'll either need to patch the library to stop using [reflection][reflection] on the sketch, or insert a thin Java interface. For example, the [Carnivore][carnivore] library uses reflection and tries to find a `packetEvent()` method on the sketch. An appropriate fix is to create, compile and jar-up a java interface, and then include it into your sketch. See also how we implement a native [FileChooser][magic] (_reflection can be a pain, and unfortunately those processing guys seem to be dead keen on it_).
 
 ```java
 public interface PacketListener {
