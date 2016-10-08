@@ -12,6 +12,13 @@ end
 
 For sketch with mouse_pressed method see [drawolver][drawolver], follow link for a sketch using [mouse_pressed?][mouse_pressed?].
 
+See also:-
+
+[mouse_released][mouse_released], [mouse_dragged][mouse_dragged], [mouse_clicked][mouse_clicked]
+
 [mouse_pressed?]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/input/mouse_press.rb
 [mousePressed]:https://processing.org/reference/mousePressed_.html
 [drawolver]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/contributed/drawolver.rb
+[mouse_released]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/contributed/bezier_playground.rb
+[mouse_dragged]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/contributed/bezier_playground.rb
+[mouse_clicked]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/contributed/fibonacci_sphere.rb
