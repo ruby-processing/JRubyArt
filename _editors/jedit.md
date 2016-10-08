@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "JEdit"
+permalink: /editors/jedit/
 keywords: editor, ide, ruby, jruby_art, jedit
 ---
 
@@ -99,6 +100,6 @@ This file lives in `~/.jedit/console/commando/` you should tune this to match yo
 The macro menu is accessible with `Alt c`.  However you should create a direct shortcut to the macro say `Alt k` see how in `Utilities/Global Options` menu.
 
 [jedit]:http://www.jedit.org/index.php
-[commando]:https://github.com/monkstone/jedit4processing/blob/master/.jedit/console/commando/k9.xml 
+[commando]:https://github.com/monkstone/jedit4processing/blob/master/.jedit/console/commando/k9.xml
 [console]:http://plugins.jedit.org/plugins/?Console
 [xml]:http://plugins.jedit.org/plugindoc/XML/

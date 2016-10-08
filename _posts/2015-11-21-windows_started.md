@@ -125,7 +125,7 @@ vim fred_sketch.rb # other editors are available
 :!k9 -r % # from vim runs the sketch
 {% endhighlight %}
 
-As a windows user you may find [jEdit][jedit] or atom to be a more suitable editor.
+As a windows user you may find [atom][atom] or [jEdit][jedit] to be a more suitable editor.
 
 {% highlight ruby %}
 def setup
@@ -155,7 +155,8 @@ Read more about using the [processing api here][api]
 [official]:https://processing.org/download/?processing
 [platforms]:https://github.com/processing/processing/wiki/Supported-Platforms
 [jruby]:https://github.com/jruby/jruby/wiki/GettingStarted
-[jedit]:{{site.github.url}}/editors/
+[atom]:{{site.github.url}}/editors/atom
+[jedit]:{{site.github.url}}/editors/jedit
 [cygwin]:https://www.cygwin.com/
 [rubyinstaller]:https://rubyinstaller.org/downloads/
 [rvm]:https://blog.developwithpassion.com/2012/03/30/installing-rvm-with-cygwin-on-windows/

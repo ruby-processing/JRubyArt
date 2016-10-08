@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Vim"
-permalink: /vim
+permalink: /editors/vim/
 keywords: editor, ide, ruby, jruby_art, vim, emacs, jedit
 ---
 

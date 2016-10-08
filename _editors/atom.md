@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Atom"
-permalink: /atom
+permalink: /editors/atom/
 keywords: ide, ruby, jruby_art, atom
 ---
 ### Install Atom ###
