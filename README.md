@@ -4,6 +4,8 @@
 ![Travis CI](https://travis-ci.org/ruby-processing/JRubyArt.svg)
 Versions before JRubyArt-1.2.0, are unsupported, please update, preferably to latest version...
 
+Note the reason the current build is failing is that the current version of processing is not available from maven central, it has only ever been available by third parties (I am eternally hopeful that one day processing.org will see the light)
+
 ## Requirements
 A clean start for `jruby_art` that works best with the latest version of [processing-3.2.1](https://github.com/processing/processing/releases) and [jruby-9.1.5.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
