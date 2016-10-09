@@ -4,7 +4,8 @@ title:  "JRuby"
 keywords: ruby, java, jruby
 ---
 ### java interfaces ###
-JRuby classes can mix in Java interfaces as modules in order to implement them.
+JRuby classes can mixin Java interfaces as modules in order to implement them.
+
 ```ruby
 class SomeFlexibleClass
   include java.lang.Runnable
@@ -22,7 +23,7 @@ Read more about [java interface][wip] etc. Otherwise see [wiki][wiki]
 
 ### java reflection ###
 
-In vanilla processing, you can [create libraries][library] in java that can access the sketch `pre`, `draw`, `post`, `mouseEvent` and `keyEvent` methods by java reflection, but you must `register` these methods with the `PApplet`. We can also register custom methods (but sadly only those without parameters which is why we found another way of dealing with `selectInput` see [chooser][chooser], `movieEvent` see [video_event][video_event]).
+In vanilla processing, you can [create libraries][library] in java that can access the sketch `pre`, `draw`, `post`, `mouseEvent` and `keyEvent` methods by java reflection, but you must `register` these methods with the `PApplet`. We can also register custom methods (but sadly only those without parameters, which is why we found another way of dealing with `selectInput` see [chooser][chooser], `movieEvent` see [video_event][video_event]).
 
 Here we show you how to `registerMethods` in a ruby class by java reflection in JRuby (requires the `!become_java` method).
 
@@ -51,7 +52,7 @@ end
 Here is the class that does the reflection (it needs to become java so that self gets recognized as a java object)
 
 ```ruby
-require 'jruby/core_ext' # required to allow become_java!
+require 'jruby/core_ext' # required to add become_java! method
 
 # This class demonstrates how to use 'reflection' methods in ruby-processing
 # NB: the class must become a java object to get registered. This is an
