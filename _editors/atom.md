@@ -25,6 +25,8 @@ From the atom editor install the `atom-k9` package by [Martin Prout (monkstone)]
 
 While you are at install the `language-jruby-art` package [also by Martin Prout][language] for code snippets (includes a `bare` JRubyArt sketch)
 
+Also install `set-syntax` package by Lee Dohm to allow easy setting of buffer syntax
+
 ### Watching Sketches (a pseudo REPL)###
 
 _Important_
@@ -36,19 +38,26 @@ mkdir watch # create a new folder
 cd watch # navigate to folder
 touch my_sketch.rb # create an empty file
 atom my_sketch.rb # fire up atom from command line (to pick up local environment)
+
 ```
 
-Make sure you are in `JRuby Art` edit mode (_click on bottom right hand corner to choose_), the use `bare` snippet to create sketch
+Make sure you are in `JRuby Art` edit mode (_click on bottom right hand corner to choose_).
 
-![enter 'bare'](https://cloud.githubusercontent.com/assets/86850/18698393/e2f48376-7fc1-11e6-80a5-fa8e954bad03.gif)
+Or if you've installed `set-syntax` load command palette with `ctrl-shift-p` and enter `ssjru` to choose.
 
-To avoid need to start from a terminal create a symbolic link to a regular system path to `k9` (eg /usr/local/bin/k9) this easily done/managed on debian linux.
+The use `bare` snippet to create sketch
 
- For a pseudo `REPL` select watch from menu or `ctrl+shift+alt+w`. Then the sketch will reload on `save` after edit.
+![enter 'bare']({{ site.github.url }}/assets/animation.gif)
+
+Use `ctrl-s` to save.
+
+For a pseudo `REPL` select watch from menu or `ctrl+shift+alt+w`. Then the sketch will reload on `ctrl-s` after edit.
+
+If you want to avoid need to start from a terminal, create a symbolic link to a regular system path to `k9` (eg /usr/local/bin/k9), this easily done/managed on debian linux  (_with `update-alternatives`_)
 
 ### To run a sketch ###
 
-To run a sketch, navigate to the sketch (file) and use either menu, or `ctrl+alt+b`.
+To simply run a sketch, navigate to the sketch (file) and use either JRubyArt menu, or `ctrl+alt+b`.
 
 ### What's it look like ###
 
