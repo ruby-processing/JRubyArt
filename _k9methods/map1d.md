@@ -5,7 +5,7 @@ title:  "map1d in detail"
 
 ### Name ###
 
-`map1d` _NB: a new name was chosen because `map` has another meaning in ruby_ and we anticipate a possible `map2d` or even `map3d`.
+`map1d` _NB: a different was used than vanilla processing because `map` has another meaning in ruby and we anticipate a possible `map2d` or even `map3d`_.
 
 ### Examples ###
 

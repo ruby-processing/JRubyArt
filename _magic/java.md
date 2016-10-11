@@ -4,6 +4,7 @@ title:  "Java"
 keywords: ruby, java, jruby
 ---
 Here will go stuff about java [inner][inner] classes and [reflection][reflection]. See how the pre-processing of the [pde][pde] sketches to valid java creates [java inner classes][pde]. This is all magic stuff that gets hidden from the average user.
+
 ### Inner Classes ###
 
 _Stolen from http://www.programmerinterview.com/_
