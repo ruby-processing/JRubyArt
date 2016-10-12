@@ -85,9 +85,15 @@ end
 
 __Note__ how the transparent ellipse is placed on top of the solid ellipse, so the reflection element must get drawn after the original sketch element.
 
+## Java Extensions for JRuby ###
+
+JRuby is a 100% Java implementation of the Ruby programming language. It is Ruby for the JVM. So it is quite possible to write your own ruby code in java, you might do this to better integrate jruby with java or to write your own ruby classes (modules etc) in java see [Method Signatures and Annotations in JRuby extensions][signatures] and [jruby-examples][jruby-examples].
+
 [library]:https://github.com/processing/processing/wiki/Library-Basics
 [wip]:http://kares.org/jruby-ji-doc/
 [wiki]:https://github.com/jruby/jruby/wiki/CallingJavaFromJRuby
 [hype]:{{ site.github.url }}/libraries/hype
+[signatures]:https://github.com/jruby/jruby/wiki/Method-Signatures-and-Annotations-in-JRuby-extensions
+[jruby-examples]:https://github.com/jruby/jruby-examples/tree/master/extensions/basic
 [chooser]:{{ site.github.url }}/libraries/chooser
 [video_event]:{{ site.github.url }}/libraries/video_event
