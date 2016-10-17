@@ -4,11 +4,13 @@
 ![Travis CI](https://travis-ci.org/ruby-processing/JRubyArt.svg)
 Versions before JRubyArt-1.2.0, are unsupported, please update, preferably to latest version...
 
+_Note the only reason the current build is failing on travis is that the current version of [processing is not available from maven central][testing], it has only ever been available by third parties (I am eternally hopeful that one day processing.org will see the light)._
+
 ## Requirements
-A clean start for `jruby_art` that works best with the latest version of [processing-3.2.1](https://github.com/processing/processing/releases) and [jruby-9.1.4.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
+A clean start for `jruby_art` that works best with the latest version of [processing-3.2.1](https://github.com/processing/processing/releases) and [jruby-9.1.5.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
  
-A suitable version of ruby (MRI ruby > 2.2 or `jruby-9.1.4.0+`) to download gem. 
+A suitable version of ruby (MRI ruby > 2.2 or `jruby-9.1.5.0+`) to download gem. 
 
 `processing-3.2.1`
 
@@ -21,7 +23,7 @@ processing `video` and `sound-1.3.2+` libraries _best installed from the process
 
 ## Configuration
 
-You can if you wish leave configuration to the `new` autoconfig tool (delete existing config to do this). The config file is `config.yml` in the `~/.jruby_art folder`, the autoconfig gets run on `k9 --install` expected to just work on `macosx`, output may need tuning on `windows` / `linux` check with `k9 --check` (run both after gem install for both)
+You can if you wish leave configuration to the `new` autoconfig tool (delete existing config to do this). The config file is `config.yml` in the `~/.jruby_art folder`, the autoconfig gets run on `k9 --install` expected to just work on `macOS`, output may need tuning on `windows` / `linux` check with `k9 --check` (run both after gem install for both)
 
 ```yaml
 # YAML configuration file for jruby_art
@@ -93,3 +95,4 @@ I wrote this little script to convert sketches from ruby-processing (processing-
 See The-Nature-of-Code-Examples-in-Ruby converted to [The-Nature-of-Code-Examples-for-JRubyArt](https://github.com/ruby-processing/The-Nature-of-Code-for-JRubyArt) using the script.
 
 [rubuto-processing3]:https://github.com/hoshi-sano/ruboto-processing3
+[testing]:http://ruby-processing.github.io/testing/testing/
