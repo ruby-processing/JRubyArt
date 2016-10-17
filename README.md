@@ -23,7 +23,7 @@ processing `video` and `sound-1.3.2+` libraries _best installed from the process
 
 ## Configuration
 
-You can if you wish leave configuration to the `new` autoconfig tool (delete existing config to do this). The config file is `config.yml` in the `~/.jruby_art folder`, the autoconfig gets run on `k9 --install` expected to just work on `macosx`, output may need tuning on `windows` / `linux` check with `k9 --check` (run both after gem install for both)
+You can if you wish leave configuration to the `new` autoconfig tool (delete existing config to do this). The config file is `config.yml` in the `~/.jruby_art folder`, the autoconfig gets run on `k9 --install` expected to just work on `macOS`, output may need tuning on `windows` / `linux` check with `k9 --check` (run both after gem install for both)
 
 ```yaml
 # YAML configuration file for jruby_art
