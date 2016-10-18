@@ -11,12 +11,9 @@ Gem::Specification.new do |spec|
   spec.email = 'mamba2928@yahoo.co.uk'
   spec.description = <<-EOS
   JRubyArt is a ruby wrapper for the processing art framework.
-  Use both processing libraries and ruby gems in your sketches. Features 
-  create/run/watch/live modes. The "--watch" mode, provides a nice REPL-ish 
-  way to work on your processing sketches. Includes:-
-  A "Control Panel" library, so that you can easily create sliders, buttons,
-  checkboxes and drop-down menus, and hook them into your sketch's instance
-  variables and hundreds of worked examples to get you started...
+  Use both processing libraries and ruby gems in your sketches. Features
+  create/run/watch/live modes. The "--watch" mode, provides a nice REPL-ish
+  way to work on your processing sketches. NB: See homepage for documentation.
   EOS
   spec.summary = %q{Code as Art, Art as Code. Processing and Ruby are meant for each other.}
   spec.homepage = "https://ruby-processing.github.io/JRubyArt/"

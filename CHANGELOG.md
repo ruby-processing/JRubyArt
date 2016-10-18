@@ -1,4 +1,6 @@
 
+**v1.2.5** Change gemspec description, trying to get people not to ignore changes to documentation?
+
 **v1.2.4** Update to jruby-9.1.5.0-complete.
 
 **v1.2.3** Further refactored sketchwriter.rb. Update to jruby-9.1.4.0-complete.
