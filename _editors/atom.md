@@ -15,7 +15,7 @@ sudo dpkg --install atom-amd64.deb # debian, mint, ubuntu
 sudo pacman -S atom # Archlinux currently installs 1.10.2
 ```
 
-Mac/Windows users could just download direct (or homebrew on Mac)
+MacOS/Windows users could just download direct (or homebrew on MacOS)
 
 Tough luck if you want the 32 bit version on debian linux
 
