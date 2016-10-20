@@ -1,0 +1,12 @@
+---
+layout: page
+title: Blocks
+---
+
+{% for block in site.blocks %}
+	<div class="block">
+		<h2><a href="{{ block.url | prepend: site.github.url }}">{{ block.title }}</a></h2>
+	</div>
+{% endfor %}
+
+<p>If you are new to ruby, you can read more about <a href="http://www.virtuouscode.com/2015/01/16/why-does-ruby-have-blocks/">blocks here</a></p>

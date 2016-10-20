@@ -14,6 +14,9 @@ twitter_username: monkstoneT
 github_username:  monkstone
 include: [collections]
 collections:
+  blocks:
+    output: true
+    permalink: /blocks/:path
   classes:
     output: true
     permalink: /classes/:path
@@ -35,7 +38,7 @@ collections:
   magic:
     output: true
     permalink: /magic/:path
-    
+
 syntax-highlighting:
   enabled: true
 
