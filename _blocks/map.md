@@ -25,16 +25,23 @@ __Example__: creating an array `Vec3D` from an array of numbers using map and a 
 @arr = [0, 0.5, 1.5, 3.5, 7.5, 15].map { |x| Vec3D.new(x * -1, x, x * -1) }
 ```
 
+NB: if no block is given an enumerator is returned instead (see map documentation)
+
 #### Subtleties ####
 
-In ruby there are often shortcuts here is one example in longform:-
+Say there is an array this class Foo (_it is usually Foo unless it is Bar or FooBar_)
+
 ```ruby
 class Foo
   def method_name
     puts "method called for #{object_id}"
   end
 end
+```
 
+Now we want iterate of the array calling the `method_name` on each element, we could use `map` and a block as below:-
+
+```ruby
 [Foo.new, Foo.new].map do |element|
   element.method_name
 end
@@ -43,11 +50,11 @@ end
 # => method called for 70339841711280
 ```
 
-But here the shortform version would be preferred:-
+However ruby there are often shortcuts, here is one example where the shortform version would be preferred (since it is a common ruby idiom):-
 
 ```ruby
 [Foo.new, Foo.new].map(&:method_name)
 ```
-Which means call the method `method_name` on each item of the list.
+The `&` takes the operand `:method_name` and turns it into a `Proc` (unless it is already a `Proc`) and passes it as if a block had been called. The result is that two forms produce the same result.
 
 [map1d]:{{site.github.url}}/methods/map1d/
