@@ -38,6 +38,9 @@ collections:
   magic:
     output: true
     permalink: /magic/:path
+  objects:
+    output: true
+    permalink: /objects/:path
 
 syntax-highlighting:
   enabled: true
