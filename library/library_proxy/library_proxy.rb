@@ -1,5 +1,3 @@
-# require 'rpextras'
-#@todo fix how we call Library Proxy
 java_import Java::MonkstoneCore::LibraryProxy
 
 
