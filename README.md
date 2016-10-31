@@ -7,7 +7,7 @@ Versions before JRubyArt-1.2.0, are unsupported, please update, preferably to la
 _Note the main reason for the current build to fail on travis is when the current version of [processing is not available from maven central][testing], it has only ever been available by third parties (I am eternally hopeful that one day processing.org will see the light)._
 
 ## Requirements
-A clean start for `jruby_art` that works best with the latest version of [processing-3.2.1](https://github.com/processing/processing/releases) and [jruby-9.1.5.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
+A clean start for `jruby_art` that works best with the latest version of [processing-3.2.2](https://github.com/processing/processing/releases) and [jruby-9.1.5.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing- 2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
  
 A suitable version of ruby (MRI ruby > 2.2 or `jruby-9.1.5.0+`) to download gem. 
@@ -18,7 +18,7 @@ A suitable version of ruby (MRI ruby > 2.2 or `jruby-9.1.5.0+`) to download gem.
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
-processing `video` and `sound-1.3.2+` libraries _best installed from the processing-3.2.1 ide_
+processing `video` and `sound-1.3.2+` libraries _best installed from the processing-3.2.2 ide_
 
 
 ## Configuration
@@ -28,7 +28,7 @@ You can if you wish leave configuration to the `new` autoconfig tool (delete exi
 ```yaml
 # YAML configuration file for jruby_art
 # K9_HOME: "/home/ruby2.3.0 ... /jruby_art" # windows users may need to set this
-PROCESSING_ROOT: "/home/tux/processing-3.2.1" # typical linux shown
+PROCESSING_ROOT: "/home/tux/processing-3.2.2" # typical linux shown
 # important sketch_book path may be different for processing-3.0
 sketchbook_path: "/home/tux/sketchbook" 
 template: emacs
@@ -38,9 +38,9 @@ template: emacs
 
 ```bash
  gem install jruby_art
- k9 --install # installs jruby-complete-9.1.4.0 and downloads and installs samples to ~/k9_samples
+ k9 --install # installs jruby-complete-9.1.5.0 and downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --run jwishy.rb # if you have jruby-9.1.4.0 installed or config `JRUBY: false`
+ k9 --run jwishy.rb # if you have jruby-9.1.5.0 installed or config `JRUBY: false`
  # to use jruby-complete set `JRUBY: false` in config
 ```
 ## Create sketches from built in templates
@@ -67,7 +67,7 @@ end
 # size, full_screen, pixel_density and smooth should all be moved to settings (this is hidden 
 # to users of processing ide, but not for JRubyArt, or for Eclipse NetBeans users). The FX2D 
 # rendering mode was introduced, and was expected to replace JAVA2D (as default rendering mode) 
-# but may not now happen, and not for processing-3.2.1 in any case.
+# but may not now happen, and not for processing-3.2.2 in any case.
 def settings
   size 400, 300
 end
