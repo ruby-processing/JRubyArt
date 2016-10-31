@@ -12,7 +12,7 @@ A clean start for `jruby_art` that works best with the latest version of [proces
  
 A suitable version of ruby (MRI ruby > 2.2 or `jruby-9.1.5.0+`) to download gem. 
 
-`processing-3.2.1`
+`processing-3.2.2`
 
 `jdk1.8.0_102+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
 
