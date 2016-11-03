@@ -6,6 +6,8 @@ keywords: library, java, framework, hype, processing
 ---
 <sup>5</sup><i>A vanilla processing library</i> that you may need to compile and install yourself.  You could even use a [polyglot maven][polyglot] build to build the jar, use a local processing core.jar to stay up to date.
 
+__pom.rb__
+
 {% highlight ruby %}
 project 'hype' do
 
