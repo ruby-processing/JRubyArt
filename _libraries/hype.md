@@ -4,7 +4,25 @@ title:  "Hype Library Examples<sup>5</sup>"
 keywords: library, java, framework, hype, processing
 
 ---
-<sup>5</sup><i>A vanilla processing library you can install from the processing ide</i>
+<sup>5</sup><i>A vanilla processing library</i> that you may need to compile and install yourself.  You could even use a [polyglot maven][polyglot] build to build the jar, use a local processing core.jar to stay up to date.
+
+{% highlight ruby %}
+project 'hype' do
+
+  model_version '4.0.0'
+  id 'hype:hype:2.0.2'
+  packaging 'jar'
+
+  properties( 'maven.compiler.source' => '1.8',
+              'project.build.sourceEncoding' => 'UTF-8',
+              'maven.compiler.target' => '1.8',
+              'polyglot.dump.pom' => 'pom.xml' )
+
+  jar 'processing.org:core:3.2.1'
+
+end
+{% endhighlight %}
+
 
 Here is an index of my blogposts about using the [Hype processing framework][] by Joshua Davis in JRubyArt. The code [examples][] are included with the JRubyArt examples.
 
@@ -48,3 +66,4 @@ Here is an index of my blogposts about using the [Hype processing framework][] b
 [examples]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/external_library/java/hype
 [Hype processing framework]:https://www.hypeframework.org/
 [color]: {{ site.url }}/alternatives/
+[polyglot]:https://github.com/takari/polyglot-maven/
