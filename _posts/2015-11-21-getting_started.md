@@ -77,7 +77,7 @@ Alternative method (that puts you in control), download and install latest Oracl
 
 Use `update-alternatives` to install and maintain configuration eg for java:-
 {% highlight bash %}
-sudo update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_92/bin/java 100
+sudo update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_111/bin/java 100
 sudo update-alternatives --config java # to configure if required
 {% endhighlight %}
 
@@ -91,7 +91,7 @@ sudo update-alternatives --config jruby # to configure if required
 
 Configure in `~/.jruby_art/config.yml`:-
 {% highlight bash %}
-PROCESSING_ROOT: "/home/tux/processing-3.2.1" # `substitute` user for `tux`
+PROCESSING_ROOT: "/home/tux/processing-3.2.2" # `substitute` user for `tux`
 sketchbook_path: "/home/tux/sketchbook"
 MAX_WATCH: 30
 JRUBY: true
@@ -100,7 +100,7 @@ template: bare
 
 Otherwise you can check to see what platforms are officially supported [here][platforms].
 
-Download Processing-3.2.1 from the [official website][official] and install, prefer to install in say `~/processing-3.2.1`, that way you can keep processing-2.2.1 (or earlier version of processing), which you may find useful.  When you're done, make sure to take note of the directory you installed the app to complete the configuration.
+Download Processing-3.2.1 from the [official website][official] and install, prefer to install in say `~/processing-3.2.2`, that way you can keep processing-2.2.1 (or earlier version of processing), which you may find useful.  When you're done, make sure to take note of the directory you installed the app to complete the configuration.
 
 Complete the install as for Archlinux (make sure `k9` is on your path or use `jruby -S k9`)
 
@@ -112,11 +112,11 @@ Install MRI ruby (must be at least ruby-2.2)
 
 https://www.ruby-lang.org/en/documentation/installation/ (NB: most distros are hopelessly out of data)
 
-Download Processing-3.2.1 from the [official website][official] and install, prefer to install in say `~/processing-3.2.1`.  When you're done, make sure to take note of the directory you installed the app to complete the configuration see below.
+Download Processing-3.2.2 from the [official website][official] and install, prefer to install in say `~/processing-3.2.2`.  When you're done, make sure to take note of the directory you installed the app to complete the configuration see below.
 
 Configure in `~/.jruby_art/config.yml`:-
 {% highlight bash %}
-PROCESSING_ROOT: "/home/tux/processing-3.2.1" # `substitute` user for `tux`
+PROCESSING_ROOT: "/home/tux/processing-3.2.2" # `substitute` user for `tux`
 sketchbook_path: "/home/tux/sketchbook"
 MAX_WATCH: 30
 JRUBY: false

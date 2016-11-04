@@ -35,14 +35,14 @@ Why was ruby-processing not updated to use processing3.0+? The [major changes][c
 
 ### Setup
 
-Setting JRubyArt for the first time, can seem a bit involved (especially if you are addicted to rvm or rbenv). The JRubyArt gem relies on JRuby-9.1.5.0, Processing-3.2.1, and a handful of other dependencies. Here's how to get them all installed and working on Windows.
+Setting JRubyArt for the first time, can seem a bit involved (especially if you are addicted to rvm or rbenv). The JRubyArt gem relies on JRuby-9.1.5.0, Processing-3.2.2, and a handful of other dependencies. Here's how to get them all installed and working on Windows.
 
-Install wget, Oracle java (1.8.0.92+), and some version of ruby-2.2+ preferably jruby-9.1.5.0.
+Install wget, Oracle java (1.8.0.111+), and some version of ruby-2.2+ preferably jruby-9.1.5.0.
 
 ### Processing
 
 You can check to see what platforms are supported [here][platforms].
-Download Processing-3.2.1 from the [official website][official] and install, prefer to install in say `C:/Java/Processing` ie folders without special characters or spaces.  When you're done, make sure to take note of the directory you installed the app to complete the configuration.
+Download Processing-3.2.2 from the [official website][official] and install, prefer to install in say `C:/Java/Processing` ie folders without special characters or spaces.  When you're done, make sure to take note of the directory you installed the app to complete the configuration.
 
 __Finishing up__
 
@@ -70,7 +70,7 @@ Config file is `config.yml` in the `~/.jruby_art folder` so it can co-exist with
 
 {% highlight yaml %}
 # Example YAML configuration file for jruby_art on Windows
-# K9_ROOT: "C:/Ruby22-x64/lib/ruby/gems/2.3.0/gems/jruby_art-1.2.2" # should not be necessary
+# K9_ROOT: "C:/Ruby22-x64/lib/ruby/gems/2.3.0/gems/jruby_art-1.2.5" # should not be necessary
 PROCESSING_ROOT: "C:/Java/Processing" # just a suggestion
 sketchbook: "C:/Users/USER/Documents/Processing" # adjust to suit your install
 # JRUBY: false # uncomment to use jruby-complete by default especially if you haven't installed jruby
@@ -112,7 +112,7 @@ rake # autoruns files in contributed folder
 k9 --run jwishy.rb # run the JWishy sketch, using an installed jruby
 cd ~/k9_samples/processing_app/topics/shaders
 rake # autoruns shader sketches
-k9 --run monjori.rb # run the Monjori sketch since jruby_art-1.2.1
+k9 --run monjori.rb # run the Monjori sketch
 {% endhighlight %}
 
 ### Creating your own sketch
