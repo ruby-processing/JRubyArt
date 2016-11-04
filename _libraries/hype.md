@@ -4,7 +4,7 @@ title:  "Hype Library Examples<sup>5</sup>"
 keywords: library, java, framework, hype, processing
 
 ---
-<sup>5</sup><i>A vanilla processing library</i> that you may need to compile and install yourself.  You could even use a [polyglot maven][polyglot] build to build the jar, use a local processing core.jar to stay up to date.
+<sup>5</sup><i>A vanilla processing library</i> that you may need to compile and install yourself.  You could even use a [polyglot maven][polyglot] (see pom.rb) to build the jar, use a local processing core.jar if you want the latest version. I've put SNAPSHOT in version because library claims to under heavy development (commit history would say otherwise).
 
 __pom.rb__
 
@@ -12,17 +12,31 @@ __pom.rb__
 project 'hype' do
 
   model_version '4.0.0'
-  id 'hype:hype:2.0.2'
+  id 'hypeframework:hype:2.0.2-SNAPSHOT'
   packaging 'jar'
 
+  description 'A collection of classes that performs the heavy lifting for you by writing a minimal amount of code.'
+
+  organization 'hypeframework', 'http://www.hypeframework.org/'
+
+  [ 'Joshua Davis', 'James Cruz', 'Benjamin Fox', 'Christopher Tino'].each do |name|
+    developer name do
+      name name
+      roles 'developer'
+    end
+  end
+
+  license 'BSD 3', 'https://opensource.org/licenses/BSD-3-Clause'
+
   properties( 'maven.compiler.source' => '1.8',
-              'project.build.sourceEncoding' => 'UTF-8',
-              'maven.compiler.target' => '1.8',
-              'polyglot.dump.pom' => 'pom.xml' )
+  'project.build.sourceEncoding' => 'UTF-8',
+  'maven.compiler.target' => '1.8',
+  'polyglot.dump.pom' => 'pom.xml' )
 
   jar 'processing.org:core:3.2.1'
 
 end
+
 {% endhighlight %}
 
 
