@@ -4,41 +4,7 @@ title:  "Hype Library Examples<sup>5</sup>"
 keywords: library, java, framework, hype, processing
 
 ---
-<sup>5</sup><i>A vanilla processing library</i> that you may need to compile and install yourself.  You could even use a [polyglot maven][polyglot] (see pom.rb) to build the jar, use a local processing core.jar if you want the latest version. I've put SNAPSHOT in version because library claims to be under heavy development (the commit history would argue otherwise).
-
-__pom.rb__
-
-{% highlight ruby %}
-project 'hype' do
-
-  model_version '4.0.0'
-  id 'hypeframework:hype:2.0.2-SNAPSHOT'
-  packaging 'jar'
-
-  description 'A collection of classes that performs the heavy lifting for you by writing a minimal amount of code.'
-
-  organization 'hypeframework', 'http://www.hypeframework.org/'
-
-  [ 'Joshua Davis', 'James Cruz', 'Benjamin Fox', 'Christopher Tino'].each do |name|
-    developer name do
-      name name
-      roles 'developer'
-    end
-  end
-
-  license 'BSD 3', 'https://opensource.org/licenses/BSD-3-Clause'
-
-  properties( 'maven.compiler.source' => '1.8',
-  'project.build.sourceEncoding' => 'UTF-8',
-  'maven.compiler.target' => '1.8',
-  'polyglot.dump.pom' => 'pom.xml' )
-
-  jar 'org.processing:core:3.2.1'
-
-end
-
-{% endhighlight %}
-
+<sup>5</sup><i>A vanilla processing library</i> that you may need to [compile and install][build] yourself.  You could even use a [polyglot maven][polyglot] (see pom.rb) to build the jar, use a local processing core.jar if you want the latest version. I've put SNAPSHOT in version because library claims to be under heavy development (the commit history would argue otherwise).
 
 Here is an index of my blogposts about using the [Hype processing framework][] by Joshua Davis in JRubyArt. The code [examples][] are included with the JRubyArt examples.
 
@@ -83,3 +49,4 @@ Here is an index of my blogposts about using the [Hype processing framework][] b
 [Hype processing framework]:https://www.hypeframework.org/
 [color]: {{ site.url }}/alternatives/
 [polyglot]:https://github.com/takari/polyglot-maven/
+[build]:http://ruby-processing.github.io/JRubyArt/libraries/hype
