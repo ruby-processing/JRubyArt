@@ -49,4 +49,4 @@ Here is an index of my blogposts about using the [Hype processing framework][] b
 [Hype processing framework]:https://www.hypeframework.org/
 [color]: {{ site.url }}/alternatives/
 [polyglot]:https://github.com/takari/polyglot-maven/
-[build]:http://ruby-processing.github.io/JRubyArt/libraries/hype
+[build]:http://ruby-processing.github.io/building/hype/
