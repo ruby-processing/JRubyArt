@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "Instance Variable"
-keywords: attr_reader, @, instane
+keywords: attr_reader, @, instance
 ---
-A instance variable in ruby has a name beginning with `@`.  It often makes sense for it to be initialised at `setup` (not necessarily in the loop could be called method).
+A instance variable in ruby has a name beginning with `@`.  It often makes sense for it to be initialised at `setup` (not necessarily in the loop could be set in a called method).
 
 ```ruby
 def setup
@@ -26,7 +26,7 @@ def draw
 end
 ```
 
-For a variable that gets called quite a lot in a JRubyArt sketch it makes sense to create a getter using `attr_reader`. This has the fortunate side effect of making it blindingly obvious when you are assigning it to a new value/instance (it also makes the sketch variable readable by external classes).
+For a variable that gets called quite a lot in a JRubyArt sketch it makes sense to create a getter using `attr_reader`. This has the fortunate side effect of making it blindingly obvious when you are assigning it to a new value/instance (it also makes the sketch variable `read only` visible externally, PS: if this concerns you don't use ruby).
 
 ```ruby
 attr_reader :x, :y

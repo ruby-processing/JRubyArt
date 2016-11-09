@@ -33,7 +33,7 @@ project 'hype' do
   'maven.compiler.target' => '1.8',
   'polyglot.dump.pom' => 'pom.xml' )
 
-  jar 'processing.org:core:3.2.1'
+  jar 'org.processing:core:3.2.1'
 
 end
 
