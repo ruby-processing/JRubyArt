@@ -23,7 +23,7 @@ class Installer
     path = File.join(folder, 'config.yml')
     proot = "#{home}/processing-#{VERSION}"
     proot = "/Java/Processing-#{VERSION}" if os == :windows
-    proot = '/Applications/Processing.app/Contents/Java' if os == :mac
+    proot = "/Applications/Processing.app/Contents/Java" if os == :mac
     settings = %w(PROCESSING_ROOT JRUBY sketchbook_path template MAX_WATCH)
     values = [proot, true, sketch, 'bare', 32]
     data = settings.zip(values).to_h
@@ -84,7 +84,7 @@ class UnpackSamples < Installer
 end
 
 # JRuby-Complete installer
-class JRubyComplete < Installer
+class JRubyCompleteInstall < Installer
   def install
     system "cd #{gem_root}/vendors && rake"
     return if root_exist?

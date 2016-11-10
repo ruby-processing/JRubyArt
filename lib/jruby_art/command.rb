@@ -20,6 +20,7 @@ module Processing
     def cmd(root)
       cmda = jruby_command(Processing::RP_CONFIG.fetch('JRUBY', true), root)
       begin
+        puts *cmda
         exec(*cmda)
         # exec replaces the Ruby process with the JRuby one.
       rescue Java::JavaLang::ClassNotFoundException
@@ -30,9 +31,10 @@ module Processing
 
     # avoiding multiline ternary etc
     def jruby_command(installed, root)
-      opts = JRubyOpts.new(root).opts
-      return ['jruby', opts, runner, filename, args].flatten if installed
-      ['java', opts, '-cp', JRubyComplete.complete, 'org.jruby.Main', runner, filename, args].flatten
+      return ['jruby', JRubyOpts.new(root).opts, runner, filename, args].flatten if installed
+      opts = JavaOpts.new(root).opts
+      complete = JRubyComplete.complete
+      ['java', opts, '-cp', complete, 'org.jruby.Main', runner, filename, args].flatten
     end
   end
 end
