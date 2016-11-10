@@ -14,7 +14,7 @@ A suitable version of ruby (MRI ruby > 2.3 or `jruby-9.1.6.0+`) to download gem.
 
 `processing-3.2.3`
 
-`jdk1.8.0_102+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
+`jdk1.8.0_111+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
@@ -38,9 +38,9 @@ template: bare
 
 ```bash
  gem install jruby_art
- k9 --install # installs jruby-complete-9.1.5.0 and downloads and installs samples to ~/k9_samples
+ k9 --install # installs jruby-complete-9.1.6.0 and downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --run jwishy.rb # if you have jruby-9.1.5.0 installed or config `JRUBY: false`
+ k9 --run jwishy.rb # if you have jruby-9.1.6.0 installed or config `JRUBY: false`
  # to use jruby-complete set `JRUBY: false` in config
 ```
 ## Create sketches from built in templates
