@@ -156,15 +156,12 @@ module Processing
 
     private
 
-    # Trade in this Ruby instance for a JRuby instance, loading in a starter
-    # script and passing it some arguments. Unless you set JRUBY: false in
-    # ~/.jruby_art/config.yml, an installed version of jruby is used instead
-    # of our vendored one. Note the use of jruby-complete might make using
-    # other gems in your sketches hard (but not impossible)....
+    # We now build and execute the command arguments in the Command class.
+    # Here we only need to supply the starter script, filename and args if any,
+    # the Command class checks config (is executable java or jruby?)
+    # and for any options in java_args.txt or config
     def spin_up(starter_script, filename, argc)
-      executable = Processing::RP_CONFIG.fetch('JRUBY', true) ? 'jruby' : 'java'
       build = Command.new(
-        executable: executable,
         runner: "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}",
         args: argc,
         filename: filename
