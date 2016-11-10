@@ -13,8 +13,17 @@ module Processing
     end
 
     def cmd(root)
-      return [executable, JRubyOpts.new(root).opts, runner, filename, args].flatten if executable =~ /jruby/
-      [executable, JavaOpts.new(root).opts, '-cp', JRubyComplete.complete, 'org.jruby.Main', runner, filename, args].flatten
+      if executable =~ /jruby/
+        cmda = [executable, JRubyOpts.new(root).opts, runner, filename, args].flatten
+      else
+        cmda = [executable, JavaOpts.new(root).opts, '-cp', JRubyComplete.complete, 'org.jruby.Main', runner, filename, args].flatten
+      end
+      begin
+        # exec(*command)
+        exec(*cmda)
+        # exec replaces the Ruby process with the JRuby one.
+      rescue Java::JavaLang::ClassNotFoundException
+      end
     end
   end
 end

@@ -169,12 +169,7 @@ module Processing
         args: argc,
         filename: filename
       )
-      begin
-        # exec(*command)
-        exec(*build.cmd(SKETCH_ROOT))
-        # exec replaces the Ruby process with the JRuby one.
-      rescue Java::JavaLang::ClassNotFoundException
-      end
+      build.cmd(SKETCH_ROOT)
     end
 
     # NB: We really do mean to use 'and' not '&&' for flow control purposes
