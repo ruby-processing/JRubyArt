@@ -1,4 +1,4 @@
-**v1.2.6** Update to processing-3.2.3 and jruby-9.1.6.0-complete
+**v1.2.6** Update to processing-3.2.3 and jruby-9.1.6.0-complete, re-factor to use a Command class to create argument array and exec.
 
 **v1.2.5** Change gemspec description, trying to get people not to ignore changes to documentation?
 

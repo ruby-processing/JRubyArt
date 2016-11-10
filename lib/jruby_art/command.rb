@@ -20,7 +20,6 @@ module Processing
     def cmd(root)
       cmda = jruby_command(Processing::RP_CONFIG.fetch('JRUBY', true), root)
       begin
-        puts *cmda
         exec(*cmda)
         # exec replaces the Ruby process with the JRuby one.
       rescue Java::JavaLang::ClassNotFoundException
