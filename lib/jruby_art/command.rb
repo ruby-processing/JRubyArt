@@ -2,6 +2,7 @@
 require_relative '../jruby_art/jruby_complete'
 require_relative '../jruby_art/java_opts'
 module Processing
+  # This is class wrapper for building the command
   class Command
     attr_reader :executable, :runner, :args, :filename
     def initialize(executable:, runner:, args:, filename:)
