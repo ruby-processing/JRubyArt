@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class JRubyComplete
   def self.complete
     rcomplete = File.join('/home/tux/JRubyArt', 'lib/ruby/jruby-complete.jar')

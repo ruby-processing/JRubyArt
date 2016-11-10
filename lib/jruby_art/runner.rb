@@ -6,7 +6,7 @@ require 'rbconfig'
 require_relative '../jruby_art/config'
 require_relative '../jruby_art/version'
 require_relative '../jruby_art/java_opts'
-
+require_relative '../jruby_art/command'
 # processing wrapper module
 module Processing
   # Utility class to handle the different commands that the 'k9' command
@@ -162,27 +162,16 @@ module Processing
     # of our vendored one. Note the use of jruby-complete might make using
     # other gems in your sketches hard (but not impossible)....
     def spin_up(starter_script, filename, argc)
-      runner = "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}"
-      if Processing::RP_CONFIG.fetch('JRUBY', true)
-        opts = JRubyOpts.new(SKETCH_ROOT).opts
-        command = ['jruby',
-                   opts,
-                   runner,
-                   filename,
-                   argc].flatten
-      else
-        opts = JavaOpts.new(SKETCH_ROOT).opts
-        command = ['java',
-                   opts,
-                   '-cp',
-                   jruby_complete,
-                   'org.jruby.Main',
-                   runner,
-                   filename,
-                   argc].flatten
-      end
+      executable = Processing::RP_CONFIG.fetch('JRUBY', true) ? 'jruby' : 'java'
+      build = Command.new(
+        executable: executable,
+        runner: "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}",
+        args: argc,
+        filename: filename
+      )
       begin
-        exec(*command)
+        # exec(*command)
+        exec(*build.cmd(SKETCH_ROOT))
         # exec replaces the Ruby process with the JRuby one.
       rescue Java::JavaLang::ClassNotFoundException
       end
@@ -191,7 +180,7 @@ module Processing
     # NB: We really do mean to use 'and' not '&&' for flow control purposes
 
     def ensure_exists(filename)
-      puts "Couldn't find: #{filename}" and exit unless FileTest.exist?(filename)
+      puts("Couldn't find: #{filename}") and exit unless FileTest.exist?(filename)
     end
 
     def jruby_complete

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative '../jruby_art/jruby_complete'
 require_relative '../jruby_art/java_opts'
 module Processing

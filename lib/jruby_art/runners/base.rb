@@ -1,6 +1,4 @@
-# encoding: utf-8
-# frozen_string_literal: false
-
+# frozen_string_literal: true
 SKETCH_PATH ||= ARGV.shift
 SKETCH_ROOT ||= File.absolute_path(File.dirname(SKETCH_PATH))
 
@@ -10,13 +8,13 @@ require_relative '../app'
 # More processing module
 module Processing
   # For use with "bare" sketches that don't want to define a class or methods
-  BARE_WRAP = <<-EOS
+  BARE_WRAP = <<-EOS.freeze
   class Sketch < Processing::App
     %s
   end
   EOS
 
-  NAKED_WRAP = <<-EOS
+  NAKED_WRAP = <<-EOS.freeze
   class Sketch < Processing::App
     def setup
       sketch_title 'Nude Sketch'

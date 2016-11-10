@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 # JRubyArt is for Code Art.
 # Send suggestions, ideas, and hate-mail to mamba2928 [at] gmail.com
 # Also, send samples and libraries.
