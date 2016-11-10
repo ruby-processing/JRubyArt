@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 require 'yaml'
 
-VERSION = '3.2.1'.freeze # processing version
+VERSION = '3.2.3'.freeze # processing version
 
 # Abstract Installer class
 class Installer
@@ -84,7 +84,7 @@ class UnpackSamples < Installer
 end
 
 # JRuby-Complete installer
-class JRubyComplete < Installer
+class JRubyCompleteInstall < Installer
   def install
     system "cd #{gem_root}/vendors && rake"
     return if root_exist?

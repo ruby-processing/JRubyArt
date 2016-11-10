@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: false
 
 require_relative '../jruby_art'
@@ -29,10 +28,10 @@ module Processing
       message = 'no such file to load -- %s'
       args.each do |lib|
         loaded = load_ruby_library(lib) || load_java_library(lib)
-        fail(LoadError.new, format(message, lib)) unless loaded
+        raise(LoadError.new, format(message, lib)) unless loaded
       end
     end
-    alias_method :load_library, :load_libraries
+    alias load_library load_libraries
 
     # For pure ruby libraries.
     # The library should have an initialization ruby file
@@ -83,7 +82,7 @@ module Processing
     end
 
     def get_platform_specific_library_paths(basename)
-      # for MacOSX, but does this even work, or does Mac return '64'?
+      # for MacOS, but does this even work, or does Mac return '64'?
       bits = 'universal'
       if java.lang.System.getProperty('sun.arch.data.model') == '32' ||
          java.lang.System.getProperty('java.vm.name').index('32')
@@ -118,6 +117,6 @@ module Processing
         end
       end
       nil
-    end    
+    end
   end
 end

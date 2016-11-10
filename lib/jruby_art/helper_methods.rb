@@ -181,7 +181,7 @@ module Processing
 
     private
 
-    FIXNUM_COL = -> (x) { x.is_a?(Fixnum) }
+    FIXNUM_COL = -> (x) { x.is_a?(Integer) } 
     STRING_COL = -> (x) { x.is_a?(String) }
     FLOAT_COL = -> (x) { x.is_a?(Float) }
     # parse single argument color int/double/String

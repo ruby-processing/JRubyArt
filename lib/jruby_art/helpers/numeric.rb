@@ -1,5 +1,4 @@
-# encoding: utf-8
-# frozen_string_literal: false
+# frozen_string_literal: true
 # Re-open Numeric so that we can do simple degree and radian conversions
 # conversion factors are 180 / Math::PI and Math::PI / 180
 

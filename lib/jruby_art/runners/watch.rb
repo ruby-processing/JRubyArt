@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: false
 require_relative 'base'
 require_relative '../config'
@@ -11,7 +10,7 @@ module Processing
   # the feedback between code and effect.
   class Watcher
     # Sic a new Processing::Watcher on the sketch
-    WATCH_MESSAGE ||= <<-EOS
+    WATCH_MESSAGE ||= <<-EOS.freeze
     Warning:
     To protect you from running watch mode in a top level
     directory with lots of nested ruby or GLSL files we
@@ -54,7 +53,7 @@ module Processing
       warn format(wformat, File.basename(SKETCH_PATH))
       puts format(tformat, e.backtrace.join("\n\t"))
     end
-    
+
     def start_original
       @runner = Thread.start do
         report_errors do
