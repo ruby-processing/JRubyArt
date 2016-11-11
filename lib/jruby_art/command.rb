@@ -4,7 +4,7 @@ require_relative '../jruby_art/java_opts'
 module Processing
   # The command class check for configuration and options, before creating and
   # executing the jruby (or java) command to run the sketch
-  class Command
+  class Command # better name might be Launcher used already by Soby
     attr_reader :runner, :args, :filename
     def initialize(runner:, args:, filename:)
       @runner = runner
