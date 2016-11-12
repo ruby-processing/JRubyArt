@@ -6,7 +6,7 @@ require 'rbconfig'
 require_relative '../jruby_art/config'
 require_relative '../jruby_art/version'
 require_relative '../jruby_art/java_opts'
-require_relative '../jruby_art/command'
+require_relative '../jruby_art/launcher'
 # processing wrapper module
 module Processing
   # Utility class to handle the different commands that the 'k9' command
@@ -156,17 +156,17 @@ module Processing
 
     private
 
-    # We now build and execute the command arguments in the Command class.
+    # We now build and execute the command arguments in the Launcher class.
     # Here we only need to supply the starter script, filename and args if any,
-    # the Command class checks config (is executable java or jruby?)
+    # the Launcher class checks config (is executable java or jruby?)
     # and for any options in java_args.txt or config
     def spin_up(starter_script, filename, argc)
-      build = Command.new(
+      launch = Launcher.new(
         runner: "#{K9_ROOT}/lib/jruby_art/runners/#{starter_script}",
         args: argc,
         filename: filename
       )
-      build.cmd(SKETCH_ROOT)
+      launch.cmd(SKETCH_ROOT)
     end
 
     # NB: We really do mean to use 'and' not '&&' for flow control purposes
