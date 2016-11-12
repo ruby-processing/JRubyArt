@@ -1,5 +1,6 @@
 package monkstone.core;
 
+import processing.core.PApplet;
 import static processing.core.PConstants.*;
 
 /**
@@ -12,7 +13,7 @@ import static processing.core.PConstants.*;
  */
 public abstract class LibraryProxy {
 
-    private final processing.core.PApplet app;
+    private final PApplet app;
 
     /**
      * Useful accessors
@@ -23,7 +24,7 @@ public abstract class LibraryProxy {
      *
      * @param app PApplet
      */
-    public LibraryProxy(processing.core.PApplet app) {
+    public LibraryProxy(PApplet app) {
         this.app = app;
         this.width = app.width;
         this.height = app.height;
@@ -48,7 +49,11 @@ public abstract class LibraryProxy {
      */
     public abstract void post();
 
-    private void setActive(boolean active) {
+    /**
+     * Register or unregister reflection methods
+     * @param active
+     */
+    final void setActive(boolean active) {
         if (active) {
             this.app.registerMethod("pre", this);
             this.app.registerMethod("draw", this);
@@ -89,7 +94,7 @@ public abstract class LibraryProxy {
      * Access applet if we must
      * @return applet PApplet
      */
-    public processing.core.PApplet app() {
+    public PApplet app() {
         return this.app;
     }
 

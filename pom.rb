@@ -1,11 +1,8 @@
-# encoding: utf-8
-# frozen_string_literal: false
-
 require 'fileutils'
 project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
 
   model_version '4.0.0'
-  id 'ruby-processing:rp5extras', '1.1.3'
+  id 'ruby-processing:rp5extras', '1.2.6'
   packaging 'jar'
 
   description 'rp5extras for JRubyArt'
@@ -14,7 +11,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
 
   developer 'monkstone' do
     name 'Martin Prout'
-    email 'martin_p@lineone.net'
+    email 'mamba2928@yahoo.co.uk'
     roles 'developer'
   end
 
@@ -35,24 +32,24 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
     'jruby.api' => 'http://jruby.org/apidocs/'
   )
 
-  pom 'org.jruby:jruby:9.1.2.0'
-  jar 'org.processing:core:3.1'
+  pom 'org.jruby:jruby:9.1.5.0'
+  jar 'org.processing:core:3.2.1'
   jar 'org.processing:video:3.0.2'
   plugin_management do
     plugin :resources, '2.6'
     plugin :dependency, '2.8'
     plugin(
-      :compiler, '3.3',
+      :compiler, '3.5.1',
       source: '${maven.compiler.source}',
       target: '${maven.compiler.target}'
     )
     plugin(
-      :javadoc, '2.10.3',
+      :javadoc, '2.10.4',
       detect_offline_links: 'false',
       links: ['${processing.api}', '${jruby.api}']
     )
     plugin(
-      :jar, '2.6',
+      :jar, '3.0.2',
       archive: {
         manifestFile: 'MANIFEST.MF' # camel case reqd
       }

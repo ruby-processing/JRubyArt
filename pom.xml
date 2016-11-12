@@ -11,7 +11,7 @@ DO NOT MODIFIY - GENERATED CODE
   <modelVersion>4.0.0</modelVersion>
   <groupId>ruby-processing</groupId>
   <artifactId>rp5extras</artifactId>
-  <version>1.1.3</version>
+  <version>1.2.6</version>
   <name>rp5extras</name>
   <description>rp5extras for JRubyArt</description>
   <url>https://github.com/ruby-processing/JRubyArt</url>
@@ -23,7 +23,7 @@ DO NOT MODIFIY - GENERATED CODE
     <developer>
       <id>monkstone</id>
       <name>Martin Prout</name>
-      <email>martin_p@lineone.net</email>
+      <email>mamba2928@yahoo.co.uk</email>
       <roles>
         <role>developer</role>
       </roles>
@@ -50,13 +50,13 @@ DO NOT MODIFIY - GENERATED CODE
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.1.2.0</version>
+      <version>9.1.5.0</version>
       <type>pom</type>
     </dependency>
     <dependency>
       <groupId>org.processing</groupId>
       <artifactId>core</artifactId>
-      <version>3.1</version>
+      <version>3.2.1</version>
     </dependency>
     <dependency>
       <groupId>org.processing</groupId>
@@ -80,7 +80,7 @@ DO NOT MODIFIY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.3</version>
+          <version>3.5.1</version>
           <configuration>
             <source>${maven.compiler.source}</source>
             <target>${maven.compiler.target}</target>
@@ -88,9 +88,9 @@ DO NOT MODIFIY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.10.3</version>
+          <version>2.10.4</version>
           <configuration>
-            <detect_offline_links>false</detect_offline_links>
+            <detectOfflineLinks>false</detectOfflineLinks>
             <links>
               <link>${processing.api}</link>
               <link>${jruby.api}</link>
@@ -99,7 +99,7 @@ DO NOT MODIFIY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>2.6</version>
+          <version>3.0.2</version>
           <configuration>
             <archive>
               <manifestFile>MANIFEST.MF</manifestFile>

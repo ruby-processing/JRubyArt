@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: false
 require_relative 'base'
 require_relative '../config'
@@ -11,7 +10,7 @@ module Processing
   # the feedback between code and effect.
   class Watcher
     # Sic a new Processing::Watcher on the sketch
-    WATCH_MESSAGE ||= <<-EOS
+    WATCH_MESSAGE ||= <<-EOS.freeze
     Warning:
     To protect you from running watch mode in a top level
     directory with lots of nested ruby or GLSL files we
@@ -30,7 +29,7 @@ module Processing
     # Kicks off a thread to watch the sketch, reloading JRubyArt
     # and restarting the sketch whenever it changes.
     def start_watching
-      start_runner
+      start_original
       Kernel.loop do
         if @files.find { |file| FileTest.exist?(file) && File.stat(file).mtime > @time }
           puts 'reloading sketch...'
@@ -55,9 +54,7 @@ module Processing
       puts format(tformat, e.backtrace.join("\n\t"))
     end
 
-    def start_runner
-      @runner.kill if @runner && @runner.alive?
-      @runner = nil
+    def start_original
       @runner = Thread.start do
         report_errors do
           Processing.load_and_run_sketch
@@ -65,10 +62,17 @@ module Processing
       end
     end
 
+    def start_runner
+      @runner.kill if @runner && @runner.alive?
+      @runner.join
+      @runner = nil
+      start_original
+    end
+
     def reload_files_to_watch
       @files = Dir.glob(File.join(SKETCH_ROOT, '**/*.{rb,glsl}'))
       count = @files.length
-      max_watch = RP_CONFIG.fetch('MAX_WATCH', 20)
+      max_watch = RP_CONFIG.fetch('MAX_WATCH', 32)
       return unless count > max_watch.to_i
       warn format(WATCH_MESSAGE, max_watch, count)
       abort

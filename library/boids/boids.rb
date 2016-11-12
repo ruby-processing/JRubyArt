@@ -1,11 +1,12 @@
+# frozen_string_literal: true
 # Boids -- after Tom de Smedt.
 # See his Python version: http://nodebox.net/code/index.php/Boids
 # This is an example of how a pure-Ruby library can work. Original for
 # ruby-processing Jeremy Ashkenas. Reworked, re-factored for JRubyArt 0.9+
 # by Martin Prout, features forwardable, keyword args, Vec3D and Vec2D.
 class Boid
-  attr_accessor :boids, :pos, :vel, :is_perching, :perch_time
-
+  attr_reader :boids
+  attr_accessor :vel, :pos, :is_perching, :perch_time
   def initialize(boids, pos)
     @boids, @flock = boids, boids
     @pos = pos
@@ -83,7 +84,7 @@ class Boids
 
   def self.flock(n:, x:, y:, w:, h:)
     flock = Boids.new.setup(n, x, y, w, h)
-    flock.goal(target: Vec3D.new(w / 2, h / 2, 0))
+    flock.reset_goal(Vec3D.new(w / 2, h / 2, 0))
   end
 
   def setup(n, x, y, w, h)
@@ -125,7 +126,14 @@ class Boids
     @perch = 0.0
   end
 
-  def goal(target:, flee: false)
+  def reset_goal(target)
+    @has_goal = true
+    @flee = false
+    @goal = target
+    self
+  end
+
+  def goal(target:, flee:)
     @has_goal = true
     @flee = flee
     @goal = target
@@ -141,14 +149,14 @@ class Boids
     dx, dy = @w * 0.1, @h * 0.1
     each do |b|
       b.vel.x += rand(dx) if b.pos.x < @x - dx
-      b.vel.x += rand(dy) if b.pos.y < @y - dy
+      b.vel.y += rand(dy) if b.pos.y < @y - dy
       b.vel.x -= rand(dx) if b.pos.x > @x + @w + dx
       b.vel.y -= rand(dy) if b.pos.y > @y + @h + dy
       b.vel.z += 10.0 if b.pos.z < 0.0
       b.vel.z -= 10.0 if b.pos.z > 100.0
       next unless b.pos.y > perch_y && rand < perch
       b.pos.y = perch_y
-      b.vel.y = -(b.vel.y.abs) * 0.2
+      b.vel.y = b.vel.y.abs * -0.2
       b.is_perching = true
       b.perch_time = perch_tm.respond_to?(:call) ? perch_tm.call : perch_tm
     end
@@ -166,7 +174,7 @@ class Boids
     m2 = 1.0 # separation
     m3 = 1.0 # alignment
     m4 = 1.0 # goal
-    @scattered = true if !(@scattered) && rand < @scatter
+    @scattered = true if !@scattered && rand < @scatter
     if @scattered
       m1 = -m1
       m3 *= 0.25

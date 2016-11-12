@@ -1,7 +1,20 @@
+**v1.2.6** Update to processing-3.2.3 and jruby-9.1.6.0-complete, re-factor to use a Command class to create argument array and exec.
+
+**v1.2.5** Change gemspec description, trying to get people not to ignore changes to documentation?
+
+**v1.2.4** Update to jruby-9.1.5.0-complete.
+
+**v1.2.3** Further refactored sketchwriter.rb. Update to jruby-9.1.4.0-complete.
+
+**v1.2.2** Refactored sketchwriter.rb (adding unit tests) to be more open to change and removing string_extra.rb on the way. Remove sketchbook.rb, because we no-longer guess sketchbook location at runtime (depends on `config.yml`), could pave the way for independent (from processing ide) location of java libraries (and freedom from the tyranny of prisoner john). Update to jruby-9.1.3.0-complete.
+
+
+**v1.2.1** Use optparse to parse command line options, and related re-factoring. Avoid casting to java Double and Integer and using `to_java` for primitives in jruby extensions. Includes important changes to CLI, `run` becomes `--run` etc and one stop `--install` replacing `setup --install` etc.
+Also `--nojruby` is dropped in favor of `config.yml`.
 
 **v1.1.3** Revert using String refinements in `creator.rb`. Refactor java options to `java_opts.rb`.
 
-**v1.1.2** Refactor `runner.rb` to `runner.rb`, `args.rb` and `installer.rb`. The `Installer` classes have the role of installing `jruby-complete`, the examples and providing `setup check` functionality. Refactored and improved default `config.yml` tool, all should make it easier for `collaborators/successors` to follow the code. Refactored `Vec2D` and `Vec3D` `==` and `eql?` methods. New `chooser` library makes it possible to use `select_input` reflection method.
+**v1.1.2** Refactor `runner.rb` to `runner.rb`, `args.rb` and `installer.rb`. The `Installer` classes have the role of installing `jruby-complete`, the examples and providing `setup check` functionality. Refactored and improved default `config.yml` tool, all should make it easier for `collaborators/successors` to follow the code. Refactored `Vec2D` and `Vec3D` `==` and `eql?` methods. New `chooser` library makes it possible to use `select_input` using vanilla processing reflection method.
 
 **v1.1.1** Even more `data_path` fixes in examples, update to jruby-complete-9.1.2.0
 
