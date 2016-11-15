@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 # Here's a little library for quickly hooking up in sketch sliders.
 # Copyright (c) 2016 Martin Prout.
