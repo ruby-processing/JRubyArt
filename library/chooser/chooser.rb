@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# Usage: :wq
+# Usage:
 # load_library :chooser
 # 
 # def setup
