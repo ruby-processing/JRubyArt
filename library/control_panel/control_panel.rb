@@ -1,10 +1,9 @@
+# frozen_string_literal: true
 # Here's a little library for quickly hooking up controls to sketches.
 # For messing with the parameters and such.
 # These controls will set instance variables on the sketches.
-
 # You can make sliders, checkboxes, buttons, and drop-down menus.
 # (optionally) pass the range and default value.
-
 module ControlPanel
   # class used to create slider elements for control_panel
   class Slider < javax.swing.JSlider
