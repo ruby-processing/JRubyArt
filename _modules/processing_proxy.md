@@ -19,7 +19,7 @@ Now we know this is not `kosher` and as you get more comfortable with JRubyArt y
 [Plane]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec3d/library/geometry/lib/plane.rb
 [Cylinder]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec3d/library/geometry/lib/cylinder.rb
 
-The hair shirted brigade might want to take a look at `forwardable` and make their classes `extend Forwardable` instead. There are some examples include with the samples see the [revolute_joint][joint] pbox2d example with the [Windmill][Windmill] and [ParticleSystem][ParticleSystem] classes for example.
+The hair shirted brigade might want to take a look at `forwardable` and make their classes `extend Forwardable` instead. See the [revolute_joint][joint] pbox2d example, where the [Windmill][Windmill] and [ParticleSystem][ParticleSystem] both `extend Forwardable`.
 
 [joint]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/external_library/gem/pbox2d/revolute_joint/revolute_joint.rb
 [Windmill]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/external_library/gem/pbox2d/revolute_joint/windmill.rb
