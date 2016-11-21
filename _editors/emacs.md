@@ -70,7 +70,8 @@ class MyApp < Processing::App
 ```
 
 Add this at the end of the file : 
-``` ruby
+
+```ruby
 end
 
 MyApp.new unless defined? $app
