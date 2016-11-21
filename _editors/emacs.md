@@ -97,7 +97,7 @@ cd $app   # go in the sketch
 
 Edit the file ~/.irbrc and put this in it:
 
-``` ruby
+```ruby
 require 'rubygems'
 require 'pry'
 Pry.start
@@ -105,6 +105,7 @@ exit
 ```
 
 Edit files with emacs with Pry, put this in ~/.pryrc  
-``` ruby
+
+```ruby
 Pry.editor = "emacs"
 ```
