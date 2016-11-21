@@ -59,7 +59,8 @@ A reminder of the commands to install the packages :
 
 1. Launch emacs, open k9_samples/contributed/jwishy.rb
 2. Add this at the beginning of the file :
-``` ruby
+
+```ruby
 require 'jruby_art'
 require 'jruby_art/app'
 
@@ -71,6 +72,7 @@ class MyApp < Processing::App
 Add this at the end of the file : 
 ``` ruby
 end
+
 MyApp.new unless defined? $app
 ```
 
