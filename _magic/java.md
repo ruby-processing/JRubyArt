@@ -27,4 +27,4 @@ One useful real-world use of reflection is when writing a framework that has to 
 [reflection]:https://docs.oracle.com/javase/tutorial/reflect/
 [inner]:https://docs.oracle.com/javase/tutorial/java/javaOO/innerclasses.html
 [pde]:{{site.github.url}}/magic/processing.html
-[programmerinterview.com]:https://www.programmerinterview.com/index.php/java-questions/java-inner-class-example/
+[programmerinterview.com]:http://www.programmerinterview.com/index.php/java-questions/java-inner-class-example/
