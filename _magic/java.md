@@ -7,7 +7,7 @@ Here is some information about java [inner][inner] classes and [reflection][refl
 
 ### Inner Classes ###
 
-_Stolen from http://www.programmerinterview.com/_
+_Stolen from [programmerinterview.com][programmerinterview.com]_
 
 What’s so special about inner classes?
 
@@ -27,3 +27,4 @@ One useful real-world use of reflection is when writing a framework that has to 
 [reflection]:https://docs.oracle.com/javase/tutorial/reflect/
 [inner]:https://docs.oracle.com/javase/tutorial/java/javaOO/innerclasses.html
 [pde]:{{site.github.url}}/magic/processing.html
+[programmerinterview.com]:https://www.programmerinterview.com/index.php/java-questions/java-inner-class-example/

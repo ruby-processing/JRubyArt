@@ -15,7 +15,7 @@ a / b # where a is instance of Vec2D and b is a scalar
 a == b # where both a and b are both instances of Vec2D
 a.angle_between(b) # where both a and b are both instances of Vec2D
 a.copy # where a is instance of Vec2D returns a deep copy
-a.cross(b) # where both a and b are both instances of Vec2D
+a.cross(b) # where both a and b are both instances of Vec2D returns float
 a.dist(b) # where both a and b are both instances of Vec2D
 a.dot(b) # where both a and b are both instances of Vec2D
 a.heading # where a is instance of Vec2D
@@ -40,9 +40,12 @@ a.y=b # sets the y value of Vec2D a to the float b
 ### Constructors:-
 {% highlight ruby %}
 Vec2D.from_angle(a) # returns a new Vec2D object # where a is a float radians
-Vec2D.new(a, b) # where a and b are both floats 
+Vec2D.new(a, b) # where a and b are both floats
 {% endhighlight %}
 
 Example Usages: [Examples][Vec2D]
 
+Note: Vec2D cross product [returns float][float] cf PVector which always returns a vector _because it is really a 3D vector_.
+
 [Vec2D]: https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec2d/
+[float]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec2d/library/circle/lib/points.rb
