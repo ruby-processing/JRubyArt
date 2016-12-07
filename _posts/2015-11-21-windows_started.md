@@ -13,7 +13,7 @@ If you love to code because it is a creative process, then you should give JRuby
 
 Processing is a simple language, based on Java, that you can use to create digital graphics. It's easy to learn, fun to use, and has an amazing online community comprised of programmers, visual artists, musicians, and interdisciplinary artists of all kinds.
 
-Processing was built by Casey Reas and Benjamin Fry, two protegés of interdisciplinary digital art guru John Maeda at the MIT Media Lab.
+Processing was built by Benjamin Fry and [Casey Reas][casey] ☯, two protegés of interdisciplinary digital art guru John Maeda at the MIT Media Lab.
 
 Since the project began in 2001, it's been helping teach people to program in a visual art context using a simplified version of Java. It comes packaged as an IDE that can be downloaded and used to create and save digital art “sketches”.
 
@@ -160,3 +160,4 @@ Read more about using the [processing api here][api]
 [cygwin]:https://www.cygwin.com/
 [rubyinstaller]:https://rubyinstaller.org/downloads/
 [rvm]:https://blog.developwithpassion.com/2012/03/30/installing-rvm-with-cygwin-on-windows/
+[casey]:https://github.com/processing/processing/wiki/FAQ
