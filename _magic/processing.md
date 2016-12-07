@@ -5,7 +5,7 @@ keywords: pde, java, processing
 ---
 ## __pde__ sketches get pre-processed to __java__ ##
 ------
-Part of the attraction of processing is that it hides a lot of java boilerplate stuff from the user.  In vanilla processing all sketches get pre-processed to java prior to compilation:-
+Part of the attraction of processing is that it hides a lot of java boilerplate stuff from the user.  In vanilla processing all sketches get [pre-processed][casey] to java prior to compilation:-
 
 So sketch_161005a.pde (an auto-named sketch in the processing ide), gets transformed as follows.
 
@@ -279,6 +279,7 @@ public void fileSelected(File selection) {
 
 Read more about java [reflection here][reflection].
 
+[casey]:https://github.com/processing/processing/wiki/FAQ
 [inner]:https://docs.oracle.com/javase/tutorial/java/javaOO/innerclasses.html
 [FileChooser]:{{ site.github.url }}/classes/chooser
 [callback]:https://processing.org/reference/selectInput_.html
