@@ -234,6 +234,14 @@ class VecmathTest < Minitest::Test
     assert_equal(zipped, expected)
   end
 
+  def test_cross # the cross product of 2D vectors is a float
+    a = Vec2D.new(0, 0)
+    b = Vec2D.new(100, 100)
+    c = Vec2D.new(200, 200)
+    # see http://mathworld.wolfram.com/Collinear.html for details
+    assert((a - b).cross(b - c).zero?, 'Failed collinearity test using 2D vector product')
+  end
+
   def test_equals
     x, y, z = 1.0000001, 1.01, 0.0
     a = Vec3D.new(x, y)
