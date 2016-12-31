@@ -1,12 +1,8 @@
 language: ruby
 sudo: false
-addons:
-  apt:
-    packages:
-      -oracle-java8-installer
 
 rvm: 
-  - jruby-9.1.2.0
+  - jruby-head
 jdk:
   - oraclejdk8
 os:
