@@ -24,8 +24,8 @@ class Installer
     proot = "#{home}/processing-#{VERSION}"
     proot = "/Java/Processing-#{VERSION}" if os == :windows
     proot = "/Applications/Processing.app/Contents/Java" if os == :mac
-    settings = %w(PROCESSING_ROOT JRUBY sketchbook_path template MAX_WATCH)
-    values = [proot, true, sketch, 'bare', 32]
+    settings = %w(PROCESSING_ROOT JRUBY sketchbook_path template MAX_WATCH sketch_title width height)
+    values = [proot, true, sketch, 'bare', 32, 'JRubyArt Static Sketch', 600, 600]
     data = settings.zip(values).to_h
     open(path, 'w:UTF-8') { |file| file.write(data.to_yaml) }
   end
@@ -43,7 +43,7 @@ class Installer
 
   # in place of default installer class
   def install
-    puts 'Usage: k9 setup [check | install | unpack_samples]'
+    puts 'Usage: k9 [--check | --install | --help]'
   end
 
   # Display the current version of JRubyArt.

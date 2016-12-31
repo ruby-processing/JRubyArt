@@ -17,13 +17,13 @@ module Processing
   NAKED_WRAP = <<-EOS.freeze
   class Sketch < Processing::App
     def setup
-      sketch_title 'Nude Sketch'
+      sketch_title '%s'
       %s
       no_loop
     end
 
     def settings
-      size(150, 150)
+      size(%d, %d)
     end
   end
   EOS
@@ -38,7 +38,10 @@ module Processing
       Processing::App.sketch_class.new unless $app
       return
     end
-    code = no_methods ? format(NAKED_WRAP, source) : format(BARE_WRAP, source)
+    name = RP_CONFIG.fetch('sketch_title', 'Naked Sketch')
+    width = RP_CONFIG.fetch('width', 200)
+    height = RP_CONFIG.fetch('height', 200)
+    code = no_methods ? format(NAKED_WRAP, name, source, width, height) : format(BARE_WRAP, source)
     Object.class_eval code, SKETCH_PATH, -1
     Processing::App.sketch_class.new unless $app
   end
