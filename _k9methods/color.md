@@ -3,11 +3,13 @@ layout: post
 title:  "color explained"
 ---
 See [processing color][processing] reference for details, but color is stored as `signed java int` (and bit shifting is used to parse Red, Green and Blue components) but generally you do not need to worry about that, as we either use processing convenience methods, or where necessary our modified color method does transforms for you eg conversion of web string to color
+
 ### processing ###
 
 ```java
 color c2 = #FFCC00; // this gets pre-processed to `int c2 = 0xffFFCC00`
 ```
+
 ### JRubyArt / propane ###
 
 in ruby we instead support use of quoted web-string
