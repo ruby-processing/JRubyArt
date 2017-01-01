@@ -13,6 +13,7 @@ color c2 = #FFCC00; // this gets pre-processed to `int c2 = 0xffFFCC00`
 ### JRubyArt / propane ###
 
 in ruby we instead support use of quoted web-string
+
 ```ruby
 c2 = color('#FFCC00') # we return a signed java int, note quoted string
 ```
