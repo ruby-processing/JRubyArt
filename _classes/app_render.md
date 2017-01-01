@@ -7,18 +7,18 @@ Vec2D and Vec3D classes can be efficiently rendered as both PApplet vertices, an
 
 ### AppRender
 
-{% highlight ruby %}
+```ruby
 attr_reader :renderer
 ...
 def setup
   @renderer = AppRender.new(self)
 end
 ...
-{% endhighlight %}
+```
 
 Note the use of `attr_reader` so we can access the `renderer` outside of `setup`. Here is a snippet of code for a 2D sketch, where we draw a polygon outline directly using the processing vertex (nested within `begin_shape` and `end_shape(CLOSE)`). All we need to do is supply our renderer as an argument to the Vec2D `:to_vertex` instance method.
 
-{% highlight ruby %}
+```ruby
 ...
 begin_shape # Vec2D example
   no_fill
@@ -28,11 +28,11 @@ begin_shape # Vec2D example
   end
 end_shape(CLOSE)
 ...
-{% endhighlight %}
+```
 
 If you chose not use the renderer, this is how the code would look, requires more ruby to java conversions:-
 
-{% highlight ruby %}
+```ruby
 ...
 begin_shape # Vec2D example
   no_fill
@@ -42,13 +42,13 @@ begin_shape # Vec2D example
   end
 end_shape(CLOSE)
 ...
-{% endhighlight %}
+```
 
 ### ShapeRender
 
 Usage of the ShapeRender is similar, except that you need to `create_shape` first, and it is the created `shape` that needs to be available in the draw loop. Here is a code snippet for use of a `ShapeRender` with `Vec2D`, where `original` is an array of `Vec2D` describing a closed polygon. We use an attr_reader for `s` so that we can define it one block of code and use `shape(s)` to call it in the draw loop in the normal way for a 'retained shape/vbo'.
 
-{% highlight ruby %}
+```ruby
 attr_reader :s
 ...
 @s = create_shape
@@ -61,11 +61,11 @@ original.map{ |v| v.to_vertex(renderer) }
 s.end_shape(CLOSE)
 ...
 shape(s)
-{% endhighlight %}
+```
 
 There is also the possibility of adding texture see this `ShapeRender` usage snippet:-
 
-{% highlight ruby %}
+```ruby
 ...
 # Put all the relevant data into the PShape
 
@@ -84,7 +84,7 @@ positions.each_with_index do |p, i|
 end
 mesh.end_shape
 ...
-{% endhighlight %}
+```
 
 The above snippet is taken from the [glsl_heighmap_noise.rb sketch][glsl], for another example of the advanced use of the ShapeRender class see the [trefoil sketch][trefoil]. Warning if you are using ShapeRender inside a custom class you need to prefix it with the sketch class name `Sketch::` for bare sketches, see [wiggle_pshape][wiggling] sketch.
 

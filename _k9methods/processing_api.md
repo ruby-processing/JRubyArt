@@ -5,7 +5,7 @@ permalink: /methods/processing_api/
 ---
 Most of the processing methods, as explained in the [Processing Language API][api], are available as instance methods to the Processing::App. (frame_rate, ellipse, many others).  But there are [exceptions][alternatives] see below and [here][alternatives], where good or better alternatives already exist in ruby. Also make sure you take a look at the many [included example sketches][sketches], where ruby [core][core] and [Math][Math] methods are preferred over the processing/java alternative eg `rand(0.0..4)` is preferred over `random(0, 4.0)`.
 
-{% highlight ruby %}
+```ruby
 
 # Triangles gone wild (class wrapped)
 class TrianglesGoneWild < Processing::App
@@ -25,11 +25,11 @@ class TrianglesGoneWild < Processing::App
     triangle(rand(width), rand(height), rand(width), rand(height), rand(width), rand(height))
   end
 end
-{% endhighlight %}
+```
 
 Here is the same sketch without the class wrapper (matches processing ide version), except that we need to explicitly put size and smooth in [settings][settings].
 
-{% highlight ruby %}
+```ruby
 
 # Triangles gone wild (match *.pde dsl)
 def settings
@@ -47,7 +47,7 @@ end
 def draw
   triangle(rand(width), rand(height), rand(width), rand(height), rand(width), rand(height))
 end
-{% endhighlight %}
+```
 
 Some variables that you might expect to find under their Processing names are available by more rubyish names, `keyPressed` becomes `key_pressed?` and `mousePressed` becomes `mouse_pressed?`. The functions `keyPressed`, `mousePressed` become `key_pressed` and `mouse_pressed` ie without `?`. And some things are better done with regular Ruby than with Processing; instead of using `load_strings('file.txt')` to read in a file, consider `File.readlines('file.txt')`. For math use `x.to_f`, `x.radians` and `x**3` for `float(x)`, `radians(x)` and `pow(x, 3)`.
 

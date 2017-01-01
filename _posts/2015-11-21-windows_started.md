@@ -68,26 +68,26 @@ JRubyArt needs to know where you've installed processing, where your processing 
 
 Config file is `config.yml` in the `~/.jruby_art folder` so it can co-exist with a ruby-processing install (~/.rp5rc), it is advisable to have separate folders for processing-3.0 and processing-2.2.1 sketchbooks.
 
-{% highlight yaml %}
+```yaml
 # Example YAML configuration file for jruby_art on Windows
 # K9_ROOT: "C:/Ruby22-x64/lib/ruby/gems/2.3.0/gems/jruby_art-1.2.6" # should not be necessary
 PROCESSING_ROOT: "C:/Java/Processing" # just a suggestion
 sketchbook: "C:/Users/USER/Documents/Processing" # adjust to suit your install
 # JRUBY: false # uncomment to use jruby-complete by default especially if you haven't installed jruby
 template: bare # use class or emacs for alternative templates
-{% endhighlight %}
+```
 
 If you can/are using rvm or rbenv switch to using jruby-9.1.6.0 then
 
-{% highlight bash %}
+```bash
 gem install jruby_art
-{% endhighlight %}
+```
 
 if you are brave (or sensible) and have done an independent jruby install
 
-{% highlight bash %}
+```bash
 jruby -S gem install jruby_art # then install other gems eg toxiclibs the same way
-{% endhighlight %}
+```
 
 but you might find regular MRI gem install works (also tends to be quicker)
 
@@ -95,9 +95,9 @@ but you might find regular MRI gem install works (also tends to be quicker)
 After installing the the gem you can download and install jruby-complete,
 this is not included in the gem, because it would make it too big, however providing you've got wget installed all you need to do is:-
 
-{% highlight bash %}
+```bash
 k9 --install # downloads and installs jruby-complete and examples uses wget
-{% endhighlight %}
+```
 
 
 ### Running examples
@@ -106,28 +106,28 @@ To run a bunch of the samples as a demo:-
 
 cd to say contributed folder (containing a Rakefile) and run `rake` see below
 
-{% highlight bash %}
+```bash
 cd ~/k9_samples/contributed # for example
 rake # autoruns files in contributed folder
 k9 --run jwishy.rb # run the JWishy sketch, using an installed jruby
 cd ~/k9_samples/processing_app/topics/shaders
 rake # autoruns shader sketches
 k9 --run monjori.rb # run the Monjori sketch
-{% endhighlight %}
+```
 
 ### Creating your own sketch
 
 All we ask is that you obey the ruby filename convention (ie snakecase) and we can create a template sketch for you as follows:-
 
-{% highlight bash %}
+```bash
 k9 --create fred_sketch 200 200 # creates a bare sketch fred_sketch.rb (see below)
 vim fred_sketch.rb # other editors are available
 :!k9 -r % # from vim runs the sketch
-{% endhighlight %}
+```
 
 As a windows user you may find [atom][atom] or [jEdit][jedit] to be a more suitable editor.
 
-{% highlight ruby %}
+```ruby
 def setup
   sketch_title 'Fred Sketch'
 end
@@ -140,7 +140,7 @@ def settings
   size 200, 200
   # smooth # here
 end
-{% endhighlight %}
+```
 
 PS: `k9 -c fred` also works with a bare template defaults, to `size 200 200`
 

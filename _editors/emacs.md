@@ -15,7 +15,8 @@ Emacs looks like an old editor, but is has loads of very good features. And as i
 2. Install the emacs packages [inf-ruby](https://github.com/nonsequitur/inf-ruby) and [rvm](https://github.com/senny/rvm.el)
 3. Add this to your .emacs
 
-``` lisp
+```lisp
+
 (setq auto-mode-alist (cons '("\\.pde$" . java-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.pde\\w?" . java-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.vert\\w?" . c-mode) auto-mode-alist))
@@ -48,6 +49,7 @@ Emacs looks like an old editor, but is has loads of very good features. And as i
 ## If you use RVM, uncomment this.
 ##(require 'rvm)
 ##(rvm-use-default) ;; use rvm's default ruby for the current Emacs session
+
 ```
 
 A reminder of the commands to install the packages :
@@ -97,7 +99,7 @@ cd $app   # go in the sketch
 
 Edit the file ~/.irbrc and put this in it:
 
-```ruby
+```bash
 require 'rubygems'
 require 'pry'
 Pry.start
@@ -106,6 +108,6 @@ exit
 
 Edit files with emacs with Pry, put this in ~/.pryrc  
 
-```ruby
+```bash
 Pry.editor = "emacs"
 ```

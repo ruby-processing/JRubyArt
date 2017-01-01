@@ -6,9 +6,9 @@ keywords: editor, ide, ruby, jruby_art, vim, emacs, jedit
 ---
 
 Is an excellent choice for linux and mac users, it is lighweight (runs from the console) commands available from vim:-
-{% highlight bash %}
+```bash
 :!k9 --run %   # will run the sketch
-{% endhighlight %}
+```
 
 ### Watching Sketches (a pseudo REPL) ###
 

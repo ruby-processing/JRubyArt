@@ -8,7 +8,7 @@ ArcBall is a user input interface to make a 3D object rotate in an intuitive way
 
 See a simple example below, where the box (a cube in this case) gets centered in the middle of the display. 
 
-{% highlight ruby %}
+```ruby
 def setup
   sketch_title 'Arcball Box'
   ArcBall.init self
@@ -24,7 +24,7 @@ def settings
   size 600, 600, P3D
   smooth 8
 end
-{% endhighlight %}
+```
 
 Alternative Examples: [3D Menger][menger], [Retained Shape][shape], [Constrained ArcBall][constrain]
 

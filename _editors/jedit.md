@@ -19,7 +19,7 @@ Either clone this repro or use a zipped file, copy the files in the `.jedit` fol
 
 This file lives in `~/.jedit/macros/` folder use this so you you can `run`, `watch` from the `macros` menu
 
-{% highlight java %}
+```java
 
 // k9.bsh
 // A jedit bean shell macro, to load environment, and call
@@ -38,13 +38,13 @@ This file lives in `~/.jedit/macros/` folder use this so you you can `run`, `wat
 // setenv("PATH", "/usr/bin");
 new console.commando.CommandoDialog(view,"commando.k9");
 
-{% endhighlight %}
+```
 
 ### The commando file k9.xml for JRubyArt-1.2.0+
 
 This file lives in `~/.jedit/console/commando/` you should tune this to match your OS setup
 
-{% highlight xml %}
+```xml
 <?xml version="1.0"?>
 <!DOCTYPE COMMANDO SYSTEM "commando.dtd"><!-- Monkstone, 2016-July-13 for JRubyArt-1.2.0+ -->
 <COMMANDO>
@@ -93,7 +93,7 @@ This file lives in `~/.jedit/console/commando/` you should tune this to match yo
 </COMMAND>
   </COMMANDS>
 </COMMANDO>
-{% endhighlight %}
+```
 
 ### keyboard shortcuts
 

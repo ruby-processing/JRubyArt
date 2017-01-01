@@ -10,21 +10,21 @@ title:  "map1d in detail"
 ### Examples ###
 
 Static sketches
-{% highlight ruby %}
+```ruby
 value = 25
 m = map1d(value, (0..100), (0..width))
 ellipse(m, height / 2, 10, 10)
-{% endhighlight %}
+```
 
-{% highlight ruby %}
+```ruby
 value = 110
 m = map1d(value, (0..100), (-20..-10))
 puts(m)  # Prints '-9.0'
-{% endhighlight %}
+```
 
 Regular sketch
 
-{% highlight ruby %}
+```ruby
 def settings
   size(200, 200)
 end
@@ -41,7 +41,7 @@ def draw
   x2 = map1d(mouse_x, (0..width), (0..200))
   ellipse(x2, 125, 50, 50)
 end
-{% endhighlight %}
+```
 
 ### Description	###
 
@@ -53,9 +53,9 @@ As shown in the second example, numbers outside of the range are not clamped to 
 
 ### Syntax ###
 
-{% highlight ruby %}
+```ruby
 map1d(value, (start1..stop1), (start2..stop2))
-{% endhighlight %}
+```
 
 ### Parameters ###
 

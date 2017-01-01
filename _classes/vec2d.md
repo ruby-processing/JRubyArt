@@ -7,7 +7,7 @@ permalink: /classes/vec2d/
 The Vec2D class is a direct replacement for processings PVector class (when used for 2D work, see Vec3D for 3D version).
 
 ### Methods:-
-{% highlight ruby %}
+```ruby
 a * b # where a is instance of Vec2D and b is a scalar
 a + b # where both a and b are both instances of Vec2D
 a - b # where both a and b are both instances of Vec2D
@@ -36,12 +36,12 @@ a.x returns x as a float # where a is instance of Vec2D
 a.x=b # sets the x value of Vec2D a to the float b
 a.y # returns y as a float # where a is instance of Vec2D
 a.y=b # sets the y value of Vec2D a to the float b
-{% endhighlight %}
+```
 ### Constructors:-
-{% highlight ruby %}
+```ruby
 Vec2D.from_angle(a) # returns a new Vec2D object # where a is a float radians
 Vec2D.new(a, b) # where a and b are both floats
-{% endhighlight %}
+```
 
 Example Usages: [Examples][Vec2D]
 

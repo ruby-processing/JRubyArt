@@ -38,28 +38,28 @@ Why was ruby-processing not updated to use processing3.0+? The [major changes][c
 
 Install Software as required:-
 
-{% highlight bash %}
+```bash
 sudo pacman -S jdk8-openjdk # installs openjdk
 sudo pacman -S java-openjfx # installs openjfx
 sudo pacman -S jruby # installs jruby
 sudo pacman -S processing # installs processing-3.2.3  (community)
-{% endhighlight %}
+```
 
 Configure in `~/.jruby_art/config.yml`:-
-{% highlight bash %}
+```bash
 PROCESSING_ROOT: "/usr/share/processing"
 sketchbook_path: "/home/tux/sketchbook"
 MAX_WATCH: 30
 JRUBY: true
-{% endhighlight %}
+```
 
 Install JRubyArt
-{% highlight bash %}
+```bash
 jruby -S gem install jruby_art
 jruby -S gem install toxiclibs # optional
 jruby -S gem install pbox2d # optional
 jruby -S gem install geomerative # optional
-{% endhighlight %}
+```
 
 Install vanilla processing libraries from processing-3.2.3 ide (recomended audio, video)
 
@@ -67,36 +67,36 @@ Install vanilla processing libraries from processing-3.2.3 ide (recomended audio
 
 The simplest way to install oracle java (but with less control over version etc)
 
-{% highlight bash %}
+```bash
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo apt-get install oracle-java8-installer
-{% endhighlight %}
+```
 
 Alternative method (that puts you in control), download and install latest Oracle jdk (in the `/opt` folder makes sense)
 
 Use `update-alternatives` to install and maintain configuration eg for java:-
-{% highlight bash %}
+```bash
 sudo update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_111/bin/java 100
 sudo update-alternatives --config java # to configure if required
-{% endhighlight %}
+```
 
 Download and install latest jruby (in the `/opt` folder makes sense)
 
 Use `update-alternatives` to install and maintain configuration eg for java:-
-{% highlight bash %}
+```bash
 sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.1.6.0/bin/jruby 100
 sudo update-alternatives --config jruby # to configure if required
-{% endhighlight %}
+```
 
 Configure in `~/.jruby_art/config.yml`:-
-{% highlight bash %}
+```bash
 PROCESSING_ROOT: "/home/tux/processing-3.2.3" # `substitute` user for `tux`
 sketchbook_path: "/home/tux/sketchbook"
 MAX_WATCH: 30
 JRUBY: true
 template: bare
-{% endhighlight %}
+```
 
 Otherwise you can check to see what platforms are officially supported [here][platforms].
 
@@ -115,19 +115,19 @@ https://www.ruby-lang.org/en/documentation/installation/ (NB: most distros are h
 Download Processing-3.2.3 from the [official website][official] and install, prefer to install in say `~/processing-3.2.2`.  When you're done, make sure to take note of the directory you installed the app to complete the configuration see below.
 
 Configure in `~/.jruby_art/config.yml`:-
-{% highlight bash %}
+```bash
 PROCESSING_ROOT: "/home/tux/processing-3.2.3" # `substitute` user for `tux`
 sketchbook_path: "/home/tux/sketchbook"
 MAX_WATCH: 30
 JRUBY: false
 template: bare
-{% endhighlight %}
+```
 
 If using `rvm` or `rbenv` make sure you are using ruby2.2+
-{% highlight bash %}
+```bash
 gem install jruby_art
 k9 --install # installs jruby-complete, and examples
-{% endhighlight %}
+```
 
 NB: you may find that you are unable to use gems in your sketches unless you have used jruby to install them.
 
@@ -135,28 +135,28 @@ NB: you may find that you are unable to use gems in your sketches unless you hav
 
 To run a bunch of the samples as a demo:-
 
-{% highlight bash %}
+```bash
 cd ~/k9_samples/contributed # for example
 rake # autoruns files in contributed folder
 k9 --run jwishy.rb # run the JWishy sketch, using an installed jruby
 cd ~/k9_samples/processing_app/topics/shaders
 rake # autoruns shader sketches
 k9 --run monjori.rb # run the Monjori sketch with jruby-complete
-{% endhighlight %}
+```
 
 ### Creating your own sketch
 
 All we ask is that you obey the ruby filename convention (ie snakecase) and we can create a template sketch for you as follows:-
 
-{% highlight bash %}
+```bash
 k9 --create fred_sketch 200 200 # creates a bare sketch fred_sketch.rb (see below)
 vim fred_sketch.rb # other editors are available
 :!k9 -r % # from vim runs the sketch
-{% endhighlight %}
+```
 
 You may want to try other [development environments][editor] eg atom, emacs or even netbeans. Needless to say your distro can install these for you, but they need a bit of post install love get the best out of them (vim in the main just works, and is super light weight).
 
-{% highlight ruby %}
+```ruby
 def setup
   sketch_title 'Fred Sketch'
 end
@@ -169,7 +169,7 @@ def settings
   size 200, 200
   # smooth # here
 end
-{% endhighlight %}
+```
 
 PS: `k9 -c fred` also works with a bare template defaults, to `size 200 200`
 

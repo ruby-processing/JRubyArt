@@ -8,12 +8,12 @@ It is common to call background near the beginning of the [draw loop][draw] to c
 
 There can only be one [draw][draw] function for each sketch, and [draw][draw] must exist if you want the code to run continuously, or to process events such as [mouse_pressed][mouse_pressed].
 
-{% highlight ruby %}
+```ruby
 def draw
   background 0
   # dynamic code
 end
-{% endhighlight %}
+```
 
 [draw]:https://processing.org/reference/draw_.html
 [mouse_pressed]:https://processing.org/reference/mousePressed_.html

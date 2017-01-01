@@ -96,7 +96,7 @@ It is an unfortunate truth that [java reflection methods][reflection] are popula
 ### VideoInterface.java ###
 
 See [javadoc here][video]
-{% highlight java %}
+```java
 package monkstone.videoevent;
 import processing.video.Movie;
 import processing.video.Capture;
@@ -119,22 +119,22 @@ public interface VideoInterface {
      */
     public void captureEvent(Capture capture);    
 }
-{% endhighlight %}
+```
 
 To match packaging the java file needs to be nested in `monkstone/videoevent` folders (it is unwise not to have a package) and compile and jar as follows, requires jdk8+.
 
-{% highlight bash %}
+```bash
 # NB: classpath needs to be a fully qualified path to jars (not as below)
 javac -cp video.jar:core.jar monkstone/videoevent/VideoInterface.java
 
 jar -cvf video_event.jar monkstone
-{% endhighlight %}
+```
 
 See below a sketch which using this VideoEvent interface, see the version using the JRubyArt provided `:video_event` library [here][bw]
 
 ### black_white_capture.rb ###
 
-{% highlight ruby %}
+```ruby
 require_relative 'video_event'
 load_libraries :video
 include_package 'processing.video'
@@ -168,13 +168,13 @@ end
 def settings
   size(960, 544, P2D)
 end
-{% endhighlight %}
+```
 
 Now where this knowledge becomes really useful, is when you want to use another library, say the vanilla processing carnivore library whose `packetEvent` method also depends on java relection. Here is a suitable CarnivoreListener class.
 
 ### CarnivoreListener.java ###
 
-{% highlight java %}
+```java
 
 package monkstone;
 
@@ -187,22 +187,22 @@ public interface CarnivoreListener {
   */
   public void packetEvent(org.rsg.carnivore.CarnivorePacket packet);  
 }
-{% endhighlight %}
+```
 
 Which we compile as before
 
-{% highlight bash %}
+```bash
 # NB: classpath needs to be a fully qualified path to jar (not as below)
 javac -cp carnivore.jar monkstone/CarnivoreListener.java
 
 jar -cvf carnivore_listener.jar monkstone
-{% endhighlight %}
+```
 
 Here is an example sketch:-
 
 ### carnivore1.rb ###
 
-{% highlight ruby %}
+```ruby
 # A Simple Carnivore Client -- print packets in Processing console
 #
 # Note: requires Carnivore Library for Processing (https://r-s-g.org/carnivore)
@@ -243,7 +243,7 @@ def packetEvent(p)
   # puts(format('Payload: %s', p.ascii))
   # puts("---------------------------\n")
 end
-{% endhighlight %}
+```
 
 
 Another example of reflection usage the vanilla processing `selectInput` utility, that enable use of the native file chooser:-

@@ -7,7 +7,7 @@ permalink: /classes/vec3d/
 The Vec3D class is a direct replacement for processings PVector class (when used for 3D work, see Vec2D for 2D version).
 
 ### Methods:-
-{% highlight ruby %}
+```ruby
 a * b # where a is instance of Vec3D and b is a scalar
 a + b # where both a and b are both instances of Vec3D
 a - b # where both a and b are both instances of Vec3D
@@ -36,11 +36,11 @@ a.y # returns y as a float where a is instance of Vec2D
 a.y = b # sets the y value of Vec3D a to the float b
 a.z # returns z as a float where a is instance of Vec2D
 a.z = b # sets the z value of Vec3D a to the float b
-{% endhighlight %}
+```
 ### Constructors:-
-{% highlight ruby %}
+```ruby
 Vec3D.new(a, b, c) # where a, b, and c are all floats 
-{% endhighlight %}
+```
 
 Example Usages: [Examples][Vec3D]
 
