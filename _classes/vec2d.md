@@ -38,9 +38,25 @@ a.y # returns y as a float # where a is instance of Vec2D
 a.y=b # sets the y value of Vec2D a to the float b
 ```
 ### Constructors:-
+
 ```ruby
 Vec2D.from_angle(a) # returns a new Vec2D object # where a is a float radians
 Vec2D.new(a, b) # where a and b are both floats
+```
+
+### Chaining:-
+
+Vec2D operations can normally be chained, which give us huge benefits over PVector, and thanks to syntatic sugar combinations of such operations read like math equations eg you want a Vec2D object `c` that is the midpoint between two points `a` and `b` (represented by vectors) we have:-
+
+```ruby
+c = (a + b) / 2
+```
+
+Or we can even use ruby `inject` to `sum` an array of Vec2D (useful in say `flocking`)
+
+```ruby
+average = array.inject(Vec2D.new, &:+) # elegantly
+average = array.reduce(Vec2D.new) { |c, d| c + d } # expressively
 ```
 
 Example Usages: [Examples][Vec2D]
