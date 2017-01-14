@@ -226,6 +226,12 @@ class VecmathTest < Minitest::Test
     assert_equal(sum, Vec2D.new(12, 6))
   end
 
+  def test_array_inject
+    array = [Vec2D.new(1, 2), Vec2D.new(10, 2), Vec2D.new(1, 2)]
+    sum = array.inject(Vec2D.new, &:+)
+    assert_equal(sum, Vec2D.new(12, 6))
+  end
+
   def test_array_zip
     one = [Vec2D.new(1, 2), Vec2D.new(10, 2), Vec2D.new(1, 2)]
     two = [Vec2D.new(1, 2), Vec2D.new(10, 2), Vec2D.new(1, 2)]
