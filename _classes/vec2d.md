@@ -37,6 +37,7 @@ a.x=b # sets the x value of Vec2D a to the float b
 a.y # returns y as a float # where a is instance of Vec2D
 a.y=b # sets the y value of Vec2D a to the float b
 ```
+
 ### Constructors:-
 
 ```ruby
