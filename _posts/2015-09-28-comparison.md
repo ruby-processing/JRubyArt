@@ -28,7 +28,7 @@ th{
 |Live mode     |Yes                |Yes                      |
 |Watch mode    |Yes                |Yes                      |
 |jruby-complete|`--nojruby` flag   |see alternative          |
-|config        |`~/.rp5rc          |`~/.jruby_art/config.yml`|
+|config        |`~/.rp5rc`         |`~/.jruby_art/config.yml`|
 |alternative   |JRUBY: false       |JRUBY: false             |
 |settings      |no                 |see below                |
 
