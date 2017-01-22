@@ -37,7 +37,7 @@ Why was ruby-processing not updated to use processing3.0+? The [major changes][c
 
 Setting JRubyArt for the first time, can seem a bit involved (especially if you are addicted to rvm or rbenv). The JRubyArt gem relies on JRuby-9.1.5.0+, Processing-3.2.3, and a handful of other dependencies. Here's how to get them all installed and working on Windows.
 
-Install wget, Oracle java (1.8.0.111+), and some version of ruby-2.2+ preferably jruby-9.1.7.0.
+Install wget, Oracle java (1.8.0.121+), and some version of ruby-2.2+ preferably jruby-9.1.7.0.
 
 ### Processing
 
