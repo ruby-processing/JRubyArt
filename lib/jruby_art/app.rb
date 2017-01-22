@@ -93,9 +93,10 @@ module Processing
     # Options are no longer relevant, define post_initialize method to use
     # custom options (see Sandi Metz POODR)
 
-    def initialize
+    def initialize(options = {})
       super()
       $app = self
+      post_initialize(options)
       proxy_java_fields
       mix_proxy_into_inner_classes
       java.lang.Thread.default_uncaught_exception_handler = proc do |_thread_, exception|
