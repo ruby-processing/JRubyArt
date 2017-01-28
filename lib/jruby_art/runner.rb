@@ -136,13 +136,13 @@ module Processing
 
     def install
       require_relative '../jruby_art/installer'
-      JRubyCompleteInstall.new(K9_ROOT, host_os).install
-      UnpackSamples.new(K9_ROOT, host_os).install
+      JRubyCompleteInstall.new(K9_ROOT, OS).install
+      UnpackSamples.new(K9_ROOT, OS).install
     end
 
     def check
       require_relative '../jruby_art/installer'
-      Check.new(K9_ROOT, host_os).install
+      Check.new(K9_ROOT, OS).install
     end
 
     # Show the standard help/usage message.
@@ -183,24 +183,7 @@ module Processing
     end
 
     def libraries
-      %w(video sound).map { |library| sketchbook_library(library) }.flatten
-    end
-
-    def sketchbook_library(name)
-      Dir["#{Processing::RP_CONFIG['sketchbook_path']}/libraries/#{name}/library/\*.jar"]
-    end
-
-    def host_os
-      detect_os = RbConfig::CONFIG['host_os']
-      case detect_os
-      when /mac|darwin/ then :mac
-      when /linux/ then :linux
-      when /solaris|bsd/ then :unix
-      else
-        WIN_PATTERNS.find { |r| detect_os =~ r }
-        raise "unknown os: #{detect_os.inspect}" if Regexp.last_match.nil?
-        :windows
-      end
+      %w(video sound).map { |library| Sketchbook.library(library) }.flatten
     end
   end # class Runner
 end # module Processing
