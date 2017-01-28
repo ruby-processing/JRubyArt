@@ -1,4 +1,6 @@
 
+**v1.2.8** Properly implement post-initialize (it might be useful). Refactor Sketchbook and OS.
+
 **v1.2.7** Introduce new config parameters `sketch_title`, `width` and `height` with a view to better static sketch support (for youngsters, absolute novices). Update to use jruby-9.1.7.0 and latest samples 1.8 (includes joons renderer examples)
 
 **v1.2.6** Update to processing-3.2.3 and jruby-9.1.6.0-complete, re-factor to use a Command class to create argument array and exec.
