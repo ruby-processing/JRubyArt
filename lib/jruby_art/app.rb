@@ -1,3 +1,4 @@
+
 # frozen_string_literal: false
 require 'java'
 require_relative '../rpextras'
@@ -55,10 +56,10 @@ module Processing
 
     class << self
       # Handy getters and setters on the class go here:
-      attr_accessor :sketch_class, :library_loader
+      attr_reader :sketch_class, :library_loader
 
       def load_libraries(*args)
-        library_loader ||= LibraryLoader.new
+        @library_loader ||= LibraryLoader.new
         library_loader.load_library(*args)
       end
       alias load_library load_libraries
@@ -122,8 +123,8 @@ module Processing
       surface.set_title(title)
     end
 
-    def sketch_path(spath = nil)
-      return super() if spath.nil?
+    def sketch_path(spath = '')
+      return super() if spath.empty?
       super(spath)
     end
 

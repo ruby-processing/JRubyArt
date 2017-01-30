@@ -31,13 +31,13 @@ class Installer
   end
 
   def root_exist?
-    return false if config.nil?
+    return false if config.empty?
     File.exist? config['PROCESSING_ROOT']
   end
 
   def config
     k9config = File.expand_path("#{home}/.jruby_art/config.yml")
-    return nil unless File.exist? k9config
+    return '' unless File.exist? k9config
     YAML.load_file(k9config)
   end
 
