@@ -20,7 +20,7 @@ Since the project began in 2001, it's been helping teach people to program in a 
 
 In 2009, Jeremy Ashkenas (aka jashkenas, creator of Backbone.JS, Underscore.JS, and Coffeescript), published the original [ruby-processing gem][gem]. It wraps Processing in a shim that makes it even easier to get started if you know Ruby. It has been since updated to use processing-2.2.1 by Martin Prout (final version using jruby-1.7.27 corresponding to ruby-1.9.3 syntax), NB: no more releases are expected, and ruby-processing is not compatible with processing-3.0+.
 
-In 2015, Martin Prout (aka monkstone) published the [JRubyArt gem][jrubyart], loosely based on the original ruby-processing, but updated to use processing-3.2.3 and jruby-9.1.7.0 (ruby-2.2 syntax)
+In 2015, Martin Prout (aka monkstone) published the [JRubyArt gem][jrubyart], loosely based on the original ruby-processing, but updated to use processing-3.2.4 and jruby-9.1.7.0 (ruby-2.2 syntax)
 
 ### Why JRubyArt? ###
 
@@ -61,7 +61,7 @@ jruby -S gem install pbox2d # optional
 jruby -S gem install geomerative # optional
 ```
 
-Install vanilla processing libraries from processing-3.2.3 ide (recomended audio, video)
+Install vanilla processing libraries from processing-3.2.4 ide (recomended audio, video)
 
 ### Pure JRuby Setup Debian (Mint, Ubuntu) ###
 
@@ -91,7 +91,7 @@ sudo update-alternatives --config jruby # to configure if required
 
 Configure in `~/.jruby_art/config.yml`:-
 ```bash
-PROCESSING_ROOT: "/home/tux/processing-3.2.3" # `substitute` user for `tux`
+PROCESSING_ROOT: "/home/tux/processing-3.2.4" # `substitute` user for `tux`
 sketchbook_path: "/home/tux/sketchbook"
 MAX_WATCH: 30
 JRUBY: true
@@ -100,7 +100,7 @@ template: bare
 
 Otherwise you can check to see what platforms are officially supported [here][platforms].
 
-Download Processing-3.2.3 from the [official website][official] and install, prefer to install in say `~/processing-3.2.3`, that way you can keep processing-2.2.1 (or earlier version of processing), which you may find useful.  When you're done, make sure to take note of the directory you installed the app to complete the configuration.
+Download Processing-3.2.3 from the [official website][official] and install, prefer to install in say `~/processing-3.2.4`, that way you can keep processing-2.2.1 (or earlier version of processing), which you may find useful.  When you're done, make sure to take note of the directory you installed the app to complete the configuration.
 
 Complete the install as for Archlinux (make sure `k9` is on your path or use `jruby -S k9`)
 
@@ -116,7 +116,7 @@ Download Processing-3.2.3 from the [official website][official] and install, pre
 
 Configure in `~/.jruby_art/config.yml`:-
 ```bash
-PROCESSING_ROOT: "/home/tux/processing-3.2.3" # `substitute` user for `tux`
+PROCESSING_ROOT: "/home/tux/processing-3.2.4" # `substitute` user for `tux`
 sketchbook_path: "/home/tux/sketchbook"
 MAX_WATCH: 30
 JRUBY: false
