@@ -33,7 +33,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
   )
 
   pom 'org.jruby:jruby:9.1.7.0'
-  jar 'org.processing:core:3.2.3'
+  jar 'org.processing:core:3.2.4'
   jar 'org.processing:video:3.0.2'
   plugin_management do
     plugin :resources, '2.6'
