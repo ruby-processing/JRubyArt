@@ -1,5 +1,5 @@
 
-**v1.2.8** Properly implement post-initialize (it might be useful). Refactor Sketchbook and OS. Update to processing-3.2.4.
+**v1.2.8** Properly implement post-initialize (it might be useful). Refactor Sketchbook and OS. Update to processing-3.2.4, if you have not updated samples for a while you should now.
 
 **v1.2.7** Introduce new config parameters `sketch_title`, `width` and `height` with a view to better static sketch support (for youngsters, absolute novices). Update to use jruby-9.1.7.0 and latest samples 1.8 (includes joons renderer examples)
 
