@@ -12,7 +12,7 @@ or ~/.profile (mint linux etc)
 ```bash
 export GEM_HOME="/home/tux/.gem/ruby/2.4.0"
 export GEM_PATH="/home/tux/.gem/ruby/2.4.0"
-export PATH="${PATH}:${GEM_PATH}"
+export PATH="${PATH}:${GEM_PATH}/bin"
 ```
 
 For MacOS it is very similar just edit `~/.bash_profile` if required
