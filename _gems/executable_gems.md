@@ -18,3 +18,5 @@ export PATH="${PATH}:${GEM_PATH}/bin"
 For MacOS it is very similar just edit `~/.bash_profile` if required
 
 Windows has a gui that allows you to add to the PATH environmental variable (if required)
+
+The executable for JRubyArt is `k9` but generally `k9 -r my_sketch.rb` or `k9 -w my_sketch.rb` to run watch sketches. Since we are running a two stage process with JRubyArt you can start the process with MRI ruby, but the sketch gets run by `jruby` directly or via `java` and `jruby-complete`.
