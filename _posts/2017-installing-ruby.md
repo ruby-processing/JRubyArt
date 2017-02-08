@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Getting Started On Windows"
+title:  "Installing Ruby"
 date:   2017-02-08 05:15:13
 categories: jruby_art update
 permalink: /installing_ruby/
