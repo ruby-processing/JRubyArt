@@ -41,7 +41,7 @@ Install Software as required:-
 ```bash
 sudo pacman -S jdk8-openjdk # installs openjdk
 sudo pacman -S java-openjfx # installs openjfx
-sudo pacman -S jruby # installs jruby
+sudo pacman -S jruby # installs jruby-9.1.7.0
 sudo pacman -S processing # installs processing-3.2.3  (community)
 ```
 
@@ -112,7 +112,7 @@ Install MRI ruby (must be at least ruby-2.2)
 
 https://www.ruby-lang.org/en/documentation/installation/ (NB: most distros are hopelessly out of data)
 
-Download Processing-3.2.3 from the [official website][official] and install, prefer to install in say `~/processing-3.2.2`.  When you're done, make sure to take note of the directory you installed the app to complete the configuration see below.
+Download Processing-3.2.3 from the [official website][official] and install, prefer to install in say `~/processing-3.2.4`.  When you're done, make sure to take note of the directory you installed the app to complete the configuration see below.
 
 Configure in `~/.jruby_art/config.yml`:-
 ```bash
