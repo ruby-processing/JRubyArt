@@ -37,13 +37,8 @@ module Processing
 
     # A nice method to run a given block for a grid.
     # Lifted from action_coding/Nodebox.
-    def grid(cols, rows, col_size = 1, row_size = 1)
-      (0...cols * rows).map do |i|
-        x = col_size * (i % cols)
-        y = row_size * i.div(cols)
-        yield x, y
-      end
-    end
+    # def grid(cols, rows, col_size = 1, row_size = 1) { |x, y| block_stuff }
+    # NB: now implemented in java
 
     # lerp_color takes three or four arguments, in Java that's two
     # different methods, one regular and one static, so:
@@ -181,7 +176,7 @@ module Processing
 
     private
 
-    FIXNUM_COL = -> (x) { x.is_a?(Integer) } 
+    FIXNUM_COL = -> (x) { x.is_a?(Integer) }
     STRING_COL = -> (x) { x.is_a?(String) }
     FLOAT_COL = -> (x) { x.is_a?(Float) }
     # parse single argument color int/double/String

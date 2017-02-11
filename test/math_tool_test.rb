@@ -76,4 +76,22 @@ class MathToolTest < Minitest::Test
     assert_in_delta(constrain(xf[1], startf, lastf), 200.0, delta = 0.00001, msg = 'constrain to 0..200')
     assert_in_delta(constrain(xf[2], startf, lastf), 0.0, delta = 0.00001, msg = 'constrain to 0..200')
   end
+
+  def test_grid_one
+    array = []
+    grid(100, 100) { |x, y| array << [x, y] }
+    assert array[0].include?(0)
+    assert array[98].include?(0)
+    assert_equal array.length, 10_000
+    assert array[50].include?(50)
+  end
+
+  def test_grid_ten
+    array = []
+    grid(100, 100, 10, 10) { |x, y| array << [x, y] }
+    assert array[0].include?(0)
+    assert array[9].include?(90)
+    assert_equal array.length, 100
+    assert array[5].include?(50)
+  end
 end
