@@ -224,12 +224,18 @@ public class MathToolModule {
         colStep = (Integer) args[3].toJava(Integer.class);
         }
         if (block.isGiven()) {
-            for (int x = 0; x < row / rowStep; x++){
-                for (int y = 0; y < column / colStep; y++){
-                    block.yieldSpecific(context, context.runtime.newFixnum(x * rowStep), context.runtime.newFixnum(y * colStep));
-
-                }
-            }
+//            for (int x = 0; x < row / rowStep; x++){
+//                for (int y = 0; y < column / colStep; y++){
+//                    block.yieldSpecific(context, context.runtime.newFixnum(x * rowStep), context.runtime.newFixnum(y * colStep));
+//
+//                }
+//            }
+              int tempRow = row / rowStep;
+              for (int z = 0; z < (tempRow * (column / colStep)); z++){
+                  int x = z % tempRow;
+                  int y = z / tempRow;
+                  block.yieldSpecific(context, context.runtime.newFixnum(x * rowStep), context.runtime.newFixnum(y * colStep));
+              }
         }
         return context.nil;
 
