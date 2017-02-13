@@ -10,6 +10,7 @@ title:  "grid"
 ### Ruby signature ###
 
 If it were pure ruby code it would look like this
+
 ```ruby
 # @param width size of 1st dimension
 # @param height size of 2nd dimension
