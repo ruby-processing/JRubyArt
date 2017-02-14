@@ -1,4 +1,4 @@
-**v1.2.9** Grid method now in java (and corrected for step greater than 1). Update to processing-3.3
+**v1.2.9** Grid method now in java (and corrected for step greater than 1). Update to processing-3.3. Update examples to 2.0, which features WOVNS examples that make use of `grid` method and in part caused me to look again a its implementation.
 
 **v1.2.8** Properly implement post-initialize (it might be useful). Refactor Sketchbook and OS. Update to processing-3.2.4, if you have not updated samples for a while you should now.
 
