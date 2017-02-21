@@ -166,7 +166,7 @@ module Processing
         args: argc,
         filename: filename
       )
-      launch.cmd(SKETCH_ROOT)
+      launch.cmd
     end
 
     # NB: We really do mean to use 'and' not '&&' for flow control purposes

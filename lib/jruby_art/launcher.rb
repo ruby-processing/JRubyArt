@@ -17,8 +17,8 @@ module Processing
     # ~/.jruby_art/config.yml, an installed version of jruby is used instead
     # of our vendored one. Note the use of jruby-complete might make using
     # other gems in your sketches hard (but not impossible)....
-    def cmd(root)
-      cmda = jruby_command(root)
+    def cmd
+      cmda = jruby_command
       begin
         exec(*cmda)
         # exec replaces the Ruby process with the JRuby one.
@@ -29,11 +29,10 @@ module Processing
     private
 
     # avoiding multiline ternary etc
-    def jruby_command(root)
+    def jruby_command
       installed = Processing::RP_CONFIG.fetch('JRUBY', true)
-      opts = JRubyOpts.new(root).opts
+      opts = installed ? JRubyOpts.new.opts : JavaOpts.new.opts
       return ['jruby', opts, runner, filename, args].flatten if installed
-      opts = JavaOpts.new(root).opts
       complete = JRubyComplete.complete
       ['java', opts, '-cp', complete, 'org.jruby.Main', runner, filename, args].flatten
     end
