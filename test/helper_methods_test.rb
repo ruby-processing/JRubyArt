@@ -13,6 +13,8 @@ include MathTool
 Dir.chdir(File.dirname(__FILE__))
 
 class HelperMethodsTest < Minitest::Test
+
+ ARRAY = %w(albatross dog horse)
  def test_hex_color
     col_double = 0.5
     hexcolor = 0xFFCC6600
@@ -46,5 +48,15 @@ class HelperMethodsTest < Minitest::Test
     assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), 0.0)
     ax, ay, bx, by, cx, cy = 0, 0, 1.0, 0.0, 0, 0
     assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), 1.0, epsilon = 0.0001, msg = 'when x and z dimension are zero')
+  end
+
+  def test_min
+    assert_equal(min(*ARRAY), 'albatross')
+    assert_equal(min(*ARRAY) { |a, b| a.length <=> b.length }, 'dog')
+  end
+
+  def test_max
+    assert_equal(max(*ARRAY), 'horse')
+    assert_equal(max(*ARRAY) { |a, b| a.length <=> b.length }, 'albatross')
   end
 end
