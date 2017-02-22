@@ -77,7 +77,7 @@ module Processing
     # explicitly provide 'processing.org' min instance method
     # to return a float:- a, b and c need to be floats
 
-    def min(*args, &block)
+    def min(args, &block)
       args.min unless block_given?
       args.min(&block) # { |a, b| a.value <=> b.value }
     end
@@ -85,7 +85,7 @@ module Processing
     # explicitly provide 'processing.org' max instance method
     # to return a float:- a, b and c need to be floats
 
-    def max(*args, &block)
+    def max(args, &block)
       args.max unless block_given?
       args.max(&block) # { |a, b| a.value <=> b.value }
     end

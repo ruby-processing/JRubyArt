@@ -51,12 +51,12 @@ class HelperMethodsTest < Minitest::Test
   end
 
   def test_min
-    assert_equal(min(*ARRAY), 'albatross')
-    assert_equal(min(*ARRAY) { |a, b| a.length <=> b.length }, 'dog')
+    assert_equal(min(ARRAY), 'albatross')
+    assert_equal(min(ARRAY) { |a, b| a.length <=> b.length }, 'dog')
   end
 
   def test_max
-    assert_equal(max(*ARRAY), 'horse')
-    assert_equal(max(*ARRAY) { |a, b| a.length <=> b.length }, 'albatross')
+    assert_equal(max(ARRAY), 'horse')
+    assert_equal(max(ARRAY) { |a, b| a.length <=> b.length }, 'albatross')
   end
 end

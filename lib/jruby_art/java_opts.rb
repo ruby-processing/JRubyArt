@@ -5,7 +5,6 @@ class JavaOpts
 
   def initialize
     arg_file = File.join(SKETCH_ROOT, 'data/java_args.txt')
-    puts arg_file
     @opts = []
     @opts += File.read(arg_file).split(/\s+/) if FileTest.exist?(arg_file)
     return unless opts.empty? && Processing::RP_CONFIG.fetch('java_args', false)

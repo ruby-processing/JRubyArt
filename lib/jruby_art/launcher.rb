@@ -54,6 +54,6 @@ class JRubyCommand
   end
 
   def cmd
-    ['jruby', opts, runner, filename, args].flatten if installed
+    ['jruby', opts, runner, filename, args].flatten
   end
 end
