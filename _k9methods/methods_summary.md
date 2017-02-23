@@ -79,4 +79,4 @@ p5map
 [conway]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/topics/shaders/conway.rb
 [color]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/color/creating.rb
 [blend_color]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/color/blend_color.rb
-[enumerable]:https://apidock.com/ruby/Enumerable/max
+[enumerable]:http://apidock.com/ruby/Enumerable/max
