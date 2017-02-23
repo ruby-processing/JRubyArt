@@ -56,6 +56,10 @@ Note: ruby already provides x.abs, x.to_s, and x.to_f replacing abs(x), str(x), 
 Example Usages:
 [bezier ellipse][bezier], [brick tower][brick_tower]
 
+### Processing max and min convenience methods
+
+We make these methods available in JRubyArt, by mocking the with ruby `Enumerable` `max` and `min` methods, you might prefer to use the `Enumerable` methods directly as they are more flexible (you can provide a [comparator block][enumerable] to change basis of ordering)
+
 ### find_method method
 A convenient way of finding a method
 ```ruby
@@ -75,3 +79,4 @@ p5map
 [conway]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/topics/shaders/conway.rb
 [color]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/color/creating.rb
 [blend_color]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/color/blend_color.rb
+[enumerable]:https://apidock.com/ruby/Enumerable/max
