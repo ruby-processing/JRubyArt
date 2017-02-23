@@ -76,18 +76,19 @@ module Processing
 
     # explicitly provide 'processing.org' min instance method
     # to return a float:- a, b and c need to be floats
+    # you might choose to use ruby method directly and then
+    # provide a block to alter comparator eg
+    # args.min(&block) # { |a, b| a.value <=> b.value }
 
-    def min(args, &block)
-      args.min unless block_given?
-      args.min(&block) # { |a, b| a.value <=> b.value }
+    def min(*args)
+      args.min
     end
 
     # explicitly provide 'processing.org' max instance method
-    # to return a float:- a, b and c need to be floats
+    # to return a float:- a, b and c need to be floats see above
 
-    def max(args, &block)
-      args.max unless block_given?
-      args.max(&block) # { |a, b| a.value <=> b.value }
+    def max(*args)
+      args.max
     end
 
     # explicitly provide 'processing.org' dist instance method
