@@ -22,4 +22,4 @@ arr = [a, b, c, x, y, z] # where a, b, c, x, y, z are custom objects with method
 arr.min { |a, b| a.value <=> b.value }  #=> one of a, b, c, x, y, z that has minimum value
 ```
 
-[max]:{{site.github.url}}/methods/alternatives/
+[max]:{{site.github.url}}/methods/alternative_methods/
