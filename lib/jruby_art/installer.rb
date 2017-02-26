@@ -31,8 +31,7 @@ class Installer
   end
 
   def root_exist?
-    return false if config.empty?
-    File.exist? config['PROCESSING_ROOT']
+    Core.check?(config['PROCESSING_ROOT'])
   end
 
   def config
@@ -55,12 +54,13 @@ end
 
 # Configuration checker
 class Check < Installer
+  require_relative 'core' 
   def install
     show_version
     return super unless config
     installed = File.exist? File.join(gem_root, 'lib/ruby/jruby-complete.jar')
-    proot = '  PROCESSING_ROOT = Not Set!!!' unless root_exist?
-    proot ||= "  PROCESSING_ROOT = #{config['PROCESSING_ROOT']}"
+    proot = '  PROCESSING_ROOT = Not Set Correctly!!!' unless root_exist?
+    proot ||= "  PROCESSING_ROOT = #{config['PROCESSING_ROOT']}"    
     sketchbook = "  sketchbook_path = #{config['sketchbook_path']}"
     template = "  template = #{config['template']}"
     java_args = "  java_args = #{config['java_args']}"
