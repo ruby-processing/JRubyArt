@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "max"
+title:  "max and min"
 keywords: blocks, max, min
 ---
 If you want to use the processing `max`, `min` method see [methods max][max]
 
-### max and min in ruby ###
+### max and min with block ###
 
 Both `max` and `min` are methods from the Enumerable module, and can be used directly with objects that implement Comparable. However you are also able to provide your own comparable block, to provide/change order of Comparison. See below where the default Comparable for string is alphabetical, but in the second instance we compare (order) by length of string.
 

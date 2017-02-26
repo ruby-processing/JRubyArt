@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "alternative ruby methods"
+permalink: /methods/alternative_methods/
 ---
 <style>
 table{
