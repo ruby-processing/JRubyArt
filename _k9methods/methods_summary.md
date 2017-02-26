@@ -58,7 +58,7 @@ Example Usages:
 
 ### Processing max and min convenience methods
 
-We make these methods available in JRubyArt, by mocking them using ruby `Enumerable` `max` and `min` methods, you may prefer to use the `Enumerable` methods directly since they are more flexible (you can even provide a [comparator block][enumerable] to change basis of ordering).
+We make these methods available in JRubyArt, by mocking them using ruby `Enumerable` `max` and `min` methods, you should prefer to use the `Enumerable` methods directly since they are more flexible (you can even provide a [comparator block][enumerable] to change basis of ordering). 
 
 ### find_method method
 A convenient way of finding a method

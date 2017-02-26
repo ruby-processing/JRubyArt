@@ -27,6 +27,8 @@ Here is a list of ruby alternatives to some 'processing' convenience methods; wh
 |               |`year`                  |`t.year`             |
 |               |`map(x, b0, eo, b1, e1)`|`map1d(x, (b0..e0), (b1..e1))`|
 |               |`map(x, b0, eo, b1, e1)`|`p5map(x, b0, e0, b1, e1)`|
+|               |`min(array)`            |`array.min`       |
+|               |`max(array)`            |`array.max`       |
 |conversion     |`degrees(theta)`        |`theta.degrees`    |
 |conversion     |`radians(theta)`        |`theta.radians`    |
 |conversion     |`hex(string)`           |`string.hex`       |
@@ -48,7 +50,7 @@ Here is a list of ruby alternatives to some 'processing' convenience methods; wh
 
 `num.to_s.rjust(left, '0').ljust(left + right, '0')`
 
-For examples of using time in sketches see [learning JRubyArt blog][time], [timestamp][timestamp] and this [clock sketch][clock].
+For examples of using time in sketches see [learning JRubyArt blog][time], [timestamp][timestamp] and this [clock sketch][clock]. We actually use the ruby Enumerable methods `max` and `min` methods to make `max(*array)` and `min(*methods)` available in JRubyArt, so you could use the processing form providing you splat the array, but it is simpler to use the ruby method directly further you have the option with ruby of changing the [comparator via a block][comparator].
 
 For example of `kamera` usage see [kamera][kamera]. To use `selectInput` see link to `File Chooser` in page header.
 
@@ -56,3 +58,4 @@ For example of `kamera` usage see [kamera][kamera]. To use `selectInput` see lin
 [timestamp]:https://monkstone.github.io/timestamp/
 [clock]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/fastmath/clock.rb
 [kamera]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/camera/kmove_eye.rb
+[comparator]:http://ruby-doc.org/core-2.4.0/Enumerable.html#method-i-max
