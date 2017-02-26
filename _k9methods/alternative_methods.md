@@ -25,7 +25,7 @@ Here is a list of ruby alternatives to some 'processing' convenience methods; wh
 |               |`minute`                |`t.minute`           |
 |               |`second`                |`t.second`           |
 |               |`year`                  |`t.year`             |
-|               |`map(x, b0, eo, b1, e1)`|`map1d(x, (b0..e0), (b1..e1))`|
+|custom math    |`map(x, b0, eo, b1, e1)`|`map1d(x, (b0..e0), (b1..e1))`|
 |               |`map(x, b0, eo, b1, e1)`|`p5map(x, b0, e0, b1, e1)`|
 |               |`min(array)`            |`array.min`       |
 |               |`max(array)`            |`array.max`       |
