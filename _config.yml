@@ -3,7 +3,7 @@ port: 4000
 title: JRubyArt (Code as Art)
 email: mamba2928@yahoo.co.uk
 description: > # this means to ignore newlines until "baseurl:"
-   JRubyArt is a ruby wrapper for processing-3.2.4 For processing-2.2.1, use
+   JRubyArt is a ruby wrapper for processing-3.3 For processing-2.2.1, use
    ruby-processing.
 baseurl: "" # the subpath of your site, e.g. /blog
 regenerate: true
