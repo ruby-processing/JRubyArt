@@ -112,7 +112,7 @@ Install MRI ruby (must be at least ruby-2.2)
 
 https://www.ruby-lang.org/en/documentation/installation/ (NB: most distros are hopelessly out of data)
 
-Download Processing-3.2.3 from the [official website][official] and install, prefer to install in say `~/processing-3.3`.  When you're done, make sure to take note of the directory you installed the app to complete the configuration see below.
+Download Processing-3.3 from the [official website][official] and install, prefer to install in say `~/processing-3.3`.  When you're done, make sure to take note of the directory you installed the app to complete the configuration see below.
 
 Configure in `~/.jruby_art/config.yml`:-
 ```bash

@@ -31,11 +31,11 @@ Additionally, you don't have to declare types, voids, or understand the differen
 
 Although there are some drawbacks to using the Ruby version Processing (slower start up time, and sometimes performance), having Ruby's API available to translate your ideas into sketches more than makes up for them.
 
-Why was ruby-processing not updated to use processing3.0+? The [major changes][changes] between processing-2.2.1 and processing-3.0 are not backward compatible. Furthermore since JRubyArt was designed to use jruby-9.0.0.0 from the outset, it makes use of the more literate ruby-2.2 syntax (although the original ruby-processing will run with jruby-9.1.5.0, the examples and the ruby-processing library are all based on ruby-1.9.3 syntax).
+Why was ruby-processing not updated to use processing3.0+? The [major changes][changes] between processing-2.2.1 and processing-3.0 are not backward compatible. Furthermore since JRubyArt was designed to use jruby-9.0.0.0 from the outset, it makes use of the more literate ruby-2.2 syntax (although the original ruby-processing will run with jruby-9.1.7.0, the examples and the ruby-processing library are all based on ruby-1.9.3 syntax).
 
 ### Setup
 
-Setting JRubyArt for the first time, can seem a bit involved (especially if you are addicted to rvm or rbenv). The JRubyArt gem relies on JRuby-9.1.5.0+, processing-3.3, and a handful of other dependencies. Here's how to get them all installed and working on Windows.
+Setting JRubyArt for the first time, can seem a bit involved (especially if you are addicted to rvm or rbenv). The JRubyArt gem relies on JRuby-9.1.7.0+, processing-3.3, and a handful of other dependencies. Here's how to get them all installed and working on Windows.
 
 Install wget, Oracle java (1.8.0.121+), and some version of ruby-2.2+ preferably jruby-9.1.7.0.
 
@@ -70,7 +70,7 @@ Config file is `config.yml` in the `~/.jruby_art folder` so it can co-exist with
 
 ```yaml
 # Example YAML configuration file for jruby_art on Windows
-# K9_ROOT: "C:/Ruby22-x64/lib/ruby/gems/2.3.0/gems/jruby_art-1.2.6" # should not be necessary
+# K9_ROOT: "C:/Ruby22-x64/lib/ruby/gems/2.4.0/gems/jruby_art-1.2.9" # should not be necessary
 PROCESSING_ROOT: "C:/Java/Processing" # just a suggestion
 sketchbook: "C:/Users/USER/Documents/Processing" # adjust to suit your install
 # JRUBY: false # uncomment to use jruby-complete by default especially if you haven't installed jruby
