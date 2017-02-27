@@ -77,7 +77,7 @@ Alternative method (that puts you in control), download and install latest Oracl
 
 Use `update-alternatives` to install and maintain configuration eg for java:-
 ```bash
-sudo update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_111/bin/java 100
+sudo update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_121/bin/java 100
 sudo update-alternatives --config java # to configure if required
 ```
 
