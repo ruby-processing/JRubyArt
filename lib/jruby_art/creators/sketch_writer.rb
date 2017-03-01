@@ -41,7 +41,7 @@ end
 # Implements methods and class_methods omits blank line after draw
 # uses private method_lines to format method lines
 class Sketch
-  attr_reader :param, :lines
+  attr_reader :param
 
   def initialize(param)
     @param = param
