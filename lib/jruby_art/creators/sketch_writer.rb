@@ -33,8 +33,7 @@ class SketchWriter
   end
 
   def write
-    template = SketchTemplate.template
-    sketch = template.code(param)
+    sketch = SketchFactory.create(param)
     File.open(file, 'w+') { |f| f.write sketch.join("\n") }
   end
 end
@@ -42,19 +41,26 @@ end
 # Implements methods and class_methods omits blank line after draw
 # uses private method_lines to format method lines
 class Sketch
+  attr_reader :param, :lines
+
+  def initialize(param)
+    @param = param
+    self
+  end
+
   BLANK ||= ''.freeze
   INDENT ||= '  '.freeze
 
-  def methods(param, indent)
+  def methods(indent)
     lines = []
     lines.concat method_lines('settings', param.sketch_size, indent)
     lines.concat method_lines('setup', param.sketch_title, indent)
     lines.concat method_lines('draw', BLANK, indent)
   end
 
-  def class_methods(param)
+  def class_methods
     lines = [format('class %s < Processing::App', param.class_name)]
-    lines.concat methods(param, INDENT)
+    lines.concat methods(INDENT)
     lines << 'end'
   end
 
@@ -70,37 +76,37 @@ class Sketch
 end
 
 # Switch templates on config
-class SketchTemplate
-  def self.template
+class SketchFactory
+  def self.create(param)
     case Processing::RP_CONFIG.fetch('template', 'bare')
     when /bare/
-      return BareSketch.new
+      BareSketch
     when /class/
-      return ClassSketch.new
+      ClassSketch
     when /emacs/
-      return EmacsSketch.new
-    end
+      EmacsSketch
+    end.new(param).code
   end
 end
 
 # The sketch class creates an array of formatted sketch lines
 class BareSketch < Sketch
-  def code(param)
-    methods(param, BLANK)
+  def code
+    methods(BLANK)
   end
 end
 
 # A simple class wrapped sketch
 class ClassSketch < Sketch
-  def code(param)
+  def code
     lines = ['# frozen_string_literal: false', BLANK]
-    lines.concat class_methods(param)
+    lines.concat class_methods
   end
 end
 
 # A sketch that will run with jruby, for emacs etc
 class EmacsSketch < Sketch
-  def code(param)
+  def code
     lines = [
       '# frozen_string_literal: false',
       "require 'jruby_art'",
@@ -109,7 +115,7 @@ class EmacsSketch < Sketch
       'Processing::App::SKETCH_PATH = __FILE__.freeze',
       BLANK
     ]
-    lines.concat class_methods(param)
+    lines.concat class_methods
     lines << BLANK
     lines << format('%s.new unless defined? $app', param.class_name)
   end

@@ -1,4 +1,4 @@
-gem 'minitest'      # don't use bundled minitest
+gem 'minitest' # don't use bundled minitest
 require 'minitest/autorun'
 require 'minitest/pride'
 
@@ -87,7 +87,7 @@ class SketchWriterTest < Minitest::Test
 
   def test_bare
     result = BARE.split(/\n/, -1)
-    sketch = BareSketch.new.code(@param)
+    sketch = BareSketch.new(@param).code
     sketch.each_with_index do |line, i|
       assert_equal result[i], line
     end
@@ -95,16 +95,16 @@ class SketchWriterTest < Minitest::Test
 
   def test_class
     result = CLASS_SKETCH.split(/\n/, -1)
-    class_lines = ClassSketch.new.code(@param)
-    class_lines.each_with_index do |line, i|
+    sketch = ClassSketch.new(@param).code
+    sketch.each_with_index do |line, i|
       assert_equal result[i], line
     end
   end
 
   def test_emacs
     result = EMACS.split(/\n/, -1)
-    class_lines = EmacsSketch.new.code(@param)
-    class_lines.each_with_index do |line, i|
+    sketch = EmacsSketch.new(@param).code
+    sketch.each_with_index do |line, i|
       assert_equal result[i], line
     end
   end
