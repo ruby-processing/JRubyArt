@@ -8,8 +8,8 @@ WARNING = <<-EOS.freeze
 
 EOS
 
-JRUBYC_VERSION     = '9.1.7.0'
-EXAMPLES           = '2.0'
+JRUBYC_VERSION     = '9.1.8.0'
+EXAMPLES           = '2.1'
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
 
@@ -27,7 +27,7 @@ file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   rescue
     warn(WARNING)
   end
-  check_sha256("jruby-complete-#{JRUBYC_VERSION}.jar", "62983e2b6360005a65931b1cd5a5b50aa97168407feb29410454e658204521de")
+  check_sha256("jruby-complete-#{JRUBYC_VERSION}.jar", "f4552ce55ac6700ad51dc1dce8a3a0b8153cbe9b885006e039a98b558f77e551")
 end
 
 directory "../lib/ruby"
