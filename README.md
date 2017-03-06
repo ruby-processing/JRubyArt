@@ -41,9 +41,9 @@ height: 600 # for static sketch only
 
 ```bash
  gem install jruby_art
- k9 --install # installs jruby-complete-9.1.7.0 and downloads and installs samples to ~/k9_samples
+ k9 --install # installs jruby-complete-9.1.8.0 and downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --run jwishy.rb # if you have jruby-9.1.7.0 installed or config `JRUBY: false`
+ k9 --run jwishy.rb # if you have jruby-9.1.8.0 installed or config `JRUBY: false`
  # to use jruby-complete set `JRUBY: false` in config
 ```
 ## Create sketches from built in templates
@@ -70,7 +70,7 @@ end
 # size, full_screen, pixel_density and smooth should all be moved to settings (this is hidden
 # to users of processing ide, but not for JRubyArt, or for Eclipse NetBeans users). The FX2D
 # rendering mode was introduced, and was expected to replace JAVA2D (as default rendering mode)
-# but may not now happen, and not for processing-3.2.4 in any case.
+# but may not now happen, and not for processing-3.3 in any case.
 def settings
   size 400, 300
 end
