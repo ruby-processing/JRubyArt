@@ -56,9 +56,12 @@ For examples of using time in sketches see [learning JRubyArt blog][time], [time
 
 For example of `kamera` usage see [kamera][kamera]. To use `selectInput` see link to `File Chooser` in page header.
 
+NB: if you have any trouble with `save` or `save_frame` then use the option of providing an absolute path.  You can easily do this using the `data_path` wrapper that does it for you see [data_path method][data_path].
+
 [time]:https://monkstone.github.io/time
 [timestamp]:https://monkstone.github.io/timestamp/
 [clock]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/fastmath/clock.rb
 [kamera]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/camera/kmove_eye.rb
 [comparator]:http://ruby-doc.org/core-2.4.0/Enumerable.html#method-i-max
 [processing]:https://processing.org/reference/
+[data_path]:{{site.github.url}}/data_path/
