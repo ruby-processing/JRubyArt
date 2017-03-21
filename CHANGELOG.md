@@ -1,5 +1,6 @@
-**v1.3.0** Not strictly semantic versioning in the sense that the significant internal refactoring of `launcher.rb` (and `sketch_writer.rb`) should not be evident to user. Bump to jruby-9.1.8.0 which should be last before jruby-9.2.x.x series (ruby-2.4 here we come).
+**v1.3.1** Bump to jruby-9.1.9.0 which should be last before jruby-9.2.x.x series (ruby-2.4 here we come).
 
+**v1.3.0** Not strictly semantic versioning in the sense that the significant internal refactoring of `launcher.rb` (and `sketch_writer.rb`) should not be evident to user. Bump to jruby-9.1.8.0 which should be last before jruby-9.2.x.x series (ruby-2.4 here we come).
 **v1.2.9** Grid method now in java (and corrected for step greater than 1). Update to processing-3.3. Update examples to 2.0, which features WOVNS examples that make use of `grid` method and in part caused me to look again a its implementation.
 
 **v1.2.8** Properly implement post-initialize (it might be useful). Refactor Sketchbook and OS. Update to processing-3.2.4, if you have not updated samples for a while you should now.
