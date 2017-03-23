@@ -31,13 +31,30 @@ On save `:w`sketch will re-load (no need to quit vim)
 
 ### Live coding with Pry ###
 
-To do live [live editing with pry][pry] you should install either [emacs][emacs] or vim, but vim is probably the best.
+To do live [live editing with pry][pry] you should install either [emacs][emacs] or vim, but vim is probably the best. You also need to install the pry gem for use with jruby:-
 
-__Note:__ sketches created with `template: class` work best for live editing.
+```bash
+jgem install pry
+# or jruby -S gem install pry
+# or if you must use rvm or rbenv not recommended
+```
 
-Do `echo "Pry.config.editor = 'vim'" > ~/.pryrc` to set vim as the pry editor.
+To make life easy change your `~/.jruby_art/config.yml` to `template: class` from `template: bare`.
 
-Then when you `k9 --live my_sketch.rb` you will be able (_from pry console_) edit code using vim.
+You must configure pry to set vim as the pry editor `echo "Pry.config.editor = 'vim'" > ~/.pryrc`.
+
+Now you are set create a test sketch `k9 -c fred 200 200`
+
+To start the live session `k9 --live fred.rb`
+
+This should start the sketch and boot into a `pry` session:-
+
+![pry session]({{ site.github.url }}/assets/fred_pry.png)
+
+To get the code listing as shown above enter `$` at the `pry` prompt, to edit the empty draw method `edit -p Fred#draw` at the `pry prompt` once completed entry leave the `vim` editor with `:wq`
+and the sketch will be redrawn to to reflect the new content. But the beauty of the setup is that you can repeat the exercise `edit -p Fred#draw` will reload vim with the `saved content` that you can continue to edit.
+
+![re-edit pry session]({{ site.github.url }}/assets/edit_p.png)
 
 ### Other advantages of vim ###
 
