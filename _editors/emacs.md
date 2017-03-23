@@ -5,7 +5,7 @@ keywords: editor, ide, ruby, jruby_art, emacs
 permalink: /emacs/
 ---
 
-You have to be somewhat dedicated to use `emacs` as editor these days, it is pretty powerful but a nightmare to configure cf atom or even JEdit. However along with `vim` it is probably the only editor that you can properly integrate with `pry`. Because it not as lightweight as vim it is just as well that you do not need to close `emacs` whilst live editing with pry.
+You have to be somewhat dedicated to use `emacs` as an editor these days, it is pretty powerful but a nightmare to configure cf atom or even JEdit. However along with `vim` it is probably the only editor that you can properly integrate with `pry`. Because it not as lightweight as vim it is just as well that you do not need to close `emacs` whilst live editing with pry.
 
 ```bash
 jgem install pry
@@ -32,8 +32,6 @@ Now you are set create a test sketch `k9 -c fred 200 200` and start the live ses
 
 This should start the sketch and boot into a `pry` session:-
 
-![pry session]({{ site.github.url }}/assets/fred_pry.png)
+![pry session]({{ site.github.url }}/assets/emacs_p.png)
 
 To get the code listing as shown above enter `$` at the `pry` prompt, to edit the empty draw method `edit -p Fred#draw` at the `pry prompt` once completed save the sketch with Cx Cc (ctrl-x, ctrl-c) and the sketch will be redrawn to to reflect the new content. But the beauty of the setup is that you can repeat the exercise `edit -p Fred#draw` will reload emacs buffer with the `saved content` that you can continue to edit.
-
-![re-edit pry session]({{ site.github.url }}/assets/emacs_p.png)
