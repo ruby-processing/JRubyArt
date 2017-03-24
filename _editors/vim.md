@@ -52,7 +52,7 @@ This should start the sketch and boot into a `pry` session:-
 ![pry session]({{ site.github.url }}/assets/fred_pry.png)
 
 To get the code listing as shown above enter `$` at the `pry` prompt, to edit the empty draw method `edit -p Fred#draw` at the `pry prompt` once completed entry leave the `vim` editor with `:wq`
-and the sketch will be redrawn to to reflect the new content. But the beauty of the setup is that you can repeat the exercise `edit -p Fred#draw` will reload vim with the `saved content` that you can continue to edit.
+ (or `:wqa` to save all changed buffers) and the sketch will be redrawn to to reflect the new content. But the beauty of the setup is that you can repeat the exercise `edit -p Fred#draw` will reload vim with the `saved content` that you can continue to edit.
 
 ![re-edit pry session]({{ site.github.url }}/assets/edit_p.png)
 
