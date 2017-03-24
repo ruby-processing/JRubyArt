@@ -38,7 +38,7 @@ To get the code listing as shown above enter `$` at the `pry` prompt, to edit th
 
 ### Further emacs configuration
 
-Emacs fanboys interested in further customising emacs for use with JRubyArt should see Jeremy Laviole article on the [wiki][wiki]. Or read about pry integration [here][pry].
+Emacs fanboys interested in further customising emacs for use with JRubyArt should see Jeremy Laviole article on the [wiki][wiki]. If you go down the Jeremy Laviole route you can  change your `~/.jruby_art/config.yml` to `template: emacs` from `template: bare`. Otherwise read about pry integration [here][pry].
 
 [pry]:https://github.com/pry/pry/wiki/Editor-integration
 
