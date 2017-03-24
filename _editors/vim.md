@@ -31,7 +31,7 @@ On save `:w`sketch will re-load (no need to quit vim)
 
 ### Live coding with Pry ###
 
-To do live [live editing with pry][pry] you should install either [emacs][emacs] or vim, but vim is probably the best. You also need to install the pry gem for use with jruby:-
+To do live editing with pry you should install either [emacs][emacs] or vim, but vim is probably the best. You also need to install the pry gem for use with jruby:-
 
 ```bash
 jgem install pry
@@ -56,6 +56,8 @@ and the sketch will be redrawn to to reflect the new content. But the beauty of 
 
 ![re-edit pry session]({{ site.github.url }}/assets/edit_p.png)
 
+You can read more about [pry integration][pry] by following link.
+
 ### Other advantages of vim ###
 
 Also because vim is run from the console it is so easy to run old friends like `rubocop` or `reek` on your sketch code.
@@ -64,4 +66,4 @@ If you are millenial and allergic to the command line install [atom][atom], emac
 
 [emacs]:{{ site.github.url }}/emacs/
 [atom]:{{ site.github.url }}/atom
-[pry]:https://github.com/ruby-processing/JRubyArt/wiki/Live-Coding
+[pry]:https://github.com/pry/pry/wiki/Editor-integration

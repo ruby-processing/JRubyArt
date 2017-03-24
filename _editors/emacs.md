@@ -35,3 +35,11 @@ This should start the sketch and boot into a `pry` session:-
 ![pry session]({{ site.github.url }}/assets/emacs_p.png)
 
 To get the code listing as shown above enter `$` at the `pry` prompt, to edit the empty draw method `edit -p Fred#draw` at the `pry prompt` once completed save the sketch with Cx Cc (ctrl-x, ctrl-c) and the sketch will be redrawn to to reflect the new content. But the beauty of the setup is that you can repeat the exercise `edit -p Fred#draw` will reload emacs buffer with the `saved content` that you can continue to edit.
+
+### Further emacs configuration
+
+Emacs fanboys interested in further customising emacs for use with JRubyArt should see Jeremy Laviole article on the [wiki][wiki]. Or read about pry integration [here][pry].
+
+[pry]:https://github.com/pry/pry/wiki/Editor-integration
+
+[wiki]:https://github.com/ruby-processing/JRubyArt/wiki/Using-emacs-as-your-JRubyArt-Ide
