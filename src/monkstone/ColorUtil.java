@@ -1,9 +1,9 @@
 /**
  * This utility allows JRubyArt users to use the processing.org color method
  * in their sketches. Includes a method to efficiently convert an array of web
- * strings to an array of color int, and another to convert an array of color
- * int to a string that can be used in ruby code (to generate web color array).
- * Copyright (c) 2015-16 Martin Prout.
+ * strings to an array of color int, and another to convert an array of p5 color
+ * (int) to a string that can be used in ruby code (to generate web color array).
+ * Copyright (c) 2015-17 Martin Prout.
  * This utility is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
@@ -46,7 +46,7 @@ public class ColorUtil {
     /**
      *
      * @param web Array of web (hex) String
-     * @return array of color int according to java
+     * @return array of p5 color (int)
      */
     static public int[] webArray(String[] web) {
         int[] result = new int[web.length];
@@ -60,19 +60,18 @@ public class ColorUtil {
      * Return a ruby string of the form "%w(a b c)" where a, b, c are raw web
      * strings. This string can be used in ruby code.
      *
-     * @param hex int array
+     * @param p5colors array of p5 colors (int)
      * @return String for use in ruby
      */
-    static public String rubyString(int[] hex) {
-        StringBuilder result = new StringBuilder("%w(");
-        for (int i = 0; i < hex.length; i++) {
-            result.append(String.format("#%06X", (0xFFFFFF & hex[i])));
-            if (i < hex.length - 1) {
-                result.append(' ');
-            }
+    static public String rubyString(int[] p5colors) {
+        StringBuilder sb = new StringBuilder("%w(");
+        for (int p5color : p5colors) {
+            sb.append(String.format("#%06X", (0xFFFFFF & p5color)));
+            sb.append(' ');
         }
-        result.append(")\n");
-        return result.toString();
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append(")\n");
+        return sb.toString();
     }
 
     /**

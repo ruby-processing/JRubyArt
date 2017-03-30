@@ -60,8 +60,13 @@ module Processing
       Java::Monkstone::ColorUtil.webArray(web)
     end
 
-    def int_to_ruby_colors(hex)
-      Java::Monkstone::ColorUtil.rubyString(hex)
+    def int_to_ruby_colors(p5color)
+      warn "[DEPRECATION] `int_to_ruby_colors` is deprecated.  Please use `p52ruby` instead."
+      p52ruby(p5color)
+    end
+
+    def p52ruby(p5color)
+      Java::Monkstone::ColorUtil.rubyString(p5color)
     end
 
     # Overrides Processing convenience function thread, which takes a String
