@@ -9,7 +9,7 @@ keywords: gem, library, jruby_art
 
 ### Processing libraries ported as ruby-gems
 
-[toxiclibs][tox], [geomerative][geom], [joonsrenderer][joons]
+[toxiclibs][tox], [geomerative][geom], [joonsrenderer][joons], [Wordcram][wordcram]
 
 ### Other java libraries ported as ruby-gems
 
@@ -24,3 +24,4 @@ jbox2d ([pbox2d][jbox2d])
 [jbox2d]:https://github.com/ruby-processing/jbox2d
 [cf3]:https://github.com/monkstone/cf3ruby
 [joons]:https://ruby-processing.github.io/joonsrenderer/
+[wordcram]:https://github.com/ruby-processing/WordCram/
