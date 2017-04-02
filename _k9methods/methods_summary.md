@@ -40,7 +40,7 @@ A convenience method that converts an array of 'color' int to a ruby string that
 
 ```ruby
 p52ruby([-3381760, -3368704, -1])
-# output = "%w(#CC6600 #CC9900 #FFFFFF)/n"
+# output = "%w(#CC6600 #CC9900 #FFFFFF)\n"
 ```
 
 See this [toxiclibs sketch][palette] where we use color theory to generate a sketch palette.
