@@ -32,6 +32,18 @@ WEB = %w(#CC6600 #CC9900 #FFFFFF).freeze
 web_to_color_array(WEB)
 # output = [-3381760, -3368704, -1]
 ```
+see usage in a [Wordcram sketch][wordcram]
+
+### p52ruby
+
+A convenience method that converts an array of 'color' int to a ruby string that you can use in your Wordcram or Hype sketches
+
+```ruby
+p52ruby([-3381760, -3368704, -1])
+# output = "%w(#CC6600 #CC9900 #FFFFFF)/n"
+```
+
+See this [toxiclibs sketch][palette] where we use color theory to generate a sketch palette.
 
 ### map1d method
 A replacement for processings map function, maps val (range1) to range2 using a linear transform.
@@ -58,7 +70,7 @@ Example Usages:
 
 ### Processing max and min convenience methods
 
-We make these methods available in JRubyArt, by mocking them using ruby `Enumerable` `max` and `min` methods, you should prefer to use the `Enumerable` methods directly since they are more flexible (you can even provide a [comparator block][enumerable] to change basis of ordering). 
+We make these methods available in JRubyArt, by mocking them using ruby `Enumerable` `max` and `min` methods, you should prefer to use the `Enumerable` methods directly since they are more flexible (you can even provide a [comparator block][enumerable] to change basis of ordering).
 
 ### find_method method
 A convenient way of finding a method
@@ -73,6 +85,8 @@ map1d
 p5map
 ```
 
+[palette]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/external_library/gem/toxiclibs/color_utils/palette_generator.rb
+[wordcram]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/external_library/gem/ruby_wordcram/fruits.rb
 [bezier]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/form/bezier_ellipse.rb
 [brick_tower]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/form/brick_tower.rb
 [mandelbrot]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/contributed/mandelbrot.rb
