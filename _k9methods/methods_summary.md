@@ -36,13 +36,13 @@ see usage in a [Wordcram sketch][wordcram]
 
 ### p52ruby
 
-A convenience method that converts an array of 'color' int to a ruby string that you can use in your Wordcram or Hype sketches
+A convenience method that converts an array of 'color' int to a ruby string that you can use in your Wordcram or Hype sketches (say from a ColorHarmony sketch)
 
 ```ruby
 p52ruby([-3381760, -3368704, -1])
 # output = "%w(#CC6600 #CC9900 #FFFFFF)\n"
 ```
-
+For toxiclibs we have created a new method `to_ruby_string` for the `ColorList` class that does the same thing for a collection of `TColor`
 See this [toxiclibs sketch][palette] where we use color theory to generate a sketch palette.
 
 ### map1d method
