@@ -100,4 +100,15 @@ class Rp5Test < Minitest::Test
     end
     assert out.index("undefined method `unknown_method'"), 'Failed to raise exception?'
   end
+
+  def test_load_ruby_library
+    out, _err_ = capture_io do
+      open('|../bin/k9 -r sketches/ruby_library.rb', 'r') do |io|
+        while l = io.gets
+          puts(l.chop)
+        end
+      end
+    end
+    assert_match(/Boids/, out, 'Failed ruby_library sketch')
+  end
 end
