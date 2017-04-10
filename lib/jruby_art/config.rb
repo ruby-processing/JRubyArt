@@ -30,15 +30,12 @@ module Processing
       case detect_os
       when /mac|darwin/ then :mac
       when /linux/ then :linux
-      when /solaris|bsd/ then :unix
+      when *WIN_PATTERNS then :windows
       else
-        WIN_PATTERNS.find { |reg| detect_os =~ reg }
-        raise "unsupported os: #{detect_os.inspect}" if Regexp.last_match.nil?
-        :windows
+        raise "unsupported os: #{detect_os.inspect}"
       end
     end
   end
-
   OS ||= HostOS.os
 end
 
@@ -50,5 +47,18 @@ class Sketchbook
 
   def self.library(name)
     Dir["#{path}/#{name}/library/\*.jar"]
+  end
+end
+
+# Expected vanilla processing paths for a given library name
+class ProcessingPath
+  def self.list(name)
+    [
+      "#{SKETCH_ROOT}/library/#{name}",
+      "#{Processing::RP_CONFIG['PROCESSING_ROOT']}/modes/java/libraries/#{name}/library",
+      "#{K9_ROOT}/library/#{name}/library",
+      "#{K9_ROOT}/library/#{name}",
+      "#{Sketchbook.path}/#{name}/library"
+    ]
   end
 end
