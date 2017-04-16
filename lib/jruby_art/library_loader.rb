@@ -82,14 +82,10 @@ module Processing
     end
 
     def get_platform_specific_library_paths(basename)
-      # for MacOS, but does this even work, or does Mac return '64'?
-      bits = 'universal'
-      if get_property('sun.arch.data.model') == '32' ||
-         get_property('java.vm.name').index('32')
-        bits = '32'
-      elsif get_property('sun.arch.data.model') == '64' ||
-            get_property('java.vm.name').index('64')
-        bits = '64' unless platform =~ /macosx/
+      bits = '64'
+      if java.lang.System.getProperty('sun.arch.data.model') == '32' ||
+         java.lang.System.getProperty('java.vm.name').index('32')
+        bits = '32' unless platform =~ /macosx/
       end
       [platform, platform + bits].map { |p| File.join(basename, p) }
     end
