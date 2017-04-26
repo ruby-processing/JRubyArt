@@ -19,7 +19,7 @@ Since the project began in 2001, it's been helping teach people to program in a 
 
 In 2009, Jeremy Ashkenas (aka jashkenas, creator of Backbone.JS, Underscore.JS, and Coffeescript), published the original [ruby-processing gem][gem]. It wraps Processing in a shim that makes it even easier to get started if you know Ruby. It has been since updated to use processing-2.2.1 by Martin Prout (final version using jruby-1.7.27 corresponding to ruby-1.9.3 syntax), NB: no more releases are expected, and ruby-processing is not compatible with processing-3.0+.
 
-In 2015, Martin Prout (aka monkstone) published the [JRubyArt gem][jrubyart], loosely based on the original ruby-processing, but updated to use processing-3.3.1 and jruby-9.1.8.0 (ruby-2.3 syntax)
+In 2015, Martin Prout (aka monkstone) published the [JRubyArt gem][jrubyart], loosely based on the original ruby-processing, but updated to use processing-3.3.2 and jruby-9.1.8.0 (ruby-2.3 syntax)
 
 ### Why JRubyArt?
 
@@ -35,14 +35,14 @@ Why was ruby-processing not updated to use processing3.0+? The [major changes][c
 
 ### Setup
 
-Setting JRubyArt for the first time, can seem a bit involved (especially if you are addicted to rvm or rbenv). The JRubyArt gem relies on jruby-9.1.8.0+, processing-3.3.1, and a handful of other dependencies. Here's how to get them all installed and working on Windows.
+Setting JRubyArt for the first time, can seem a bit involved (especially if you are addicted to rvm or rbenv). The JRubyArt gem relies on jruby-9.1.8.0+, processing-3.3.2, and a handful of other dependencies. Here's how to get them all installed and working on Windows.
 
 Install wget, Oracle java (1.8.0.121+), and some version of ruby-2.2+ preferably jruby-9.1.8.0.
 
 ### Processing
 
 You can check to see what platforms are supported [here][platforms].
-Download processing-3.3.1 from the [official website][official] and install, prefer to install in say `C:/Java/Processing` ie folders without special characters or spaces.  When you're done, make sure to take note of the directory you installed the app to complete the configuration.
+Download processing-3.3.2 from the [official website][official] and install, prefer to install in say `C:/Java/Processing` ie folders without special characters or spaces.  When you're done, make sure to take note of the directory you installed the app to complete the configuration.
 
 __Finishing up__
 
