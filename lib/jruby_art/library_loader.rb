@@ -51,8 +51,8 @@ module Processing
     def load_java_library(library_name)
       library_name = library_name.to_sym
       return true if @loaded_libraries.include?(library_name)
-      jpath = get_library_directory_path(library_name, 'jar')
-      jars = get_library_paths(library_name, 'jar')
+      jpath = get_library_directory_path(library_name) # defaults to jar
+      jars = get_library_paths(library_name)
       return false if jars.empty?
       jars.each { |jar| require jar }
       platform_specific_library_paths = get_platform_specific_library_paths(jpath)
@@ -60,7 +60,7 @@ module Processing
         FileTest.directory?(ppath) && !Dir.glob(File.join(ppath, '*.{so,dll,jnilib}')).empty?
       end
       unless platform_specific_library_paths.empty?
-        platform_specific_library_paths << java.lang.System.getProperty('java.library.path')
+        platform_specific_library_paths << get_property('java.library.path')
         new_library_path = platform_specific_library_paths.join(java.io.File.pathSeparator)
         java.lang.System.setProperty('java.library.path', new_library_path)
         field = java.lang.Class.for_name('java.lang.ClassLoader').get_declared_field('sys_paths')
@@ -74,7 +74,7 @@ module Processing
 
     def platform
       match = %w(mac linux windows).find do |os|
-        java.lang.System.getProperty('os.name').downcase.index(os)
+        get_property('os.name').downcase.index(os)
       end
       return 'other' unless match
       return match unless match =~ /mac/
@@ -90,23 +90,21 @@ module Processing
       [platform, platform + bits].map { |p| File.join(basename, p) }
     end
 
-    def get_library_paths(library_name, extension = nil)
+    def get_library_paths(library_name, extension = 'jar')
       dir = get_library_directory_path(library_name, extension)
       Dir.glob("#{dir}/*.{rb,jar}")
     end
 
     protected
 
-    def get_library_directory_path(library_name, extension = nil)
+    def get_property(prop)
+      java.lang.System.getProperty(prop)
+    end
+
+    def get_library_directory_path(library_name, extension = 'jar')
       extensions = extension ? [extension] : %w(jar rb)
       extensions.each do |ext|
-        [
-          "#{SKETCH_ROOT}/library/#{library_name}",
-          "#{Processing::RP_CONFIG['PROCESSING_ROOT']}/modes/java/libraries/#{library_name}/library",
-          "#{K9_ROOT}/library/#{library_name}/library",
-          "#{K9_ROOT}/library/#{library_name}",
-	  "#{Sketchbook.path}/#{library_name}/library"
-        ].each do |jpath|
+        ProcessingPath.list(library_name).each do |jpath|
           if File.exist?(jpath) && !Dir.glob(format('%s/*.%s', jpath, ext)).empty?
             return jpath
           end
@@ -114,5 +112,5 @@ module Processing
       end
       nil
     end
-  end
+  end  
 end
