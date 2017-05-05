@@ -1,3 +1,4 @@
+require_relative 'config'
 # The abstract RubyLibrary class
 class RubyLibrary
   attr_reader :path
@@ -16,7 +17,7 @@ class LocalRubyLibrary < RubyLibrary
   def initialize(name)
     super
     @path = File.absolute_path(
-      File.join(Processing::SKETCH_ROOT, 'library', name, "#{name}.rb")
+      File.join(SKETCH_ROOT, 'library', name, "#{name}.rb")
     )
   end
 end

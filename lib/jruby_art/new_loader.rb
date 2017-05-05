@@ -43,6 +43,9 @@ module Processing
       if (@library = LocalJavaLibrary.new(fname)).exist?
         return load_jars(library, name)
       end
+      if (@library = ProcessingJavaLibrary.new(fname)).exist?
+        return load_jars(library, name)
+      end
       if (@library = InstalledJavaLibrary.new(fname)).exist?
         return load_jars(library, name)
       end

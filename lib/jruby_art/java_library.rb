@@ -1,4 +1,4 @@
-require_relative 'config'
+require_relative '../jruby_art'
 require_relative 'native_folder'
 require_relative 'native_loader'
 
@@ -41,8 +41,17 @@ end
 class LocalJavaLibrary < JavaLibrary
   def initialize(name)
     super
-    @dir = File.join(Processing::SKETCH_ROOT, 'library', name)
+    @dir = File.join(SKETCH_ROOT, 'library', name)
     @path = File.join(dir, "#{name}.jar")
+  end
+end
+
+# The ProcessingJavaLibrary class
+class ProcessingJavaLibrary < JavaLibrary
+  def initialize(name)
+    super
+    @dir = "#{Processing::RP_CONFIG['PROCESSING_ROOT']}/modes/java/libraries"
+    @path = File.join(dir, name, 'library', "#{name}.jar")
   end
 end
 
