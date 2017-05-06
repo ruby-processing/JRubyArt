@@ -1,4 +1,4 @@
-class RubyLibrary
+class Dummy
   def initialize
     puts 'ok'
   end

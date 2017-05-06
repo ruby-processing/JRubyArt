@@ -1,10 +1,12 @@
+load_library :ruby_library
+
 def settings
   size 200, 200
 end
 
 def setup
   sketch_title 'Local Ruby'
-  puts 'ok'
+  RubyLibrary.new
 end
 
 def draw
