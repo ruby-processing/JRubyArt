@@ -31,6 +31,12 @@ Inspired by Nodebox, JRubyArt (copied from ruby-processing) provides a way to co
       @hide = true
     end
   # Rest of the code follows
+  
+  # eg
+  def reset!
+    # some action you want performed on button pressed
+  end
+    
 
 ```
 
