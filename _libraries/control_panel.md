@@ -11,8 +11,12 @@ Inspired by Nodebox, JRubyArt (copied from ruby-processing) provides a way to co
   load_library :control_panel
   attr_reader :panel, :hide
 
-  def setup
+  def settings
     size(200, 200)
+  end
+
+  def setup
+    sketch_title 'Control Panel Example'
     @hide = false
     control_panel do |c|
       c.look_feel "Nimbus"
