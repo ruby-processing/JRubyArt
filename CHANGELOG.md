@@ -1,3 +1,5 @@
+**v1.3.3** Update for processing-3.3.3
+
 **v1.3.2** Update for processing-3.3.2, and bump examples version to include glvideo library examples
 
 **v1.3.1** The native binaries for the video library in MacOS are in the `macosx64` folder not the `macosx` this release should provide a quick fix. Note the library loader is in line for quite a major refactor in the near future, so this is a temporary fix.

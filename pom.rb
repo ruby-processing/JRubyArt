@@ -2,7 +2,7 @@ require 'fileutils'
 project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
 
   model_version '4.0.0'
-  id 'ruby-processing:rp5extras', '1.3.2'
+  id 'ruby-processing:rp5extras', '1.3.3'
   packaging 'jar'
 
   description 'rp5extras for JRubyArt'
@@ -33,7 +33,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
   )
 
   pom 'org.jruby:jruby:9.1.8.0'
-  jar 'org.processing:core:3.3.2'
+  jar 'org.processing:core:3.3.3'
   jar 'org.processing:video:3.0.2'
   plugin_management do
     plugin :resources, '2.6'
@@ -47,12 +47,6 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
       :javadoc, '2.10.4',
       detect_offline_links: 'false',
       links: ['${processing.api}', '${jruby.api}']
-    )
-    plugin(
-      :jar, '3.0.2',
-      archive: {
-        manifestFile: 'MANIFEST.MF' # camel case reqd
-      }
     )
   end
   build do

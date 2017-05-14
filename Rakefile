@@ -1,13 +1,8 @@
 require_relative 'lib/jruby_art/version'
 
 def create_manifest
-  title =  'Implementation-Title: rpextras (java extension for JRubyArt)    '        
+  title =  'Implementation-Title: rpextras (java extension for JRubyArt)    '
   version =  format('Implementation-Version: %s', JRubyArt::VERSION)
-  file = File.open('MANIFEST.MF', 'w') do |f|
-    f.puts(title)    
-    f.puts(version)
-    f.puts('Class-Path: core.jar gluegen-rt.jar jog-all.jar')
-  end
 end
 
 task default: [:init, :compile, :gem, :test]
@@ -19,7 +14,7 @@ end
 
 desc 'Build gem'
 task :gem do
-  sh 'gem build jruby_art.gemspec' 
+  sh 'gem build jruby_art.gemspec'
 end
 
 desc 'Compile'
