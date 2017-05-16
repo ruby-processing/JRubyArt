@@ -1,4 +1,4 @@
-**v1.3.3** Update for processing-3.3.3
+**v1.3.3** Update for processing-3.3.3 and JRuby-9.1.9.0
 
 **v1.3.2** Update for processing-3.3.2, and bump examples version to include glvideo library examples
 
