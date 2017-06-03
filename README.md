@@ -7,12 +7,12 @@ Versions before JRubyArt-1.2.0, are unsupported, please update, preferably to la
 _Note the main reason for the current build to fail on travis is when the current version of [processing is not available from maven central][testing], it has only ever been available by third parties (I am eternally hopeful that one day processing.org will see the light), actually rvm with jruby as used by travis-ci is also pretty crap as judged by the build traces._
 
 ## Requirements
-A clean start for `jruby_art` that works best with the latest version of [processing-3.3.2](https://github.com/processing/processing/releases) and [jruby-9.1.8.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing-2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
+A clean start for `jruby_art` that works best with the latest version of [processing-3.3.3](https://github.com/processing/processing/releases) and [jruby-9.1.9.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing-2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
 
-A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.1.8.0+`) to download gem.
+A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.1.9.0+`) to download gem.
 
-`processing-3.3.2`
+`processing-3.3.3`
 
 `jdk1.8.0_121+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
 
@@ -28,7 +28,7 @@ You can if you wish leave configuration to the `new` autoconfig tool (delete exi
 ```yaml
 # YAML configuration file for jruby_art
 # K9_HOME: "/home/ruby2.3.0 ... /jruby_art" # windows users may need to set this
-PROCESSING_ROOT: "/home/tux/processing-3.3.2" # typical linux shown
+PROCESSING_ROOT: "/home/tux/processing-3.3.3" # typical linux shown
 # important sketch_book path may be different for processing-3.0
 sketchbook_path: "/home/tux/sketchbook"
 template: bare
@@ -41,9 +41,9 @@ height: 600 # for static sketch only
 
 ```bash
  gem install jruby_art
- k9 --install # installs jruby-complete-9.1.8.0 and downloads and installs samples to ~/k9_samples
+ k9 --install # installs jruby-complete-9.1.9.0 and downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --run jwishy.rb # if you have jruby-9.1.8.0 installed or config `JRUBY: false`
+ k9 --run jwishy.rb # if you have jruby-9.1.9.0 installed or config `JRUBY: false`
  # to use jruby-complete set `JRUBY: false` in config
 ```
 ## Create sketches from built in templates
