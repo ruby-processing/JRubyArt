@@ -4,7 +4,7 @@
 # Also, send samples and libraries.
 unless defined? K9_ROOT
   $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
-  K9_ROOT = File.expand_path(File.dirname(__FILE__) + '/../')
+  K9_ROOT = File.absolute_path(File.dirname(__dir__))
 end
 
 SKETCH_ROOT ||= Dir.pwd
