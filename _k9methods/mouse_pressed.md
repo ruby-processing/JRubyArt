@@ -17,6 +17,7 @@ See also:-
 [mouse_released][mouse_released], [mouse_dragged][mouse_dragged], [mouse_clicked][mouse_clicked]
 
 [mouse_pressed?]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/input/mouse_press.rb
+[mouse_pressed]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/contributed/empathy.rb
 [mousePressed]:https://processing.org/reference/mousePressed_.html
 [drawolver]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/contributed/drawolver.rb
 [mouse_released]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/contributed/bezier_playground.rb
