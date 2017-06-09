@@ -4,7 +4,7 @@ require 'java'
 require_relative '../rpextras'
 require_relative '../jruby_art/helper_methods'
 require_relative '../jruby_art/helpers/aabb'
-require_relative '../jruby_art/new_loader'
+require_relative '../jruby_art/library_loader'
 require_relative '../jruby_art/config'
 
 # A wrapper module for the processing App

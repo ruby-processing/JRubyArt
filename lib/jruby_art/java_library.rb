@@ -1,3 +1,4 @@
+require 'java'
 require_relative '../jruby_art'
 require_relative 'native_folder'
 require_relative 'native_loader'
