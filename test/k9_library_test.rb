@@ -39,6 +39,17 @@ class Rp5LibraryTest < Minitest::Test
     assert_match(/ok/, out, 'Failed Local Java Sketch')
   end
 
+  def test_processing_java
+    out, _err_ = capture_io do
+      open('|../bin/k9 -r sketches/processing_java.rb', 'r') do |io|
+        while l = io.gets
+          puts(l.chop)
+        end
+      end
+    end
+    assert_match(/ok/, out, 'Failed Local Java Sketch')
+  end
+
   def test_installed_java
     out, _err_ = capture_io do
       open('|../bin/k9 -r sketches/installed_java.rb', 'r') do |io|

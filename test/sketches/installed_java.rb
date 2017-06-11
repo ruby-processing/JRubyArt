@@ -1,10 +1,12 @@
+load_library :hype
+
 def settings
   size 200, 200
 end
 
 def setup
   sketch_title 'Installed Java'
-  puts 'ok'
+  puts library_loaded?(:hype) ? 'ok' : 'oops?'
 end
 
 def draw

@@ -40,13 +40,13 @@ module Processing
       if (@library = InstalledRubyLibrary.new(fname)).exist?
         return require_library(library, name)
       end
-      if (@library = LocalJavaLibrary.new(fname)).exist?
+      if (@library = JavaLibrary.new(LocalPath.new(fname))).exist?
         return load_jars(library, name)
       end
-      if (@library = ProcessingJavaLibrary.new(fname)).exist?
+      if (@library = JavaLibrary.new(ProcessingPath.new(fname))).exist?
         return load_jars(library, name)
       end
-      if (@library = InstalledJavaLibrary.new(fname)).exist?
+      if (@library = JavaLibrary.new(InstalledPath.new(fname))).exist?
         return load_jars(library, name)
       end
       false

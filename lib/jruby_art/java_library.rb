@@ -7,9 +7,9 @@ require_relative 'native_loader'
 class JavaLibrary
   attr_reader :dir, :path, :ppath
 
-  def initialize(name)
-    @dir = '.'
-    @path = File.join(dir, "#{name}.jar")
+  def initialize(java_path)
+    @dir = java_path.dir
+    @path = java_path.path
   end
 
   def exist?
@@ -18,10 +18,11 @@ class JavaLibrary
 
   def load_jars
     Dir["#{dir}/*.jar"].each do |jar|
+      puts jar
       require jar
     end
-    return unless native_binaries?
-    add_binaries_to_classpath
+    # return unless native_binaries?
+    # add_binaries_to_classpath
   end
 
   def native_binaries?
@@ -39,27 +40,27 @@ class JavaLibrary
 end
 
 # The LocalJavaLibrary class
-class LocalJavaLibrary < JavaLibrary
+class LocalPath
+  attr_reader :dir, :path
   def initialize(name)
-    super
     @dir = File.join(SKETCH_ROOT, 'library', name)
     @path = File.join(dir, "#{name}.jar")
   end
 end
 
 # The ProcessingJavaLibrary class
-class ProcessingJavaLibrary < JavaLibrary
+class ProcessingPath
+  attr_reader :dir, :path
   def initialize(name)
-    super
     @dir = "#{Processing::RP_CONFIG['PROCESSING_ROOT']}/modes/java/libraries"
     @path = File.join(dir, name, 'library', "#{name}.jar")
   end
 end
 
 # The InstalledJavaLibrary class
-class InstalledJavaLibrary < JavaLibrary
+class InstalledPath
+  attr_reader :dir, :path
   def initialize(name)
-    super
     @dir = File.join(Processing::RP_CONFIG['sketchbook_path'], 'libraries')
     @path = File.join(dir, name, 'library', "#{name}.jar")
   end
