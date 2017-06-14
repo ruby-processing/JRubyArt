@@ -9,7 +9,7 @@ WARNING = <<-EOS.freeze
 EOS
 
 
-JRUBYC_VERSION     = '9.1.10.0'
+JRUBYC_VERSION     = '9.1.11.0'
 
 EXAMPLES           = '2.1'
 HOME_DIR = ENV['HOME']
@@ -30,7 +30,7 @@ file "jruby-complete-#{JRUBYC_VERSION}.jar" do
     warn(WARNING)
   end
 
-  check_sha256("jruby-complete-#{JRUBYC_VERSION}.jar", "3ec520273edcfb9051abd99ca9c646ad43e0eeeb615f7e546231783af6c5bb13")
+  check_sha256("jruby-complete-#{JRUBYC_VERSION}.jar", "aecc49df828172a5543b931e2575de535583dcfa30a4f771954b8152368d8301")
 
 end
 
