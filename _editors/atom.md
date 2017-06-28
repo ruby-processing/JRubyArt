@@ -12,7 +12,7 @@ For linux ignore any distro version and download latest version:-
 
 ```bash
 sudo dpkg --install atom-amd64.deb # debian, mint, ubuntu
-sudo pacman -S atom # Archlinux currently installs 1.15.0
+sudo pacman -S atom # Archlinux currently installs 1.18.0
 ```
 
 MacOS/Windows users could just download direct (or homebrew on MacOS)
@@ -69,9 +69,9 @@ Navigate to ~/.atom/packages/language-jruby-art/snippets and edit `language-jrub
 
 ### Linter Ruby Leek package etc
 
-Fans of Sandi Metz will probably want to install linter-ruby-reek and rubocop packages, the latter v. useful for detecting stupid coding errors.
+Fans of Sandi Metz will may want to experiment with trhe linter-ruby-reek and rubocop packages, the latter v. useful for detecting stupid coding errors.
 
 [language]:https://atom.io/packages/language-jruby-art
 [atom-k9]:https://atom.io/packages/atom-k9
 [atom]:https://atom.io/
-[releases]:https://github.com/atom/atom/releases/tag/v1.10.2
+[releases]:https://github.com/atom/atom/releases/tag/v1.18.0
