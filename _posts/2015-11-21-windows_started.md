@@ -37,7 +37,7 @@ Why was ruby-processing not updated to use processing3.0+? The [major changes][c
 
 Setting JRubyArt for the first time, can seem a bit involved (especially if you are addicted to rvm or rbenv). The JRubyArt gem relies on jruby-9.1.12.0+, processing-3.3.4, and a handful of other dependencies. Here's how to get them all installed and working on Windows.
 
-Install wget, Oracle java (1.8.0.121+), and some version of ruby-2.2+ preferably jruby-9.1.12.0.
+Install [wget][wget] which is also available as [cygwin][cygwin] package, Oracle java (1.8.0.121+), and some version of ruby-2.2+ preferably jruby-9.1.12.0.
 
 ### Processing
 
@@ -54,7 +54,7 @@ download (but you will surely want them):-
 ### JRuby
 
 It might actually be simpler to just install [jruby][jruby] on Windows rather
-than struggle with MRI ruby, but you may also want to install [cygwin][cygwin] or similar in any case (cygwin at least includes wget).
+than struggle with MRI ruby, but you may also want to install [cygwin][cygwin] or similar in any case (cygwin has a wget package).
 
 If you've already installed MRI ruby is also possible to run JRubyArt without a system install of jruby. But a jruby install might be needed to use JRubyArt with other gems eg toxiclibs.
 
@@ -161,3 +161,4 @@ Read more about using the [processing api here][api]
 [rubyinstaller]:https://rubyinstaller.org/downloads/
 [rvm]:https://blog.developwithpassion.com/2012/03/30/installing-rvm-with-cygwin-on-windows/
 [casey]:https://github.com/processing/processing/wiki/FAQ
+[wget]:http://gnuwin32.sourceforge.net/packages/wget.htm
