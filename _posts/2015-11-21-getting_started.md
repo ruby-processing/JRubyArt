@@ -175,7 +175,7 @@ PS: `k9 -c fred` also works with a bare template defaults, to `size 200 200`
 
 Read more about using the [processing api here][api]
 
-[api]: {{site.github.url}}/methods/processing_api.html
+[api]: {{site.github.url}}/methods/processing_api
 [ben]:https://blog.engineyard.com/2015/getting-started-with-ruby-processing
 [processing]:https://processing.org/
 [gem]:https://rubygems.org/gems/ruby-processing
