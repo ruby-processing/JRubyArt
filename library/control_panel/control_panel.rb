@@ -82,8 +82,8 @@ module ControlPanel
       set_preferred_size(java.awt.Dimension.new(170, 64))
       control_panel.add_element(self, name, false, true)
       add_action_listener do
-        $app.send(name.to_s)
-        proc.call(value) if proc
+        $app.send(name)
+        proc.call if proc
       end
     end
   end
@@ -150,10 +150,10 @@ module ControlPanel
 
     def set_feel(lf = 'metal')
       lafinfo = javax.swing.UIManager.getInstalledLookAndFeels
-      laf = lafinfo.select do |info|
-        info.getName.eql? lf.capitalize
+      laf = lafinfo.to_ary.select do |info|
+        info.name =~ Regexp.new(Regexp.escape(lf), Regexp::IGNORECASE)
       end
-      javax.swing.UIManager.setLookAndFeel(laf[0].getClassName)
+      javax.swing.UIManager.setLookAndFeel(laf[0].class_name)
     end
   end
 
@@ -168,4 +168,4 @@ module ControlPanel
   end
 end
 
-Processing::App.send :include, ControlPanel::InstanceMethods
+Processing::App.include(ControlPanel::InstanceMethods)
