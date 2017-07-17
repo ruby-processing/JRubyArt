@@ -34,7 +34,10 @@ module Processing
   }.freeze
   # All sketches extend this class
   class App < PApplet
-    include HelperMethods, Math, MathTool, Render
+    include HelperMethods
+    include Math
+    include MathTool
+    include Render
     # Alias some methods for familiarity for Shoes coders.
     # surface replaces :frame, but needs field_reader for access
     alias oval ellipse
@@ -181,9 +184,9 @@ module Processing
 
     def import_opengl
       # Include processing opengl classes that we'd like to use:
-      %w(FontTexture FrameBuffer LinePath LineStroker PGL
+      %w[FontTexture FrameBuffer LinePath LineStroker PGL
          PGraphics2D PGraphics3D PGraphicsOpenGL PShader
-         PShapeOpenGL Texture).each do |klass|
+         PShapeOpenGL Texture].each do |klass|
         java_import format('processing.opengl.%s', klass)
       end
     end
@@ -192,14 +195,16 @@ module Processing
   # @HACK purists may prefer 'forwardable' to the use of Proxy
   # Importing PConstants here to access the processing constants
   module Proxy
-    include Math, HelperMethods, Java::ProcessingCore::PConstants
+    include Math
+    include HelperMethods
+    include Java::ProcessingCore::PConstants
 
-    def respond_to_missing?(name, include_private = false)
-      $app.respond_to?(name) || super
+    def respond_to_missing?(symbol, include_priv = false)
+      $app.respond_to?(symbol, include_priv) || super
     end
 
-    def method_missing(name, *args)
-      return $app.send(name, *args) if $app && $app.respond_to?(name)
+    def method_missing(name, *args, &block)
+      return $app.send(name, *args) if $app.respond_to? name
       super
     end
   end # Processing::Proxy

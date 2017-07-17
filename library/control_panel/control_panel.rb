@@ -65,7 +65,7 @@ module ControlPanel
       set_horizontal_alignment javax.swing.SwingConstants::CENTER
       control_panel.add_element(self, name, false)
       add_action_listener do
-        $app.instance_variable_set("@#{name}", value) unless value.nil?
+        $app.instance_variable_set("@#{name}", value)
         proc.call(value) if proc
       end
     end
@@ -101,6 +101,10 @@ module ControlPanel
       set_feel
     end
 
+    def title(name)
+      set_title(name)
+    end
+
     def display
       add panel
       set_size 200, 30 + (64 * elements.size)
@@ -133,7 +137,7 @@ module ControlPanel
       Menu.new(self, name, elements, initial_value, block || nil)
     end
 
-    def checkbox(name, initial_value = nil, &block)
+    def checkbox(name, initial_value = false, &block)
       checkbox = Checkbox.new(self, name, block || nil)
       checkbox.do_click if initial_value == true
     end
