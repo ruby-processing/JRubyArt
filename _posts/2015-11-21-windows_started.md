@@ -39,6 +39,8 @@ Setting JRubyArt for the first time, can seem a bit involved (especially if you 
 
 Install [wget][wget] which is also available as [cygwin][cygwin] package, Oracle java (1.8.0.121+), and some version of ruby-2.2+ preferably jruby-9.1.12.0.
 
+It is entirely possible that [chocolatey][choco] can install both `wget` and `jruby` though I'm not sure whether Windows users have embraced it as much as `MacOS` users have embraced `homebrew`.
+
 ### Processing
 
 You can check to see what platforms are supported [here][platforms].
@@ -162,3 +164,4 @@ Read more about using the [processing api here][api]
 [rvm]:https://blog.developwithpassion.com/2012/03/30/installing-rvm-with-cygwin-on-windows/
 [casey]:https://github.com/processing/processing/wiki/FAQ
 [wget]:http://gnuwin32.sourceforge.net/packages/wget.htm
+[choco]:https://chocolatey.org/packages/Wget
