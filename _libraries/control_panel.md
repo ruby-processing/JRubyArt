@@ -18,7 +18,7 @@ def setup
   sketch_title 'Simple Button'
   control_panel do |c|
     c.look_feel 'Nimbus'
-    c.title = 'Control Button'
+    c.title 'Control Button'
     c.button    :color_background # needs a defined :color_background method
     c.button :exit { exit } # button with optional block
     @panel = c
@@ -44,7 +44,7 @@ def settings
   size 300, 300
 end
 ```
-
+__More Complete Example__
 
 ``` ruby
 
@@ -103,7 +103,7 @@ end
 def setup
   sketch_title 'Wishy Worm'
   control_panel do |c|
-    c.title = 'Control Panel'
+    c.title 'Control Panel'
     c.look_feel 'Nimbus'
     c.slider    :bluish, 0.0..1.0, 0.5
     c.slider    :alpha,  0.0..1.0, 0.5
