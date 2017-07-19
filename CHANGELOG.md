@@ -1,6 +1,4 @@
-**v1.3.4** Simplify control_panel library (replacing `c.title = 'PaneTitle'` with `c.title('PaneTitle')`) also enable use of `block` with `button's`.
-
-**v1.3.3** Update for processing-3.3.4, jruby-9.1.12.0
+**v1.3.3** Update for processing-3.3.5, jruby-9.1.12.0. Simplify control_panel library (replacing `c.title = 'PaneTitle'` with `c.title('PaneTitle')`) also enable use of `block` with `button's`.
 
 **v1.3.2** Update for processing-3.3.3, jruby-9.1.12.0 and bump examples version to include glvideo library examples
 
