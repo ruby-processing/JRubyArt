@@ -28,7 +28,7 @@ end
 def setup
   sketch_title 'AI4R Sketch'
   control_panel do |c|
-    c.title = 'control'
+    c.title 'control'
     c.look_feel 'Nimbus'
     c.checkbox :drawing
     c.button :clear

@@ -100,7 +100,7 @@ template: bare
 
 Otherwise you can check to see what platforms are officially supported [here][platforms].
 
-Download processing-3.3.4 from the [official website][official] and install, prefer to install in say `~/processing-3.3.5`, that way you can keep processing-2.2.1 (or earlier version of processing), which you may find useful.  When you're done, make sure to take note of the directory you installed the app to complete the configuration.
+Download processing-3.3.5 from the [official website][official] and install, prefer to install in say `~/processing-3.3.5`, that way you can keep processing-2.2.1 (or earlier version of processing), which you may find useful.  When you're done, make sure to take note of the directory you installed the app to complete the configuration.
 
 Complete the install as for Archlinux (make sure `k9` is on your path or use `jruby -S k9`)
 

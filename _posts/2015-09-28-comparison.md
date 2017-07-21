@@ -23,7 +23,7 @@ th{
 |----------    |---------------    |-----------              |
 |binary        |rp5                |k9                       |
 |run opts      |run, watch, live   |-r, -w, -l               |
-|jruby version |1.7.26             |9.1.7.0+                 |
+|jruby version |1.7.27             |9.1.12.0+                 |
 |App Export    |Yes                |Not Yet                  |
 |Live mode     |Yes                |Yes                      |
 |Watch mode    |Yes                |Yes                      |
