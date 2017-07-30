@@ -1,4 +1,7 @@
 _site
+*.gem
+lib
+target
 .sass-cache
 .bundle
 .jekyll-metadata
