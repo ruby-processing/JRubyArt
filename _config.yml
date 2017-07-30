@@ -46,6 +46,9 @@ collections:
 syntax-highlighting:
   enabled: true
 
+sass:
+  sass_dir: _sass  
+
 # Build settings
 markdown: kramdown
 gems:
