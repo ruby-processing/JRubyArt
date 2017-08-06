@@ -1,4 +1,6 @@
 java_import Java::MonkstoneCore::LibraryProxy
+java_import Java::ProcessingEvent::KeyEvent
+java_import Java::ProcessingEvent::MouseEvent
 
 # classes that inherit from LibraryProxy are expected to implement
 # the abstract draw method of monkstone.core.LibraryProxy the other methods are
