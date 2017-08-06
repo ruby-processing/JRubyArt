@@ -1,3 +1,5 @@
+**v1.4.0.pre** Extended LibraryProxy to allow implementing libraries to register mouseEvent(e) and keyEvent(e) with Sketch instance
+
 **v1.3.3** Update for processing-3.3.5. Simplify control_panel library (replacing `c.title = 'PaneTitle'` with `c.title('PaneTitle')`) also enable use of `block` with `button's`.
 
 **v1.3.2** Update for processing-3.3.3, jruby-9.1.12.0 and bump examples version to include glvideo library examples
