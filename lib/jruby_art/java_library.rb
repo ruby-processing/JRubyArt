@@ -17,12 +17,11 @@ class JavaLibrary
   end
 
   def load_jars
-    Dir["#{dir}/*.jar"].each do |jar|
-      puts jar
+    Dir.glob("#{dir}/*.jar").each do |jar|
       require jar
     end
-    # return unless native_binaries?
-    # add_binaries_to_classpath
+    return unless native_binaries?
+    add_binaries_to_classpath
   end
 
   def native_binaries?
@@ -36,6 +35,7 @@ class JavaLibrary
   def add_binaries_to_classpath
     native_loader = NativeLoader.new
     native_loader.add_native_path(ppath)
+    true
   end
 end
 

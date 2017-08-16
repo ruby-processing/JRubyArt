@@ -35,26 +35,19 @@ module Processing
       return true if @loaded_libraries.include?(name)
       fname = name.to_s
       if (@library = LocalRubyLibrary.new(fname)).exist?
-        return require_library(library, name)
-      end
-      if (@library = InstalledRubyLibrary.new(fname)).exist?
+      elsif (@library = InstalledRubyLibrary.new(fname)).exist?
         return require_library(library, name)
       end
       if (@library = JavaLibrary.new(LocalPath.new(fname))).exist?
-        return load_jars(library, name)
-      end
-      if (@library = JavaLibrary.new(ProcessingPath.new(fname))).exist?
-        return load_jars(library, name)
-      end
-      if (@library = JavaLibrary.new(InstalledPath.new(fname))).exist?
+      elsif (@library = JavaLibrary.new(ProcessingPath.new(fname))).exist?
+      elsif (@library = JavaLibrary.new(InstalledPath.new(fname))).exist?
         return load_jars(library, name)
       end
       false
     end
 
     def load_jars(lib, name)
-      lib.load_jars
-      @loaded_libraries[name] = true
+      @loaded_libraries[name] = lib.load_jars
     end
 
     def require_library(lib, name)
