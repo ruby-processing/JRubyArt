@@ -46,3 +46,4 @@ end
 [libraries]:{{ site.github.url }}/libraries.html
 [carnivore]:http://r-s-g.org/carnivore/installation.html
 [magic]:{{ site.github.url }}/magic/processing
+[reflection]:https://docs.oracle.com/javase/tutorial/reflect/
