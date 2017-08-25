@@ -11,7 +11,7 @@ MESSAGE = "You need to 'jruby -S gem install pry' for 'live' mode".freeze
 
 if Gem::Specification.find_all_by_name('pry').any?
   require 'pry'
-  $app.pry
+  Processing.app.pry
 else
   raise(PryException.new, MESSAGE)
 end

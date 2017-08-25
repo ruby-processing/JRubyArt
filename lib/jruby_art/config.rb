@@ -41,14 +41,3 @@ module Processing
 
   OS ||= HostOS.os
 end
-
-# This class encapulates knowledge of processing sketchbook structure
-class Sketchbook
-  def self.path
-    File.join(Processing::RP_CONFIG['sketchbook_path'], 'libraries')
-  end
-
-  def self.library(name)
-    Dir["#{path}/#{name}/library/\*.jar"]
-  end
-end

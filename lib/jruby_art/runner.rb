@@ -84,7 +84,7 @@ module Processing
         end
 
         options[:live] = false
-        opts.on('-l', '--live', 'As above, with pry console bound to $app') do
+        opts.on('-l', '--live', 'As above, with pry console bound to Processing.app') do
           options[:live] = true
         end
 

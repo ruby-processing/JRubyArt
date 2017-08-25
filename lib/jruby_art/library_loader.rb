@@ -1,8 +1,7 @@
 # frozen_string_literal: false
 # The processing wrapper module
 module Processing
-  require_relative 'ruby_library'
-  require_relative 'java_library'
+  require_relative 'library'
 
   # Encapsulate library loader functionality as a class
   class LibraryLoader
@@ -34,20 +33,16 @@ module Processing
     def loader(name)
       return true if @loaded_libraries.include?(name)
       fname = name.to_s
-      if (@library = LocalRubyLibrary.new(fname)).exist?
-      elsif (@library = InstalledRubyLibrary.new(fname)).exist?
-        return require_library(library, name)
-      end
-      if (@library = JavaLibrary.new(LocalPath.new(fname))).exist?
-      elsif (@library = JavaLibrary.new(ProcessingPath.new(fname))).exist?
-      elsif (@library = JavaLibrary.new(InstalledPath.new(fname))).exist?
-        return load_jars(library, name)
-      end
-      false
+      library = Library.new(fname)
+      library.locate
+      return require_library(library, name) if library.ruby?
+      warn("Not found library: #{fname}") unless library.exist?
+      load_jars(library, name)
     end
 
     def load_jars(lib, name)
-      @loaded_libraries[name] = lib.load_jars
+      lib.load_jars
+      @loaded_libraries[name] = true
     end
 
     def require_library(lib, name)
