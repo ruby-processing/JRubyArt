@@ -42,11 +42,11 @@ class Library
   end
 
   def sketchbook
-    Processing::RP_CONFIG.fetch('sketchbook_path', '/home/tux/sketchbook3')
+    Processing::RP_CONFIG.fetch('sketchbook_path', "#{ENV['HOME']}/sketchbook")
   end
 
   def root
-    Processing::RP_CONFIG.fetch('PROCESSING_ROOT', '/home/processing-3.3.5')
+    Processing::RP_CONFIG.fetch('PROCESSING_ROOT', "#{ENV['HOME']}/processing")
   end
 
   def ruby?
