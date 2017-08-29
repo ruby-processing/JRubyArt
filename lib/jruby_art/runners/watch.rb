@@ -33,7 +33,7 @@ module Processing
       Kernel.loop do
         if @files.find { |file| FileTest.exist?(file) && File.stat(file).mtime > @time }
           puts 'reloading sketch...'
-          $app && $app.close
+          Processing.app && Processing.app.close
           java.lang.System.gc
           @time = Time.now
           start_runner

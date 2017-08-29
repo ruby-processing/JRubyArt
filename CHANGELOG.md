@@ -1,4 +1,4 @@
-**v1.4.0.pre** Extended LibraryProxy to allow implementing libraries to register mouseEvent(e) and keyEvent(e) with Sketch instance
+**v1.4.0** Refactor of library loader, replacement of $app with Processing.app. Extended LibraryProxy to allow implementing libraries to register mouseEvent(e) and keyEvent(e) with Sketch instance.
 
 **v1.3.3** Update for processing-3.3.5. Simplify control_panel library (replacing `c.title = 'PaneTitle'` with `c.title('PaneTitle')`) also enable use of `block` with `button's`.
 
