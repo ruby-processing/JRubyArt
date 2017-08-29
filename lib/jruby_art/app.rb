@@ -32,6 +32,9 @@ module Processing
     key_released: :keyReleased,
     key_typed: :keyTyped
   }.freeze
+  class << self
+    attr_accessor :app
+  end
   # All sketches extend this class
   class App < PApplet
     include HelperMethods
@@ -99,7 +102,7 @@ module Processing
 
     def initialize(options = {})
       super()
-      $app = self
+      Processing.app = self
       post_initialize(options)
       proxy_java_fields
       mix_proxy_into_inner_classes
@@ -161,7 +164,7 @@ module Processing
       surface.stopThread
       surface.setVisible(false) if surface.isStopped
       dispose
-      $app = nil
+      Processing.app = nil
     end
 
     def exit
@@ -199,12 +202,12 @@ module Processing
     include HelperMethods
     include Java::ProcessingCore::PConstants
 
-    def respond_to_missing?(symbol, include_priv = false)
-      $app.respond_to?(symbol, include_priv) || super
+    def respond_to_missing?(name, include_private = false)
+      Processing.app.respond_to?(name) || super
     end
 
-    def method_missing(name, *args, &block)
-      return $app.send(name, *args) if $app.respond_to? name
+    def method_missing(name, *args)
+      return Processing.app.send(name, *args) if Processing.app && Processing.app.respond_to?(name)
       super
     end
   end # Processing::Proxy
