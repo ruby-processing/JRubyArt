@@ -59,6 +59,10 @@ If you want to avoid need to start from a terminal, create a symbolic link to a 
 
 To simply run a sketch, navigate to the sketch (file) and use either JRubyArt menu, or `ctrl+alt+b`.
 
+### To close a running sketch ###
+
+Close the console from the JRubyArt menu (or just close the sketch window)
+
 ### What's it look like ###
 
 ![atom-k9]({{ site.github.url }}/assets/jwishy.png)
