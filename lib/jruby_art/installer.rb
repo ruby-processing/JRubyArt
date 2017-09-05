@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 require 'yaml'
 
-VERSION = '3.3.4'.freeze # processing version
+VERSION = '3.3.6'.freeze # processing version
 
 # Abstract Installer class
 class Installer
