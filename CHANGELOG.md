@@ -1,3 +1,5 @@
+**v1.4.1** Update to processing-3.3.6.
+
 **v1.4.0** Refactor of library loader, replacement of $app with Processing.app. Extended LibraryProxy to allow implementing libraries to register mouseEvent(e) and keyEvent(e) with Sketch instance.
 
 **v1.3.3** Update for processing-3.3.5. Simplify control_panel library (replacing `c.title = 'PaneTitle'` with `c.title('PaneTitle')`) also enable use of `block` with `button's`.
@@ -20,7 +22,7 @@
 
 **v1.2.4** Update to jruby-9.1.5.0-complete.
 
-**v1.2.3** Further refactored sketchwriter.rb. Update to jruby-9.1.4.0-complete.
+**v1.2.3** Further refactored sketchwriter.rb. Update to jruby-9.1.4.1-complete.
 
 **v1.2.2** Refactored sketchwriter.rb (adding unit tests) to be more open to change and removing string_extra.rb on the way. Remove sketchbook.rb, because we no-longer guess sketchbook location at runtime (depends on `config.yml`), could pave the way for independent (from processing ide) location of java libraries (and freedom from the tyranny of prisoner john). Update to jruby-9.1.3.0-complete.
 
