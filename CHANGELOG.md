@@ -1,4 +1,4 @@
-**v1.4.1** Update to processing-3.3.6.
+**v1.4.1** Update to processing-3.3.6, and jruby-complete-9.1.13.0.
 
 **v1.4.0** Refactor of library loader, replacement of $app with Processing.app. Extended LibraryProxy to allow implementing libraries to register mouseEvent(e) and keyEvent(e) with Sketch instance.
 
