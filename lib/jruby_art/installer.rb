@@ -5,29 +5,29 @@ VERSION = '3.3.6'.freeze # processing version
 
 # Abstract Installer class
 class Installer
-  attr_reader :os, :sketch, :gem_root, :home
+  attr_reader :os, :sketch, :gem_root, :confd
   def initialize(root, os)
     @os = os
     @gem_root = root
-    @home = ENV['HOME']
-    @sketch = "#{home}/sketchbook" if os == :linux
-    @sketch = "#{home}/My Documents/Processing" if os == :windows
-    @sketch = "#{home}/Documents/Processing" if os == :mac
+    @sketch = "#{ENV['HOME']}/sketchbook" if os == :linux
+    @sketch = "#{ENV['HOME']}/My Documents/Processing" if os == :windows
+    @sketch = "#{ENV['HOME']}/Documents/Processing" if os == :mac
+    @confd = "#{ENV['HOME']}/.jruby_art"
   end
 
   # Optimistically set processing root
   def set_processing_root
-    require 'psych'
-    folder = File.expand_path("#{home}/.jruby_art")
+    folder = "#{ENV['HOME']}/.jruby_art"
     Dir.mkdir(folder) unless File.exist? folder
     path = File.join(folder, 'config.yml')
-    proot = "#{home}/processing-#{VERSION}"
+    proot = "#{ENV['HOME']}/processing-#{VERSION}"
     proot = "/Java/Processing-#{VERSION}" if os == :windows
     proot = "/Applications/Processing.app/Contents/Java" if os == :mac
     settings = %w(PROCESSING_ROOT JRUBY sketchbook_path template MAX_WATCH sketch_title width height)
     values = [proot, true, sketch, 'bare', 32, 'JRubyArt Static Sketch', 600, 600]
     data = settings.zip(values).to_h
     open(path, 'w:UTF-8') { |file| file.write(data.to_yaml) }
+    warn 'PROCESSING_ROOT set optimistically, run check to confirm' 
   end
 
   def root_exist?
@@ -35,7 +35,7 @@ class Installer
   end
 
   def config
-    k9config = File.expand_path("#{home}/.jruby_art/config.yml")
+    k9config = File.join(confd, 'config.yml')
     return '' unless File.exist? k9config
     YAML.load_file(k9config)
   end
@@ -54,7 +54,7 @@ end
 
 # Configuration checker
 class Check < Installer
-  require_relative 'core'
+  require_relative './core'
   def install
     show_version
     return super unless config
@@ -86,9 +86,7 @@ end
 # JRuby-Complete installer
 class JRubyCompleteInstall < Installer
   def install
+    set_processing_root unless File.exist? File.join(confd, 'config.yml')
     system "cd #{gem_root}/vendors && rake"
-    return if root_exist?
-    set_processing_root
-    warn 'PROCESSING_ROOT set optimistically, run check to confirm'
   end
 end
