@@ -7,10 +7,10 @@ Versions before JRubyArt-1.2.0, are unsupported, please update, preferably to la
 _Note the main reason for the current build to fail on travis is when the current version of [processing is not available from maven central][testing], it has only ever been available by third parties (I am eternally hopeful that one day processing.org will see the light), actually rvm with jruby as used by travis-ci is also pretty crap as judged by the build traces._
 
 ## Requirements
-A clean start for `jruby_art` that works best with the latest version of [processing-3.3.6](https://github.com/processing/processing/releases) and [jruby-9.1.12.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing-2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
+A clean start for `jruby_art` that works best with the latest version of [processing-3.3.6](https://github.com/processing/processing/releases) and [jruby-9.1.13.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing-2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
 
-A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.1.12.0`) to download gem.
+A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.1.13.0`) to download gem.
 
 `processing-3.3.6`
 
