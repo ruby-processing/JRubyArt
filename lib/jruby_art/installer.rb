@@ -1,33 +1,37 @@
 # frozen_string_literal: false
+
 require 'yaml'
-
 VERSION = '3.3.6'.freeze # processing version
-
+HOME = ENV['HOME']
 # Abstract Installer class
 class Installer
   attr_reader :os, :sketch, :gem_root, :confd
   def initialize(root, os)
     @os = os
     @gem_root = root
-    @sketch = "#{ENV['HOME']}/sketchbook" if os == :linux
-    @sketch = "#{ENV['HOME']}/My Documents/Processing" if os == :windows
-    @sketch = "#{ENV['HOME']}/Documents/Processing" if os == :mac
-    @confd = "#{ENV['HOME']}/.jruby_art"
+    @sketch = "#{HOME}/sketchbook" if os == :linux
+    @sketch = "#{HOME}/My Documents/Processing" if os == :windows
+    @sketch = "#{HOME}/Documents/Processing" if os == :mac
+    @confd = "#{HOME}/.jruby_art"
   end
 
   # Optimistically set processing root
   def set_processing_root
-    folder = "#{ENV['HOME']}/.jruby_art"
+    folder = "#{HOME}/.jruby_art"
     Dir.mkdir(folder) unless File.exist? folder
     path = File.join(folder, 'config.yml')
-    proot = "#{ENV['HOME']}/processing-#{VERSION}"
+    proot = "#{HOME}/processing-#{VERSION}"
     proot = "/Java/Processing-#{VERSION}" if os == :windows
-    proot = "/Applications/Processing.app/Contents/Java" if os == :mac
-    settings = %w(PROCESSING_ROOT JRUBY sketchbook_path template MAX_WATCH sketch_title width height)
-    values = [proot, true, sketch, 'bare', 32, 'JRubyArt Static Sketch', 600, 600]
+    proot = '/Applications/Processing.app/Contents/Java' if os == :mac
+    settings = %w[
+      PROCESSING_ROOT JRUBY sketchbook_path template MAX_WATCH sketch_title width height
+    ]
+    values = [
+      proot, true, sketch, 'bare', 32, 'JRubyArt Static Sketch', 600, 600
+    ]
     data = settings.zip(values).to_h
     open(path, 'w:UTF-8') { |file| file.write(data.to_yaml) }
-    warn 'PROCESSING_ROOT set optimistically, run check to confirm' 
+    warn 'PROCESSING_ROOT set optimistically, run check to confirm'
   end
 
   def root_exist?
