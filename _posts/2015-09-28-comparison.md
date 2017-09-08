@@ -30,7 +30,10 @@ th{
 |jruby-complete|`--nojruby` flag   |see alternative          |
 |config        |`~/.rp5rc`         |`~/.jruby_art/config.yml`|
 |alternative   |JRUBY: false       |JRUBY: false             |
+|global        |$app               |Processing.app           |
 |settings      |no                 |see below                |
+
+Since JRubyArt 1.4.0 the global `$app` has been replaced by the safer `Processing.app`.
 
 The `settings` method was introduced to vanilla processing since processing-3.0. However this is hidden for users of the [processing ide][settings] but required by Eclipse users. The `settings` method is where `size` belongs or `full_screen`, also you should set `smooth` and `pixel_density` here. Retina users can make use of their hi-dpi display by setting `pixel_density(2)`, NB: size should be first line of `settings`, and if used `pixel_density(2)` should be next.
 
