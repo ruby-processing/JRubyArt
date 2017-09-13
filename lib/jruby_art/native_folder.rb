@@ -4,8 +4,8 @@ require 'rbconfig'
 class NativeFolder
   attr_reader :os, :bit
 
-  WIN_FORMAT = 'windows%d'
-  LINUX_FORMAT = 'linux%d'
+  WIN_FORMAT = 'windows%d'.freeze
+  LINUX_FORMAT = 'linux%d'.freeze
   WIN_PATTERNS = [
     /bccwin/i,
     /cygwin/i,
@@ -22,13 +22,13 @@ class NativeFolder
 
   def name
     return 'macosx' if os =~ /darwin/ || os =~ /mac/
-    return format(WIN_FORMAT, bit) if WIN_PATTERNS.any? os
+    return format(WIN_FORMAT, bit) if WIN_PATTERNS.any? { |pat| pat =~ os }
     return format(LINUX_FORMAT, bit) if os =~ /linux/
   end
 
   def extension
     return '*.so' if os =~ /linux/
-    return '*.dll' if WIN_PATTERNS.any? os
+    return '*.dll' if WIN_PATTERNS.any? { |pat| pat =~ os }
     '*.dylib' # MacOS
   end
 end
