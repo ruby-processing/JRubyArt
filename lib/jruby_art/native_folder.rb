@@ -22,13 +22,13 @@ class NativeFolder
 
   def name
     return 'macosx' if os =~ /darwin/ || os =~ /mac/
-    return format(WIN_FORMAT, bit) if WIN_PATTERNS.include? os
+    return format(WIN_FORMAT, bit) if WIN_PATTERNS.any? os
     return format(LINUX_FORMAT, bit) if os =~ /linux/
   end
 
   def extension
     return '*.so' if os =~ /linux/
-    return '*.dll' if WIN_PATTERNS.include? os
+    return '*.dll' if WIN_PATTERNS.any? os
     '*.dylib' # MacOS
   end
 end
