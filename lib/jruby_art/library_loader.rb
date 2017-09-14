@@ -19,8 +19,8 @@ module Processing
     # Load a list of Ruby or Java libraries (in that order)
     # Usage: load_libraries :video, :video_event
     #
-    # If a library is put into a 'library' folder next to the sketch it will
-    # be used instead of the library that ships with Propane.
+    # If a library is put into a 'library' folder next to the sketch it will be used 
+    # instead of the library that ships with vanilla processing (or ide installed), or JRubyArt.
     def load_libraries(*args)
       message = 'no such file to load -- %s'
       args.each do |lib|
