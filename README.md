@@ -14,7 +14,7 @@ A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.1.13.0`) to download gem
 
 `processing-3.3.6`
 
-`jdk1.8.0_131+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is experimental is expected to replace JAVA2D in the near future see changes above...
+`jdk1.8.0_131+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is still experimental but might in the future replace JAVA2D as default renderer, however for hardware graphics acceleration there is alway P2D / P3D.
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
