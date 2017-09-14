@@ -2,7 +2,7 @@
 # JRubyArt
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
 ![Travis CI](https://travis-ci.org/ruby-processing/JRubyArt.svg)
-Versions before JRubyArt-1.2.0, are unsupported, please update, preferably to latest version...
+Versions before JRubyArt-1.2.0, are unsupported, please update, preferably to latest version, especially if you are on windows (_library_loader_ fix 1.4.2+)...
 
 _Note the main reason for the current build to fail on travis is when the current version of [processing is not available from maven central][testing], it has only ever been available by third parties (I am eternally hopeful that one day processing.org will see the light), actually rvm with jruby as used by travis-ci is also pretty crap as judged by the build traces._
 
