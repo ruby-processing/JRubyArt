@@ -1,4 +1,6 @@
-**v1.4.2** Possible fix for windows `library_loader`
+**v1.4.3** Features example sketches using the PixelFlow library by Thomas Diewald
+
+**v1.4.2** Fix for windows `library_loader` thanks to Thomas Diewald
 
 **v1.4.1** Update to processing-3.3.6, and jruby-complete-9.1.13.0.
 

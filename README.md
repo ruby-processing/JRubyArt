@@ -89,7 +89,7 @@ k9 --live sketch.rb # pry is bound to $app # needs `jruby -S gem install pry`
 ```
 ## Example sketches
 
-[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) more to follow, feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --install` please move existing `k9_samples` if you wish to keep them.
+[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) more to follow, feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --install` please move existing `k9_samples` if you wish to keep them.  The current release features several PixelFlow glsl library examples, including a few shadertoy demos as sketches.
 
 ## Conversion Tool
 
