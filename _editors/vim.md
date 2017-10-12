@@ -4,8 +4,7 @@ title:  "Vim"
 permalink: /editors/vim/
 keywords: editor, ide, ruby, jruby_art, vim, emacs, jedit
 ---
-
-Is an excellent choice for linux and mac users, it is lighweight (runs from the console) commands available from vim:-
+Unless you are a vim or emacs aficionado you should probably prefer atom. However vim can be an excellent choice for linux and mac users, it is lighweight (runs from the console) commands available from vim:-
 ```bash
 :!k9 --run %   # will run the sketch
 ```

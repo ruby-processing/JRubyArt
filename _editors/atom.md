@@ -4,6 +4,8 @@ title:  "Atom"
 permalink: /editors/atom/
 keywords: ide, ruby, jruby_art, atom
 ---
+Unless you are a vim or emacs aficionado you should probably prefer atom.
+
 ### Install Atom ###
 
 See [website][atom] (or scroll to bottom of [releases page for downloads][releases] on github)

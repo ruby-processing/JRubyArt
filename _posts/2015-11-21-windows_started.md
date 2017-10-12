@@ -72,7 +72,7 @@ Config file is `config.yml` in the `~/.jruby_art folder` so it can co-exist with
 
 ```yaml
 # Example YAML configuration file for jruby_art on Windows
-# K9_ROOT: "C:/Ruby22-x64/lib/ruby/gems/2.4.0/gems/jruby_art-1.3.3" # should not be necessary
+# K9_ROOT: "C:/Ruby241-x64/lib/ruby/gems/2.4.0/gems/jruby_art-1.3.3" # should not be necessary
 PROCESSING_ROOT: "C:/Java/Processing" # just a suggestion
 sketchbook: "C:/Users/USER/Documents/Processing" # adjust to suit your install
 # JRUBY: false # uncomment to use jruby-complete by default especially if you haven't installed jruby

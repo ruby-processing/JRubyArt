@@ -5,7 +5,7 @@ keywords: editor, ide, ruby, jruby_art, emacs
 permalink: /emacs/
 ---
 
-You have to be somewhat dedicated to use `emacs` as an editor these days, it is pretty powerful but a nightmare to configure cf atom or even JEdit. However along with `vim` it is probably the only editor that you can properly integrate with `pry`. Because it not as lightweight as vim it is just as well that you do not need to close `emacs` whilst live editing with pry.
+Unless you are a `emacs` aficionado you should probably prefer atom. However `emacs` is pretty powerful but a nightmare to configure cf atom. However along with `vim` it is probably the only editor that you can properly integrate with `pry`. Because it not as lightweight as vim it is just as well that you do not need not close `emacs` when live editing with pry.
 
 ```bash
 jgem install pry
