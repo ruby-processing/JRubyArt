@@ -12,7 +12,8 @@ Gem::Specification.new do |spec|
   spec.description = <<-EOS
   JRubyArt is a ruby wrapper for the processing art framework, with enhanced
   functionality. Use both processing libraries and ruby gems in your sketches.
-  Features create/run/watch/live modes.
+  Features create/run/watch/live modes. The current release features several
+  PixelFlow glsl library examples, including a few shadertoy demos as sketches.
   EOS
   spec.summary = %q{Code as Art, Art as Code. Processing and Ruby are meant for each other.}
   spec.homepage = "https://ruby-processing.github.io/JRubyArt/"
