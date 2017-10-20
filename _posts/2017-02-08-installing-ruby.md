@@ -9,7 +9,7 @@ permalink: /installing_ruby/
 ## Installing MRI ruby
 
 RubyInstaller
-If you are on Windows, there is a great project to help you install Ruby: [RubyInstaller][installer]. It gives you everything you need to set up a full Ruby development environment on Windows.  Also, you could go radical any just install `jruby` on windows
+If you are on Windows, there is a great project to help you install Ruby: [RubyInstaller][installer]. It gives you everything you need to set up a full Ruby development environment on Windows.  Also, you could go radical any just install `jruby` on windows.
 
 Just download it, run it, and you are done!
 

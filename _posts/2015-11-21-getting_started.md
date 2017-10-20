@@ -106,7 +106,7 @@ Complete the install as for Archlinux (make sure `k9` is on your path or use `jr
 
 ### Alternative JRuby-Complete Setup Debian (Mint, Ubuntu) ###
 
-Download and install latest Oracle jdk as above.
+Download and install latest Oracle jdk8 or openjdk8 as above (NB: neither jruby or processing are ready for jdk9).
 
 Install MRI ruby (must be at least ruby-2.2)
 
