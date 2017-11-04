@@ -39,10 +39,10 @@ a.z = b # sets the z value of Vec3D a to the float b
 ```
 ### Constructors:-
 ```ruby
-Vec3D.new(a, b, c) # where a, b, and c are all floats 
+Vec3D.new(a, b, c) # where a, b, and c are all floats
+Vec3D.random # returns a new random Vec3D object # with mag 1.0
 ```
 
 Example Usages: [Examples][Vec3D]
 
 [Vec3D]: https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec3d/
-

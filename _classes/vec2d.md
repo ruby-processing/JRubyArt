@@ -28,7 +28,7 @@ a.normalize!(b) # where both a and b are both instances of Vec2D
 a.rotate(b) # where both a is an instance of Vec2D and b is scalar radians
 a.rotate!(b) # where both a is an instance of Vec2D and b is scalar radians
 a.set_mag(b) # where both a is instance of Vec2D and b is scalar
-a.set_mag(b) &block # a conditional variantwhere &block evaluates to a boolean
+a.set_mag(b) &block # a conditional variant where &block evaluates to a boolean
 a.to_a # returns an array [x, y] where a is instance of Vec2D
 a.to_s # returns a string where a is instance of Vec2D
 a.to_vertex(b) # where b is a instance of Render sends vector a to PApplet.vertex
@@ -42,6 +42,7 @@ a.y=b # sets the y value of Vec2D a to the float b
 
 ```ruby
 Vec2D.from_angle(a) # returns a new Vec2D object # where a is a float radians
+Vec2D.random # returns a new random Vec2D object # with mag 1.0
 Vec2D.new(a, b) # where a and b are both floats
 ```
 
