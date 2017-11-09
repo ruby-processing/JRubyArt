@@ -11,7 +11,7 @@ DO NOT MODIFIY - GENERATED CODE
   <modelVersion>4.0.0</modelVersion>
   <groupId>ruby-processing</groupId>
   <artifactId>rp5extras</artifactId>
-  <version>1.4.3</version>
+  <version>1.4.4</version>
   <name>rp5extras</name>
   <description>rp5extras for JRubyArt</description>
   <url>https://github.com/ruby-processing/JRubyArt</url>
@@ -62,11 +62,6 @@ DO NOT MODIFIY - GENERATED CODE
       <groupId>org.processing</groupId>
       <artifactId>video</artifactId>
       <version>3.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>controlP5</groupId>
-      <artifactId>controlP5</artifactId>
-      <version>2</version>
     </dependency>
   </dependencies>
   <build>
