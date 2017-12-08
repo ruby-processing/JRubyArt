@@ -10,7 +10,7 @@ _Note the main reason for the current build to fail on travis is when the curren
 A clean start for `jruby_art` that works best with the latest version of [processing-3.3.6](https://github.com/processing/processing/releases) and [jruby-9.1.13.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing-2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
 
-A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.1.13.0`) to download gem.
+A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.1.15.0`) to download gem.
 
 `processing-3.3.6`
 
@@ -41,9 +41,9 @@ height: 600 # for static sketch only
 
 ```bash
  gem install jruby_art
- k9 --install # installs jruby-complete-9.1.9.0 and downloads and installs samples to ~/k9_samples
+ k9 --install # installs jruby-complete-9.1.15.0 and downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --run jwishy.rb # if you have jruby-9.1.9.0 installed or config `JRUBY: false`
+ k9 --run jwishy.rb # if you have jruby-9.1.15.0 installed or config `JRUBY: false`
  # to use jruby-complete set `JRUBY: false` in config
 ```
 ## Create sketches from built in templates

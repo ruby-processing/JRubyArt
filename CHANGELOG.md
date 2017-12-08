@@ -1,5 +1,5 @@
 
-**v1.4.4** Bump up to JRubyComplete-9.1.14.0
+**v1.4.4** Bump up to JRubyComplete-9.1.15.0
 
 **v1.4.3** Features example sketches using the PixelFlow library by Thomas Diewald
 
