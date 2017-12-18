@@ -89,13 +89,7 @@ k9 --live sketch.rb # pry is bound to $app # needs `jruby -S gem install pry`
 ```
 ## Example sketches
 
-[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) more to follow, feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --install` please move existing `k9_samples` if you wish to keep them.  The current release features several PixelFlow glsl library examples, including a few shadertoy demos as sketches.
-
-## Conversion Tool
-
-I wrote this little script to convert sketches from ruby-processing (processing-2) to jruby_art (processing-3.0) [here](https://gist.github.com/monkstone/1a658bdda4ea21c204c5).
-
-See The-Nature-of-Code-Examples-in-Ruby converted to [The-Nature-of-Code-Examples-for-JRubyArt](https://github.com/ruby-processing/The-Nature-of-Code-for-JRubyArt) using the script.
+[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) and, [The-Nature-of-Code-Examples-for-JRubyArt](https://github.com/ruby-processing/The-Nature-of-Code-for-JRubyArt) feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --install` please move existing `k9_samples` if you wish to keep them.  The recent releases feature several PixelFlow glsl library examples, including a few shadertoy demos as sketches.
 
 [rubuto-processing3]:https://github.com/hoshi-sano/ruboto-processing3
 [testing]:http://ruby-processing.github.io/testing/testing/
