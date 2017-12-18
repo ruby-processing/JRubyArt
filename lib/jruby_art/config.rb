@@ -8,7 +8,7 @@ module Processing
     config_path = "#{ENV['HOME']}/.jruby_art/config.yml"
     begin
       CONFIG_FILE_PATH = File.expand_path(config_path)
-      RP_CONFIG = YAML.load_file(CONFIG_FILE_PATH)
+      RP_CONFIG = YAML.safe_load(File.read(CONFIG_FILE_PATH))
     rescue
       warn(format('WARN: you need to set PROCESSING_ROOT in %s', config_path))
     end
