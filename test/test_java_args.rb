@@ -1,7 +1,4 @@
-gem 'minitest'      # don't use bundled minitest
-require 'minitest/autorun'
-require 'minitest/pride'
-
+require_relative 'test_helper'
 require_relative '../lib/jruby_art/java_opts'
 
 JAVA = %w(-Xmx512 -Xms1G)

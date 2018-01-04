@@ -1,8 +1,4 @@
-gem 'minitest'      # don't use bundled minitest
-require 'java'
-require 'minitest/autorun'
-require 'minitest/pride'
-
+require_relative 'test_helper'
 require_relative '../lib/rpextras'
 
 Java::Monkstone::JRLibrary.load(JRuby.runtime)
@@ -12,7 +8,14 @@ Dir.chdir(File.dirname(__FILE__))
 
 class VecmathTest < Minitest::Test
 
-
+  # duck for Vec2D constructor
+  Point = Struct.new(:x, :y)
+  # duck for Vec3D constructor
+  Point3 = Struct.new(:x, :y, :z)
+  # non-duck to test fail
+  Pointless = Struct.new(:a, :b)
+  # non-duck to test fail
+  Pointless3 = Struct.new(:a, :b, :c)
   def setup
 
   end
@@ -20,7 +23,7 @@ class VecmathTest < Minitest::Test
   def test_equals
     x, y = 1.0000001, 1.01
     a = Vec2D.new(x, y)
-    assert_equal(a.to_a, [x, y], 'Failed to return Vec2D as and Array')
+    assert_equal(a.to_a, [x, y], 'Failed to return Vec2D as an Array')
   end
 
   def test_not_equals
@@ -34,6 +37,25 @@ class VecmathTest < Minitest::Test
     a = Vec2D.new(x, y)
     b = a.copy
     assert_equal(a.to_a, b.to_a, 'Failed deep copy')
+  end
+
+  def test_constructor_float
+    val = Point.new(1.0, 8.0) # duck type
+    expected = Vec2D.new(val)
+    assert_equal(expected, Vec2D.new(1.0, 8.0), 'Failed duck type constructor floats')
+  end
+
+  def test_constructor_fixnum
+    val = Point.new(1, 8) # duck type fixnum
+    expected = Vec2D.new(val)
+    assert_equal(expected, Vec2D.new(1.0, 8.0), 'Failed duck type constructor fixnum')
+  end
+
+  def test_failed_duck_type
+    val = Pointless.new(1.0, 8.0) # non duck type
+    assert_raises TypeError do
+      Vec2D.new(val)
+    end
   end
 
   def test_copy_not_equals
@@ -127,7 +149,7 @@ class VecmathTest < Minitest::Test
   def test_dist
     a = Vec2D.new(3, 5)
     b = Vec2D.new(6, 7)
-    assert_in_epsilon(a.dist(b), Math.sqrt(3.0**2 + 2**2), 'Failed to return distance between two vectors')
+    assert_in_epsilon(a.dist(b), Math.sqrt(3.0**2 + 2**2), 0.001, 'Failed to return distance between two vectors')
   end
 
   def test_lerp
@@ -212,7 +234,7 @@ class VecmathTest < Minitest::Test
     x = 10
     b = Vec2D.new
     b[:x] = x
-    assert_equal(a, Vec2D.new(-10, 20), 'Failed to hash assign')
+    assert_equal(b, Vec2D.new(x, 0), 'Failed to hash assign')
   end
 
   def test_inspect
@@ -223,12 +245,6 @@ class VecmathTest < Minitest::Test
   def test_array_reduce
     array = [Vec2D.new(1, 2), Vec2D.new(10, 2), Vec2D.new(1, 2)]
     sum = array.reduce(Vec2D.new) { |c, d| c + d }
-    assert_equal(sum, Vec2D.new(12, 6))
-  end
-
-  def test_array_inject
-    array = [Vec2D.new(1, 2), Vec2D.new(10, 2), Vec2D.new(1, 2)]
-    sum = array.inject(Vec2D.new, &:+)
     assert_equal(sum, Vec2D.new(12, 6))
   end
 
@@ -262,26 +278,45 @@ class VecmathTest < Minitest::Test
     assert((a - b).cross(b - c).zero?, 'Failed collinearity test using 2D vector cross product')
   end
 
-  def test_equals
+  def test_equals3
     x, y, z = 1.0000001, 1.01, 0.0
     a = Vec3D.new(x, y)
-    assert_equal(a.to_a, [x, y, z], 'Failed to return Vec3D as and Array')
+    assert_equal(a.to_a, [x, y, z], 'Failed to return Vec3D as an Array')
   end
 
-  def test_not_equals
+  def test_constructor_float3
+    val = Point3.new(1.0, 8.0, 7.0) # duck type
+    expected = Vec3D.new(val)
+    assert_equal(expected, Vec3D.new(1.0, 8.0, 7.0), 'Failed duck type constructor floats')
+  end
+
+  def test_constructor_fixnum3
+    val = Point3.new(1, 8, 7) # duck type fixnum
+    expected = Vec3D.new(val)
+    assert_equal(expected, Vec3D.new(1.0, 8.0, 7.0), 'Failed duck type constructor fixnum')
+  end
+
+  def test_failed_duck_type3
+    val = Pointless3.new(1.0, 8.0, 7.0) # non duck type
+    assert_raises TypeError do
+      Vec3D.new(val)
+    end
+  end
+
+  def test_not_equals3
     a = Vec3D.new(3, 5, 1)
     b = Vec3D.new(6, 7, 1)
     refute_equal(a, b, 'Failed equals false')
   end
 
-  def test_copy_equals
+  def test_copy_equals3
     x, y, z = 1.0000001, 1.01, 1
     a = Vec3D.new(x, y, z)
     b = a.copy
     assert_equal(a.to_a, b.to_a, 'Failed deep copy')
   end
 
-  def test_copy_not_equals
+  def test_copy_not_equals3
     x, y, z = 1.0000001, 1.01, 6.0
     a = Vec3D.new(x, y, z)
     b = a.copy
@@ -289,27 +324,27 @@ class VecmathTest < Minitest::Test
     refute_equal(a.to_a, b.to_a, 'Failed deep copy')
   end
 
-  def test_equals_when_close
+  def test_equals_when_close3
     a = Vec3D.new(3.0000000, 5.00000, 2)
     b = Vec3D.new(3.0000000, 5.000001, 2)
     assert_equal(a, b, 'Failed to return equal when v. close')
   end
 
-  def test_sum
+  def test_sum3
     a = Vec3D.new(3, 5, 1)
     b = Vec3D.new(6, 7, 1)
     c = Vec3D.new(9, 12, 2)
     assert_equal(a + b, c, 'Failed to sum vectors')
   end
 
-  def test_subtract
+  def test_subtract3
     a = Vec3D.new(3, 5, 0)
     b = Vec3D.new(6, 7, 1)
     c = Vec3D.new(-3, -2, -1)
     assert_equal(a - b, c, 'Failed to subtract vectors')
   end
 
-  def test_multiply
+  def test_multiply3
     a = Vec3D.new(3, 5, 1)
     b = 2
     c = a * b
@@ -317,7 +352,7 @@ class VecmathTest < Minitest::Test
     assert_equal(c, d, 'Failed to multiply vector by scalar')
   end
 
-  def test_divide
+  def test_divide3
     a = Vec3D.new(3, 5, 4)
     b = 2
     c = Vec3D.new(1.5, 2.5, 2)
@@ -325,112 +360,112 @@ class VecmathTest < Minitest::Test
     assert_equal(c, d, 'Failed to divide vector by scalar')
   end
 
-  def test_random
+  def test_random3
     a = Vec3D.random
     assert a.kind_of? Vec3D
     assert_in_epsilon(a.mag, 1.0)
   end
 
-  def test_assign_value
+  def test_assign_value3
     a = Vec3D.new(3, 5)
     a.x=23
     assert_equal(a.x, 23, 'Failed to assign x value')
   end
 
-  def test_mag
+  def test_mag3
     a = Vec3D.new(-3, -4)
     assert_equal(a.mag, 5, 'Failed to return magnitude of vector')
   end
 
-  def test_mag_variant
+  def test_mag_variant3
     a = Vec3D.new(3.0, 2)
     b = Math.sqrt(3.0**2 + 2**2)
     assert_in_epsilon(a.mag, b, 0.001, 'Failed to return magnitude of vector')
   end
 
-  def test_mag_zero_one
+  def test_mag_zero_one3
     a = Vec3D.new(-1, 0)
     assert_equal(a.mag, 1, 'Failed to return magnitude of vector')
   end
 
-  def test_dist
+  def test_dist3
     a = Vec3D.new(3, 5, 2)
     b = Vec3D.new(6, 7, 1)
     message = 'Failed to return distance between two vectors'
     assert_equal(a.dist(b), Math.sqrt(3.0**2 + 2**2 + 1), message)
   end
 
-  def test_dist_squared
+  def test_dist_squared3
     a = Vec3D.new(3, 5, 2)
     b = Vec3D.new(6, 7, 1)
     message = 'Failed to return distance squared between two vectors'
     assert_equal(a.dist_squared(b), 3.0**2 + 2**2 + 1, message)
   end
 
-  def test_dot
+  def test_dot3
     a = Vec3D.new(10, 20, 0)
     b = Vec3D.new(60, 80, 0)
     assert_in_epsilon(a.dot(b), 2200.0, 0.001, 'Failed to dot product')
   end
 
-  def test_self_dot
+  def test_self_dot3
     a = Vec3D.new(10, 20, 4)
     assert_in_epsilon(a.dot(a), 516.0, 0.001, 'Failed to self dot product')
   end
 
-  def test_cross
+  def test_cross3
     a = Vec3D.new(3, 5, 2)
     b = Vec3D.new(6, 7, 1)
     c = Vec3D.new(-9.0, 9.0, -9.0)
     assert_equal(a.cross(b), c, 'Failed cross product')
   end
 
-  def test_set_mag
+  def test_set_mag3
     a = Vec3D.new(1, 1)
     assert_equal(a.set_mag(Math.sqrt(32)), Vec3D.new(4, 4), 'Failed to set_mag vector')
   end
 
-  def test_set_mag_block
+  def test_set_mag_block3
     a = Vec3D.new(1, 1)
     assert_equal(a.set_mag(Math.sqrt(32)) { true }, Vec3D.new(4, 4), 'Failed to set_mag_block true vector')
   end
 
-  def test_set_mag_block_false
+  def test_set_mag_block_false3
     a = Vec3D.new(1, 1)
     assert_equal(a.set_mag(Math.sqrt(32)) { false }, Vec3D.new(1, 1), 'Failed to set_mag_block true vector')
   end
 
-  def test_plus_assign
+  def test_plus_assign3
     a = Vec3D.new(3, 5)
     b = Vec3D.new(6, 7)
     a += b
     assert_equal(a, Vec3D.new(9, 12), 'Failed to += assign')
   end
 
-  def test_normalize
+  def test_normalize3
     a = Vec3D.new(3, 5)
     b = a.normalize
     assert_in_epsilon(b.mag, 1, 0.001, 'Failed to return a normalized vector')
   end
 
-  def test_normalize!
+  def test_normalize3!
     a = Vec3D.new(3, 5)
     a.normalize!
     assert_in_epsilon(a.mag, 1, 0.001, 'Failed to return a normalized! vector')
   end
 
-  def test_inspect
+  def test_inspect3
     a = Vec3D.new(3, 2.000000000000001, 1)
     assert_equal(a.inspect, 'Vec3D(x = 3.0000, y = 2.0000, z = 1.0000)')
   end
 
-  def test_array_reduce
+  def test_array_reduce3
     array = [Vec3D.new(1, 2), Vec3D.new(10, 2), Vec3D.new(1, 2)]
     sum = array.reduce(Vec3D.new) { |c, d| c + d }
     assert_equal(sum, Vec3D.new(12, 6))
   end
 
-  def test_array_zip
+  def test_array_zip3
     one = [Vec3D.new(1, 2), Vec3D.new(10, 2), Vec3D.new(1, 2)]
     two = [Vec3D.new(1, 2), Vec3D.new(10, 2), Vec3D.new(1, 2)]
     zipped = one.zip(two).flatten
@@ -438,30 +473,30 @@ class VecmathTest < Minitest::Test
     assert_equal(zipped, expected)
   end
 
-  def test_eql?
+  def test_eql3?
     a = Vec3D.new(3.0, 5.0, 0)
     b = Vec3D.new(3.0, 5.0, 0)
     assert(a.eql?(b))
   end
 
-  def test_not_eql?
+  def test_not_eql3?
     a = Vec3D.new(3.0, 5.0, 0)
     b = Vec3D.new(3.0, 5.000001, 0)
     refute(a.eql?(b))
   end
 
-  def test_equal?
+  def test_equal3?
     a = Vec3D.new(3.0, 5.0, 0)
     assert(a.equal?(a))
   end
 
-  def test_not_equal?
+  def test_not_equal3?
     a = Vec3D.new(3.0, 5.0, 0)
     b = Vec3D.new(3.0, 5.0, 0)
     refute(a.equal?(b))
   end
 
-  def test_hash_key
+  def test_hash_key3
     x, y, z = 10, 20, 50
     b = Vec3D.new(x, y, z)
     assert_equal(b[:x], x, 'Failed hash key access')
@@ -469,7 +504,7 @@ class VecmathTest < Minitest::Test
     assert_equal(b[:z], z, 'Failed hash key access')
   end
 
-  def test_hash_set
+  def test_hash_set3
     x = 10
     b = Vec3D.new
     b[:x] = x
