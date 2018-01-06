@@ -1,8 +1,4 @@
-gem 'minitest'      # don't use bundled minitest
-require 'minitest/autorun'
-require 'minitest/pride'
-
-require_relative '../lib/jruby_art/command'
+require_relative 'test_helper'
 
 JAVA = %w(java -Xmx512 -Xms1G -cp /home/tux/JRubyArt/lib/ruby/jruby-complete.jar org.jruby.Main watch)
 JRUBY = %w(jruby -J-Xmx512 -J-Xms1G watch)

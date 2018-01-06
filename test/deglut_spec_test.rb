@@ -1,8 +1,4 @@
-gem 'minitest' # don't use bundled minitest
-require 'java'
-require 'minitest/autorun'
-require 'minitest/pride'
-
+require_relative 'test_helper'
 require_relative '../lib/rpextras'
 
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)

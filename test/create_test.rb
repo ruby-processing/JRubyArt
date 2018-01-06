@@ -1,8 +1,4 @@
-gem 'minitest' # don't use bundled minitest
-require 'minitest/autorun'
-require 'minitest/pride'
-
-
+require_relative 'test_helper'
 require_relative '../lib/jruby_art/creators/sketch_writer'
 
 EMACS = <<~CODE

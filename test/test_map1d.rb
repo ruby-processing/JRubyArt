@@ -1,8 +1,4 @@
-gem 'minitest' # don't use bundled minitest
-require 'java'
-require 'minitest/autorun'
-require 'minitest/pride'
-
+require_relative 'test_helper'
 require_relative '../lib/rpextras'
 require_relative '../lib/jruby_art/helper_methods'
 
