@@ -14,7 +14,7 @@ th{
     border:2px solid #0000FF;
 }
 </style>
-You can use most [processing methods][processing] in propane, but where possible you should prefer these ruby alternatives (you should also prefer Vec2D and Vec3D to PVector).
+You can use most [processing methods][processing] in propane, but where possible you should prefer these ruby alternatives (NB: use Vec2D and Vec3D instead of PVector).
 Here is a list of ruby alternatives to some 'processing' convenience methods; which with the exception of `color`, `map1d`, `p5map`, `degrees` and `radians` are just regular ruby methods.
 
 |function       |processing            |JRubyArt           |

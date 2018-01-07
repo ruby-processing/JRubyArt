@@ -43,7 +43,9 @@ a.y=b # sets the y value of Vec2D a to the float b
 ```ruby
 Vec2D.from_angle(a) # returns a new Vec2D object # where a is a float radians
 Vec2D.random # returns a new random Vec2D object # with mag 1.0
-Vec2D.new(a, b) # where a and b are both floats
+Vec2D.new # returns new instance where x, y are both zero.
+Vec2D.new(a, b) # where a and b are both float or numeric (NB: stored as float)
+Vec2D.new(vec) # where vec has methods `:x` and `:y` that return float or numeric
 ```
 
 ### Chaining:-
