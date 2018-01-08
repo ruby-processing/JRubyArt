@@ -11,7 +11,7 @@ EOS
 
 JRUBYC_VERSION     = '9.1.15.0'
 
-EXAMPLES           = '2.6'
+EXAMPLES           = '2.7'
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
 
