@@ -118,3 +118,5 @@ def settings
   full_screen(P3D)
 end
 ```
+
+For more examples see [grid method examples](https://github.com/ruby-processing/JRubyArt-examples/tree/master/examples/grid_method)
