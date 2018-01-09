@@ -51,7 +51,7 @@ sass:
 
 # Build settings
 markdown: kramdown
-gems:
+plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-seo-tag
