@@ -81,7 +81,7 @@ be prepared to `KILL` the odd java process (ie when sketch does not exit cleanly
 
 ## Watch sketches
 ```bash
-k9 --watch sketch.rb # don't try and change render mode, or use FX2D render mode during watch yet
+k9 --watch sketch.rb # NB: doesn't work with FX2D render mode
 ```
 ## Open pry console on sketch
 ```bash
