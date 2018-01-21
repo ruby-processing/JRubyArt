@@ -41,12 +41,12 @@ Here are some the main differences moving from vanilla processing to JRubyArt:-
 3. Everything is an object (this includes primitive types float, integer etc cf. java) [see more][about]
 4. Confusing for beginners and especially pythonistas there is often more than one way to do it
 
-5. Processing makes heavy use of java `inner` classes (to make methods and values somewhat globally available) ruby-processing provides the `Processing::Proxy` mixin to somewhat mimic this behaviour see [Ball][ball]. An alternative to consider is to use delegator methods using `extend Forwardable`, requires `require 'forwardable'` see JRubyArt [example][].
+5. Processing makes heavy use of java `inner` classes (to make methods and values somewhat globally available) JRubyArt provides the `Processing::Proxy` mixin to somewhat mimic this behaviour see [Ball][ball]. An alternative to consider is to use delegator methods using `extend Forwardable`, requires `require 'forwardable'` see JRubyArt [example][].
 
 6. Use `mouse_pressed?` and `key_pressed?` to access mouse_pressed and key_pressed as variables (ruby can't cope with overloading the `mouse_pressed` and `key_pressed` methods like java) [see example][mouse_pressed?].
 
 
-In general you should try and code in regular ruby (in propane), only using processing short-cuts / methods when you need to (ie when ruby alternatives don't exist, many processing short-cuts just aren't needed in ruby). From 3. above you should use:-
+In general you should try and code in regular ruby (in JRubyArt), only using processing short-cuts / methods when you need to (ie when ruby alternatives don't exist, many processing short-cuts just aren't needed in ruby). From 3. above you should use:-
 
 * `a**b` for `pow(a, b)`
 * `theta.degrees` for `degrees(theta)`
