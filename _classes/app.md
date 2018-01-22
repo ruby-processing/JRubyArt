@@ -29,10 +29,11 @@ end
 
 Sketch.new
 ```
-You should be aware that all vanilla processing sketches are similary wrapped prior to java compilation.  The idea of processing and also JRubyArt is to make it easy to create sketches, so this is all you need to know, and you should probably look at [propane][propane] if you really prefer class wrapped sketches.
+You should be aware that all vanilla processing sketches are similary wrapped prior to java compilation, further in the processing ide the pre-processor moves `size` etc to [settings][settings].  The idea of processing and also JRubyArt is to make it easy to create sketches, so this is all you need to know, and you should probably look at [propane][propane] if you really prefer class wrapped sketches.
 
 For JRubyArt see also [Processing][processing] module for more details, you could also see [magic][magic] (_but it 'really' is not necessary_)
 
+[settings]:https://processing.org/reference/settings_.html
 [propane]:https://ruby-processing.github.io/propane/
 [processing]:{{ site.github.url }}/modules/processing
 [magic]:{{ site.github.url }}/magic.html
