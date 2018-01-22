@@ -9,7 +9,7 @@ JRubyArt is the closest thing to a ruby DSL for vanilla processing, it supports 
 
 ### The processing-api
 
-Most of the processing methods, as explained in the [Processing Language API][processing], are available as instance methods on your Processing::App. (frame_rate, ellipse, and the 158 others.) This makes it easy as pie to use them within your sketch, but you should prefer snake case to camel case and there are some caveats. Here is an example of a `bare` sketch (you can if you wish create a class wrapped sketch), the main difference with vanilla processing (from the processing ide) is that you need to explicitly create a settings method to set the size and sketch mode.
+Most of the processing methods, as explained in the [Processing Language API][processing], are available as instance methods on your Processing::App. (frame_rate, ellipse, and the 158 others.) This makes it easy as pie to use them within your sketch, but you should prefer snake case to camel case and there are some caveats. Here is an example of a `bare` sketch (you can if you wish create a class wrapped sketch), the main difference with vanilla processing (from the processing ide) is that you need to explicitly create a [settings][settings] method to set the size and sketch mode.
 
 ``` ruby
 def settings
@@ -76,3 +76,4 @@ To avoid confusion use with ruby `map` use `map1d` for processing `map` function
 [processing]:https://processing.org/reference/
 [map1d]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/contributed/circles.rb
 [mouse_pressed?]:https://github.com/ruby-processing/JrubyArt-examples/blob/master/contributed/re_sample.rb
+[settings]:https://processing.org/reference/settings_.html
