@@ -14,7 +14,7 @@ For linux ignore any distro version and download latest version:-
 
 ```bash
 sudo dpkg --install atom-amd64.deb # debian, mint, ubuntu
-sudo pacman -S atom # Archlinux currently installs 1.22.1
+sudo pacman -S atom # Archlinux currently installs 1.23.3
 ```
 
 MacOS/Windows users could just download direct (or homebrew on MacOS)
@@ -47,7 +47,7 @@ Make sure you are in `JRuby Art` edit mode (_click on bottom right hand corner t
 
 Or if you've installed `set-syntax` load command palette with `ctrl-shift-p` and enter `ssjru` to choose.
 
-The use `bare` snippet to create sketch
+The use `bare` snippet to create sketch, NB: below gif has not been updated to show red `JRA` label that helpfully highlights core JRubyArt snippets
 
 ![enter 'bare']({{ site.github.url }}/assets/animation.gif)
 
