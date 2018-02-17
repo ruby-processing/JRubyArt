@@ -183,7 +183,7 @@ Read more about using the [processing api here][api]
 [changes]:https://github.com/processing/processing/wiki/Changes-in-3.0
 [official]:https://processing.org/download/?processing
 [platforms]:https://github.com/processing/processing/wiki/Supported-Platforms
-[editor]:{{site.github.url}}/editors/
+[editor]:http://ruby-processing.github.io/JRubyArt/editors.html
 [sound]:https://monkstone.github.io/_posts/minim
 [video]:https://monkstone.github.io/_posts/create_video
 [casey]:https://github.com/processing/processing/wiki/FAQ
