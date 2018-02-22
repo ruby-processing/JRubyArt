@@ -2,7 +2,7 @@ require 'fileutils'
 project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
 
   model_version '4.0.0'
-  id 'ruby-processing:rp5extras', '1.4.5'
+  id 'ruby-processing:rp5extras', '1.4.6'
   packaging 'jar'
 
   description 'rp5extras for JRubyArt'
@@ -32,7 +32,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
     'jruby.api' => 'http://jruby.org/apidocs/'
   )
 
-  pom 'org.jruby:jruby:9.1.13.0'
+  pom 'org.jruby:jruby:9.1.16.0'
   jar 'org.processing:core:3.3.6'
   jar 'org.processing:video:3.0.2'
 
