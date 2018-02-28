@@ -585,8 +585,8 @@ public final class Vec3 extends RubyObject {
      * @param args IRubyObject[]
      */
     @JRubyMethod(name = "to_vertex_uv", rest = true)
-    public void toVertexUV(ThreadContext context, IRubyObject[] args) {
-        int count = Arity.checkArgumentCount(context.runtime, args, Arity.OPTIONAL.getValue(), 3);
+    public void toVertexUV(ThreadContext context, IRubyObject... args) {
+        int count = args.length;
         double u = 0;
         double v = 0;
         if (count == 3) {
