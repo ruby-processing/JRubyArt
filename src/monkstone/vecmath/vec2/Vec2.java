@@ -72,7 +72,7 @@ public class Vec2 extends RubyObject {
      * @return new Vec2 object (ruby)
      */
     @JRubyMethod(name = "new", meta = true, rest = true)
-    public static final IRubyObject rbNew(ThreadContext context, IRubyObject klazz, IRubyObject[] args) {
+    public static final IRubyObject rbNew(ThreadContext context, IRubyObject klazz, IRubyObject... args) {
         Vec2 vec2 = (Vec2) ((RubyClass) klazz).allocate();
         vec2.init(context, args);
         return vec2;
@@ -87,13 +87,12 @@ public class Vec2 extends RubyObject {
         super(runtime, klass);
     }
 
-    void init(ThreadContext context, IRubyObject[] args) {
-        int count = Arity.checkArgumentCount(context.runtime, args, Arity.OPTIONAL.getValue(), 2);
-        if (count == 2) {
+    void init(ThreadContext context, IRubyObject... args) {
+        if (args.length == 2) {
             jx = (args[0] instanceof RubyFloat) ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
             jy = (args[1] instanceof RubyFloat) ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
         }   // allow ruby ducktyping in constructor
-        if (count == 1) {
+        if (args.length == 1) {
             if (!(args[0].respondsTo("x"))) {
                 throw context.runtime.newTypeError(args[0].getType() + " doesn't respond_to :x & :y");
             }
