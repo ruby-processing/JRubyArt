@@ -14,7 +14,7 @@ For linux ignore any distro version and download latest version:-
 
 ```bash
 sudo dpkg --install atom-amd64.deb # debian, mint, ubuntu
-sudo pacman -S atom # Archlinux currently installs 1.23.3
+sudo pacman -S atom # Archlinux currently installs 1.24.0
 ```
 
 MacOS/Windows users could just download direct (or homebrew on MacOS)
