@@ -28,7 +28,7 @@ Java processing provides the following __Library Methods__
 ### JRubyArt implementation
 
 
-Since jruby_art-1.4.0 we can readily access all the above library methods in library classes and include them in our sketches (and TouchEvent could be added if required). For simplicities sake you should use the jruby_art `library_loader` to load the `proxy_library` into the sketch. We can then create ruby classes that inherit from `LibraryProxy` to give us access to the above methods. Note `LibraryProxy` is an abstract java class, because it's `draw` method is abstract. We need to implement that method in our ruby class, but an empty `draw` method will work just fine.   
+Since jruby_art-1.4.0 we can readily access all the above library methods in library classes and include them in our sketches (and TouchEvent could be added if required). For simplicities sake you should use the jruby_art `library_loader` to load the `proxy_library` into the sketch. We can then create ruby classes that inherit from `LibraryProxy` to give us access to the above methods. Note `LibraryProxy` is an abstract java class, because it's `draw` method is abstract. We need to implement that method in our ruby class, but an empty `draw` method will work just fine, if you don't want to use a draw loop.   
 
 ```ruby
 class MyLibrary < LibraryProxy
@@ -84,7 +84,9 @@ class MyLibrary < LibraryProxy
 end
 ```
 
-For more example usage see [key_event.rb][key_event] and [my_library.rb][my_library]
+For more example usage see [deadgrid_events.rb and its library][dead_grid] or [key_event.rb][key_event] and [my_library.rb][my_library] for simpler usage.
+
+[dead_grid]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/library_proxy/deadgrid_events.rb
 
 [key_event]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/library_proxy/key_event.rb
 
