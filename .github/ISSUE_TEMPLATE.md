@@ -1,6 +1,6 @@
 ### Before you file an issue
 
-Please check you configuration, if you get the follow ing error
+Please check you configuration, if you get the following error
 ```bash
 LoadError: load error: C:/jruby-9.1.15.0/lib/ruby/gems/shared/gems/jruby_art-1.4.6/lib/jruby_art/app --java.lang.NoClassDefFoundError: processing/core/PApplet
 ```
