@@ -8,7 +8,7 @@ It means the program can't find the processing root and you should make sure tha
 ```bash
 PROCESSING_ROOT: /home/tux/processing-3.3.6
 ```
-matches your system (typical linux shown above for user tux) for windows it may be safer to use quoted string, especially if you have spaces in your path.
+matches your system (_typical linux shown above for user tux_) for windows it may be safer to use quoted string, especially if you have spaces in your path.
 
 
 <!--
