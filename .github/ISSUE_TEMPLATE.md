@@ -1,3 +1,16 @@
+### Before you file an issue
+
+Please check you configuration, if you get the follow ing error
+```bash
+LoadError: load error: C:/jruby-9.1.15.0/lib/ruby/gems/shared/gems/jruby_art-1.4.6/lib/jruby_art/app --java.lang.NoClassDefFoundError: processing/core/PApplet
+```
+It means the program can't find the processing root and you should make sure that
+```bash
+PROCESSING_ROOT: /home/tux/processing-3.3.6
+```
+matches your system (typical linux shown above for user tux) for windows it may be safer to use quoted string, especially if you have spaces in your path.
+
+
 <!--
 This is a simple template for filing JRubyArt issues.
 
