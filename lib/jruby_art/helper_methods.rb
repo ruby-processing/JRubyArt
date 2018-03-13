@@ -11,11 +11,11 @@ module Processing
     # You can optionally pass it a width, a height, and a renderer.
     # Takes care of starting and ending the draw for you.
     def buffer(buf_width = width, buf_height = height, renderer = @render_mode)
-      buf = create_graphics(buf_width, buf_height, renderer)
-      buf.begin_draw
-      yield buf
-      buf.end_draw
-      buf
+      create_graphics(buf_width, buf_height, renderer).tap do |buffer|
+        buffer.begin_draw
+        yield buffer
+        buffer.end_draw
+      end
     end
 
     def kamera(
