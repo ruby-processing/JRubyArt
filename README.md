@@ -7,18 +7,18 @@ Versions before JRubyArt-1.2.0, are unsupported, please update, preferably to la
 _Note the main reason for the current build to fail on travis is when the current version of [processing is not available from maven central][testing], it has only ever been available by third parties (I am eternally hopeful that one day processing.org will see the light), actually rvm with jruby as used by travis-ci is also pretty crap as judged by the build traces._
 
 ## Requirements
-A clean start for `jruby_art` that works best with the latest version of [processing-3.3.6](https://github.com/processing/processing/releases) and [jruby-9.1.16.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing-2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
+A clean start for `jruby_art` that works best with the latest version of [processing-3.3.7](https://github.com/processing/processing/releases) and [jruby-9.1.16.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing-2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on same platforms as vanilla processing (windows, mac, linux) for Android see Yuki Morohoshi [rubuto-processing3][].
 ## Requirements
 
 A suitable version of ruby (MRI `ruby 2.4+` or `jruby-9.1.16.0`) to download gem.
 
-`processing-3.3.6`
+`processing-3.3.7`
 
 `jdk1.8.0_131+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is still experimental but might in the future replace JAVA2D as default renderer, however for hardware graphics acceleration there is alway P2D / P3D.
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
-processing `video` and `sound-1.3.2+` libraries _best installed from the processing-3.3.6+ ide_ although for `video` on linux at least it may better to install the development version with support for gstreamer-1.0 (gstreamer-0.1.0 is either deprecated or completely missing).
+processing `video` and `sound-1.3.2+` libraries _best installed from the processing-3.3.7+ ide_ although for `video` on linux at least it may better to install the development version with support for gstreamer-1.0 (gstreamer-0.1.0 is either deprecated or completely missing).
 
 ## Configuration
 
@@ -27,7 +27,7 @@ You can if you wish leave configuration to the `new` autoconfig tool (delete exi
 ```yaml
 # YAML configuration file for jruby_art
 # K9_HOME: "/home/ruby2.4.0 ... /jruby_art" # windows users may need to set this
-PROCESSING_ROOT: "/home/tux/processing-3.3.6" # typical linux shown
+PROCESSING_ROOT: "/home/tux/processing-3.3.7" # typical linux shown
 # important sketch_book path may be different for processing-3.0
 sketchbook_path: "/home/tux/sketchbook"
 template: bare

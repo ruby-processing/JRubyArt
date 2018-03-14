@@ -1,6 +1,6 @@
 /**
  * The purpose of this class is to load the MathTool etc. into JRuby runtime
- * Copyright (c) 2015-17 Martin Prout. This code is free software; you can
+ * Copyright (c) 2015-18 Martin Prout. This code is free software; you can
  * redistribute it and/or modify it under the terms of the GNU Lesser General
  * Public License as published by the Free Software Foundation; either version
  * 2.1 of the License, or (at your option) any later version.

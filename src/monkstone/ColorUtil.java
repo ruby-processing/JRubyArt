@@ -3,7 +3,7 @@
  * in their sketches. Includes a method to efficiently convert an array of web
  * strings to an array of color int, and another to convert an array of p5 color
  * (int) to a string that can be used in ruby code (to generate web color array).
- * Copyright (c) 2015-17 Martin Prout.
+ * Copyright (c) 2015-18 Martin Prout.
  * This utility is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
