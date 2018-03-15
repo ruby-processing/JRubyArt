@@ -2,7 +2,7 @@
 layout: post
 title:  "Color Explained"
 ---
-See [processing color][processing] reference for details, but color is stored as `signed java int` (and bit shifting is used to parse Red, Green and Blue components) but generally you do not need to worry about that, as we either use processing convenience methods, or where necessary our modified color method does transforms for you eg conversion of web string to color
+See [processing color][processing] reference for details, but color is stored as `signed java int` (and bit shifting is used to parse Red, Green and Blue components) but generally you do not need to worry about that, as we either use processing convenience methods, or where necessary our modified color method does the transforms for you eg conversion of web string to color
 
 ### processing ###
 The `*.pde` files get pre-processed to `java` before compiling, allowing you to write this:-
