@@ -2,7 +2,7 @@
 layout: post
 title:  "Replacing create_graphics with buffer convenience method"
 ---
-In vanilla processing there is a [createGraphics][processing] method that allows you to create a graphics into an off-screen buffer, that should only really be called outside the draw loop (_to avoid memory issues_). The `buffer` method reduces the boilerplate code required by wrapping the user provided block with `begin_draw` and `end_draw`, in practice you probably won't use this method much but it illustrates how can use ruby blocks in your code.
+In vanilla processing there is a [createGraphics][processing] method that allows you to create a graphics into an off-screen buffer, that should only really be called outside the draw loop (_to avoid memory issues_). The `buffer` method reduces the boilerplate code required by wrapping the user provided block with `begin_draw` and `end_draw`, in practice you probably won't use this method much, however it does illustrates how can use ruby blocks in your code.
 
 ### The buffer method ###
 Here is the `buffer` method extracted from the `HelperMethods` module see `helper_methods.rb`
@@ -21,48 +21,37 @@ end
 
 ```
 
-```java
-PGraphics pg;
-
-void setup() {
-  size(200, 200);
-  pg = createGraphics(100, 100);
-}
-
-void draw() {
-  pg.beginDraw();
-  pg.background(102);
-  pg.stroke(255);
-  pg.line(pg.width*0.5, pg.height*0.5, mouseX, mouseY);
-  pg.endDraw();
-  image(pg, 50, 50);
-}
-
-```
-In JRubyArt we have created a buffer convenience method that wraps `beginDraw` and `endDraw` all you need to do is provide a `block` so the above code becomes:-
+### A simple example ###
 
 ```ruby
-
 attr_reader :pg
 
-def settings
-  size(200, 200)
-end
-
 def setup
-  sketch_title 'Using buffer method'
-  size(200, 200)
-  @pg = buffer(100, 100) do |buff|
-    buff.background(102)
-    buff.stroke(255)
-    buff.line(buff.width*0.5, buff.height*0.5, mouse_x, mouse_y)
+  sketch_title 'Create graphics using :buffer'
+  @pg = buffer(60, 70, P2D) do |buf|
+    buf.background 51
+    buf.no_fill
+    buf.stroke 255
+    buf.rect 0, 0, 59, 69
   end
 end
 
 def draw
-  image(pg, 50, 50)
+  fill 0, 12
+  rect 0, 0, width, height
+  image pg, mouse_x - 60, mouse_y - 70
+end
+
+def settings
+  size 640, 380, P2D
 end
 
 ```
+
+For real example usage see [luciernagas][firefly], [trefoil][trefoil] sketches
+
+[firefly]:JRubyArt-examples/examples/grid_method/luciernagas.rb
+[trefoil]:JRubyArt-examples/processing_app/demos/graphics/trefoil.rb
+
 
 [processing]:https://processing.org/reference/createGraphics_.html
