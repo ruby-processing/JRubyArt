@@ -1,7 +1,9 @@
 ---
 layout: post
-title:  "Replacing create_graphics with buffer convenience method"
+title:  "buffer"
 ---
+### Replacing createGraphics with buffer convenience method
+
 In vanilla processing there is a [createGraphics][processing] method that allows you to create a graphics into an off-screen buffer, that should only really be called outside the draw loop (_to avoid memory issues_). The `buffer` method reduces the boilerplate code required by wrapping the user provided block with `begin_draw` and `end_draw`, in practice you probably won't use this method much, however it does illustrates how can use ruby blocks in your code.
 
 ### The buffer method ###
@@ -50,8 +52,8 @@ end
 
 For real example usage see [luciernagas][firefly], [trefoil][trefoil] sketches
 
-[firefly]:JRubyArt-examples/examples/grid_method/luciernagas.rb
-[trefoil]:JRubyArt-examples/processing_app/demos/graphics/trefoil.rb
+[firefly]:https://github.com/ruby-processing/JRubyArt-examples/examples/grid_method/luciernagas.rb
+[trefoil]:https://github.com/ruby-processing/JRubyArt-examples/processing_app/demos/graphics/trefoil.rb
 
 
 [processing]:https://processing.org/reference/createGraphics_.html
