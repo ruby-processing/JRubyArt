@@ -5,6 +5,10 @@ title:  "summary"
 
 The MathTool and HelperMethods modules implement some of the processing convenience methods
 
+### buffer methods
+
+See [buffer][buffer]
+
 ### color method
 A convenience method that returns a 'color' int for processing
 ```ruby
@@ -85,6 +89,7 @@ map1d
 p5map
 ```
 
+[buffer]:http://ruby-processing.github.io/JRubyArt/methods/buffer
 [palette]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/external_library/gem/toxiclibs/color_utils/palette_generator.rb
 [wordcram]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/external_library/gem/ruby_wordcram/fruits.rb
 [bezier]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/form/bezier_ellipse.rb
