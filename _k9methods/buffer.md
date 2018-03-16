@@ -52,8 +52,8 @@ end
 
 For real example usage see [luciernagas][firefly], [trefoil][trefoil] sketches
 
-[firefly]:https://github.com/ruby-processing/JRubyArt-examples/examples/grid_method/luciernagas.rb
-[trefoil]:https://github.com/ruby-processing/JRubyArt-examples/processing_app/demos/graphics/trefoil.rb
+[firefly]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/examples/grid_method/luciernagas.rb
+[trefoil]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/demos/graphics/trefoil.rb
 
 
 [processing]:https://processing.org/reference/createGraphics_.html
