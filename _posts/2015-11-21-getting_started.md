@@ -39,7 +39,7 @@ Why was ruby-processing not updated to use processing3.0+? The [major changes][c
 Install Software as required:-
 
 ```bash
-sudo pacman -S jdk8-openjdk # installs openjdk
+sudo pacman -S jdk8-openjdk # installs openjdk, jdk9 not currently supported
 sudo pacman -S java-openjfx # installs openjfx
 sudo pacman -S jruby # installs jruby-9.1.16.0
 sudo pacman -S processing # installs processing-3.3.7  (community)
