@@ -13,7 +13,7 @@ module Processing
     WATCH_MESSAGE ||= <<-EOS.freeze
     Warning:
     To protect you from running watch mode in a top level
-    directory with lots of nested ruby or GLSL files we
+    directory with lots of nested ruby files we
     limit the number of files to watch to %d.
     If you really want to watch %d files you should
     increase MAX_WATCH in ~/.jruby_art/config.yml
@@ -21,6 +21,9 @@ module Processing
     EOS
     SLEEP_TIME = 0.2
     def initialize
+      count = Dir["**.*rb"].length
+      max_watch = RP_CONFIG.fetch('MAX_WATCH', 30).to_i
+      return warn format(WATCH_MESSAGE, max_watch, count) if count > max_watch
       reload_files_to_watch
       @time = Time.now
       start_watching
@@ -71,11 +74,6 @@ module Processing
 
     def reload_files_to_watch
       @files = Dir.glob(File.join(SKETCH_ROOT, '**/*.{rb,glsl}'))
-      count = @files.length
-      max_watch = RP_CONFIG.fetch('MAX_WATCH', 32)
-      return unless count > max_watch.to_i
-      warn format(WATCH_MESSAGE, max_watch, count)
-      abort
     end
   end
 end
