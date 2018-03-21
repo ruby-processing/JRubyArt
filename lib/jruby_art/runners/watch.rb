@@ -22,8 +22,8 @@ module Processing
     SLEEP_TIME = 0.2
     def initialize
       count = Dir["**.*rb"].length
-      max_watch = RP_CONFIG.fetch('MAX_WATCH', 30).to_i
-      return warn format(WATCH_MESSAGE, max_watch, count) if count > max_watch
+      max_watch = RP_CONFIG.fetch('MAX_WATCH', 20)
+      return warn format(WATCH_MESSAGE, max_watch, count) if count > max_watch.to_i
       reload_files_to_watch
       @time = Time.now
       start_watching
