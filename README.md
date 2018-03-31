@@ -14,7 +14,7 @@ A suitable version of ruby (MRI `ruby 2.4+` or `jruby-9.1.16.0`) to download gem
 
 `processing-3.3.7`
 
-`jdk1.8.0_131+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is still experimental but might in the future replace JAVA2D as default renderer, however for hardware graphics acceleration there is alway P2D / P3D.
+`jdk1.8.0_151+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is still experimental but might in the future replace JAVA2D as default renderer, however for hardware graphics acceleration there is alway P2D / P3D. NB: if you want to use jdk9 use [propane-2.7.0](https://github.com/ruby-processing/propane) instead of JRubyArt.
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
