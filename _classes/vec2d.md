@@ -66,6 +66,7 @@ average = array.reduce(Vec2D.new) { |c, d| c + d } # expressively
 Example Usages: [Examples][Vec2D]
 
 Note: Vec2D cross product [returns float][float] cf PVector which always returns a vector _because it is really a 3D vector_.
+Also normalize on zero vector returns a zero vector for simplicities sake (like PVector)
 
 [Vec2D]: https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec2d/
 [float]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec2d/library/circle/lib/points.rb

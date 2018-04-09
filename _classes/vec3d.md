@@ -46,6 +46,8 @@ Vec3D.new(vec) # where vec has methods `:x` and `:y` that return float or numeri
                # if vec has no method `:z` then z is set to zero.
 ```
 
+Note: Normalize on zero vector returns a zero vector for simplicities sake (like PVector)
+
 Example Usages: [Examples][Vec3D]
 
 [Vec3D]: https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec3d/
