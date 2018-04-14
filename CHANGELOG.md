@@ -1,3 +1,5 @@
+**v1.4.8** Re-factor control_panel to avoid calling protected method on slider, also default set_visible to true.
+
 **v1.4.7** Bump up to processing-3.3.7, make watch fail early if too many ruby files to watch
 
 **v1.4.6** Bump up to JRubyComplete-9.1.16.0
