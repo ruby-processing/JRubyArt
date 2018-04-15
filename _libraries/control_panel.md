@@ -98,7 +98,6 @@ def setup
     c.checkbox  :go_big
     c.button    :reset
     c.menu      :shape, %w(oval square triangle)
-    @panel = c
   end
   @hide = false
   @shape = 'oval'
