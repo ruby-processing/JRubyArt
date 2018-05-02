@@ -15,7 +15,8 @@ module ControlPanel
       mx = range.end
       mx = range.max if range.exclude_end? && range.begin.respond_to?(:succ)
       max = mx * 100
-      super(min, max)
+      val = range.cover?(initial) ? initial * 100 : (range.first + range.last) * 50
+      super(min, max, val)
       set_minor_tick_spacing((max - min).abs / 10)
       set_paint_ticks true
       # paint_labels = true
@@ -26,8 +27,6 @@ module ControlPanel
         ControlPanel.app_value(name, value)
         proc.call(value) if proc
       end
-      val = initial.nil? ? (range.first + range.last) * 50 : initial * 100
-      set_value(val)
       ControlPanel.app_value(name, val)
     end
 

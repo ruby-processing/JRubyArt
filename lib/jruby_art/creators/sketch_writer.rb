@@ -117,6 +117,6 @@ class EmacsSketch < Sketch
     ]
     lines.concat class_methods
     lines << BLANK
-    lines << format('%s.new unless defined? $app', param.class_name)
+    lines << format('%s.new if Processing.app.nil?', param.class_name)
   end
 end
