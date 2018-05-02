@@ -22,7 +22,7 @@ class FredSketch < Processing::App
   end
 end
 
-FredSketch.new unless defined? $app
+FredSketch.new if Processing.app.nil?
 
 CODE
 
@@ -64,7 +64,7 @@ CODE
 
 class SketchWriterTest < Minitest::Test
   ParamMethods = Struct.new(:name, :class_name, :sketch_title, :sketch_size)
-  
+
   def setup
     @param = ParamMethods.new(
       'fred_sketch',
