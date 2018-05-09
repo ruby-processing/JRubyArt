@@ -1,4 +1,4 @@
-language: java
+language: ruby
 sudo: false
 dist: trusty
 
@@ -11,3 +11,4 @@ os:
 
 addons:
    apt:
+   update: true
