@@ -1,4 +1,4 @@
-language: ruby
+language: java
 sudo: false
 dist: trusty
 
@@ -8,3 +8,6 @@ jdk:
   - oraclejdk8
 os:
   - linux
+
+addons:
+   apt:
