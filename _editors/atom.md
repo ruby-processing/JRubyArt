@@ -14,7 +14,7 @@ For linux ignore any distro version and download latest version:-
 
 ```bash
 sudo dpkg --install atom-amd64.deb # debian, mint, ubuntu
-sudo pacman -S atom # Archlinux currently installs 1.25.0
+sudo pacman -S atom # Archlinux currently installs 1.26.1
 ```
 
 MacOS/Windows users could just download direct (or homebrew on MacOS)
@@ -29,7 +29,7 @@ While you are at install the `language-jruby-art` package [also by Martin Prout]
 
 Also install `set-syntax` package by Lee Dohm to allow easy setting of buffer syntax
 
-### Watching Sketches (a pseudo REPL)###
+### Watching Sketches (a pseudo REPL) ###
 
 _Important_
 
@@ -80,4 +80,4 @@ Fans of Sandi Metz will may want to experiment with the linter-ruby-reek and rub
 [language]:https://atom.io/packages/language-jruby-art
 [atom-k9]:https://atom.io/packages/atom-k9
 [atom]:https://atom.io/
-[releases]:https://github.com/atom/atom/releases/tag/v1.22.1
+[releases]:https://github.com/atom/atom/releases/tag/v1.27.0
