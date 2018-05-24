@@ -1,3 +1,5 @@
+**v1.5.0** Update to jruby-complete-9.2.0.0.
+
 **v1.4.9** Update to jruby-complete-9.1.17.0.
 
 **v1.4.8** Re-factor `control_panel` to avoid calling protected method on slider, also reduces boilerplate code requires in `control_panel` sketches.
