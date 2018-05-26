@@ -17,17 +17,17 @@ class NativeFolder
 
   def initialize
     @os = RbConfig::CONFIG['host_os'].downcase
-    @bit = java.lang.System.get_property('os.arch')
+    @bit = /64/.match?(java.lang.System.get_property('os.arch')) ? '64' : '32'
   end
 
   def name
-    return 'macosx' if os =~ /darwin/ || os =~ /mac/
+    return 'macosx' if /darwin|mac/.match?(os)
     return format(WIN_FORMAT, bit) if WIN_PATTERNS.any? { |pat| pat.match?(os) }
     return format(LINUX_FORMAT, bit) if /linux/.match?(os)
   end
 
   def extension
-    return '*.so' if os =~ /linux/
+    return '*.so' if /linux/.match?(os)
     return '*.dll' if WIN_PATTERNS.any? { |pat| pat.match?(os) }
     '*.dylib' # MacOS
   end
