@@ -21,8 +21,11 @@ class Installer
     Dir.mkdir(folder) unless File.exist? folder
     path = File.join(folder, 'config.yml')
     proot = "#{HOME}/processing-#{VERSION}"
+    proot = "/usr/local/lib/processing-#{VERSION}" if os == :arm
     proot = "/Java/Processing-#{VERSION}" if os == :windows
     proot = '/Applications/Processing.app/Contents/Java' if os == :mac
+    jruby = true
+    jruby = false if os == :arm
     settings = %w[
       PROCESSING_ROOT JRUBY sketchbook_path template MAX_WATCH sketch_title width height
     ]

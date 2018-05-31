@@ -1,4 +1,4 @@
-**v1.5.0** Update to jruby-complete-9.2.0.0.
+**v1.5.0** Update to jruby-complete-9.2.0.0, make native loader work with raspberrypi.
 
 **v1.4.9** Update to jruby-complete-9.1.17.0.
 
