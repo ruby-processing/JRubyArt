@@ -29,11 +29,11 @@ module Processing
       detect_os = RbConfig::CONFIG['host_os']
       case detect_os
       when /mac|darwin/ then :mac
-      when /gnueabihf/ then :arm 
+      when /gnueabihf/ then :arm
       when /linux/ then :linux
       when /solaris|bsd/ then :unix
       else
-        WIN_PATTERNS.find { |reg| reg.match?(detect_os) }
+        WIN_PATTERNS.find { |reg| detect_os =~ reg }
         raise "unsupported os: #{detect_os.inspect}" if Regexp.last_match.nil?
         :windows
       end

@@ -38,7 +38,7 @@ class NativeFolder
 
   def extension
     return '*.so' if /linux/.match?(os)
-    return '*.dll' if WIN_PATTERNS.any? { |pat| pat.match?(os) }
+    return '*.dll' if WIN_PATTERNS.any? { |pat| pat =~ os }
     '*.dylib' # MacOS
   end
 end
