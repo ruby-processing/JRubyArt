@@ -20,7 +20,7 @@ Since the project began in 2001, it's been helping teach people to program in a 
 
 In 2009, Jeremy Ashkenas (aka jashkenas, creator of Backbone.JS, Underscore.JS, and Coffeescript), published the original [ruby-processing gem][gem]. It wraps Processing in a shim that makes it even easier to get started if you know Ruby. It has been since updated to use processing-2.2.1 by Martin Prout (final version using jruby-1.7.27 corresponding to ruby-1.9.3 syntax), NB: no more releases are expected, and ruby-processing is not compatible with processing-3.0+.
 
-In 2015, Martin Prout (aka monkstone) published the [JRubyArt gem][jrubyart], loosely based on the original ruby-processing, since update to use processing-3.3.7 and jruby-9.2+ (ruby-2.2 syntax)
+In 2015, Martin Prout (aka monkstone) published the [JRubyArt gem][jrubyart], loosely based on the original ruby-processing, since update to use processing-3.3.7 and jruby-9.2+ (ruby-2.4+ syntax)
 
 ### Why JRubyArt? ###
 
@@ -61,7 +61,7 @@ jruby -S gem install pbox2d # optional
 jruby -S gem install geomerative # optional
 ```
 
-Install vanilla processing libraries from processing-3.3.7 ide (recomended audio, video)
+Install vanilla processing libraries from processing-3.3.7 ide (recommended audio, video)
 
 ### Pure JRuby Setup Debian (Mint, Ubuntu) ###
 
@@ -85,7 +85,7 @@ Download and install latest jruby (in the `/opt` folder makes sense)
 
 Use `update-alternatives` to install and maintain configuration eg for java:-
 ```bash
-sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2+/bin/jruby 100
+sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.0.0/bin/jruby 100
 sudo update-alternatives --config jruby # to configure if required
 ```
 
@@ -123,7 +123,7 @@ JRUBY: false
 template: bare
 ```
 
-If using `rvm` or `rbenv` make sure you are using ruby2.2+
+If using `rvm` or `rbenv` make sure you are using ruby2.4+
 ```bash
 gem install jruby_art
 k9 --install # installs jruby-complete, and examples
