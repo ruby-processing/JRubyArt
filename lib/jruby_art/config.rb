@@ -29,6 +29,7 @@ module Processing
       detect_os = RbConfig::CONFIG['host_os']
       case detect_os
       when /mac|darwin/ then :mac
+      when /gnueabihf/ then :arm
       when /linux/ then :linux
       when /solaris|bsd/ then :unix
       else
