@@ -1,5 +1,5 @@
 require_relative 'lib/jruby_art/version'
-
+# @TODO change download source for jruby-complete
 def create_manifest
   title =  'Implementation-Title: rpextras (java extension for JRubyArt)    '
   version =  format('Implementation-Version: %s', JRubyArt::VERSION)
