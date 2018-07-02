@@ -1,4 +1,4 @@
-**v1.5.1** JRuby downloads have moved
+**v1.5.2** JRuby downloads have moved
 
 **v1.5.1** Revert changes to windows OS detection
 
