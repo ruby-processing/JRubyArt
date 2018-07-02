@@ -1,3 +1,5 @@
+**v1.5.1** JRuby downloads have moved
+
 **v1.5.1** Revert changes to windows OS detection
 
 **v1.5.0** Update to jruby-complete-9.2.0.0, make native loader work with raspberrypi.
