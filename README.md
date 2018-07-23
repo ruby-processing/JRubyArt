@@ -12,7 +12,7 @@ A clean start for `jruby_art` that works best with the latest version of [proces
 
 A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.2.0.0`) to download gem.
 
-`processing-3.3.7`
+`processing-3.3.7` for raspberrypi use `processing-3.3.7.2` see [gist](https://gist.github.com/monkstone/bd76c73fdb8d4c71161f3a698f8c36be) for install scripts.
 
 `jdk1.8.0_151+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is still experimental but might in the future replace JAVA2D as default renderer, however for hardware graphics acceleration there is alway P2D / P3D. NB: if you want to use jdk9 use [propane-2.7.1](https://github.com/ruby-processing/propane) instead of JRubyArt.
 
