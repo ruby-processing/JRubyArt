@@ -14,11 +14,11 @@ A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.2.0.0`) to download gem.
 
 `processing-3.4`
 
-`jdk1.8.0_151+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is still experimental but might in the future replace JAVA2D as default renderer, however for hardware graphics acceleration there is alway P2D / P3D. NB: if you want to use jdk9 use [propane-2.7.1](https://github.com/ruby-processing/propane) instead of JRubyArt.
+`jdk1.8.0_171+` can be openjdk with OpenJFX _a separate download works on ArchLinux_, currently FX2D is still experimental but might in the future replace JAVA2D as default renderer, however for hardware graphics acceleration there is alway P2D / P3D. NB: if you want to use jdk9 use [propane-2.7.1](https://github.com/ruby-processing/propane) instead of JRubyArt.
 
 ### recommended installs (JRubyArt is currently hard-coded to expect them)
 
-processing `video` and `sound-1.3.2+` libraries _best installed from the processing-3.4+ ide_ although for `video` on linux at least it may better to install the development version with support for gstreamer-1.0 (gstreamer-0.1.0 is either deprecated or completely missing).
+processing `video` and `sound-1.3.2+` libraries _best installed from the processing-3.4+ ide_ although for `video` on linux at least it may better to install the development version with support for gstreamer-1.0 (gstreamer-0.1.0 is either deprecated or completely missing). NB: a replacement processing sound library is also under active development. 
 
 ## Configuration
 
