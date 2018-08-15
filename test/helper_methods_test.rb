@@ -29,7 +29,7 @@ class HelperMethodsTest < Minitest::Test
 
   def test_p52ruby
     p5array = [16777215, 16711680, 255]
-    ruby_string = "%w(#FFFFFF #FF0000 #0000FF)\n"
+    ruby_string = "%w[#FFFFFF #FF0000 #0000FF]\n"
     result = p52ruby(p5array)
     assert_equal(result, ruby_string)
   end
