@@ -31,6 +31,7 @@ task :test do
   sh 'jruby test/helper_methods_test.rb'
   sh 'jruby test/aabb_spec_test.rb'
   sh 'jruby test/create_test.rb'
+  sh 'jruby test/color_group_test.rb'
   home = File.expand_path('~')
   config = File.exist?(format('%s/.jruby_art/config.yml', home))
   if config

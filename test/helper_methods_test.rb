@@ -27,13 +27,6 @@ class HelperMethodsTest < Minitest::Test
     end
   end
 
-  def test_p52ruby
-    p5array = [16777215, 16711680, 255]
-    ruby_string = "%w[#FFFFFF #FF0000 #0000FF]\n"
-    result = p52ruby(p5array)
-    assert_equal(result, ruby_string)
-  end
-
   def test_dist
     ax, ay, bx, by = 0, 0, 1.0, 1.0
     assert_in_epsilon(dist(ax, ay, bx, by), Math.sqrt(2), epsilon = 0.0001, msg = '2D distance')
