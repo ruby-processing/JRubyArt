@@ -14,8 +14,6 @@
 package monkstone;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -24,6 +22,8 @@ import java.util.Random;
  * @author Martin Prout
  */
 public class ColorUtil {
+
+    static final String TOO_BIG = "produces a line too long a line for code";
 
     /**
      * Returns hex long as a positive int unless greater than Integer.MAX_VALUE
@@ -63,13 +63,14 @@ public class ColorUtil {
     }
 
     /**
-     * Return a ruby string of the form "%w(a b c)" where a, b, c are raw web
+     * Return a ruby string of the form "%w[a b c]" where a, b, c are raw web
      * strings. This string can be used in ruby code.
      *
      * @param p5colors cols of p5 colors (int)
      * @return String for use in ruby
      */
     static public String rubyString(int[] p5colors) {
+        if (p5colors.length > 8){ return TOO_BIG;}
         StringBuilder sb = new StringBuilder("%w[");
         for (int p5color : p5colors) {
             sb.append(String.format("#%06X", (0xFFFFFF & p5color)));
