@@ -40,7 +40,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
     plugin :resources, '2.6'
     plugin :dependency, '2.8'
     plugin(
-      :compiler, '3.7.0',
+      :compiler, '3.8.0',
       source: '${maven.compiler.source}',
       target: '${maven.compiler.target}'
     )
