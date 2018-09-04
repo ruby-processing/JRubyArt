@@ -91,7 +91,7 @@ JRuby is a 100% Java implementation of the Ruby programming language. It is Ruby
 
 ## Accessing java methods with overloaded signatures ##
 
-Sometimes you may find that a java method is not-available from ruby, and this can be because the java signature is overloaded. The preferred way to access such methods is to use [java_alias][alias]. Using [java_alias][alias] to create signature-specific aliases of a given method, avoids the lookup overhead and allowing invokedynamic to optimize the calls. See example:-
+Sometimes you may find that a java method is not-available from ruby, and this can be because the java signature is overloaded. The preferred way to access such methods is to use [java_alias][alias]. Using [java_alias][alias] to create signature-specific aliases of a given method, avoids the lookup overhead and allows invokedynamic to optimize the calls. See example:-
 
 ```ruby
 # Here we re-open the SinOsc class to deal with java signatures
