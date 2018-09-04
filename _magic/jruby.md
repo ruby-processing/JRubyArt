@@ -89,6 +89,23 @@ __Note__ how the transparent ellipse is placed on top of the solid ellipse, so t
 
 JRuby is a 100% Java implementation of the Ruby programming language. It is Ruby for the JVM. So it is quite possible to write your own ruby code in java, you might do this to better integrate jruby with java or to write your own ruby classes (modules etc) in java see [Method Signatures and Annotations in JRuby extensions][signatures] and [jruby-examples][jruby-examples].
 
+## Accessing java methods with overloaded signatures ##
+
+Sometimes you may find that a java method is not-available from ruby, and this can be because the java signature is overloaded. The preferred way to access such methods is to use [java_alias][alias]. Using [java_alias][alias] to create signature-specific aliases of a given method, avoids the lookup overhead and allowing invokedynamic to optimize the calls. See example:-
+
+```ruby
+# Here we re-open the SinOsc class to deal with java signatures
+class SinOsc
+  java_alias :just_play, :play
+  java_alias :freq_float, :freq, [Java::float]
+  java_alias :amp_float, :amp, [Java::float]
+end
+```
+
+See full [code listing here][code]
+
+[code]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/sound/sine_cluster.rb
+[alias]:https://github.com/jruby/jruby/wiki/ImprovingJavaIntegrationPerformance
 [library]:https://github.com/processing/processing/wiki/Library-Basics
 [wip]:http://kares.org/jruby-ji-doc/
 [wiki]:https://github.com/jruby/jruby/wiki/CallingJavaFromJRuby
