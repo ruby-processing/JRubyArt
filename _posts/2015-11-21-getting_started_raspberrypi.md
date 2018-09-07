@@ -78,7 +78,7 @@ k9 --install # should create config.yml for you since JRubyArt-1.5.0
 # also installs JRuby-Complete and examples in ~/k9_samples
 k9 --check
 ```
-The k9 --check should pass with `PROCESSING_ROOT: "/usr/local/lib/processing-3.3.7"` and `JRUBY: false`
+The k9 --check should pass with `PROCESSING_ROOT: "/usr/local/lib/processing-3.4"` and `JRUBY: false`
 
 With this configuration JRubyArt _knows_ where to locate processing jars, and that we wish to JRubyComplete, rather than an installed JRuby.
 
@@ -115,7 +115,7 @@ rubocop ..._static code analysis_
 [usbstick]:https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/msd.md
 
 
-[image]:https://github.com/processing/processing/releases/download/processing-0264-3.3.7/processing-3.3.7-linux-raspbian.zip
+[image]:https://github.com/processing/processing/releases/download/processing-0264-3.4/processing-3.4-linux-raspbian.zip
 [api]: {{site.github.url}}/methods/processing_api
 [ben]:https://blog.engineyard.com/2015/getting-started-with-ruby-processing
 [processing]:https://processing.org/
