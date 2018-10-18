@@ -1,3 +1,7 @@
+---
+layout: post
+title:  "About"
+---
 
   - [JRubyArt](https://github.com/ruby-processing/JRubyArt) allows you
     to code [processing](https://processing.org/) sketches in regular
