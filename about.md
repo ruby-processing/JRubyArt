@@ -1,20 +1,42 @@
----
-layout: page
-title: About
-permalink: /about/
-categories: jruby_art update
----
+### What is JRubyArt? ###
 
-[JRubyArt][jruby_art] is a ruby wrapper for [processing-3.4][processing]. Create processing sketches in ruby using regular ruby-2.4+ syntax, and use the magic [JRuby][jruby] to run them. You can use both rubygems and and regular processing libraries in your sketches. Features run, watch and live modes (uses pry).
+  - [JRubyArt](https://github.com/ruby-processing/JRubyArt) allows you
+    to code [processing](https://processing.org/) sketches in regular
+    ruby (it supersedes ruby-processing for processing-3.0+).
 
-In general where there is a choice of using a java (processing) method or a regular ruby method you should choose the ruby method (eg use `rand` in place of `random`). Further you should prefer to use `JRuby` classes `Vec2D` and `Vec3D` instead of processings `PVector` class. Processing has a number of convenience methods which are not needed in ruby (eg 'pow' use `**` in JRubyArt) and some static methods have not been implemented in JRubyArt. For the processing `map` method prefer `map1d` ([see example][map1d]) or use `p5map` if you must. Another thing to watch is `color` which is implemented differently in JRubyArt ([see example][color]).
+  - Vanilla processing is essentially Java with an antlr \[1\]
+    pre-processor to make writing code simpler (in the processing ide).
 
-See also my [blog][blog] for more code ideas.
+  - [JRubyArt](https://github.com/ruby-processing/JRubyArt) is able to
+    emulate the simplicity of vanilla processing, by using JRuby \[2\]
+    to load regular processing jars into a ruby runtime environment.
 
-[jruby]: https://jruby.org
-[processing]: https://processing.org
+  - You can write JRubyArt code in any editor that supports ruby syntax,
+    however the [atom](https://atom.io/) editor \[3\] has a plugin that
+    allows you to run / watch processing sketches without leaving the
+    editor.
 
-[jruby_art]: https://ruby-processing.github.io/index.html
-[color]: https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/color/creating.rb
-[map1d]: https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/basics/arrays/array.rb
-[blog]:https://monkstone.github.io/
+  - Vim \[4\] and Emacs \[5\] can also run sketches without leaving the
+    editor, in addition both can be used to edit live JRubyArt code live
+    from pry \[6\].
+
+<!-- end list -->
+
+1.  ANTLR (ANother Tool for Language Recognition) is a powerful parser
+    generator for reading, processing, executing, or translating
+    structured text or binary files.
+
+2.  JRuby is an implementation of the Ruby programming language atop the
+    Java Virtual Machine
+
+3.  A hackable text editor for the 21st Century
+
+4.  Vim is a highly configurable text editor for efficiently creating
+    and changing any kind of text
+
+5.  The features of GNU Emacs include. Content-aware editing modes,
+    including syntax coloring, for many file types. Complete built-in
+    documentation
+
+6.  Pry is a powerful alternative to the standard IRB shell for Ruby. It
+    is written from scratch to provide a number of advanced features
