@@ -11,7 +11,7 @@ DO NOT MODIFIY - GENERATED CODE
   <modelVersion>4.0.0</modelVersion>
   <groupId>ruby-processing</groupId>
   <artifactId>rp5extras</artifactId>
-  <version>1.5.2</version>
+  <version>1.5.4</version>
   <name>rp5extras</name>
   <description>rp5extras for JRubyArt</description>
   <url>https://github.com/ruby-processing/JRubyArt</url>
@@ -39,12 +39,12 @@ DO NOT MODIFIY - GENERATED CODE
     <url>https://github.com/ruby-processing/JRubyArt/issues</url>
   </issueManagement>
   <properties>
-    <processing.api>http://processing.github.io/processing-javadocs/core/</processing.api>
-    <polyglot.dump.pom>pom.xml</polyglot.dump.pom>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
     <jruby.api>http://jruby.org/apidocs/</jruby.api>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <polyglot.dump.pom>pom.xml</polyglot.dump.pom>
+    <processing.api>http://processing.github.io/processing-javadocs/core/</processing.api>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
     <dependency>
