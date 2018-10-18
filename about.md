@@ -1,6 +1,7 @@
 ---
-layout: post
-title:  "About"
+layout: page
+title:  "What is JRubyArt?"
+permalink: about
 ---
 
   - [JRubyArt](https://github.com/ruby-processing/JRubyArt) allows you
