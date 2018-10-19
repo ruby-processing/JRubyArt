@@ -39,7 +39,7 @@ Why was ruby-processing not updated to use processing3.0+? The [major changes][c
 Install Software as required:-
 
 ```bash
-sudo pacman -S jdk8-openjdk # installs openjdk, for jdk9 use propane-2.7.0+
+sudo pacman -S jdk8-openjdk # installs openjdk (jdk11 also seems to work OK)
 sudo pacman -S java-openjfx # installs openjfx
 sudo pacman -S jruby # installs jruby-9.2+
 sudo pacman -S processing # installs processing-3.4  (community)
@@ -77,7 +77,7 @@ Alternative method (that puts you in control), download and install latest Oracl
 
 Use `update-alternatives` to install and maintain configuration eg for java:-
 ```bash
-sudo update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_151/bin/java 100
+sudo update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_181/bin/java 100
 sudo update-alternatives --config java # to configure if required
 ```
 
