@@ -3,7 +3,7 @@ sudo: false
 dist: trusty
 
 rvm:
-  - jruby-9.2.0.0
+  - jruby-9.2.1.0
 jdk:
   - oraclejdk8
 os:

@@ -1,3 +1,5 @@
+**v1.5.5** Update to jruby-complete-9.2.1.0
+
 **v1.5.4** Add color_group library, remove web_array helper method
 
 **v1.5.3** Update to expect processing-3.4
