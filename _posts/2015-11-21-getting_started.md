@@ -41,7 +41,7 @@ Install Software as required:-
 ```bash
 sudo pacman -S jdk8-openjdk # installs openjdk (jdk11 also seems to work OK)
 sudo pacman -S java-openjfx # installs openjfx
-sudo pacman -S jruby # installs jruby-9.2.1.0
+sudo pacman -S jruby # installs jruby-9.2.2.0
 sudo pacman -S processing # installs processing-3.4  (community)
 ```
 
@@ -85,7 +85,7 @@ Download and install latest jruby (in the `/opt` folder makes sense)
 
 Use `update-alternatives` to install and maintain configuration eg for java:-
 ```bash
-sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.1.0/bin/jruby 100
+sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.2.0/bin/jruby 100
 sudo update-alternatives --config jruby # to configure if required
 ```
 
