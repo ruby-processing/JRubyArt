@@ -1,8 +1,6 @@
-**v1.5.5** Update to jruby-complete-9.2.1.0
+**v1.6.1** Update to jruby-complete-9.2.2.0.
 
-**v1.5.4** Add color_group library, remove web_array helper method
-
-**v1.5.3** Update to expect processing-3.4
+**v1.6.0** Update to expect processing-3.4 and to jruby-complete-9.2.1.0. Add color_group library, remove web_array helper method
 
 **v1.5.2** JRuby downloads have moved
 
