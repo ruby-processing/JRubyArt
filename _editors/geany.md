@@ -1,11 +1,5 @@
 ---
 layout: post
-title:  "Geany editor for raspberryPI"
-permalink: /editors/atom/
-keywords: ide, ruby, jruby_art, atom
----
----
-layout: post
 title:  "Geany"
 permalink: /editors/geany/
 keywords: editor, ide, ruby, JRubyArt, vim, emacs, geany
