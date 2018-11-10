@@ -4,6 +4,7 @@ title:  "Geany"
 permalink: /editors/geany/
 keywords: editor, ide, ruby, JRubyArt, vim, emacs, geany
 ---
+
 Geany is highly configurable, and comes pre-installed with the raspbian distribution. It is suggested that you use our [jruby_art.geany][project] file as the basis of your configuration.
 
 Use `make` to check syntax and `run` to run sketch
