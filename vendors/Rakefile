@@ -15,10 +15,22 @@ EXAMPLES           = '3.2'
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
 
-CLOBBER.include("jruby-complete-#{JRUBYC_VERSION}.jar")
+CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar"
+CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
+
+file "jruby-complete-#{JRUBYC_VERSION}.jar.sha256" do
+  begin
+    sh "wget https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
+  rescue
+    warn(WARNING)
+  end
+end
+
+desc "get sha256"
+task :get_sha256 => ["jruby-complete-#{JRUBYC_VERSION}.jar.sha256"]
 
 desc "download, and copy to jruby_art"
-task :default => [:download, :copy_ruby]
+task :default => [:get_sha256, :download, :copy_ruby]
 
 desc "download JRuby upstream sources"
 task :download => ["jruby-complete-#{JRUBYC_VERSION}.jar"]
@@ -29,7 +41,8 @@ file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   rescue
     warn(WARNING)
   end
-  check_sha256("jruby-complete-#{JRUBYC_VERSION}.jar", "32791137441c76bb68188ffe35548d8a6b609c73833013e20fcb8d8de7700d16")
+  value=File.read("jruby-complete-#{JRUBYC_VERSION}.jar.sha256")
+  check_sha256("jruby-complete-#{JRUBYC_VERSION}.jar", value)
 end
 
 directory "../lib/ruby"
