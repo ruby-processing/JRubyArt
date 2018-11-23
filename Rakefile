@@ -43,8 +43,8 @@ end
 
 desc 'clean'
 task :clean do
-  Dir['./**/*.%w{jar gem}'].each do |path|
-    puts 'Deleting #{path} ...'
+  Dir["./**/*.{jar,gem}"].each do |path|
+    puts "Deleting #{path} ..."
     File.delete(path)
   end
   FileUtils.rm_rf('./target')
