@@ -151,7 +151,12 @@ module Processing
     end
 
     def show_version
-      puts format('JRubyArt version %s', JRubyArt::VERSION)
+      require 'erb'
+      template = ERB.new <<-EOF
+        JRubyArt version <%= JRubyArt::VERSION %>
+        Ruby version <%= RUBY_VERSION %>
+      EOF
+      puts template.result(binding)
     end
 
     private
