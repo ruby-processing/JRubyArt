@@ -1,3 +1,5 @@
+**v1.6.3** Update to jruby-complete-9.2.4.1.
+
 **v1.6.2** Update to jruby-complete-9.2.4.0.
 
 **v1.6.1** Update to jruby-complete-9.2.2.0.
