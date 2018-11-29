@@ -9,7 +9,7 @@ WARNING = <<-EOS.freeze
 EOS
 
 
-JRUBYC_VERSION     = '9.2.4.0'
+JRUBYC_VERSION     = '9.2.4.1'
 
 EXAMPLES           = '3.2'
 HOME_DIR = ENV['HOME']
