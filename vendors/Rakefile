@@ -1,17 +1,16 @@
 require 'rake/clean'
 
-WARNING = <<-EOS.freeze
+WARNING = <<-WARN.freeze
    WARNING: you may not have wget installed, you could just download
    the correct version of jruby-complete to the vendors folder, and
    re-run k9 setup install instead of installing wget. Some systems
    may also require 'sudo' access to install, NB: this is untested....
 
-EOS
+WARN
 
+JRUBYC_VERSION     = '9.2.4.1'.freeze
 
-JRUBYC_VERSION     = '9.2.4.1'
-
-EXAMPLES           = '3.2'
+EXAMPLES           = '3.2'.freeze
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
 
@@ -26,14 +25,14 @@ file "jruby-complete-#{JRUBYC_VERSION}.jar.sha256" do
   end
 end
 
-desc "get sha256"
-task :get_sha256 => ["jruby-complete-#{JRUBYC_VERSION}.jar.sha256"]
+desc 'get sha256'
+task get_sha256: ["jruby-complete-#{JRUBYC_VERSION}.jar.sha256"]
 
-desc "download, and copy to jruby_art"
-task :default => [:get_sha256, :download, :copy_ruby]
+desc 'download, and copy to jruby_art'
+task default: %i[get_sha256 download copy_ruby]
 
-desc "download JRuby upstream sources"
-task :download => ["jruby-complete-#{JRUBYC_VERSION}.jar"]
+desc 'download JRuby upstream sources'
+task download: ["jruby-complete-#{JRUBYC_VERSION}.jar"]
 
 file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   begin
@@ -41,36 +40,36 @@ file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   rescue
     warn(WARNING)
   end
-  value=File.read("jruby-complete-#{JRUBYC_VERSION}.jar.sha256")
+  value = File.read("jruby-complete-#{JRUBYC_VERSION}.jar.sha256")
   check_sha256("jruby-complete-#{JRUBYC_VERSION}.jar", value)
 end
 
-directory "../lib/ruby"
+directory '../lib/ruby'
 
-desc "copy jruby-complete"
-task :copy_ruby => ["../lib/ruby"] do
+desc 'copy jruby-complete'
+task copy_ruby: ['../lib/ruby'] do
   sh "cp -v jruby-complete-#{JRUBYC_VERSION}.jar ../lib/ruby/jruby-complete.jar"
 end
 
 def check_sha256(filename, expected_hash)
-  require "digest"
+  require 'digest'
   sha256 = Digest::SHA256.new
-  File.open(filename, "r") do |f|
-    while buf = f.read(4096)
+  File.open(filename, 'r') do |f|
+    while (buf = f.read(4096))
       sha256.update(buf)
     end
   end
-  if sha256.hexdigest != expected_hash
-    raise "bad sha256 checksum for #{filename} (expected #{expected_hash} got #{sha256.hexdigest})"
-  end
+  return if sha256.hexdigest == expected_hash
+
+  raise "bad sha256 checksum for #{filename} (expected #{expected_hash} got #{sha256.hexdigest})"
 end
 
-desc "download, and copy to jruby_art"
-task :unpack_samples => [:download_examples, :copy_examples]
+desc 'download, and copy to jruby_art'
+task unpack_samples: %i[download_examples copy_examples]
 
 desc 'download and copy examples to user home'
 task :download_examples
-file_name = (MAC_OR_LINUX.nil?) ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
+file_name = MAC_OR_LINUX.nil? ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
 file file_name do
   begin
     if MAC_OR_LINUX.nil?
@@ -83,8 +82,8 @@ file file_name do
   end
 end
 
-desc "copy examples"
-task :copy_examples => file_name do
+desc 'copy examples'
+task copy_examples: file_name do
   if MAC_OR_LINUX.nil?
     sh "unzip #{EXAMPLES}.zip"
   else
