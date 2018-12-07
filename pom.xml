@@ -50,7 +50,7 @@ DO NOT MODIFIY - GENERATED CODE
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.2.4.1</version>
+      <version>9.2.5.0</version>
       <type>pom</type>
     </dependency>
     <dependency>
