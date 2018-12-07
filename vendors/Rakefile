@@ -8,7 +8,7 @@ WARNING = <<-WARN.freeze
 
 WARN
 
-JRUBYC_VERSION     = '9.2.4.1'.freeze
+JRUBYC_VERSION     = '9.2.5.0'.freeze
 
 EXAMPLES           = '3.2'.freeze
 HOME_DIR = ENV['HOME']
