@@ -59,7 +59,7 @@ def check_sha256(filename, expected_hash)
       sha256.update(buf)
     end
   end
-  return if sha256.hexdigest == expected_hash
+  next if sha256.hexdigest == expected_hash
 
   raise "bad sha256 checksum for #{filename} (expected #{expected_hash} got #{sha256.hexdigest})"
 end
