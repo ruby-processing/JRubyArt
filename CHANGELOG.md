@@ -1,3 +1,5 @@
+**v1.6.4** Amended vendors/Rakefile
+
 **v1.6.3** Update to jruby-complete-9.2.5.0.
 
 **v1.6.2** Update to jruby-complete-9.2.4.0.
