@@ -39,7 +39,7 @@ Why was ruby-processing not updated to use processing3.0+? The [major changes][c
 Install Software as required:-
 
 ```bash
-sudo pacman -S jdk8-openjdk # installs openjdk (jdk11 also seems to work OK)
+sudo pacman -S jdk-openjdk # installs openjdk jdk11 also seems to work OK if somewhat noisy
 sudo pacman -S java-openjfx # installs openjfx
 sudo pacman -S jruby # installs jruby-9.2.5.0
 sudo pacman -S processing # installs processing-3.4  (community)
@@ -106,7 +106,7 @@ Complete the install as for Archlinux (make sure `k9` is on your path or use `jr
 
 ### Alternative JRuby-Complete Setup Debian (Mint, Ubuntu) ###
 
-Download and install latest Oracle jdk8 as above, for jdk9 use propane-2.7.0+ instead.
+Download and install latest Oracle jdk8 as above, although openjdk (upto jdk11) also seems to work.
 
 Install MRI ruby (must be at least ruby-2.3)
 

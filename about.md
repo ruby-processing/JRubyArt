@@ -9,7 +9,8 @@ permalink: about
     ruby (it supersedes ruby-processing for processing-3.0+).
 
   - Vanilla processing is essentially Java with an antlr \[1\]
-    pre-processor to make writing code simpler (in the processing ide).
+    pre-processor to make writing code simpler (in the processing ide), although
+    it is debatable whether whether `color` should have ever been a type!!!.
 
   - [JRubyArt](https://github.com/ruby-processing/JRubyArt) is able to
     emulate the simplicity of vanilla processing, by using JRuby \[2\]
