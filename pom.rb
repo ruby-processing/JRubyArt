@@ -32,7 +32,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
     'jruby.api' => 'http://jruby.org/apidocs/'
   )
 
-  pom 'org.jruby:jruby:9.2.5.0'
+  pom 'org.jruby:jruby:9.2.6.0'
   jar 'org.processing:core:3.3.7'
   jar 'org.processing:video:3.0.2'
 

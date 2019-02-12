@@ -1,9 +1,8 @@
 language: ruby
-sudo: false
 dist: trusty
 
 rvm:
-  - jruby-9.2.4.0
+  - jruby-9.2.6.0
 jdk:
   - oraclejdk8
 os:

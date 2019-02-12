@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 require 'yaml'
-VERSION = '3.4'.freeze # processing version
+VERSION = '3.5.3'.freeze # processing version
 HOME = ENV['HOME']
 # Abstract Installer class
 class Installer
