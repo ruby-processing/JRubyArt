@@ -141,6 +141,8 @@ module Processing
     end
 
     def check
+      require_relative 'helpers/version_error'
+      raise JDKVersionError.new if ENV_JAVA['java.specification.version'] > '8'
       require_relative '../jruby_art/installer'
       Check.new(K9_ROOT, OS).install
     end
