@@ -1,3 +1,5 @@
+**v1.6.4** Fix glitch on loading jruby-complete, warn if not using JDK8 improved ColorGroup
+
 **v1.6.3** Update to jruby-complete-9.2.6.0 and processing-3.5.3
 
 **v1.6.2** Update to jruby-complete-9.2.4.0.
