@@ -152,8 +152,8 @@ module Processing
 
     def show_version
       require 'erb'
-      WARNING = 'WARNING: JDK8 is preferred'
-      warn WARNING unless ENV_JAVA['java.specification.version'] == '1.8'
+      warning = 'WARNING: JDK8 is preferred'.freeze
+      warn warning unless ENV_JAVA['java.specification.version'] == '1.8'
       template = ERB.new <<-EOF
         JRubyArt version <%= JRubyArt::VERSION %>
         Ruby version <%= RUBY_VERSION %>
