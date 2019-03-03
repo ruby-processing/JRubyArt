@@ -9,7 +9,7 @@ class ColorGroup
   end
 
   def self.from_web_array(web)
-    ColorGroup.new(ColorUtil.web_array(web))
+    ColorGroup.new(ColorUtil.web_array(web.to_java(:string)))
   end
 
   def shuffle!
