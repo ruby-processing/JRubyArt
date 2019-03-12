@@ -1,17 +1,17 @@
 ---
 layout: post
-title:  "AppRender and ShapeRender"
-keywords: to_vertex, Vec3D, Vec2D, AppRender, ShapeRender
+title:  "GfxRender and ShapeRender"
+keywords: to_vertex, Vec3D, Vec2D, GfxRender, ShapeRender
 ---
-Vec2D and Vec3D classes can be efficiently rendered as both PApplet vertices, and PShape vertices using AppRender and ShapeRender utility classes. To use the AppRender renderer you should create a single instance in the processing setup see below example:-
+Vec2D and Vec3D classes can be efficiently rendered as both PApplet vertices, and PShape vertices using GfxRender and ShapeRender utility classes. To use the GfxRender renderer you should create a single instance in the processing setup see below example:-
 
-### AppRender
+### GfxRender
 
 ```ruby
 attr_reader :renderer
 ...
 def setup
-  @renderer = AppRender.new(self)
+  @renderer = GfxRender.new(self.g)
 end
 ...
 ```
