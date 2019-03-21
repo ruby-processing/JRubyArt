@@ -17,7 +17,7 @@ module Processing
   # Load vecmath, fastmath and mathtool modules
   Java::Monkstone::JRLibrary.load(JRuby.runtime)
   module Render
-    java_import 'monkstone.vecmath.AppRender'
+    java_import 'monkstone.vecmath.GfxRender'
     java_import 'monkstone.vecmath.ShapeRender'
   end
   # Watch the definition of these methods, to make sure

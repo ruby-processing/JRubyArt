@@ -15,10 +15,6 @@ DO NOT MODIFIY - GENERATED CODE
   <name>rp5extras</name>
   <description>rp5extras for JRubyArt</description>
   <url>https://github.com/ruby-processing/JRubyArt</url>
-  <organization>
-    <name>ruby-processing</name>
-    <url>https://ruby-processing.github.io</url>
-  </organization>
   <developers>
     <developer>
       <id>monkstone</id>
