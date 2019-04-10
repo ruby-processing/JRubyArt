@@ -1,7 +1,7 @@
 project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
 
   model_version '4.0.0'
-  id 'ruby-processing:rp5extras:1.6.4'
+  id 'ruby-processing:rp5extras:1.7.0'
   packaging 'jar'
 
   description 'rp5extras for JRubyArt'
