@@ -8,9 +8,9 @@ WARNING = <<-WARN.freeze
 
 WARN
 
-JRUBYC_VERSION     = '9.2.6.0'.freeze
+JRUBYC_VERSION     = '9.2.7.0'.freeze
 
-EXAMPLES           = '3.3'.freeze
+EXAMPLES           = '3.4'.freeze
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
 

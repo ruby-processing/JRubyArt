@@ -1,3 +1,5 @@
+**v1.7.0** Update to jruby-complete-9.2.7.0. NB: breaking change AppRender(applet) changed to GfxRender(graphics) please update samples.
+
 **v1.6.4** Fix glitch on loading jruby-complete, warn if not using JDK8 improved ColorGroup
 
 **v1.6.3** Update to jruby-complete-9.2.6.0 and processing-3.5.3
