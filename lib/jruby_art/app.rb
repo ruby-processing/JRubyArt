@@ -1,5 +1,5 @@
-
 # frozen_string_literal: false
+
 require 'java'
 require_relative '../rpextras'
 require_relative '../jruby_art/helper_methods'
@@ -14,8 +14,10 @@ module Processing
   end
   # Include some core processing classes that we'd like to use:
   include_package 'processing.core'
+  java_import 'processing.core.PFont'
   # Load vecmath, fastmath and mathtool modules
   Java::Monkstone::JRLibrary.load(JRuby.runtime)
+  # import custom Vecmath renderers
   module Render
     java_import 'monkstone.vecmath.GfxRender'
     java_import 'monkstone.vecmath.ShapeRender'
@@ -86,6 +88,7 @@ module Processing
       # Processing call them by their expected Java names.
       def method_added(method_name) #:nodoc:
         return unless METHODS_TO_ALIAS.key?(method_name)
+
         alias_method METHODS_TO_ALIAS[method_name], method_name
       end
     end
@@ -117,9 +120,9 @@ module Processing
     end
 
     def size(*args)
-      w, h, mode = *args
-      @width ||= w
-      @height ||= h
+      width, height, mode = *args
+      @width ||= width
+      @height ||= height
       @render_mode ||= mode
       import_opengl if /opengl/ =~ mode
       super(*args)
@@ -131,6 +134,7 @@ module Processing
 
     def sketch_path(spath = '')
       return super() if spath.empty?
+
       super(spath)
     end
 
@@ -181,19 +185,22 @@ module Processing
       klass.constants.each do |name|
         const = klass.const_get name
         next if const.class != Class || const.to_s.match(/^Java::/)
-        const.class_eval 'include Processing::Proxy'
+
+        const.class_eval 'include Processing::Proxy', __FILE__, __LINE__
       end
     end
 
     def import_opengl
       # Include processing opengl classes that we'd like to use:
+      opengl = 'processing.opengl.%s'
       %w[FontTexture FrameBuffer LinePath LineStroker PGL
          PGraphics2D PGraphics3D PGraphicsOpenGL PShader
          PShapeOpenGL Texture].each do |klass|
-        java_import format('processing.opengl.%s', klass)
+        java_import format(opengl, klass)
       end
     end
-  end # Processing::App
+  end
+  # Processing::App
 
   # @HACK purists may prefer 'forwardable' to the use of Proxy
   # Importing PConstants here to access the processing constants
@@ -207,8 +214,12 @@ module Processing
     end
 
     def method_missing(name, *args)
-      return Processing.app.send(name, *args) if Processing.app && Processing.app.respond_to?(name)
+      app = Processing.app
+      return app.send(name, *args) if app && app.respond_to?(name)
+
       super
     end
-  end # Processing::Proxy
-end # Processing
+  end
+  # Processing::Proxy
+end
+# Processing

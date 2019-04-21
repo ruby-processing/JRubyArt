@@ -5,12 +5,13 @@ require 'yaml'
 # The wrapper module
 module Processing
   unless defined? RP_CONFIG
-    config_path = "#{ENV['HOME']}/.jruby_art/config.yml"
+    config_path = File.join(ENV['HOME'], '.jruby_art/config.yml')
     begin
-      CONFIG_FILE_PATH = File.expand_path(config_path)
-      RP_CONFIG = YAML.safe_load(File.read(CONFIG_FILE_PATH))
-    rescue
-      warn(format('WARN: you need to set PROCESSING_ROOT in %s', config_path))
+      RP_CONFIG = YAML.safe_load(File.read(config_path))
+    rescue Errno::ENOENT => err
+      warning = 'WARN: you need to set PROCESSING_ROOT in %s'
+      warn(format(warning, config_path))
+      raise err, 'Not Configured'
     end
   end
 
@@ -35,6 +36,7 @@ module Processing
       else
         WIN_PATTERNS.find { |reg| detect_os =~ reg }
         raise "unsupported os: #{detect_os.inspect}" if Regexp.last_match.nil?
+
         :windows
       end
     end
