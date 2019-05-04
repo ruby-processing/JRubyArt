@@ -30,5 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest', '~> 5.10'
   spec.requirements << 'A decent graphics card'
   spec.requirements << 'java runtime >= 1.8.0_171+'
-  spec.requirements << 'processing = 3.5.3'
+  spec.requirements << 'processing = 4.0.0'
 end

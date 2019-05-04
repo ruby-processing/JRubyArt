@@ -54,7 +54,7 @@ class Rp5Test < Minitest::Test
     path = File.expand_path('~/.jruby_art/config.yml')
     config = FileTest.exist?(path)? Psych.load_file(path) : {}
     root = config.empty? ? '' : config['PROCESSING_ROOT']
-    assert root =~ /processing/, 'You need to set your PROCESSING_ROOT in .rp5rc'
+    assert root =~ /processing/, 'You need to set your PROCESSING_ROOT in .jruby_art/config.yml'
   end
 
   def test_fx2d

@@ -1,7 +1,7 @@
 project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
 
   model_version '4.0.0'
-  id 'ruby-processing:rp5extras:1.7.0'
+  id 'ruby-processing:rp5extras:2.0.0'
   packaging 'jar'
 
   description 'rp5extras for JRubyArt'
@@ -21,8 +21,6 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
   properties( 'processing.api' => 'http://processing.github.io/processing-javadocs/core/',
               'polyglot.dump.pom' => 'pom.xml',
               'project.build.sourceEncoding' => 'UTF-8',
-              'maven.compiler.source' => '1.8',
-              'maven.compiler.target' => '1.8',
               'jruby.api' => 'http://jruby.org/apidocs/' )
 
   pom 'org.jruby:jruby:9.2.6.0'
@@ -33,8 +31,7 @@ project 'rp5extras', 'https://github.com/ruby-processing/JRubyArt' do
     plugin :resources, '2.6'
     plugin :dependency, '2.8'
     plugin( :compiler, '3.8.0',
-            'source' =>  '${maven.compiler.source}',
-            'target' =>  '${maven.compiler.target}' )
+            'release' =>  '11' )
     plugin( :javadoc, '2.10.4',
             'detectOfflineLinks' =>  'false',
             'links' => [ '${processing.api}',
