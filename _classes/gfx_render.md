@@ -16,7 +16,7 @@ end
 ...
 ```
 
-Note the use of `attr_reader` so we can access the `renderer` outside of `setup`. Here is a snippet of code for a 2D sketch, where we draw a polygon outline directly using the processing vertex (nested within `begin_shape` and `end_shape(CLOSE)`). All we need to do is supply our renderer as an argument to the Vec2D `:to_vertex` instance method.
+Note the use of `attr_reader` so we can access the `renderer` outside of `setup`. Here is a snippet of code for a 2D sketch, where we draw a polygon outline directly using the processing vertex (nested within `begin_shape` and `end_shape(CLOSE)`). All we need to do is supply our renderer as an argument to the Vec2D `:to_vertex` instance method. If you want to initialize the renderer in a custom class (ie outside PApplet) you should use the fully justified name `Java::MonkstoneVecmath::GfxRender` or `java_import monkstone.vecmath.GfxRender`.
 
 ```ruby
 ...
@@ -86,8 +86,9 @@ mesh.end_shape
 ...
 ```
 
-The above snippet is taken from the [glsl_heighmap_noise.rb sketch][glsl], for another example of the advanced use of the ShapeRender class see the [trefoil sketch][trefoil]. Warning if you are using ShapeRender inside a custom class you need to prefix it with the sketch class name `Sketch::` for bare sketches, see [wiggle_pshape][wiggling] sketch.
+The above snippet is taken from the [glsl_heighmap_noise.rb sketch][glsl], for another example of the advanced use of the ShapeRender class see the [trefoil sketch][trefoil]. Warning if you are using ShapeRender inside a custom class you need to prefix it with the sketch class name `Sketch::` for bare sketches, see [wiggle_pshape][wiggling] sketch. For use outside PApplet see [polyhedron][polyhedron]
 
 [glsl]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/topics/shaders/glsl_heightmap_noise.rb
 [trefoil]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/demos/graphics/trefoil.rb
 [wiggling]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec2d/wiggle_pshape.rb
+[polyhedron]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec3d/library/polyhedron.rb

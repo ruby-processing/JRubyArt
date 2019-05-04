@@ -37,6 +37,5 @@ The `settings` method was introduced to vanilla processing since processing-3.0.
 
 In JRubyArt use the `data_path` wrapper to return the absolute path for the `data` folder [see here][here] (this means `--nojruby` flag is obsolete since even shader sketches should now run with an installed jruby). Set `JRUBY: false` in config.yml to use jruby-complete instead of an installed jruby (crucial if you haven't installed jruby on your system).
 
-
 [settings]:https://processing.org/reference/settings_.html
 [here]:{{site.github.url}}/data_path/
