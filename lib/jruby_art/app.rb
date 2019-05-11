@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 require 'java'
-require_relative '../rpextras'
+require_relative '../jruby_art.jar'
 require_relative '../jruby_art/helper_methods'
 require_relative '../jruby_art/helpers/aabb'
 require_relative '../jruby_art/library_loader'
