@@ -1,11 +1,11 @@
 require_relative 'lib/jruby_art/version'
 require 'erb'
 
-task default: [:init, :create_manifest, :compile, :gem, :test]
+task default: [:create_manifest, :compile, :install_jogl, :gem, :test]
 
 # depends on installed processing, with processing on path
 desc 'Copy Jars'
-task :init do
+task :install_jogl do
   processing_root = File.dirname(`readlink -f $(which processing)`) # for Archlinux etc
   # processing_root = File.join(ENV['HOME'], 'processing-3.5.3') # alternative for debian linux etc
   jar_dir = File.join(processing_root, 'core', 'library')

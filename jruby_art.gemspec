@@ -20,8 +20,15 @@ Gem::Specification.new do |spec|
   spec.license = 'MIT'
 
   spec.files = FileList['bin/**/*', 'lib/**/*', 'library/**/*', 'samples/**/*', 'vendors/Rakefile'].exclude(/jar/).to_a
-  spec.files << 'lib/rpextras.jar'
-
+  spec.files << 'lib/jruby_art.jar'
+  spec.files << 'lib/gluegen-rt.jar'
+  spec.files << 'lib/jogl-all.jar'
+  spec.files << 'lib/gluegen-rt-natives-linux-amd64.jar'
+  spec.files << 'lib/gluegen-rt-natives-macosx-universal.jar'
+  spec.files << 'lib/gluegen-rt-natives-windows-amd64.jar'
+  spec.files << 'lib/jogl-all-natives-linux-amd64.jar'
+  spec.files << 'lib/jogl-all-natives-macosx-universal.jar'
+  spec.files << 'lib/jogl-all-natives-windows-amd64.jar'
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
@@ -29,6 +36,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'minitest', '~> 5.10'
   spec.requirements << 'A decent graphics card'
-  spec.requirements << 'java runtime >= 1.8.0_171+'
-  spec.requirements << 'processing = 4.0.0'
+  spec.requirements << 'java runtime >= 11.0.3+'
 end
