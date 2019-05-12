@@ -9,7 +9,7 @@ module Processing
     begin
       RP_CONFIG = YAML.safe_load(File.read(config_path))
     rescue Errno::ENOENT => err
-      warning = 'WARN: you need to set PROCESSING_ROOT in %s'
+      warning = 'WARN: you need to set sketchpath in %s'
       warn(format(warning, config_path))
       raise err, 'Not Configured'
     end

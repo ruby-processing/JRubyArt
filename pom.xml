@@ -40,6 +40,7 @@ DO NOT MODIFIY - GENERATED CODE
     <polyglot.dump.pom>pom.xml</polyglot.dump.pom>
     <processing.api>http://processing.github.io/processing-javadocs/core/</processing.api>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <source.directory>src</source.directory>
   </properties>
   <dependencies>
     <dependency>
@@ -65,8 +66,25 @@ DO NOT MODIFIY - GENERATED CODE
     </dependency>
   </dependencies>
   <build>
-    <sourceDirectory>src</sourceDirectory>
-    <defaultGoal>package</defaultGoal>
+    <resources>
+      <resource>
+        <directory>${source.directory}/main/java</directory>
+        <includes>
+          <include>**/**/*.glsl</include>
+          <include>**/*.jnilib</include>
+        </includes>
+        <excludes>
+          <exclude>**/**/*.java</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>${source.directory}/main/resources</directory>
+        <includes>
+          <include>**/*.png</include>
+          <include>*.txt</include>
+        </includes>
+      </resource>
+    </resources>
     <finalName>jruby_art</finalName>
     <pluginManagement>
       <plugins>

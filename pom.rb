@@ -22,6 +22,7 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
     'processing.api' => 'http://processing.github.io/processing-javadocs/core/',
     'polyglot.dump.pom' => 'pom.xml',
     'project.build.sourceEncoding' => 'UTF-8',
+    'source.directory' => 'src',
     'jogl.version' => '2.3.2',
     'jruby.api' => 'http://jruby.org/apidocs/'
    )
@@ -44,8 +45,18 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
 
 
   build do
-    default_goal 'package'
-    source_directory 'src'
+
+    resource do
+      directory '${source.directory}/main/java'
+      includes '**/**/*.glsl', '**/*.jnilib'
+      excludes '**/**/*.java'
+    end
+
+    resource do
+      directory '${source.directory}/main/resources'
+      includes '**/*.png', '*.txt'
+      excludes
+    end
     final_name 'jruby_art'
   end
 
