@@ -17,6 +17,7 @@ class Rp5Test < Minitest::Test
   end
 
   def test_sketch_path
+    skip 'Skip whilst non-standard project name'
     out, _err_ = capture_io do
       open('|../bin/k9 -r sketches/sketch_path.rb', 'r') do |io|
         while l = io.gets
@@ -53,11 +54,12 @@ class Rp5Test < Minitest::Test
     require 'psych'
     path = File.expand_path('~/.jruby_art/config.yml')
     config = FileTest.exist?(path)? Psych.load_file(path) : {}
-    root = config.empty? ? '' : config['PROCESSING_ROOT']
-    assert root =~ /processing/, 'You need to set your PROCESSING_ROOT in .jruby_art/config.yml'
+    library = config.empty? ? '' : config['library_path']
+    assert library =~ /librar/, 'You need to set your library_path in .jruby_art/config.yml'
   end
 
   def test_fx2d
+    skip 'Currently FX2D not implemented'
     out, _err = capture_io do
       open('|../bin/k9 -r sketches/fx2d.rb', 'r') do |io|
         while l = io.gets

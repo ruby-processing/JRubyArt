@@ -11,6 +11,10 @@ require_relative '../jruby_art/launcher'
 module Processing
   # Utility class to handle the different commands that the 'k9' command
   # offers. Able to run, watch, live, create, app, and unpack
+  unless defined? RP_CONFIG
+    conf = Config.new.load_config
+    RP_CONFIG = conf.config
+  end
   class Runner
     WIN_PATTERNS = [
       /bccwin/i,
@@ -141,8 +145,8 @@ module Processing
     end
 
     def check
-      require_relative '../jruby_art/installer'
-      Check.new(K9_ROOT, OS).install
+      require_relative '../jruby_art/config'
+      Config.new.check
     end
 
     # Show the standard help/usage message.
@@ -152,9 +156,9 @@ module Processing
 
     def show_version
       require 'erb'
-      warning = 'WARNING: JDK8 is preferred'.freeze
+      warning = 'WARNING: JDK11 is preferred'.freeze
       if RUBY_PLATFORM == 'java'
-        warn warning unless ENV_JAVA['java.specification.version'] == '1.8'
+        warn warning unless ENV_JAVA['java.specification.version'] == '11'
       end
       template = ERB.new <<-EOF
         JRubyArt version <%= JRubyArt::VERSION %>

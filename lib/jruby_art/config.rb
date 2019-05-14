@@ -1,46 +1,36 @@
-# frozen_string_literal: false
-
 require 'yaml'
-
-# The wrapper module
-module Processing
-  unless defined? RP_CONFIG
-    config_path = File.join(ENV['HOME'], '.jruby_art/config.yml')
-    begin
-      RP_CONFIG = YAML.safe_load(File.read(config_path))
-    rescue Errno::ENOENT => err
-      warning = 'WARN: you need to set sketchpath in %s'
-      warn(format(warning, config_path))
-      raise err, 'Not Configured'
-    end
+require_relative 'default_config'
+require_relative 'version'
+HOME = ENV['HOME']
+# Configuration class
+class Config
+  attr_reader :config
+  def initialize(conf = {})
+    @config = Default.config.merge(conf)
   end
 
-  WIN_PATTERNS = [
-    /bccwin/i,
-    /cygwin/i,
-    /djgpp/i,
-    /ming/i,
-    /mswin/i,
-    /wince/i
-  ].freeze
-
-  # This class knows about supported JRubyArt operating systems
-  class HostOS
-    def self.os
-      detect_os = RbConfig::CONFIG['host_os']
-      case detect_os
-      when /mac|darwin/ then :mac
-      when /gnueabihf/ then :arm
-      when /linux/ then :linux
-      when /solaris|bsd/ then :unix
-      else
-        WIN_PATTERNS.find { |reg| detect_os =~ reg }
-        raise "unsupported os: #{detect_os.inspect}" if Regexp.last_match.nil?
-
-        :windows
-      end
-    end
+  def write_to_file
+    directory = File.join(HOME, '.jruby_art')
+    Dir.mkdir(directory) unless Dir.exist? directory
+    File.write(File.join(HOME, '.jruby_art', 'config.yml'), config.to_yaml)
   end
 
-  OS ||= HostOS.os
+  def load_config
+    config_path = File.join(File.join(HOME, '.jruby_art', 'config.yml'))
+    loaded = YAML.safe_load(File.read(config_path))
+    @config = Default.config.merge(loaded)
+    self
+  end
+
+  def check
+    load_config
+    puts "JRubyArt version #{JRubyArt::VERSION}"
+    puts 'Approximates to Processing-4.0'
+    puts "processing ide = #{config.fetch('processing_ide', false)}"
+    puts "library_path = #{config.fetch('library_path', File.join(HOME, '.jruby_art'))}"
+    puts "template = #{config.fetch('template', 'bare')}"
+    puts "java_args = #{config.fetch('java_args', '')}"
+    puts "MAX_WATCH = #{config.fetch('MAX_WATCH', 32)}"
+    puts "JRUBY = #{config.fetch('JRUBY', true)}"
+  end
 end

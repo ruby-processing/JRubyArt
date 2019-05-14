@@ -7,10 +7,10 @@ require 'rake'
 Gem::Specification.new do |spec|
   spec.name = 'jruby_art'
   spec.version = JRubyArt::VERSION
-  spec.authors = %w(Jeremy\ Ashkenas Guillaume\ Pierronnet Martin\ Prout)
+  spec.author  = 'Martin Prout'
   spec.email = 'mamba2928@yahoo.co.uk'
   spec.description = <<-EOS
-  JRubyArt is a ruby wrapper for the processing art framework, with enhanced
+  JRubyArt is a ruby implementation of the processing art framework, with enhanced
   functionality. Use both processing libraries and ruby gems in your sketches.
   Features create/run/watch/live modes.
   EOS
