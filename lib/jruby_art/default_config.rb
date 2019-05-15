@@ -5,7 +5,7 @@ class Default
       'processing_ide' => false,
       'library_path' => File.join(ENV['HOME'], '.jruby_art', 'libraries'),
       'MAX_WATCH' => 32,
-      'jruby' => true,
+      'JRUBY' => true,
       'template' => 'bare',
       'java_args' => nil
     }

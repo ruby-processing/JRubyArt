@@ -20,14 +20,12 @@ class Config
     if File.exist? config_path
       loaded = YAML.safe_load(File.read(config_path))
       @config = Default.config.merge(loaded)
-      return self unless loaded.has_key? 'PROCESSING_ROOT'
+      return self unless loaded.key? 'PROCESSING_ROOT'
+
       warn '*********** Move Old Config File ***************'
-      @config = Default.config
-      warn '*********** Default Config Loaded ***************'
-    else
-      @config = Default.config
-      warn '*********** Default Config Loaded ***************'
     end
+    @config = Default.config
+    warn '*********** Default Config Loaded ***************'
     self
   end
 

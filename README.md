@@ -1,45 +1,38 @@
 
 # JRubyArt
-[![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](http://badge.fury.io/rb/jruby_art)
-![Travis CI](https://travis-ci.org/ruby-processing/JRubyArt.svg)
-Versions before JRubyArt-1.5.1, are unsupported, please update, preferably to latest version, especially if you are on windows
 
-_Note the main reason for the current build to fail on travis is when the current version of [processing is not available from maven central][testing], it has only ever been available by third parties (I am eternally hopeful that one day processing.org will see the light), actually rvm with jruby as used by travis-ci is also pretty crap as judged by the build traces._
+__Gem Version 4.0.0.pre__
+
+A new version for jdk11 use, does not require an installed `vanilla processing`, however if installed you can use processing-ide to download libraries. Configuration file is incompatible with that of previous version of JRubyArt (and you should move or rename old `config.yml` to keep it). This version will run with a default configuration file but you won't be able to use processing libraries.
 
 ## Requirements
-A clean start for `jruby_art` designed to work with the development version of [processing-3.4.0](https://github.com/sampottinger/processing/) and [jruby-9.2.7.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  Changes from processing-2.0 to [processing-3.0 here](https://github.com/processing/processing/wiki/Changes-in-3.0). Should work on windows, mac and linux.
+A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.7.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  
 ## Requirements
 
 A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.2.7.0`) to download gem.
 
-`processing-3.5.3`
-
 `open-jdk11.03+` currently FX2D is still experimental.
-
-### recommended installs (JRubyArt is currently hard-coded to expect them)
-
-processing `video` and `sound-1.3.2+` libraries _best installed from the processing-3.5.3+ ide_ although for `video` on linux at least it may better to install the development version with support for gstreamer-1.0 (gstreamer-0.1.x is either deprecated or completely missing). NB: a replacement processing sound library is also under active development.
 
 ## Configuration
 
-You can if you wish leave configuration to the `new` autoconfig tool (delete existing config to do this). The config file is `config.yml` in the `~/.jruby_art folder`, the autoconfig gets run on `k9 --install` expected to just work on `macOS`, output may need tuning on `windows` / `linux` check with `k9 --check` (run both after gem install for both)
+You can if you wish leave configuration to the `new` autoconfig tool (delete or rename existing config to do this). The config file is `config.yml` in the `~/.jruby_art folder`, the autoconfig gets run on `k9 --install` expected to just work.
+
+__config.yml on linux__
 
 ```yaml
-# YAML configuration file for jruby_art
-# K9_HOME: "/home/ruby2.4.0 ... /jruby_art" # windows users may need to set this
-PROCESSING_ROOT: "/home/tux/sampottinger/build/linux/work" #  linux shown
-# important sketch_book path may be different for processing-3.0
-sketchbook_path: "/home/tux/sketchbook"
+---
+processing_ide: true
+library_path: "/home/tux/sketchbook"
+MAX_WATCH: 32
+JRUBY: true
 template: bare
-sketch_title: 'Edit Static Sketch' # for static sketch only
-width: 600 # for static sketch only
-height: 600 # for static sketch only
+java_args:
 ```
 
 ## Install Steps (assumes you have requirements above)
 
 ```bash
- gem install jruby_art
+ gem install jruby_art --pre
  k9 --install # installs jruby-complete-9.2.7.0 and downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
  k9 --run jwishy.rb # if you have jruby-9.2.7.0 installed or config `JRUBY: false`
