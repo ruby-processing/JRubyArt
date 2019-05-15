@@ -18,3 +18,17 @@ class Installer
     config.write_to_file
   end
 end
+
+# Examples Installer
+class UnpackSamples
+  def install
+    system "cd #{K9_ROOT}/vendors && rake unpack_samples"
+  end
+end
+
+# JRuby-Complete installer
+class JRubyCompleteInstall
+  def install
+    system "cd #{K9_ROOT}/vendors && rake"
+  end
+end

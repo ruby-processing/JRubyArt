@@ -139,9 +139,10 @@ module Processing
     end
 
     def install
-      require_relative '../jruby_art/installer'
-      JRubyCompleteInstall.new(K9_ROOT, OS).install
-      UnpackSamples.new(K9_ROOT, OS).install
+      require_relative 'installer'
+      Installer.new.install
+      JRubyCompleteInstall.new.install
+      UnpackSamples.new.install
     end
 
     def check

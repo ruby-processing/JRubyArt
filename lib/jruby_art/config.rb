@@ -17,8 +17,17 @@ class Config
 
   def load_config
     config_path = File.join(File.join(HOME, '.jruby_art', 'config.yml'))
-    loaded = YAML.safe_load(File.read(config_path))
-    @config = Default.config.merge(loaded)
+    if File.exist? config_path
+      loaded = YAML.safe_load(File.read(config_path))
+      @config = Default.config.merge(loaded)
+      return self unless loaded.has_key? 'PROCESSING_ROOT'
+      warn '*********** Move Old Config File ***************'
+      @config = Default.config
+      warn '*********** Default Config Loaded ***************'
+    else
+      @config = Default.config
+      warn '*********** Default Config Loaded ***************'
+    end
     self
   end
 
