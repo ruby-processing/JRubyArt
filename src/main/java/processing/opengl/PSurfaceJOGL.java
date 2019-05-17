@@ -114,6 +114,7 @@ public class PSurfaceJOGL implements PSurface {
     this.pgl = (PJOGL) ((PGraphicsOpenGL) graphics).pgl;
   }
 
+  @Override
   public void initOffscreen(PApplet sketch) {
     this.sketch = sketch;
 
@@ -127,6 +128,7 @@ public class PSurfaceJOGL implements PSurface {
     }
   }
 
+  @Override
   public void initFrame(PApplet sketch) {
     this.sketch = sketch;
     initIcons();
@@ -137,6 +139,7 @@ public class PSurfaceJOGL implements PSurface {
     initAnimator();
   }
 
+  @Override
   public Object getNative() {
     return window;
   }
@@ -431,6 +434,7 @@ public class PSurfaceJOGL implements PSurface {
     });
   }
 
+  @Override
   public void setIcon(PImage icon) {
     PGraphics.showWarning("Window icons for OpenGL sketches can only be set in settings()\n"
       + "using PJOGL.setIcon(filename).");
@@ -1252,6 +1256,7 @@ public class PSurfaceJOGL implements PSurface {
     }
   }
 
+  @Override
   public void setCursor(PImage image, int hotspotX, int hotspotY) {
     Display disp = window.getScreen().getDisplay();
     BufferedImage bimg = (BufferedImage) image.getNative();
@@ -1269,12 +1274,17 @@ public class PSurfaceJOGL implements PSurface {
     });
   }
 
+  /**
+   *
+   */
+  @Override
   public void showCursor() {
     display.getEDTUtil().invoke(false, () -> {
       window.setPointerVisible(true);
     });
   }
 
+  @Override
   public void hideCursor() {
     display.getEDTUtil().invoke(false, () -> {
       window.setPointerVisible(false);

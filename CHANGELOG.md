@@ -1,4 +1,4 @@
-**v2.0.0** Update to jdk11, removing many bashisms on the way. Compile our own processing code and include with jogl gems in gem.
+**v2.0.0** Update to jdk11, removing many bashisms on the way. We compile our own processing code, and include with jogl gems in gem. Requires a new `config.yml` file to use libaries.
 
 **v1.7.0** Update to jruby-complete-9.2.7.0. NB: breaking change AppRender(applet) changed to GfxRender(graphics) please update samples.
 

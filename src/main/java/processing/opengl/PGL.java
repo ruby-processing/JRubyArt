@@ -433,15 +433,16 @@ public abstract class PGL {
   }
 
   static public int smoothToSamples(int smooth) {
-    if (smooth == 0) {
-      // smooth(0) is noSmooth(), which is 1x sampling
-      return 1;
-    } else if (smooth == 1) {
-      // smooth(1) means "default smoothing", which is 2x for OpenGL
-      return 2;
-    } else {
-      // smooth(N) can be used for 4x, 8x, etc
-      return smooth;
+    switch (smooth) {
+      case 0:
+        // smooth(0) is noSmooth(), which is 1x sampling
+        return 1;
+      case 1:
+        // smooth(1) means "default smoothing", which is 2x for OpenGL
+        return 2;
+      default:
+        // smooth(N) can be used for 4x, 8x, etc
+        return smooth;
     }
   }
 
@@ -476,7 +477,7 @@ public abstract class PGL {
     return fboLayerEnabled ? COLOR_ATTACHMENT0 : FRONT;
   }
 
-  protected boolean isFBOBacked() {;
+  protected boolean isFBOBacked() {
     return fboLayerEnabled;
   }
 
@@ -508,13 +509,13 @@ public abstract class PGL {
   protected boolean getDepthTest() {
     intBuffer.rewind();
     getBooleanv(DEPTH_TEST, intBuffer);
-    return intBuffer.get(0) == 0 ? false : true;
+    return intBuffer.get(0) != 0;
   }
 
   protected boolean getDepthWriteMask() {
     intBuffer.rewind();
     getBooleanv(DEPTH_WRITEMASK, intBuffer);
-    return intBuffer.get(0) == 0 ? false : true;
+    return intBuffer.get(0) != 0;
   }
 
   protected Texture wrapBackTexture(Texture texture) {
@@ -1552,6 +1553,8 @@ public abstract class PGL {
   /**
    * Converts input native OpenGL value (RGBA on big endian, ABGR on little
    * endian) to Java ARGB.
+   * @param color
+   * @return 
    */
   protected static int nativeToJavaARGB(int color) {
     if (BIG_ENDIAN) { // RGBA to ARGB
@@ -1565,8 +1568,11 @@ public abstract class PGL {
   /**
    * Converts input array of native OpenGL values (RGBA on big endian, ABGR on
    * little endian) representing an image of width x height resolution to Java
-   * ARGB. It also rearranges the elements in the array so that the image is
+   * ARGB.It also rearranges the elements in the array so that the image is
    * flipped vertically.
+   * @param pixels
+   * @param width
+   * @param height
    */
   protected static void nativeToJavaARGB(int[] pixels, int width, int height) {
     int index = 0;
@@ -1609,6 +1615,8 @@ public abstract class PGL {
    * Converts input native OpenGL value (RGBA on big endian, ABGR on little
    * endian) to Java RGB, so that the alpha component of the result is set to
    * opaque (255).
+   * @param color
+   * @return 
    */
   protected static int nativeToJavaRGB(int color) {
     if (BIG_ENDIAN) { // RGBA to ARGB
@@ -1623,9 +1631,12 @@ public abstract class PGL {
   /**
    * Converts input array of native OpenGL values (RGBA on big endian, ABGR on
    * little endian) representing an image of width x height resolution to Java
-   * RGB, so that the alpha component of all pixels is set to opaque (255). It
+   * RGB, so that the alpha component of all pixels is set to opaque (255).It
    * also rearranges the elements in the array so that the image is flipped
    * vertically.
+   * @param pixels
+   * @param width
+   * @param height
    */
   protected static void nativeToJavaRGB(int[] pixels, int width, int height) {
     int index = 0;
@@ -1670,6 +1681,8 @@ public abstract class PGL {
   /**
    * Converts input Java ARGB value to native OpenGL format (RGBA on big endian,
    * BGRA on little endian).
+   * @param color
+   * @return 
    */
   protected static int javaToNativeARGB(int color) {
     if (BIG_ENDIAN) { // ARGB to RGBA
@@ -1683,8 +1696,11 @@ public abstract class PGL {
   /**
    * Converts input array of Java ARGB values representing an image of width x
    * height resolution to native OpenGL format (RGBA on big endian, BGRA on
-   * little endian). It also rearranges the elements in the array so that the
+   * little endian).It also rearranges the elements in the array so that the
    * image is flipped vertically.
+   * @param pixels
+   * @param width
+   * @param height
    */
   protected static void javaToNativeARGB(int[] pixels, int width, int height) {
     int index = 0;
@@ -1726,6 +1742,8 @@ public abstract class PGL {
   /**
    * Converts input Java ARGB value to native OpenGL format (RGBA on big endian,
    * BGRA on little endian), setting alpha component to opaque (255).
+   * @param color
+   * @return 
    */
   protected static int javaToNativeRGB(int color) {
     if (BIG_ENDIAN) { // ARGB to RGB
@@ -1740,8 +1758,11 @@ public abstract class PGL {
    * Converts input array of Java ARGB values representing an image of width x
    * height resolution to native OpenGL format (RGBA on big endian, BGRA on
    * little endian), while setting alpha component of all pixels to opaque
-   * (255). It also rearranges the elements in the array so that the image is
+   * (255).It also rearranges the elements in the array so that the image is
    * flipped vertically.
+   * @param pixels
+   * @param width
+   * @param height
    */
   protected static void javaToNativeRGB(int[] pixels, int width, int height) {
     int index = 0;
@@ -1990,13 +2011,13 @@ public abstract class PGL {
   protected boolean compiled(int shader) {
     intBuffer.rewind();
     getShaderiv(shader, COMPILE_STATUS, intBuffer);
-    return intBuffer.get(0) == 0 ? false : true;
+    return intBuffer.get(0) != 0;
   }
 
   protected boolean linked(int program) {
     intBuffer.rewind();
     getProgramiv(program, LINK_STATUS, intBuffer);
-    return intBuffer.get(0) == 0 ? false : true;
+    return intBuffer.get(0) != 0;
   }
 
   protected int validateFramebuffer() {
@@ -2055,9 +2076,9 @@ public abstract class PGL {
 
     int[] res = {0, 0, 0};
     String[] parts = version.split(" ");
-    for (int i = 0; i < parts.length; i++) {
-      if (0 < parts[i].indexOf(".")) {
-        String nums[] = parts[i].split("\\.");
+    for (String part : parts) {
+      if (0 < part.indexOf(".")) {
+        String[] nums = part.split("\\.");
         try {
           res[0] = Integer.parseInt(nums[0]);
         } catch (NumberFormatException e) {
@@ -2085,10 +2106,10 @@ public abstract class PGL {
     int major = getGLVersion()[0];
     if (major < 2) {
       String ext = getString(EXTENSIONS);
-      return ext.indexOf("_framebuffer_object") != -1
-        && ext.indexOf("_vertex_shader") != -1
-        && ext.indexOf("_shader_objects") != -1
-        && ext.indexOf("_shading_language") != -1;
+      return ext.contains("_framebuffer_object")
+        && ext.contains("_vertex_shader")
+        && ext.contains("_shader_objects")
+        && ext.contains("_shading_language");
     } else {
       return true;
     }
@@ -2101,10 +2122,10 @@ public abstract class PGL {
     int major = getGLVersion()[0];
     if (major < 2) {
       String ext = getString(EXTENSIONS);
-      return ext.indexOf("_fragment_shader") != -1
-        && ext.indexOf("_vertex_shader") != -1
-        && ext.indexOf("_shader_objects") != -1
-        && ext.indexOf("_shading_language") != -1;
+      return ext.contains("_fragment_shader")
+        && ext.contains("_vertex_shader")
+        && ext.contains("_shader_objects")
+        && ext.contains("_shading_language");
     } else {
       return true;
     }

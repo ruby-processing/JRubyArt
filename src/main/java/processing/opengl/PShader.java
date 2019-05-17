@@ -235,6 +235,7 @@ public class PShader implements PConstants {
   }
 
   /**
+   * @param parent
    * @param vertURL network location of the vertex shader
    * @param fragURL network location of the fragment shader
    */
@@ -368,6 +369,8 @@ public class PShader implements PConstants {
 
   /**
    * Returns true if the shader is bound, false otherwise.
+   *
+   * @return
    */
   public boolean bound() {
     return bound;
@@ -384,6 +387,8 @@ public class PShader implements PConstants {
   }
 
   /**
+   * @param name
+   * @param x
    * @param y second component of the variable to modify. The variable has to be
    * declared with an array/vector type in the shader (i.e.: int[2], vec2)
    */
@@ -392,6 +397,9 @@ public class PShader implements PConstants {
   }
 
   /**
+   * @param name
+   * @param x
+   * @param y
    * @param z third component of the variable to modify. The variable has to be
    * declared with an array/vector type in the shader (i.e.: int[3], vec3)
    */
@@ -400,8 +408,12 @@ public class PShader implements PConstants {
   }
 
   /**
+   * @param name
+   * @param x
    * @param w fourth component of the variable to modify. The variable has to be
    * declared with an array/vector type in the shader (i.e.: int[4], vec4)
+   * @param z
+   * @param y
    */
   public void set(String name, int x, int y, int z, int w) {
     setUniformImpl(name, UniformValue.INT4, new int[]{x, y, z, w});
@@ -424,6 +436,7 @@ public class PShader implements PConstants {
   }
 
   /**
+   * @param name
    * @param vec modifies all the components of an array/vector uniform variable.
    * PVector can only be used if the type of the variable is vec3.
    */
@@ -456,6 +469,8 @@ public class PShader implements PConstants {
   }
 
   /**
+   * @param name
+   * @param vec
    * @param ncoords number of coordinates per element, max 4
    */
   public void set(String name, int[] vec, int ncoords) {
@@ -509,6 +524,7 @@ public class PShader implements PConstants {
   }
 
   /**
+   * @param name
    * @param mat matrix of values
    */
   public void set(String name, PMatrix2D mat) {
@@ -522,6 +538,8 @@ public class PShader implements PConstants {
   }
 
   /**
+   * @param name
+   * @param mat
    * @param use3x3 enforces the matrix is 3 x 3
    */
   public void set(String name, PMatrix3D mat, boolean use3x3) {
@@ -540,6 +558,7 @@ public class PShader implements PConstants {
   }
 
   /**
+   * @param name
    * @param tex sets the sampler uniform variable to read from this image
    * texture
    */
@@ -690,12 +709,18 @@ public class PShader implements PConstants {
   protected void setUniformMatrix(int loc, float[] mat) {
     if (-1 < loc) {
       updateFloatBuffer(mat);
-      if (mat.length == 4) {
-        pgl.uniformMatrix2fv(loc, 1, false, floatBuffer);
-      } else if (mat.length == 9) {
-        pgl.uniformMatrix3fv(loc, 1, false, floatBuffer);
-      } else if (mat.length == 16) {
-        pgl.uniformMatrix4fv(loc, 1, false, floatBuffer);
+      switch (mat.length) {
+        case 4:
+          pgl.uniformMatrix2fv(loc, 1, false, floatBuffer);
+          break;
+        case 9:
+          pgl.uniformMatrix3fv(loc, 1, false, floatBuffer);
+          break;
+        case 16:
+          pgl.uniformMatrix4fv(loc, 1, false, floatBuffer);
+          break;
+        default:
+          break;
       }
     }
   }
@@ -714,7 +739,7 @@ public class PShader implements PConstants {
 
   protected void setUniformImpl(String name, int type, Object value) {
     if (uniformValues == null) {
-      uniformValues = new HashMap<String, UniformValue>();
+      uniformValues = new HashMap<>();
     }
     uniformValues.put(name, new UniformValue(type, value));
   }
@@ -977,7 +1002,7 @@ public class PShader implements PConstants {
   }
 
   /**
-   * @param shaderSource a string containing the shader's code
+   * @return
    */
   protected boolean compileVertexShader() {
     pgl.shaderSource(glVertex, PApplet.join(vertexShaderSource, "\n"));
@@ -995,7 +1020,7 @@ public class PShader implements PConstants {
   }
 
   /**
-   * @param shaderSource a string containing the shader's code
+   * @return
    */
   protected boolean compileFragmentShader() {
     pgl.shaderSource(glFragment, PApplet.join(fragmentShaderSource, "\n"));
