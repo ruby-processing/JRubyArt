@@ -73,7 +73,7 @@ Now you are ready to install JRubyArt
 ### Installing JRubyArt ###
 
 ```bash
-gem install jruby_art
+gem install jruby_art -v 1.6.4 # jruby_art-2.0.0+ is not suitable
 k9 --install # should create config.yml for you since JRubyArt-1.5.0
 # also installs JRuby-Complete and examples in ~/k9_samples
 k9 --check

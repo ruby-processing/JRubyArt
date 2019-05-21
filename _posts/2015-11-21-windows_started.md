@@ -37,8 +37,7 @@ Why was ruby-processing not updated to use processing3.0+? The [major changes][c
 
 Setting JRubyArt for the first time, can seem a bit involved (especially if you are addicted to rvm or rbenv). The JRubyArt gem relies on jruby-9.2++, processing-3.5.3, and a handful of other dependencies. Here's how to get them all installed and working on Windows.
 
-Install [wget][wget] which is also available as [cygwin][cygwin] package, Oracle java (1.8.0.151+), and some version of ruby-2.2+ preferably jruby-9.2+. Do not use java-9 or greater see [processing-wiki][wiki]
-
+Install [wget][wget] which is also available as [cygwin][cygwin] package, openjdk (11.0.3+), and some version of ruby-2.2+ preferably jruby-9.2+.
 ### Processing
 
 You can check to see what platforms are supported [here][platforms].
@@ -67,15 +66,6 @@ Configuration:-
 JRubyArt needs to know where you've installed processing, where your processing sketchbook lives (for the video and audio libraries etc), and whether you've done a system/user install of jruby.
 
 Config file is `config.yml` in the `~/.jruby_art folder` so it can co-exist with a ruby-processing install (~/.rp5rc), it is advisable to have separate folders for processing-3.0 and processing-2.2.1 sketchbooks.
-
-```yaml
-# Example YAML configuration file for jruby_art on Windows
-# K9_ROOT: "C:/Ruby22-x64/lib/ruby/gems/2.5.0/gems/jruby_art-1.6.0" # should not be necessary
-PROCESSING_ROOT: "C:/Java/Processing" # just a suggestion
-sketchbook: "C:/Users/USER/Documents/Processing" # adjust to suit your install
-# JRUBY: false # uncomment to use jruby-complete by default especially if you haven't installed jruby
-template: bare # use class or emacs for alternative templates
-```
 
 If you can/are using rvm or rbenv switch to using jruby-9.2+ then
 

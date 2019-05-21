@@ -65,7 +65,7 @@ Install vanilla processing libraries from processing-3.5.3 ide (recommended audi
 
 ### Pure JRuby Setup Debian (Mint, Ubuntu) ###
 
-The simplest way to install oracle java (but with less control over version etc)
+The simplest way to install openjdk (but with less control over version etc)
 
 ```bash
 sudo add-apt-repository ppa:webupd8team/java
