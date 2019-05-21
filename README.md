@@ -3,7 +3,7 @@
 
 __Gem Version 2.0.0__
 
-A new version for jdk11 use, does not require an installed `vanilla processing`, however if installed you can use processing-ide to download libraries. Configuration file is incompatible with that of previous version of JRubyArt (and you should move or rename old `config.yml` to keep it). This version will run with a default configuration file but you won't be able to use processing libraries.
+A new version for jdk11 use, does not require an installed `vanilla processing`, however if installed you can use processing-ide to download libraries. Configuration file is incompatible with that of previous version of JRubyArt (and you should move or rename old `config.yml` to keep it). This version will run with a default configuration file but you won't be able to use processing libraries, until you match configuration to your setup.
 
 ## Requirements
 A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.7.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  
