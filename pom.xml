@@ -10,10 +10,10 @@ DO NOT MODIFIY - GENERATED CODE
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>ruby-processing</groupId>
-  <artifactId>rp5extras</artifactId>
-  <version>1.7.0</version>
-  <name>rp5extras</name>
-  <description>rp5extras for JRubyArt</description>
+  <artifactId>jruby_art</artifactId>
+  <version>2.0.0</version>
+  <name>jruby_art</name>
+  <description>Jar for JRubyArt</description>
   <url>https://github.com/ruby-processing/JRubyArt</url>
   <developers>
     <developer>
@@ -35,24 +35,29 @@ DO NOT MODIFIY - GENERATED CODE
     <url>https://github.com/ruby-processing/JRubyArt/issues</url>
   </issueManagement>
   <properties>
+    <jogl.version>2.3.2</jogl.version>
     <jruby.api>http://jruby.org/apidocs/</jruby.api>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
     <polyglot.dump.pom>pom.xml</polyglot.dump.pom>
     <processing.api>http://processing.github.io/processing-javadocs/core/</processing.api>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <source.directory>src</source.directory>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.2.6.0</version>
+      <version>9.2.7.0</version>
       <type>pom</type>
     </dependency>
     <dependency>
-      <groupId>org.processing</groupId>
-      <artifactId>core</artifactId>
-      <version>3.3.7</version>
+      <groupId>org.jogamp.jogl</groupId>
+      <artifactId>jogl-all</artifactId>
+      <version>${jogl.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jogamp.gluegen</groupId>
+      <artifactId>gluegen-rt-main</artifactId>
+      <version>${jogl.version}</version>
     </dependency>
     <dependency>
       <groupId>org.processing</groupId>
@@ -61,9 +66,26 @@ DO NOT MODIFIY - GENERATED CODE
     </dependency>
   </dependencies>
   <build>
-    <sourceDirectory>src</sourceDirectory>
-    <defaultGoal>package</defaultGoal>
-    <finalName>rpextras</finalName>
+    <resources>
+      <resource>
+        <directory>${source.directory}/main/java</directory>
+        <includes>
+          <include>**/**/*.glsl</include>
+          <include>**/*.jnilib</include>
+        </includes>
+        <excludes>
+          <exclude>**/**/*.java</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>${source.directory}/main/resources</directory>
+        <includes>
+          <include>**/*.png</include>
+          <include>*.txt</include>
+        </includes>
+      </resource>
+    </resources>
+    <finalName>jruby_art</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -78,8 +100,7 @@ DO NOT MODIFIY - GENERATED CODE
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
           <configuration>
-            <source>${maven.compiler.source}</source>
-            <target>${maven.compiler.target}</target>
+            <release>11</release>
           </configuration>
         </plugin>
         <plugin>

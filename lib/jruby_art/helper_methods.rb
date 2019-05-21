@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 # processing module wrapper
-require_relative '../rpextras'
+require_relative '../jruby_art'
 
 module Processing
   # Provides some convenience methods

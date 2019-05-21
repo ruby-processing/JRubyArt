@@ -3,8 +3,7 @@ require_relative 'native_loader'
 
 require 'pathname'
 
-BUNDLED = %r{pdf|net|dxf|svg|serial}
-# This class knows where to find propane libraries
+# This class knows where to find JRubyArt libraries
 class Library
   require_relative '../jruby_art'
   require_relative './config'
@@ -22,6 +21,7 @@ class Library
     return if (@path = Pathname.new(
       File.join(K9_ROOT, 'library', name, "#{name}.rb")
     )).exist?
+
     locate_java
   end
 
@@ -30,31 +30,24 @@ class Library
       File.join(SKETCH_ROOT, 'library', name)
     )
     return @path = dir.join(Pathname.new("#{name}.jar")) if dir.directory?
+
     locate_installed_java
   end
 
   def locate_installed_java
-    prefix = bundled? ? File.join(root, 'modes/java') : sketchbook
+    prefix = library_path
     @dir = Pathname.new(
       File.join(prefix, "libraries/#{name}/library")
     )
     @path = dir.join(Pathname.new("#{name}.jar"))
   end
 
-  def sketchbook
-    Processing::RP_CONFIG.fetch('sketchbook_path', "#{ENV['HOME']}/sketchbook")
-  end
-
-  def root
-    Processing::RP_CONFIG.fetch('PROCESSING_ROOT', "#{ENV['HOME']}/processing")
+  def library_path
+    Processing::RP_CONFIG.fetch('library_path', "#{ENV['HOME']}/.jruby_art")
   end
 
   def ruby?
     path.extname == '.rb'
-  end
-
-  def bundled?
-    BUNDLED =~ name
   end
 
   def exist?
@@ -66,6 +59,7 @@ class Library
       require jar
     end
     return unless native_binaries?
+
     add_binaries_to_classpath
   end
 
