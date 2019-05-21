@@ -7060,7 +7060,7 @@ public class PGraphicsOpenGL extends PGraphics {
       allocate();
     }
 
-    void allocate() {
+    final void allocate() {
       textures = new PImage[PGL.DEFAULT_IN_TEXTURES];
       firstIndex = new int[PGL.DEFAULT_IN_TEXTURES];
       lastIndex = new int[PGL.DEFAULT_IN_TEXTURES];
@@ -7179,7 +7179,7 @@ public class PGraphicsOpenGL extends PGraphics {
       allocate();
     }
 
-    void allocate() {
+    final void allocate() {
       size = 0;
       indexCount = new int[2];
       indexOffset = new int[2];
@@ -8880,7 +8880,7 @@ public class PGraphicsOpenGL extends PGraphics {
     // -----------------------------------------------------------------
     //
     // Allocate/dispose
-    void allocate() {
+    final void allocate() {
       polyVertices = new float[4 * PGL.DEFAULT_TESS_VERTICES];
       polyColors = new int[PGL.DEFAULT_TESS_VERTICES];
       polyNormals = new float[3 * PGL.DEFAULT_TESS_VERTICES];

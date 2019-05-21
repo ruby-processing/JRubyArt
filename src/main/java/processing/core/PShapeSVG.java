@@ -293,12 +293,16 @@ public class PShapeSVG extends PShape {
 
   /**
    * Factory method for subclasses.
+   * @param parent
+   * @param properties
+   * @param parseKids
+   * @return
    */
   protected PShapeSVG createShape(PShapeSVG parent, XML properties, boolean parseKids) {
     return new PShapeSVG(parent, properties, parseKids);
   }
 
-  protected void parseChildren(XML graphics) {
+  protected final void parseChildren(XML graphics) {
     XML[] elements = graphics.getChildren();
     children = new PShape[elements.length];
     childCount = 0;
@@ -313,8 +317,10 @@ public class PShapeSVG extends PShape {
   }
 
   /**
-   * Parse a child XML element. Override this method to add parsing for more SVG
+   * Parse a child XML element.Override this method to add parsing for more SVG
    * elements.
+   * @param elem
+   * @return
    */
   protected PShape parseChild(XML elem) {
 //    System.err.println("parsing child in pshape " + elem.getName());
@@ -1140,7 +1146,7 @@ public class PShapeSVG extends PShape {
     return null;
   }
 
-  protected void parseColors(XML properties) {
+  protected final void parseColors(XML properties) {
     if (properties.hasAttribute("opacity")) {
       String opacityText = properties.getString("opacity");
       setOpacity(opacityText);
@@ -1628,12 +1634,10 @@ public class PShapeSVG extends PShape {
       String[] styleTokens = PApplet.splitTokens(styleText, ";");
 
       //PApplet.println(styleTokens);
-      for (int i = 0; i < styleTokens.length; i++) {
-        String[] tokens = PApplet.splitTokens(styleTokens[i], ":");
+      for (String styleToken : styleTokens) {
+        String[] tokens = PApplet.splitTokens(styleToken, ":");
         //PApplet.println(tokens);
-
         tokens[0] = PApplet.trim(tokens[0]);
-
         if (tokens[0].equals("font-style")) {
           // PApplet.println("font-style: " + tokens[1]);
           if (tokens[1].contains("italic")) {
@@ -1805,30 +1809,33 @@ public class PShapeSVG extends PShape {
       glyphCount = 0;
       glyphs = new FontGlyph[elements.length];
 
-      for (int i = 0; i < elements.length; i++) {
-        String name = elements[i].getName();
-        XML elem = elements[i];
-        if (name == null) {
+      for (XML element1 : elements) {
+        String name = element1.getName();
+        XML elem = element1;
+        if (null == name) {
           // skip it
-        } else if (name.equals("glyph")) {
-          FontGlyph fg = new FontGlyph(this, elem, this);
-          if (fg.isLegit()) {
-            if (fg.name != null) {
-              namedGlyphs.put(fg.name, fg);
-            }
-            if (fg.unicode != 0) {
-              unicodeGlyphs.put(Character.valueOf(fg.unicode), fg);
-            }
-          }
-          glyphs[glyphCount++] = fg;
-
-        } else if (name.equals("missing-glyph")) {
-//          System.out.println("got missing glyph inside <font>");
-          missingGlyph = new FontGlyph(this, elem, this);
-        } else if (name.equals("font-face")) {
-          face = new FontFace(this, elem);
-        } else {
-          System.err.println("Ignoring " + name + " inside <font>");
+        } else switch (name) {
+          case "glyph":
+            FontGlyph fg = new FontGlyph(this, elem, this);
+            if (fg.isLegit()) {
+              if (fg.name != null) {
+                namedGlyphs.put(fg.name, fg);
+              }
+              if (fg.unicode != 0) {
+                unicodeGlyphs.put(fg.unicode, fg);
+              }
+            } glyphs[glyphCount++] = fg;
+            break;
+          case "missing-glyph":
+            //          System.out.println("got missing glyph inside <font>");
+            missingGlyph = new FontGlyph(this, elem, this);
+            break;
+          case "font-face":
+            face = new FontFace(this, elem);
+            break;
+          default:
+            System.err.println("Ignoring " + name + " inside <font>");
+            break;
         }
       }
     }

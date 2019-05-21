@@ -38,7 +38,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class ImageLoadFacade {
 
-  private static final AtomicReference<ImageLoadFacade> instance = new AtomicReference<>(null);
+  private static final AtomicReference<ImageLoadFacade> INSTANCE = new AtomicReference<>(null);
 
   private static final String PREFIX_BASE64_STRING_IMAGE = "data:image";
   private static final String PREFIX_FILE_PATH = "file://";
@@ -47,13 +47,13 @@ public class ImageLoadFacade {
   private final ImageLoadStrategy defaultImageLoadStrategy;
 
   /**
-   * Get a shared instance of this singleton.
+   * Get a shared INSTANCE of this singleton.
    *
-   * @return Shared instance of this singleton.
+   * @return Shared INSTANCE of this singleton.
    */
   public static ImageLoadFacade get() {
-    instance.compareAndSet(null, new ImageLoadFacade());
-    return instance.get();
+    INSTANCE.compareAndSet(null, new ImageLoadFacade());
+    return INSTANCE.get();
   }
 
   /**

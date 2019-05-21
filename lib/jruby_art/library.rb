@@ -3,7 +3,7 @@ require_relative 'native_loader'
 
 require 'pathname'
 
-# This class knows where to find propane libraries
+# This class knows where to find JRubyArt libraries
 class Library
   require_relative '../jruby_art'
   require_relative './config'

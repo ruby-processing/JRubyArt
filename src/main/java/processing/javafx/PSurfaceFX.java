@@ -25,7 +25,7 @@ import processing.core.PSurface;
 
 public class PSurfaceFX implements PSurface {
 
-  final String message = "FX2D renderer not supported in this version of propane";
+  final String message = "FX2D renderer not supported in this version of JRubyArt";
 
   @Override
   public void initOffscreen(PApplet sketch) {

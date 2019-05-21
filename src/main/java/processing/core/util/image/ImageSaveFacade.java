@@ -39,19 +39,19 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class ImageSaveFacade {
 
-  private static final AtomicReference<ImageSaveFacade> instance = new AtomicReference<>(null);
+  private static final AtomicReference<ImageSaveFacade> INSTANCE = new AtomicReference<>(null);
 
   private final Map<String, ImageSaveStrategy> saveStrategies;
   private final ImageSaveStrategy defaultImageSaveStrategy;
 
   /**
-   * Get a shared instance of this singleton.
+   * Get a shared INSTANCE of this singleton.
    *
-   * @return Shared instance of ImageSaveFacade.
+   * @return Shared INSTANCE of ImageSaveFacade.
    */
   public static ImageSaveFacade get() {
-    instance.compareAndSet(null, new ImageSaveFacade());
-    return instance.get();
+    INSTANCE.compareAndSet(null, new ImageSaveFacade());
+    return INSTANCE.get();
   }
 
   /**
@@ -79,11 +79,12 @@ public class ImageSaveFacade {
    *
    * @param pixels The raw representation of the image to save.
    * @param pixelWidth Width of the image in pixels.
-   * @param pixelheight Height of the image in pixels.
+   * @param pixelHeight Height of the image in pixels.
    * @param format Format corresponding to value in PConstants like
    * PConstants.ARGB.
    * @param filename The path at which the file should be saved like
    * "test/path/output.png".
+   * @return 
    */
   public boolean save(int[] pixels, int pixelWidth, int pixelHeight, int format, String filename) {
     return save(
@@ -101,13 +102,14 @@ public class ImageSaveFacade {
    *
    * @param pixels The raw representation of the image to save.
    * @param pixelWidth Width of the image in pixels.
-   * @param pixelheight Height of the image in pixels.
+   * @param pixelHeight Height of the image in pixels.
    * @param format Format corresponding to value in PConstants like
    * PConstants.ARGB.
    * @param filename The path at which the file should be saved like
    * "test/path/output.png".
    * @param pApplet The applet through which files should be saved when using
    * sketch relative paths. Can pass null if using absolute paths.
+   * @return 
    */
   public boolean save(int[] pixels, int pixelWidth, int pixelHeight, int format, String filename,
     PApplet pApplet) {
@@ -131,7 +133,6 @@ public class ImageSaveFacade {
       );
     } catch (IOException e) {
       System.err.println("Error while saving image.");
-      e.printStackTrace();
       return false;
     } catch (SaveImageException e) {
       PGraphics.showException(e.getMessage());

@@ -57,12 +57,12 @@ public class VertexBuffer {
     init();
   }
 
-  protected void create() {
+  protected final void create() {
     context = pgl.getCurrentContext();
     glres = new GLResourceVertexBuffer(this);
   }
 
-  protected void init() {
+  protected final void init() {
     int size = index ? ncoords * INIT_INDEX_BUFFER_SIZE * elementSize
       : ncoords * INIT_VERTEX_BUFFER_SIZE * elementSize;
     pgl.bindBuffer(target, glId);

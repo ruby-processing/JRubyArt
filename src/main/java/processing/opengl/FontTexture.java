@@ -79,7 +79,7 @@ class FontTexture implements PConstants {
     }
   }
 
-  protected void initTexture(PGraphicsOpenGL pg, PFont font) {
+  protected final void initTexture(PGraphicsOpenGL pg, PFont font) {
     lastTex = -1;
 
     int spow = PGL.nextPowerOfTwo(font.getSize());
@@ -342,7 +342,7 @@ class FontTexture implements PConstants {
       updateTex();
     }
 
-    void updateUV() {
+    final void updateUV() {
       width = textures[texIndex].glWidth;
       height = textures[texIndex].glHeight;
 
@@ -352,7 +352,7 @@ class FontTexture implements PConstants {
       v1 = v0 - (float) crop[3] / (float) height;
     }
 
-    void updateTex() {
+    final void updateTex() {
       textures[texIndex].setNative(pixels, crop[0] - 1, crop[1] + crop[3] - 1,
         crop[2] + 2, -crop[3] + 2);
     }

@@ -210,7 +210,7 @@ public class Texture implements PConstants {
    * @param height int
    * @param params GLTextureParameters
    */
-  public void init(int width, int height, Parameters params) {
+  public final void init(int width, int height, Parameters params) {
     setParameters(params);
     setSize(width, height);
     allocate();

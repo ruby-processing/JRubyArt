@@ -80,35 +80,35 @@ import processing.opengl.*;
 
 /**
  * Base class for all sketches that use processing.core.
- * <p/>
+ * 
  * The
  * <A HREF="https://github.com/processing/processing/wiki/Window-Size-and-Full-Screen">
  * Window Size and Full Screen</A> page on the Wiki has useful information about
  * sizing, multiple displays, full screen, etc.
- * <p/>
+ * 
  * Processing uses active mode rendering. All animation tasks happen on the
  * "Processing Animation Thread". The setup() and draw() methods are handled by
  * that thread, and events (like mouse movement and key presses, which are fired
  * by the event dispatch thread or EDT) are queued to be safely handled at the
  * end of draw().
- * <p/>
+ * 
  * Starting with 3.0a6, blit operations are on the EDT, so as not to cause GUI
  * problems with Swing and AWT. In the case of the default renderer, the sketch
  * renders to an offscreen image, then the EDT is asked to bring that image to
  * the screen.
- * <p/>
+ * 
  * For code that needs to run on the EDT, use EventQueue.invokeLater(). When
  * doing so, be careful to synchronize between that code and the Processing
  * animation thread. That is, you can't call Processing methods from the EDT or
  * at any random time from another thread. Use of a callback function or the
  * registerXxx() methods in PApplet can help ensure that your code doesn't do
  * something naughty.
- * <p/>
+ * 
  * As of Processing 3.0, we have removed Applet as the base class for PApplet.
  * This means that we can remove lots of legacy code, however one downside is
  * that it's no longer possible (without extra code) to embed a PApplet into
  * another Java application.
- * <p/>
+ * 
  * As of Processing 3.0, we have discontinued support for versions of Java prior
  * to 1.8. We don't have enough people to support it, and for a project of our
  * (tiny) size, we should be focusing on the future, rather than working around
@@ -1294,7 +1294,7 @@ public class PApplet implements PConstants {
    * Called by the browser or applet viewer to inform this applet that it should
    * start its execution. It is called after the init method and each time the
    * applet is revisited in a Web page.
-   * <p/>
+   * 
    * Called explicitly via the first call to PApplet.paint(), because PAppletGL
    * needs to have a usable screen before getting things rolling.
    */
@@ -1309,7 +1309,7 @@ public class PApplet implements PConstants {
   /**
    * Called by the browser or applet viewer to inform this applet that it should
    * stop its execution.
-   * <p/>
+   * 
    * Unfortunately, there are no guarantees from the Java spec when or if stop()
    * will be called (i.e. on browser quit, or when moving between web pages),
    * and it's not always called.
@@ -1365,7 +1365,7 @@ public class PApplet implements PConstants {
 //   * Called by the browser or applet viewer to inform this applet
 //   * that it is being reclaimed and that it should destroy
 //   * any resources that it has allocated.
-//   * <p/>
+//   * 
 //   * destroy() supposedly gets called as the applet viewer
 //   * is shutting down the applet. stop() is called
 //   * first, and then destroy() to really get rid of things.
@@ -3347,9 +3347,7 @@ public class PApplet implements PConstants {
         // Just pass it off to open() and hope for the best
         launch(url);
       }
-    } catch (IOException e) {
-      printStackTrace(e);
-    } catch (URISyntaxException e) {
+    } catch (IOException | URISyntaxException e) {
       printStackTrace(e);
     }
   }
@@ -3359,13 +3357,12 @@ public class PApplet implements PConstants {
   /**
    * ( begin auto-generated from launch.xml )
    *
-   * Attempts to open an application or file using your platform's launcher. The
-   * <b>file</b> parameter is a String specifying the file name and location.
-   * The location parameter must be a full path name, or the name of an
-   * executable in the system's PATH. In most cases, using a full path is the
-   * best option, rather than relying on the system PATH. Be sure to make the
-   * file executable before attempting to open it (chmod +x).
-   * <br/> <br/>
+   * Attempts to open an application or file using your platform's launcher.The
+  <b>file</b> parameter is a String specifying the file name and location. The location parameter must be a full path name, or the name of an
+ executable in the system's PATH. In most cases, using a full path is the
+ best option, rather than relying on the system PATH. Be sure to make the
+ file executable before attempting to open it (chmod +x).
+ <br/> <br/>
    * The <b>args</b> parameter is a String or String array which is passed to
    * the command line. If you have multiple parameters, e.g. an application and
    * a document, or a command with multiple switches, use the version that takes
@@ -3388,6 +3385,7 @@ public class PApplet implements PConstants {
    *
    * ( end auto-generated )
    *
+   * @return 
    * @webref input:files
    * @param args arguments to the launcher, eg. a filename.
    * @usage Application
@@ -3395,42 +3393,44 @@ public class PApplet implements PConstants {
   static public Process launch(String... args) {
     String[] params = null;
 
-    if (platform == WINDOWS) {
-      // just launching the .html file via the shell works
-      // but make sure to chmod +x the .html files first
-      // also place quotes around it in case there's a space
-      // in the user.dir part of the url
-      params = new String[]{"cmd", "/c"};
-
-    } else if (platform == MACOSX) {
-      params = new String[]{"open"};
-
-    } else if (platform == LINUX) {
-      // xdg-open is in the Free Desktop Specification and really should just
-      // work on desktop Linux. Not risking it though.
-      final String[] launchers = {"xdg-open", "gnome-open", "kde-open"};
-      for (String launcher : launchers) {
-        if (openLauncher != null) {
-          break;
+    switch (platform) {
+      case WINDOWS:
+        // just launching the .html file via the shell works
+        // but make sure to chmod +x the .html files first
+        // also place quotes around it in case there's a space
+        // in the user.dir part of the url
+        params = new String[]{"cmd", "/c"};
+        break;
+      case MACOSX:
+        params = new String[]{"open"};
+        break;
+      case LINUX:
+        // xdg-open is in the Free Desktop Specification and really should just
+        // work on desktop Linux. Not risking it though.
+        final String[] launchers = {"xdg-open", "gnome-open", "kde-open"};
+        for (String launcher : launchers) {
+          if (openLauncher != null) {
+            break;
+          }
+          try {
+            Process p = Runtime.getRuntime().exec(new String[]{launcher});
+            /*int result =*/ p.waitFor();
+            // Not installed will throw an IOException (JDK 1.4.2, Ubuntu 7.04)
+            openLauncher = launcher;
+          } catch (IOException | InterruptedException e) {
+          }
+        } if (openLauncher == null) {
+          System.err.println("Could not find xdg-open, gnome-open, or kde-open: "
+            + "the open() command may not work.");
+        } if (openLauncher != null) {
+          params = new String[]{openLauncher};
         }
-        try {
-          Process p = Runtime.getRuntime().exec(new String[]{launcher});
-          /*int result =*/ p.waitFor();
-          // Not installed will throw an IOException (JDK 1.4.2, Ubuntu 7.04)
-          openLauncher = launcher;
-        } catch (Exception e) {
-        }
-      }
-      if (openLauncher == null) {
-        System.err.println("Could not find xdg-open, gnome-open, or kde-open: "
-          + "the open() command may not work.");
-      }
-      if (openLauncher != null) {
-        params = new String[]{openLauncher};
-      }
-      //} else {  // give up and just pass it to Runtime.exec()
-      //open(new String[] { filename });
-      //params = new String[] { filename };
+        //} else {  // give up and just pass it to Runtime.exec()
+        //open(new String[] { filename });
+        //params = new String[] { filename };
+        break;
+      default:
+        break;
     }
     if (params != null) {
       // If the 'open', 'gnome-open' or 'cmd' are already included
@@ -3447,10 +3447,10 @@ public class PApplet implements PConstants {
   }
 
   /**
-   * Pass a set of arguments directly to the command line. Uses Java's
-   * <A HREF="https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#exec-java.lang.String:A-">Runtime.exec()</A>
-   * method. This is different from the
-   * <A HREF="https://processing.org/reference/launch_.html">launch()</A>
+   * Pass a set of arguments directly to the command line.Uses Java's
+  <A HREF="https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#exec-java.lang.String:A-">Runtime.exec()</A>
+ method. This is different from the
+ <A HREF="https://processing.org/reference/launch_.html">launch()</A>
    * method, which uses the operating system's launcher to open the files. It's
    * always a good idea to use a full path to the executable here.
    * <pre>
@@ -3465,6 +3465,7 @@ public class PApplet implements PConstants {
    * </pre> You can also get the system output and error streams from the
    * Process object, but that's more that we'd like to cover here.
    *
+   * @param args
    * @return a
    * <A HREF="https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html">Process</A>
    * object
@@ -3472,7 +3473,7 @@ public class PApplet implements PConstants {
   static public Process exec(String... args) {
     try {
       return Runtime.getRuntime().exec(args);
-    } catch (Exception e) {
+    } catch (IOException e) {
       throw new RuntimeException("Exception while attempting " + join(args, ' '), e);
     }
   }
@@ -3748,7 +3749,7 @@ public class PApplet implements PConstants {
   //////////////////////////////////////////////////////////////
   /**
    * Call a method in the current class based on its name.
-   * <p/>
+   * 
    * Note that the function being called must be public. Inside the PDE,
    * 'public' is automatically added, but when used without the preprocessor,
    * (like from Eclipse) you'll have to do it yourself.
@@ -3776,7 +3777,7 @@ public class PApplet implements PConstants {
    * Launch a new thread and call the specified function from that new thread.
    * This is a very simple way to do a thread without needing to get into
    * classes, runnables, etc.
-   * <p/>
+   * 
    * Note that the function being called must be public. Inside the PDE,
    * 'public' is automatically added, but when used without the preprocessor,
    * (like from Eclipse) you'll have to do it yourself.
@@ -6972,7 +6973,7 @@ public class PApplet implements PConstants {
   /**
    * Identical to the other saveStream(), but writes to a File object, for
    * greater control over the file location.
-   * <p/>
+   * 
    * Note that unlike other api methods, this will not automatically compress or
    * uncompress gzip files.
    */
@@ -7243,11 +7244,11 @@ public class PApplet implements PConstants {
   /**
    * Prepend the sketch folder path to the filename (or path) that is passed in.
    * External libraries should use this function to save to the sketch folder.
-   * <p/>
+   * 
    * Note that when running as an applet inside a web browser, the sketchPath
    * will be set to null, because security restrictions prevent applets from
    * accessing that information.
-   * <p/>
+   * 
    * This will also cause an error if the sketch is not inited properly, meaning
    * that init() was never called on the PApplet when hosted my some other
    * main() or by other code. For proper use of init(), see the examples in the
@@ -7277,7 +7278,7 @@ public class PApplet implements PConstants {
   /**
    * Returns a path inside the applet folder to save to. Like sketchPath(), but
    * creates any in-between folders so that things save properly.
-   * <p/>
+   * 
    * All saveXxxx() functions use the path to the sketch folder, rather than its
    * data folder. Once exported, the data folder will be found inside the jar
    * file of the exported application or applet. In this case, it's not possible

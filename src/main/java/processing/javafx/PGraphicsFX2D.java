@@ -10,7 +10,7 @@ import processing.core.PSurface;
 
 public class PGraphicsFX2D extends PGraphics {
 
-  final String message = "FX2D renderer not supported in this version of propane";
+  final String message = "FX2D renderer not supported in this version of JRubyArt";
 
   public PGraphicsFX2D() {
   }

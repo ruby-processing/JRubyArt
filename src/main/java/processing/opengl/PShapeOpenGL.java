@@ -399,9 +399,9 @@ public class PShapeOpenGL extends PShape {
 
         if (c3d.family == GROUP) {
           if (c3d.textures != null) {
-            for (PImage tex : c3d.textures) {
+            c3d.textures.forEach((tex) -> {
               addTexture(tex);
-            }
+            });
           } else {
             untexChild(true);
           }
@@ -1383,11 +1383,9 @@ public class PShapeOpenGL extends PShape {
         firstPolyVertex, lastPolyVertex);
       root.setModifiedPolyVertices(firstPolyVertex, lastPolyVertex);
       root.setModifiedPolyNormals(firstPolyVertex, lastPolyVertex);
-      for (VertexAttribute attrib : polyAttribs.values()) {
-        if (attrib.isPosition() || attrib.isNormal()) {
-          root.setModifiedPolyAttrib(attrib, firstPolyVertex, lastPolyVertex);
-        }
-      }
+      polyAttribs.values().stream().filter((attrib) -> (attrib.isPosition() || attrib.isNormal())).forEachOrdered((attrib) -> {
+        root.setModifiedPolyAttrib(attrib, firstPolyVertex, lastPolyVertex);
+      });
     }
 
     if (is3D()) {
@@ -2819,15 +2817,21 @@ public class PShapeOpenGL extends PShape {
 
         switch (family) {
           case GEOMETRY:
-            if (kind == POINTS) {
+          switch (kind) {
+            case POINTS:
               tessellator.tessellatePoints();
-            } else if (kind == LINES) {
+              break;
+            case LINES:
               tessellator.tessellateLines();
-            } else if (kind == LINE_STRIP) {
+              break;
+            case LINE_STRIP:
               tessellator.tessellateLineStrip();
-            } else if (kind == LINE_LOOP) {
+              break;
+            case LINE_LOOP:
               tessellator.tessellateLineLoop();
-            } else if (kind == TRIANGLE || kind == TRIANGLES) {
+              break;
+            case TRIANGLE:
+            case TRIANGLES:
               if (stroke) {
                 inGeo.addTrianglesEdges();
               }
@@ -2835,7 +2839,8 @@ public class PShapeOpenGL extends PShape {
                 inGeo.calcTrianglesNormals();
               }
               tessellator.tessellateTriangles();
-            } else if (kind == TRIANGLE_FAN) {
+              break;
+            case TRIANGLE_FAN:
               if (stroke) {
                 inGeo.addTriangleFanEdges();
               }
@@ -2843,7 +2848,8 @@ public class PShapeOpenGL extends PShape {
                 inGeo.calcTriangleFanNormals();
               }
               tessellator.tessellateTriangleFan();
-            } else if (kind == TRIANGLE_STRIP) {
+              break;
+            case TRIANGLE_STRIP:
               if (stroke) {
                 inGeo.addTriangleStripEdges();
               }
@@ -2851,7 +2857,9 @@ public class PShapeOpenGL extends PShape {
                 inGeo.calcTriangleStripNormals();
               }
               tessellator.tessellateTriangleStrip();
-            } else if (kind == QUAD || kind == QUADS) {
+              break;
+            case QUAD:
+            case QUADS:
               if (stroke) {
                 inGeo.addQuadsEdges();
               }
@@ -2859,7 +2867,8 @@ public class PShapeOpenGL extends PShape {
                 inGeo.calcQuadsNormals();
               }
               tessellator.tessellateQuads();
-            } else if (kind == QUAD_STRIP) {
+              break;
+            case QUAD_STRIP:
               if (stroke) {
                 inGeo.addQuadStripEdges();
               }
@@ -2867,7 +2876,8 @@ public class PShapeOpenGL extends PShape {
                 inGeo.calcQuadStripNormals();
               }
               tessellator.tessellateQuadStrip();
-            } else if (kind == POLYGON) {
+              break;
+            case POLYGON:
               boolean bez = inGeo.hasBezierVertex();
               boolean quad = inGeo.hasQuadraticVertex();
               boolean curv = inGeo.hasCurveVertex();
@@ -2886,8 +2896,12 @@ public class PShapeOpenGL extends PShape {
               if (curv) {
                 restoreCurveVertexSettings();
               }
-            }
+              break;
+            default:
+              break;
+          }
             break;
+
           case PRIMITIVE:
             // The input geometry needs to be cleared because the geometry
             // generation methods in InGeometry add the vertices of the

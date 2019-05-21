@@ -310,7 +310,7 @@ public class FrameBuffer implements PConstants {
 
   ///////////////////////////////////////////////////////////
   // Allocate/release framebuffer.
-  protected void allocate() {
+  protected final void allocate() {
     dispose(); // Just in the case this object is being re-allocated.
 
     context = pgl.getCurrentContext();
