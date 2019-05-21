@@ -1,7 +1,7 @@
 
 # JRubyArt
 
-__Gem Version 4.0.0.pre__
+__Gem Version 2.0.0__
 
 A new version for jdk11 use, does not require an installed `vanilla processing`, however if installed you can use processing-ide to download libraries. Configuration file is incompatible with that of previous version of JRubyArt (and you should move or rename old `config.yml` to keep it). This version will run with a default configuration file but you won't be able to use processing libraries.
 
@@ -11,7 +11,7 @@ A clean start for `jruby_art` with custom processing core included, built for [j
 
 A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.2.7.0`) to download gem.
 
-`open-jdk11.03+` currently FX2D is still experimental.
+`open-jdk11.03+` currently FX2D is not included.
 
 ## Configuration
 
