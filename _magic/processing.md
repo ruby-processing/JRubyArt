@@ -120,7 +120,7 @@ public interface VideoInterface {
 }
 ```
 
-To match packaging the java file needs to be nested in `monkstone/videoevent` folders (it is unwise not to have a package) and compile and jar as follows, requires jdk8+.
+To match packaging the java file needs to be nested in `monkstone/videoevent` folders (it is unwise not to have a package) and compile and jar as follows, requires jdk11+.
 
 ```bash
 # NB: classpath needs to be a fully qualified path to jars (not as below)

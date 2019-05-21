@@ -73,7 +73,7 @@ sudo apt-get update
 sudo apt-get install oracle-java8-installer
 ```
 
-Alternative method (that puts you in control), download and install latest Oracle jdk8 (in the `/opt` folder makes sense)
+Alternative method (that puts you in control), download and install latest OpenJDK11 (in the `/opt` folder makes sense)
 
 Use `update-alternatives` to install and maintain configuration eg for java:-
 ```bash
@@ -106,7 +106,7 @@ Complete the install as for Archlinux (make sure `k9` is on your path or use `jr
 
 ### Alternative JRuby-Complete Setup Debian (Mint, Ubuntu) ###
 
-Download and install latest Oracle jdk8 as above, although openjdk (upto jdk11) also seems to work.
+Download and install latest OpenJDK11 as above, although openjdk (upto jdk11) also seems to work.
 
 Install MRI ruby (must be at least ruby-2.3)
 
