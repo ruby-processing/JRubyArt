@@ -35,28 +35,31 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
     overrides do
       plugin :resources, '2.6'
       plugin :dependency, '2.8'
-      plugin( :compiler, '3.8.0',
-        'release' => '11' )
-        plugin( :javadoc, '2.10.4',
-          'detectOfflineLinks' =>  'false',
-          'links' => [ '${processing.api}',
-            '${jruby.api}' ] )
-          end
+      plugin( :compiler, '3.8.0', 'release' => '11' )
+      plugin(
+        :javadoc,
+        '2.10.4',
+        'detectOfflineLinks' =>  'false',
+        'links' => [ '${processing.api}', '${jruby.api}' ]
+      )
+      plugin(
+        :jar, '3.1.0',
+        'archive' => {'manifestFile' =>  'MANIFEST.MF'}
+      )
+    end
 
 
-          build do
-
-            resource do
-              directory '${source.directory}/main/java'
-              includes '**/**/*.glsl', '**/*.jnilib'
-              excludes '**/**/*.java'
-            end
-
-            resource do
-              directory '${source.directory}/main/resources'
-              includes '**/*.png', '*.txt'
-              excludes
-            end
-            final_name 'jruby_art'
-          end
-        end
+    build do
+      resource do
+        directory '${source.directory}/main/java'
+        includes '**/**/*.glsl', '**/*.jnilib'
+        excludes '**/**/*.java'
+      end      
+      resource do
+        directory '${source.directory}/main/resources'
+        includes '**/*.png', '*.txt'
+        excludes
+      end
+      final_name 'jruby_art'
+    end
+  end
