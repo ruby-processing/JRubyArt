@@ -44,7 +44,9 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
       )
       plugin(
         :jar, '3.1.0',
-        'archive' => {'manifestFile' =>  'MANIFEST.MF'}
+        'archive' => {
+          'manifestEntries' => { 'Class-Path' => 'gluegen-rt.jar jog-all.jar' }
+        }
       )
     end
 
@@ -54,7 +56,7 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
         directory '${source.directory}/main/java'
         includes '**/**/*.glsl', '**/*.jnilib'
         excludes '**/**/*.java'
-      end      
+      end
       resource do
         directory '${source.directory}/main/resources'
         includes '**/*.png', '*.txt'

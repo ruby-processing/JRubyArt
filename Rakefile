@@ -1,7 +1,7 @@
 require_relative 'lib/jruby_art/version'
 require 'erb'
 
-task default: [:create_manifest, :compile, :install_jogl, :gem, :test]
+task default: [:compile, :install_jogl, :gem, :test]
 
 # depends on installed processing, with processing on path
 desc 'Copy Jars'
@@ -13,19 +13,6 @@ task :install_jogl do
   opengl.concat %w[jogl-all.jar gluegen-rt.jar]
   opengl.each do |gl|
     FileUtils.cp(File.join(jar_dir, gl), File.join('.', 'lib'))
-  end
-end
-
-desc 'Create jar Manifest'
-task :create_manifest do
-  manifest = ERB.new <<~MANIFEST
-    Implementation-Title: jruby_art
-    Implementation-Version: <%= JRubyArt::VERSION %>
-    Class-Path: gluegen-rt.jar jog-all.jar
-  MANIFEST
-
-  File.open('MANIFEST.MF', 'w') do |f|
-    f.puts(manifest.result(binding))
   end
 end
 

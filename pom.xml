@@ -119,7 +119,9 @@ DO NOT MODIFIY - GENERATED CODE
           <version>3.1.0</version>
           <configuration>
             <archive>
-              <manifestFile>MANIFEST.MF</manifestFile>
+              <manifestEntries>
+                <Class-Path>gluegen-rt.jar jog-all.jar</Class-Path>
+              </manifestEntries>
             </archive>
           </configuration>
         </plugin>
