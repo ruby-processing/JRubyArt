@@ -17,7 +17,6 @@ class Rp5Test < Minitest::Test
   end
 
   def test_sketch_path
-    skip 'Skip whilst non-standard project name'
     out, _err_ = capture_io do
       open('|../bin/k9 -r sketches/sketch_path.rb', 'r') do |io|
         while l = io.gets
@@ -25,7 +24,7 @@ class Rp5Test < Minitest::Test
         end
       end
     end
-    assert_match('/home/tux/JRubyArt/test', out, 'Failed Sketch Path Sketch')
+    assert_match('/home/tux/JRubyArt', out, 'Failed Sketch Path Sketch')
   end
 
   def test_on_top
