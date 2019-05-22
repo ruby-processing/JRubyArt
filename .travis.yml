@@ -1,4 +1,4 @@
-language: ruby
+language: java
 dist: trusty
 
 rvm:
