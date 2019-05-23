@@ -1,7 +1,7 @@
 
 # JRubyArt
 
-__Gem Version 2.0.0__
+__Gem Version 2.0.0__ ![Travis CI](https://travis-ci.org/ruby-processing/JRubyArt.svg)
 
 A new version for jdk11 use, does not require an installed `vanilla processing`, however if installed you can use processing-ide to download libraries. Configuration file is incompatible with that of previous version of JRubyArt (and you should move or rename old `config.yml` to keep it). This version will run with a default configuration file but you won't be able to use processing libraries, until you match configuration to your setup.
 
