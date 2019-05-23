@@ -33,7 +33,7 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
     jar 'org.processing:video:3.0.2'
 
     overrides do
-      plugin :resources, '2.6'
+      plugin :resources, '2.7'
       plugin :dependency, '2.8'
       plugin( :compiler, '3.8.0', 'release' => '11' )
       plugin(
