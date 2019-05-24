@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require_relative 'test_helper'
-require_relative '../lib/jruby_art.jar'
 require_relative '../library/color_group/color_group'
 
 Java::Monkstone::JRLibrary.load(JRuby.runtime)

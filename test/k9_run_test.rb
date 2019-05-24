@@ -1,5 +1,6 @@
 gem 'minitest'      # don't use bundled minitest
-require_relative 'test_helper'
+require 'minitest/autorun'
+require 'minitest/pride'
 
 Dir.chdir(File.dirname(__FILE__))
 
@@ -99,6 +100,6 @@ class Rp5Test < Minitest::Test
         end
       end
     end
-    assert out.index("undefined method `unknown_method'"), 'Failed to raise exception?'
+    assert out.index("undefined method `unknown_method"), 'Failed to raise exception?'
   end
 end

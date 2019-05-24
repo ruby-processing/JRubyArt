@@ -24,7 +24,7 @@ end
 desc 'Compile'
 task :compile do
   system 'mvn package'
-  FileUtils.mv('target/jruby_art.jar', 'lib')
+  FileUtils.mv "target/jruby_art-#{JRubyArt::VERSION}.jar", 'lib'
 end
 
 desc 'Test'

@@ -9,10 +9,10 @@ end
 
 SKETCH_ROOT ||= Dir.pwd
 
-require 'jruby_art/version'
-require 'jruby_art/helpers/numeric'
+require "#{K9_ROOT}/lib/jruby_art/version"
+require "#{K9_ROOT}/lib/jruby_art/helpers/numeric"
 
 # The top-level namespace, a home for all JRubyArt classes.
 module Processing
-  require 'jruby_art/runner'
+  require "#{K9_ROOT}/lib/jruby_art/runner"
 end

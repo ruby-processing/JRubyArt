@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.license = 'MIT'
 
   spec.files = FileList['bin/**/*', 'lib/**/*', 'library/**/*', 'samples/**/*', 'vendors/Rakefile'].exclude(/jar/).to_a
-  spec.files << 'lib/jruby_art.jar'
+  spec.files << "lib/jruby_art-#{JRubyArt::VERSION}.jar"
   spec.files << 'lib/gluegen-rt.jar'
   spec.files << 'lib/jogl-all.jar'
   spec.files << 'lib/gluegen-rt-natives-linux-amd64.jar'

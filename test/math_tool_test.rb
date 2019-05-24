@@ -1,6 +1,4 @@
 require_relative 'test_helper'
-require_relative '../lib/jruby_art.jar'
-# require_relative '../lib/jruby_art/helper_methods'
 
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
 

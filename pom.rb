@@ -62,6 +62,5 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
         includes '**/*.png', '*.txt'
         excludes
       end
-      final_name 'jruby_art'
     end
   end

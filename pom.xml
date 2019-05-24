@@ -85,7 +85,6 @@ DO NOT MODIFIY - GENERATED CODE
         </includes>
       </resource>
     </resources>
-    <finalName>jruby_art</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
