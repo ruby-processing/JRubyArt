@@ -51,7 +51,7 @@ class Rp5Test < Minitest::Test
   end
 
   def test_proc_root
-    skip 'need a better test'
+    skip 'TODO: create a test for library configuration'
     require 'psych'
     path = File.expand_path('~/.jruby_art/config.yml')
     config = FileTest.exist?(path)? Psych.load_file(path) : {}

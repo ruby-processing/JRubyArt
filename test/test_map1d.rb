@@ -6,8 +6,6 @@ Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
 include Processing::HelperMethods
 include Processing::MathTool
 
-Dir.chdir(File.dirname(__FILE__))
-
 class Rp5Test < Minitest::Test
 
  def setup

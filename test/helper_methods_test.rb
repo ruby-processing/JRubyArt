@@ -6,8 +6,6 @@ Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
 include Processing::HelperMethods
 include MathTool
 
-Dir.chdir(File.dirname(__FILE__))
-
 class HelperMethodsTest < Minitest::Test
 
  ARRAY = %w(albatross dog horse)

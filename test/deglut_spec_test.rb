@@ -2,8 +2,6 @@ require_relative 'test_helper'
 
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
 
-Dir.chdir(File.dirname(__FILE__))
-
 class DeglutTest < Minitest::Test
   attr_reader :to_radian
 

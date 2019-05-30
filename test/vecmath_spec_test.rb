@@ -2,9 +2,6 @@ require_relative 'test_helper'
 
 Java::Monkstone::JRLibrary.load(JRuby.runtime)
 
-
-Dir.chdir(File.dirname(__FILE__))
-
 class VecmathTest < Minitest::Test
 
   # duck for Vec2D constructor

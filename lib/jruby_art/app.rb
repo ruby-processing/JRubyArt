@@ -13,7 +13,6 @@ module Processing
 
   # Include some core processing classes that we'd like to use:
   include_package 'processing.core'
-  java_import 'processing.core.PFont'
   # Load vecmath, fastmath and mathtool modules
   Java::Monkstone::JRLibrary.load(JRuby.runtime)
   # import custom Vecmath renderers

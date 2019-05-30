@@ -1,10 +1,7 @@
 require_relative 'test_helper'
-require_relative '../lib/jruby_art.jar'
 require_relative '../lib/jruby_art/helpers/aabb'
 
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
-
-Dir.chdir(File.dirname(__FILE__))
 
 class MathToolTest < Minitest::Test
 

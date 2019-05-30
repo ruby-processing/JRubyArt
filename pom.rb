@@ -60,7 +60,6 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
       resource do
         directory '${source.directory}/main/resources'
         includes '**/*.png', '*.txt'
-        excludes
       end
     end
   end

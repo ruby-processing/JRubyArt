@@ -5,8 +5,6 @@ require_relative '../library/color_group/color_group'
 Java::Monkstone::JRLibrary.load(JRuby.runtime)
 java_import Java::Monkstone::ColorUtil
 
-Dir.chdir(File.dirname(__FILE__))
-
 PALETTE = %w[#FFFFFF #FF0000 #0000FF].freeze
 COLORS = [16777215, 16711680, 255].to_java(:int)
 

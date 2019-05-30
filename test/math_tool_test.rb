@@ -3,10 +3,6 @@ require_relative 'test_helper'
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
 
 # include Processing::HelperMethods
-
-
-Dir.chdir(File.dirname(__FILE__))
-
 class MathToolTest < Minitest::Test
  include MathTool
  def test_map1d
