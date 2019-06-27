@@ -198,12 +198,12 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * Array of hint[] items. These are hacks to get around various temporary
    * workarounds inside the environment.
-   * <p/>
+   * 
    * Note that this array cannot be static, as a hint() may result in a runtime
    * change specific to a renderer. For instance, calling
    * hint(DISABLE_DEPTH_TEST) has to call glDisable() right away on an instance
    * of PGraphicsOpenGL.
-   * <p/>
+   * 
    * The hints[] array is allocated early on because it might be used inside
    * beginDraw(), allocate(), etc.
    */
@@ -881,7 +881,7 @@ public class PGraphics extends PImage implements PConstants {
    *
    * ( end auto-generated )
    * <h3>Advanced</h3>
-   * <p/>
+   * 
    * When creating your own PGraphics, you should call this when you're finished
    * drawing.
    *
@@ -1604,12 +1604,12 @@ public class PGraphics extends PImage implements PConstants {
    * its own function, and will (almost?) always be coincident with a call to
    * vertex. As of beta, this was moved to the protected method you see here,
    * and called from an optional param of and overloaded vertex().
-   * <p/>
+   * 
    * The parameters depend on the current textureMode. When using
    * textureMode(IMAGE), the coordinates will be relative to the size of the
    * image texture, when used with textureMode(NORMAL), they'll be in the range
    * 0..1.
-   * <p/>
+   * 
    * Used by both PGraphics2D (for images) and PGraphics3D.
    */
   protected void vertexTexture(float u, float v) {
@@ -3816,7 +3816,7 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * Expects x1, y1, x2, y2 coordinates where (x2 >= x1) and (y2 >= y1). If
    * tint() has been called, the image will be colored.
-   * <p/>
+   * 
    * The default implementation draws an image as a textured quad. The (u, v)
    * coordinates are in image space (they're ints, after all..)
    */
@@ -4636,11 +4636,11 @@ public class PGraphics extends PImage implements PConstants {
    * Draw text in a box that is constrained to a particular size. The current
    * rectMode() determines what the coordinates mean (whether x1/y1/x2/y2 or
    * x/y/w/h).
-   * <P/>
+   * 
    * Note that the x,y coords of the start of the box will align with the
    * *ascent* of the text, not the baseline, as is the case for the other text()
    * functions.
-   * <P/>
+   * 
    * Newlines that are \n (Unix newline or linefeed char, ascii 10) are honored,
    * and \r (carriage return, Windows and Mac OS) are ignored.
    *

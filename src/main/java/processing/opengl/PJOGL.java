@@ -1920,10 +1920,10 @@ public class PJOGL extends PGL {
     } else if (gl3 != null) {
       gl3.glDrawBuffer(buf);
     } else if (gl3es3 != null) {
-      IntBuffer intBuffer = IntBuffer.allocate(1);
-      intBuffer.put(buf);
-      intBuffer.rewind();
-      gl3es3.glDrawBuffers(1, intBuffer);
+      IntBuffer localIntBuffer = IntBuffer.allocate(1);
+      localIntBuffer.put(buf);
+      localIntBuffer.rewind();
+      gl3es3.glDrawBuffers(1, localIntBuffer);
     } else {
       throw new RuntimeException(String.format(MISSING_GLFUNC_ERROR, "glDrawBuffer()"));
     }

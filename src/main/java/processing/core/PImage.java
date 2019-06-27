@@ -1163,7 +1163,7 @@ public class PImage implements PConstants, Cloneable {
    * </UL>
    * Luminance conversion code contributed by
    * <A HREF="http://www.toxi.co.uk">toxi</A>
-   * <P/>
+   * 
    * Gaussian blur code contributed by
    * <A HREF="http://incubator.quasimondo.com">Mario Klingemann</A>
    *

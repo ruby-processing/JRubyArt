@@ -912,13 +912,10 @@ return shape;
   /**
    * ( begin auto-generated from blendMode.xml )
    *
-   * This is a new reference entry for Processing 2.0. It will be updated
-   * shortly.
-   *
-   * ( end auto-generated )
+   * This is a new reference entry for Processing 2.0.It will be updated
+ shortly. ( end auto-generated )
    *
    * @webref Rendering
-   * @param mode the blending mode to use
    */
   @Override
   protected void blendModeImpl() {
@@ -926,15 +923,7 @@ return shape;
       g2.setComposite(defaultComposite);
 
     } else {
-      g2.setComposite(new Composite() {
-
-        @Override
-        public CompositeContext createContext(ColorModel srcColorModel,
-          ColorModel dstColorModel,
-          RenderingHints hints) {
-          return new BlendingContext(blendMode);
-        }
-      });
+      g2.setComposite((ColorModel srcColorModel, ColorModel dstColorModel, RenderingHints hints1) -> new BlendingContext(blendMode));
     }
   }
 
@@ -943,15 +932,17 @@ return shape;
 // http://www.curious-creature.org/2006/09/20/new-blendings-modes-for-java2d/
   private static final class BlendingContext implements CompositeContext {
 
-    private int mode;
+    private final int mode;
 
     private BlendingContext(int mode) {
       this.mode = mode;
     }
 
+    @Override
     public void dispose() {
     }
 
+    @Override
     public void compose(Raster src, Raster dstIn, WritableRaster dstOut) {
       // not sure if this is really necessary, since we control our buffers
       if (src.getSampleModel().getDataType() != DataBuffer.TYPE_INT
@@ -1162,18 +1153,22 @@ return shape;
     int fillMode = Arc2D.PIE;
     int strokeMode = Arc2D.OPEN;
 
-    if (mode == OPEN) {
-      fillMode = Arc2D.OPEN;
-      //strokeMode = Arc2D.OPEN;
-
-    } else if (mode == PIE) {
-      //fillMode = Arc2D.PIE;
-      strokeMode = Arc2D.PIE;
-
-    } else if (mode == CHORD) {
-      fillMode = Arc2D.CHORD;
-      strokeMode = Arc2D.CHORD;
-    }
+      switch (mode) {
+          case OPEN:
+              fillMode = Arc2D.OPEN;
+              //strokeMode = Arc2D.OPEN;
+              break;
+          case PIE:
+              //fillMode = Arc2D.PIE;
+              strokeMode = Arc2D.PIE;
+              break;
+          case CHORD:
+              fillMode = Arc2D.CHORD;
+              strokeMode = Arc2D.CHORD;
+              break;
+          default:
+              break;
+      }
 
     if (fill) {
       //System.out.println("filla");
@@ -1359,6 +1354,15 @@ return shape;
 //                  int u1, int v1, int u2, int v2)
   /**
    * Handle renderer-specific image drawing.
+     * @param who
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param u1
+     * @param y2
+     * @param v1
+     * @param u2
+     * @param v2
    */
   @Override
   protected void imageImpl(PImage who,
@@ -1537,39 +1541,42 @@ return shape;
           } else {
             int index = 0;
             for (int y = 0; y < source.pixelHeight; y++) {
-              if (source.format == RGB) {
-                int alpha = tintColor & 0xFF000000;
-                for (int x = 0; x < source.pixelWidth; x++) {
-                  int argb1 = source.pixels[index++];
-                  int r1 = (argb1 >> 16) & 0xff;
-                  int g1 = (argb1 >> 8) & 0xff;
-                  int b1 = (argb1) & 0xff;
-                  tintedTemp[x] = alpha
-                    | (((r2 * r1) & 0xff00) << 8)
-                    | ((g2 * g1) & 0xff00)
-                    | (((b2 * b1) & 0xff00) >> 8);
+                switch (source.format) {
+                    case RGB:
+                        int alpha = tintColor & 0xFF000000;
+                        for (int x = 0; x < source.pixelWidth; x++) {
+                            int argb1 = source.pixels[index++];
+                            int r1 = (argb1 >> 16) & 0xff;
+                            int g1 = (argb1 >> 8) & 0xff;
+                            int b1 = (argb1) & 0xff;
+                            tintedTemp[x] = alpha
+                                    | (((r2 * r1) & 0xff00) << 8)
+                                    | ((g2 * g1) & 0xff00)
+                                    | (((b2 * b1) & 0xff00) >> 8);
+                        }       break;
+                    case ARGB:
+                        for (int x = 0; x < source.pixelWidth; x++) {
+                            int argb1 = source.pixels[index++];
+                            int a1 = (argb1 >> 24) & 0xff;
+                            int r1 = (argb1 >> 16) & 0xff;
+                            int g1 = (argb1 >> 8) & 0xff;
+                            int b1 = (argb1) & 0xff;
+                            tintedTemp[x]
+                                    = (((a2 * a1) & 0xff00) << 16)
+                                    | (((r2 * r1) & 0xff00) << 8)
+                                    | ((g2 * g1) & 0xff00)
+                                    | (((b2 * b1) & 0xff00) >> 8);
+                        }       break;
+                    case ALPHA:
+                        int lower = tintColor & 0xFFFFFF;
+                        for (int x = 0; x < source.pixelWidth; x++) {
+                            int a1 = source.pixels[index++];
+                            tintedTemp[x]
+                                    = (((a2 * a1) & 0xff00) << 16) | lower;
+                        }       break;
+                    default:
+                        break;
                 }
-              } else if (source.format == ARGB) {
-                for (int x = 0; x < source.pixelWidth; x++) {
-                  int argb1 = source.pixels[index++];
-                  int a1 = (argb1 >> 24) & 0xff;
-                  int r1 = (argb1 >> 16) & 0xff;
-                  int g1 = (argb1 >> 8) & 0xff;
-                  int b1 = (argb1) & 0xff;
-                  tintedTemp[x]
-                    = (((a2 * a1) & 0xff00) << 16)
-                    | (((r2 * r1) & 0xff00) << 8)
-                    | ((g2 * g1) & 0xff00)
-                    | (((b2 * b1) & 0xff00) >> 8);
-                }
-              } else if (source.format == ALPHA) {
-                int lower = tintColor & 0xFFFFFF;
-                for (int x = 0; x < source.pixelWidth; x++) {
-                  int a1 = source.pixels[index++];
-                  tintedTemp[x]
-                    = (((a2 * a1) & 0xff00) << 16) | lower;
-                }
-              }
               wr.setDataElements(0, y, source.pixelWidth, 1, tintedTemp);
             }
           }
@@ -1667,7 +1674,7 @@ return shape;
 
   /**
    * Same as parent, but override for native version of the font.
-   * <p/>
+   * 
    * Called from textFontImpl and textSizeImpl, so the metrics will get recorded
    * properly.
    */

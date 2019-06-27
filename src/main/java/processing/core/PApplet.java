@@ -12556,11 +12556,11 @@ public class PApplet implements PConstants {
    * Draw text in a box that is constrained to a particular size. The current
    * rectMode() determines what the coordinates mean (whether x1/y1/x2/y2 or
    * x/y/w/h).
-   * <P/>
+   * 
    * Note that the x,y coords of the start of the box will align with the
    * *ascent* of the text, not the baseline, as is the case for the other text()
    * functions.
-   * <P/>
+   * 
    * Newlines that are \n (Unix newline or linefeed char, ascii 10) are honored,
    * and \r (carriage return, Windows and Mac OS) are ignored.
    *
@@ -15213,7 +15213,7 @@ public class PApplet implements PConstants {
    * </UL>
    * Luminance conversion code contributed by
    * <A HREF="http://www.toxi.co.uk">toxi</A>
-   * <P/>
+   * 
    * Gaussian blur code contributed by
    * <A HREF="http://incubator.quasimondo.com">Mario Klingemann</A>
    *

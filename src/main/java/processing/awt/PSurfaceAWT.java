@@ -178,7 +178,7 @@ public class PSurfaceAWT extends PSurfaceNone {
   public class SmoothCanvas extends Canvas {
 
     private Dimension oldSize = new Dimension(0, 0);
-    private Dimension newSize = new Dimension(0, 0);
+    private final Dimension newSize = new Dimension(0, 0);
 
     // Turns out getParent() returns a JPanel on a JFrame. Yech.
     public Frame getFrame() {
