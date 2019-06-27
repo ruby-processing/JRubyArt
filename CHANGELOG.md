@@ -1,4 +1,6 @@
-**v2.0.0** Update to jdk11, removing many bashisms on the way. We compile our own processing code, and include with jogl gems in gem. Requires a new `config.yml` file to use libaries. Revert to processing-3.3.7 versions of PShapeOpenGL and PGraphicsOpenGL to fix diwi examples and possibly others.
+**v2.1.0** JRubyArt is no longer dependent on an installed version of vanilla processing, but needs at least jdk11 to run. Anyone wanting to use jdk8 should install JRubyArt-1.7.0 and probably use bundler to freeze version.
+
+**v2.0.0** Update to jdk11, removing many bashisms on the way. We compile our own processing code, and include with jogl gems in gem. Requires a new `config.yml` file to use libraries. Revert to processing-3.3.7 versions of PShapeOpenGL and PGraphicsOpenGL to fix diwi examples and possibly others.
 
 **v1.7.0** Update to jruby-complete-9.2.7.0. NB: breaking change AppRender(applet) changed to GfxRender(graphics) please update samples.
 

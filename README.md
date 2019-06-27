@@ -76,7 +76,7 @@ k9 --live sketch.rb # pry is bound to Processing.app # needs `jruby -S gem insta
 ```
 ## Example sketches
 
-[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) and, [The-Nature-of-Code-Examples-for-JRubyArt](https://github.com/ruby-processing/The-Nature-of-Code-for-JRubyArt) feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --install` please move existing `k9_samples` if you wish to keep them.  NB: The current release features a change from `AppRender` to `GfxRender`, so please update your `k9_samples`.
+[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) and, [The-Nature-of-Code-Examples-for-JRubyArt](https://github.com/ruby-processing/The-Nature-of-Code-for-JRubyArt) feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --install` please move existing `k9_samples` if you wish to keep them.  
 
 [rubuto-processing3]:https://github.com/hoshi-sano/ruboto-processing3
 [testing]:http://ruby-processing.github.io/testing/testing/

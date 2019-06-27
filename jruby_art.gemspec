@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.author  = 'Martin Prout'
   spec.email = 'mamba2928@yahoo.co.uk'
   spec.description = <<-EOS
-  JRubyArt is a ruby implementation of the processing art framework, with enhanced
-  functionality. Use both processing libraries and ruby gems in your sketches.
+  JRubyArt-2.0+ is a ruby implementation of the processing art framework, with enhanced
+  functionality. Processing libraries and ruby gems can be used in your sketches.
   Features create/run/watch/live modes.
   EOS
   spec.summary = %q{Code as Art, Art as Code. Processing and Ruby are meant for each other.}
