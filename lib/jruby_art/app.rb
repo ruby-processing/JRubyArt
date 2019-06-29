@@ -33,7 +33,7 @@ module Processing
     key_typed: :keyTyped
   }.freeze
   class << self
-    attr_accessor :app
+    attr_accessor :app, :surface
   end
   # All sketches extend this class
   class App < PApplet
@@ -47,7 +47,7 @@ module Processing
     alias stroke_width stroke_weight
     alias rgb color
     alias gray color
-    field_reader :surface
+    # field_reader :surface
 
     def sketch_class
       self.class.sketch_class
@@ -113,6 +113,7 @@ module Processing
         puts(exception.backtrace.map { |trace| "\t#{trace}" })
         close
       end
+      @surface = self.get_surface
       # NB: this is the processing runSketch() method as used by processing.py
       run_sketch
     end
