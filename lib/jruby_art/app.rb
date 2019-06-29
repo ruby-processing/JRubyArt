@@ -42,12 +42,11 @@ module Processing
     include MathTool
     include Render
     # Alias some methods for familiarity for Shoes coders.
-    # surface replaces :frame, but needs field_reader for access
+    # surface replaces :frame
     alias oval ellipse
     alias stroke_width stroke_weight
     alias rgb color
     alias gray color
-    # field_reader :surface
 
     def sketch_class
       self.class.sketch_class
@@ -133,7 +132,7 @@ module Processing
 
     def sketch_path(spath = '')
       return super() if spath.empty?
-
+      
       super(spath)
     end
 
