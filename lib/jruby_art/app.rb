@@ -15,6 +15,7 @@ module Processing
   include_package 'processing.core'
   # Load vecmath, fastmath and mathtool modules
   Java::Monkstone::JRLibrary.load(JRuby.runtime)
+
   # import custom Vecmath renderers
   module Render
     java_import 'monkstone.vecmath.GfxRender'
@@ -132,7 +133,7 @@ module Processing
 
     def sketch_path(spath = '')
       return super() if spath.empty?
-      
+
       super(spath)
     end
 
