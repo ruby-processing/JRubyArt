@@ -29,13 +29,13 @@ end
 
 desc 'Test'
 task :test do
-  system 'jruby test/deglut_spec_test.rb'
-  system 'jruby test/vecmath_spec_test.rb'
-  system 'jruby test/math_tool_test.rb'
-  system 'jruby test/helper_methods_test.rb'
-  system 'jruby test/aabb_spec_test.rb'
-  system 'jruby test/create_test.rb'
-  system 'jruby test/color_group_test.rb'
+  system 'jruby --dev test/deglut_spec_test.rb'
+  system 'jruby --dev test/vecmath_spec_test.rb'
+  system 'jruby --dev test/math_tool_test.rb'
+  system 'jruby --dev test/helper_methods_test.rb'
+  system 'jruby --dev test/aabb_spec_test.rb'
+  system 'jruby --dev test/create_test.rb'
+  system 'jruby --dev test/color_group_test.rb'
   home = File.expand_path('~')
   config = File.exist?(format('%s/.jruby_art/config.yml', home))
   if config

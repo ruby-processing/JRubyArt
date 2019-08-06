@@ -11,7 +11,7 @@ end
 require "#{K9_ROOT}/lib/jruby_art/version"
 require "#{K9_ROOT}/lib/jruby_art/helpers/numeric"
 # inherited from ruby-processing, we could probably re-factor this but since
-# SKETCH_ROOT is used before instance of sketch is created leave alone.
+# SKETCH_ROOT is used before instance of sketch is created leave it alone.
 SKETCH_ROOT ||= Dir.pwd
 
 # The top-level namespace, a home for all JRubyArt classes.
