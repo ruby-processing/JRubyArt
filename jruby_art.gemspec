@@ -14,10 +14,10 @@ Gem::Specification.new do |spec|
   functionality. Processing libraries and ruby gems can be used in your sketches.
   Features create/run/watch/live modes.
   EOS
-  spec.summary = %q{Code as Art, Art as Code. Processing and Ruby are meant for each other.}
+  spec.summary = %q[Code as Art, Art as Code. Processing and Ruby are meant for each other.]
   spec.homepage = "https://ruby-processing.github.io/JRubyArt/"
-  spec.post_install_message = %q{Use 'k9 --install' to install jruby-complete, and 'k9 --check' to check config.}
-  spec.license = 'MIT'
+  spec.post_install_message = %q[Use 'k9 --install' to install jruby-complete, and 'k9 --check' to check config.]
+  spec.licenses = %w[GPL-3.0 LGPL-2.0]
 
   spec.files = FileList['bin/**/*', 'lib/**/*', 'library/**/*', 'samples/**/*', 'vendors/Rakefile'].exclude(/jar/).to_a
   spec.files << "lib/jruby_art-#{JRubyArt::VERSION}.jar"

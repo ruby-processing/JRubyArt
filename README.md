@@ -6,10 +6,10 @@ __Gem Version 2.0.0__ ![Travis CI](https://travis-ci.org/ruby-processing/JRubyAr
 A new version for jdk11 use, does not require an installed `vanilla processing`, however if installed you can use processing-ide to download libraries. Configuration file is incompatible with that of previous version of JRubyArt (and you should move or rename old `config.yml` to keep it). This version will run with a default configuration file but you won't be able to use processing libraries, until you match configuration to your setup.
 
 ## Requirements
-A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.7.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  
+A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.8.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  
 ## Requirements
 
-A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.2.7.0`) to download gem.
+A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.2.8.0`) to download gem.
 
 `open-jdk11.03+` currently FX2D is not included.
 
@@ -33,9 +33,9 @@ java_args:
 
 ```bash
  gem install jruby_art --pre
- k9 --install # installs jruby-complete-9.2.7.0 and downloads and installs samples to ~/k9_samples
+ k9 --install # installs jruby-complete-9.2.8.0 and downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --run jwishy.rb # if you have jruby-9.2.7.0 installed or config `JRUBY: false`
+ k9 --run jwishy.rb # if you have jruby-9.2.8.0 installed or config `JRUBY: false`
  # to use jruby-complete set `JRUBY: false` in config
 ```
 ## Create sketches from built in templates
