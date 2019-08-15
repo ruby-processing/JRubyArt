@@ -6,8 +6,8 @@ task default: [:compile, :install_jogl, :gem, :test]
 # depends on installed processing, with processing on path
 desc 'Copy Jars'
 task :install_jogl do
-  processing_root = File.dirname(`readlink -f $(which processing)`) # for Archlinux etc
-  # processing_root = File.join(ENV['HOME'], 'processing-3.5.3') # alternative for debian linux etc
+  # processing_root = File.dirname(`readlink -f $(which processing)`) # for Archlinux etc
+  processing_root = File.join(ENV['HOME'], 'processing-3.5.3') # alternative for debian linux etc
   jar_dir = File.join(processing_root, 'core', 'library')
   opengl = Dir.entries(jar_dir).grep(/amd64|macosx-universal/)
   opengl.concat %w[jogl-all.jar gluegen-rt.jar]
