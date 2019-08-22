@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Comparison with ruby-processing"
+title:  "Comparison JRubyArt-2.2 and JRubyArt-1.7"
 date:   2015-09-28 06:24:13
 categories: jruby_art update
 ---
@@ -19,19 +19,13 @@ th{
 }
 </style>
 
-|feature       |  ruby-processing  |  JRubyArt               |
+|feature       |  JRubyArt-1.7     |  JRubyArt-2.0           |
 |----------    |---------------    |-----------              |
-|binary        |rp5                |k9                       |
-|run opts      |run, watch, live   |-r, -w, -l               |
-|jruby version |1.7.27             |9.2.6.0+                 |
-|App Export    |Yes                |Not Yet                  |
-|Live mode     |Yes                |Yes                      |
-|Watch mode    |Yes                |Yes                      |
-|jruby-complete|`--nojruby` flag   |see alternative          |
-|config        |`~/.rp5rc`         |`~/.jruby_art/config.yml`|
-|alternative   |JRUBY: false       |JRUBY: false             |
-|global        |$app               |Processing.app           |
-|settings      |no                 |see below                |
+|binary        |k9                 |k9                       |
+|run opts      |-r, -w, -l         |-r, -w, -l               |
+|jruby version |9.2.8.0 (2.5.3)    |9.2.8.0+  (2.5.3+)       |
+|jdk version   |jdk8               |jdk11+                   |
+|config        |PROCESSING_ROOT    |not required             |
 
 The `settings` method was introduced to vanilla processing since processing-3.0. However this is hidden for users of the [processing ide][settings] but required by Eclipse users. The `settings` method is where `size` belongs or `full_screen`, also you should set `smooth` and `pixel_density` here. Retina users can make use of their hi-dpi display by setting `pixel_density(2)`, NB: size should be first line of `settings`, and if used `pixel_density(2)` should be next.
 
