@@ -18,7 +18,7 @@ Processing was built by Benjamin Fry and [Casey Reas][casey] ☯, two protegés 
 
 Since the project began in 2001, it's been helping teach people to program in a visual art context using a simplified version of Java. It comes packaged as an IDE that can be downloaded and used to create and save digital art “sketches”.
 
-In 2009, Jeremy Ashkenas (aka jashkenas, creator of Backbone.JS, Underscore.JS, and Coffeescript), published the original [ruby-processing gem][gem]. It wraps Processing in a shim that makes it even easier to get started if you know Ruby. It has been since updated to use processing-2.2.1 by Martin Prout (final version using jruby-1.7.27 corresponding to ruby-1.9.3 syntax), NB: no more releases are expected, and ruby-processing is not compatible with processing-3.0+.
+In 2009, Jeremy Ashkenas (aka jashkenas, creator of Backbone.JS, Underscore.JS, and Coffeescript), published the original [ruby-processing gem][gem]. It wraps Processing in a shim that makes it even easier to get started if you know Ruby. It has been since updated to use processing-2.2.1 by Martin Prout (final version using jruby-1.7.27 corresponding to ruby-2.3.0 syntax), NB: no more releases are expected, and ruby-processing is not compatible with processing-3.0+.
 
 In 2015, Martin Prout (aka monkstone) published the [JRubyArt gem][jrubyart], loosely based on the original ruby-processing, since update to use processing-3.5.3 and jruby-9.2+ (ruby-2.4+ syntax)
 
@@ -32,7 +32,7 @@ Additionally, you don't have to declare types, voids, or understand the differen
 
 Although there are some drawbacks to using the Ruby version Processing (slower start up time, and sometimes performance), having Ruby's API available to translate your ideas into sketches more than makes up for them.
 
-Why was ruby-processing not updated to use processing3.0+? The [major changes][changes] between processing-2.2.1 and processing-3.0 are not backward compatible. Furthermore since JRubyArt was designed to use jruby-9.0.0.0+ from the outset, it makes use of the more literate ruby2.4+ syntax (although the original ruby-processing might run with jruby-9.2+, the examples and the ruby-processing library are all based on ruby-1.9.3 syntax).
+Why was ruby-processing not updated to use processing3.0+? The [major changes][changes] between processing-2.2.1 and processing-3.0 are not backward compatible. Furthermore since JRubyArt was designed to use jruby-9.0.0.0+ from the outset, it makes use of the more literate ruby2.4+ syntax (although the original ruby-processing might run with jruby-9.2+, the examples and the ruby-processing library are all based on ruby-2.3.0 syntax).
 
 ### Pure JRuby Setup Archlinux ###
 
@@ -41,7 +41,7 @@ Install Software as required:-
 ```bash
 sudo pacman -S jdk-openjdk # installs openjdk jdk11 also seems to work OK if somewhat noisy
 sudo pacman -S java-openjfx # installs openjfx
-sudo pacman -S jruby # installs jruby-9.2.6.0
+sudo pacman -S jruby # installs jruby-9.2.8.0
 sudo pacman -S processing # installs processing-3.5.3  (community)
 ```
 
@@ -85,7 +85,7 @@ Download and install latest jruby (in the `/opt` folder makes sense)
 
 Use `update-alternatives` to install and maintain configuration eg for java:-
 ```bash
-sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.6.0/bin/jruby 100
+sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.8.0/bin/jruby 100
 sudo update-alternatives --config jruby # to configure if required
 ```
 
