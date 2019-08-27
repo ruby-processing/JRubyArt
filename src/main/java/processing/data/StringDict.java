@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 
 import processing.core.PApplet;
 
+
 /**
  * A simple table class to use a String as a lookup for another String value.
  *
@@ -16,18 +17,15 @@ import processing.core.PApplet;
  */
 public class StringDict {
 
-  /**
-   * Number of elements in the table
-   */
+  /** Number of elements in the table */
   protected int count;
 
   protected String[] keys;
   protected String[] values;
 
-  /**
-   * Internal implementation for faster lookups
-   */
+  /** Internal implementation for faster lookups */
   private HashMap<String, Integer> indices = new HashMap<>();
+
 
   public StringDict() {
     count = 0;
@@ -35,10 +33,11 @@ public class StringDict {
     values = new String[10];
   }
 
+
   /**
    * Create a new lookup pre-allocated to a specific length. This will not
-   * change the size(), but is more efficient than not specifying a length. Use
-   * it when you know the rough size of the thing you're creating.
+   * change the size(), but is more efficient than not specifying a length.
+   * Use it when you know the rough size of the thing you're creating.
    *
    * @nowebref
    */
@@ -48,9 +47,10 @@ public class StringDict {
     values = new String[length];
   }
 
+
   /**
-   * Read a set of entries from a Reader that has each key/value pair on a
-   * single line, separated by a tab.
+   * Read a set of entries from a Reader that has each key/value pair on
+   * a single line, separated by a tab.
    *
    * @nowebref
    */
@@ -70,6 +70,7 @@ public class StringDict {
     }
   }
 
+
   /**
    * @nowebref
    */
@@ -85,6 +86,7 @@ public class StringDict {
     }
   }
 
+
   /**
    * Constructor to allow (more intuitive) inline initialization, e.g.:
    * <pre>
@@ -92,8 +94,8 @@ public class StringDict {
    *   { "key1", "value1" },
    *   { "key2", "value2" }
    * });
-   * </pre> It's no Python, but beats a static { } block with HashMap.put()
-   * statements.
+   * </pre>
+   * It's no Python, but beats a static { } block with HashMap.put() statements.
    */
   public StringDict(String[][] pairs) {
     count = pairs.length;
@@ -106,10 +108,11 @@ public class StringDict {
     }
   }
 
+
   /**
-   * Create a dictionary that maps between column titles and cell entries in a
-   * TableRow. If two columns have the same name, the later column's values will
-   * override the earlier values.
+   * Create a dictionary that maps between column titles and cell entries
+   * in a TableRow. If two columns have the same name, the later column's
+   * values will override the earlier values.
    */
   public StringDict(TableRow row) {
     this(row.getColumnCount());
@@ -125,6 +128,7 @@ public class StringDict {
     crop();
   }
 
+
   /**
    * @webref stringdict:method
    * @brief Returns the number of key/value pairs
@@ -133,9 +137,10 @@ public class StringDict {
     return count;
   }
 
+
   /**
-   * Resize the internal data, this can only be used to shrink the list. Helpful
-   * for situations like sorting and then grabbing the top 50 entries.
+   * Resize the internal data, this can only be used to shrink the list.
+   * Helpful for situations like sorting and then grabbing the top 50 entries.
    */
   public void resize(int length) {
     if (length > count) {
@@ -155,6 +160,7 @@ public class StringDict {
     resetIndices();
   }
 
+
   /**
    * Remove all entries.
    *
@@ -166,6 +172,7 @@ public class StringDict {
     indices = new HashMap<>();
   }
 
+
   private void resetIndices() {
     indices = new HashMap<>(count);
     for (int i = 0; i < count; i++) {
@@ -173,9 +180,11 @@ public class StringDict {
     }
   }
 
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-  public class Entry {
 
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+
+  public class Entry {
     public String key;
     public String value;
 
@@ -185,6 +194,7 @@ public class StringDict {
     }
   }
 
+
   public Iterable<Entry> entries() {
     return new Iterable<Entry>() {
 
@@ -193,6 +203,7 @@ public class StringDict {
       }
     };
   }
+
 
   public Iterator<Entry> entryIterator() {
     return new Iterator<Entry>() {
@@ -210,15 +221,19 @@ public class StringDict {
       }
 
       public boolean hasNext() {
-        return index + 1 < size();
+        return index+1 < size();
       }
     };
   }
 
+
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+
   public String key(int index) {
     return keys[index];
   }
+
 
   protected void crop() {
     if (count != keys.length) {
@@ -226,6 +241,7 @@ public class StringDict {
       values = PApplet.subset(values, 0, count);
     }
   }
+
 
   public Iterable<String> keys() {
     return new Iterable<String>() {
@@ -236,6 +252,7 @@ public class StringDict {
       }
     };
   }
+
 
   // Use this to iterate when you want to be able to remove elements along the way
   public Iterator<String> keyIterator() {
@@ -252,10 +269,11 @@ public class StringDict {
       }
 
       public boolean hasNext() {
-        return index + 1 < size();
+        return index+1 < size();
       }
     };
   }
+
 
   /**
    * Return a copy of the internal keys array. This array can be modified.
@@ -268,6 +286,7 @@ public class StringDict {
     return keyArray(null);
   }
 
+
   public String[] keyArray(String[] outgoing) {
     if (outgoing == null || outgoing.length != count) {
       outgoing = new String[count];
@@ -275,6 +294,7 @@ public class StringDict {
     System.arraycopy(keys, 0, outgoing, 0, count);
     return outgoing;
   }
+
 
   public String value(int index) {
     return values[index];
@@ -294,6 +314,7 @@ public class StringDict {
     };
   }
 
+
   public Iterator<String> valueIterator() {
     return new Iterator<String>() {
       int index = -1;
@@ -308,10 +329,11 @@ public class StringDict {
       }
 
       public boolean hasNext() {
-        return index + 1 < size();
+        return index+1 < size();
       }
     };
   }
+
 
   /**
    * Create a new array and copy each of the values into it.
@@ -324,10 +346,11 @@ public class StringDict {
     return valueArray(null);
   }
 
+
   /**
    * Fill an already-allocated array with the values (more efficient than
-   * creating a new array each time). If 'array' is null, or not the same size
-   * as the number of values, a new array will be allocated and returned.
+   * creating a new array each time). If 'array' is null, or not the same
+   * size as the number of values, a new array will be allocated and returned.
    */
   public String[] valueArray(String[] array) {
     if (array == null || array.length != size()) {
@@ -337,6 +360,7 @@ public class StringDict {
     return array;
   }
 
+
   /**
    * Return a value for the specified key.
    *
@@ -345,19 +369,17 @@ public class StringDict {
    */
   public String get(String key) {
     int index = index(key);
-    if (index == -1) {
-      return null;
-    }
+    if (index == -1) return null;
     return values[index];
   }
 
+
   public String get(String key, String alternate) {
     int index = index(key);
-    if (index == -1) {
-      return alternate;
-    }
+    if (index == -1) return alternate;
     return values[index];
   }
+
 
   /**
    * @webref stringdict:method
@@ -372,6 +394,7 @@ public class StringDict {
     }
   }
 
+
   public void setIndex(int index, String key, String value) {
     if (index < 0 || index >= count) {
       throw new ArrayIndexOutOfBoundsException(index);
@@ -380,10 +403,12 @@ public class StringDict {
     values[index] = value;
   }
 
+
   public int index(String what) {
     Integer found = indices.get(what);
     return (found == null) ? -1 : found.intValue();
   }
+
 
   /**
    * @webref stringdict:method
@@ -392,6 +417,7 @@ public class StringDict {
   public boolean hasKey(String key) {
     return index(key) != -1;
   }
+
 
   protected void create(String key, String value) {
     if (count == keys.length) {
@@ -418,15 +444,16 @@ public class StringDict {
     return value;
   }
 
+
   public String removeIndex(int index) {
     if (index < 0 || index >= count) {
       throw new ArrayIndexOutOfBoundsException(index);
     }
     String value = values[index];
     indices.remove(keys[index]);
-    for (int i = index; i < count - 1; i++) {
-      keys[i] = keys[i + 1];
-      values[i] = values[i + 1];
+    for (int i = index; i < count-1; i++) {
+      keys[i] = keys[i+1];
+      values[i] = values[i+1];
       indices.put(keys[i], i);
     }
     count--;
@@ -434,6 +461,8 @@ public class StringDict {
     values[count] = null;
     return value;
   }
+
+
 
   public void swap(int a, int b) {
     String tkey = keys[a];
@@ -446,6 +475,7 @@ public class StringDict {
 //    indices.put(keys[a], Integer.valueOf(a));
 //    indices.put(keys[b], Integer.valueOf(b));
   }
+
 
   /**
    * Sort the keys alphabetically (ignoring case). Uses the value as a
@@ -466,6 +496,7 @@ public class StringDict {
     sortImpl(true, true);
   }
 
+
   /**
    * Sort by values in descending order (largest value will be at [0]).
    *
@@ -476,6 +507,7 @@ public class StringDict {
     sortImpl(false, false);
   }
 
+
   /**
    * @webref stringdict:method
    * @brief Sort by values in descending order
@@ -483,6 +515,7 @@ public class StringDict {
   public void sortValuesReverse() {
     sortImpl(false, true);
   }
+
 
   protected void sortImpl(final boolean useKeys, final boolean reverse) {
     Sort s = new Sort() {
@@ -519,9 +552,8 @@ public class StringDict {
     resetIndices();
   }
 
-  /**
-   * Returns a duplicate copy of this object.
-   */
+
+  /** Returns a duplicate copy of this object. */
   public StringDict copy() {
     StringDict outgoing = new StringDict(count);
     System.arraycopy(keys, 0, outgoing.keys, 0, count);
@@ -533,11 +565,13 @@ public class StringDict {
     return outgoing;
   }
 
+
   public void print() {
     for (int i = 0; i < size(); i++) {
       System.out.println(keys[i] + " = " + values[i]);
     }
   }
+
 
   /**
    * Save tab-delimited entries to a file (TSV format, UTF-8 encoding)
@@ -547,6 +581,7 @@ public class StringDict {
     write(writer);
     writer.close();
   }
+
 
   /**
    * Write tab-delimited entries to a PrintWriter
@@ -558,16 +593,18 @@ public class StringDict {
     writer.flush();
   }
 
+
   /**
    * Return this dictionary as a String in JSON format.
    */
   public String toJSON() {
     StringList items = new StringList();
     for (int i = 0; i < count; i++) {
-      items.append(JSONObject.quote(keys[i]) + ": " + JSONObject.quote(values[i]));
+      items.append(JSONObject.quote(keys[i])+ ": " + JSONObject.quote(values[i]));
     }
     return "{ " + items.join(", ") + " }";
   }
+
 
   @Override
   public String toString() {

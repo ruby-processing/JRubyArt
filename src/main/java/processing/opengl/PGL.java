@@ -1,6 +1,6 @@
 /* -*- mode: java; c-basic-offset: 2; indent-tabs-mode: nil -*- */
 
- /*
+/*
   Part of the Processing project - http://processing.org
 
   Copyright (c) 2012-15 The Processing Foundation
@@ -20,7 +20,8 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
- */
+*/
+
 package processing.opengl;
 
 import java.io.IOException;
@@ -38,6 +39,7 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 
+
 /**
  * Processing-OpenGL abstraction layer. Needs to be implemented by subclasses
  * using specific OpenGL-Java bindings.
@@ -49,112 +51,93 @@ public abstract class PGL {
   // ........................................................
 
   // Basic fields
-  /**
-   * The PGraphics and PApplet objects using this interface
-   */
+
+  /** The PGraphics and PApplet objects using this interface */
   protected PGraphicsOpenGL graphics;
   protected PApplet sketch;
 
-  /**
-   * OpenGL thread
-   */
+  /** OpenGL thread */
   protected Thread glThread;
 
-  /**
-   * ID of the GL context associated to the surface *
-   */
+  /** ID of the GL context associated to the surface **/
   protected int glContext;
 
-  /**
-   * true if this is the GL interface for a primary surface PGraphics
-   */
+  /** true if this is the GL interface for a primary surface PGraphics */
   public boolean primaryPGL;
 
   // ........................................................
-  // Parameters
-  public static int REQUESTED_DEPTH_BITS = 24;
-  public static int REQUESTED_STENCIL_BITS = 8;
-  public static int REQUESTED_ALPHA_BITS = 8;
 
-  /**
-   * Switches between the use of regular and direct buffers.
-   */
+  // Parameters
+
+  public static int REQUESTED_DEPTH_BITS   = 24;
+  public static int REQUESTED_STENCIL_BITS = 8;
+  public static int REQUESTED_ALPHA_BITS   = 8;
+
+  /** Switches between the use of regular and direct buffers. */
   protected static boolean USE_DIRECT_BUFFERS = true;
   protected static int MIN_DIRECT_BUFFER_SIZE = 1;
 
-  /**
-   * Enables/disables mipmap use.
-   */
+  /** Enables/disables mipmap use. */
   protected static boolean MIPMAPS_ENABLED = true;
 
-  /**
-   * Initial sizes for arrays of input and tessellated data.
-   */
-  protected static int DEFAULT_IN_VERTICES = 64;
-  protected static int DEFAULT_IN_EDGES = 128;
-  protected static int DEFAULT_IN_TEXTURES = 64;
+  /** Initial sizes for arrays of input and tessellated data. */
+  protected static int DEFAULT_IN_VERTICES   = 64;
+  protected static int DEFAULT_IN_EDGES      = 128;
+  protected static int DEFAULT_IN_TEXTURES   = 64;
   protected static int DEFAULT_TESS_VERTICES = 64;
-  protected static int DEFAULT_TESS_INDICES = 128;
+  protected static int DEFAULT_TESS_INDICES  = 128;
 
-  /**
-   * Maximum lights by default is 8, the minimum defined by OpenGL.
-   */
+  /** Maximum lights by default is 8, the minimum defined by OpenGL. */
   protected static int MAX_LIGHTS = 8;
 
-  /**
-   * Maximum index value of a tessellated vertex. GLES restricts the vertex
+  /** Maximum index value of a tessellated vertex. GLES restricts the vertex
    * indices to be of type unsigned short. Since Java only supports signed
    * shorts as primitive type we have 2^15 = 32768 as the maximum number of
    * vertices that can be referred to within a single VBO.
    */
-  protected static int MAX_VERTEX_INDEX = 32767;
+  protected static int MAX_VERTEX_INDEX  = 32767;
   protected static int MAX_VERTEX_INDEX1 = MAX_VERTEX_INDEX + 1;
 
-  /**
-   * Count of tessellated fill, line or point vertices that will trigger a flush
-   * in the immediate mode. It doesn't necessarily be equal to
-   * MAX_VERTEX_INDEX1, since the number of vertices can be effectively much
-   * large since the renderer uses offsets to refer to vertices beyond the
-   * MAX_VERTEX_INDEX limit.
+  /** Count of tessellated fill, line or point vertices that will
+   * trigger a flush in the immediate mode. It doesn't necessarily
+   * be equal to MAX_VERTEX_INDEX1, since the number of vertices can
+   * be effectively much large since the renderer uses offsets to
+   * refer to vertices beyond the MAX_VERTEX_INDEX limit.
    */
   protected static int FLUSH_VERTEX_COUNT = MAX_VERTEX_INDEX1;
 
-  /**
-   * Minimum/maximum dimensions of a texture used to hold font data.
-   */
+  /** Minimum/maximum dimensions of a texture used to hold font data. */
   protected static int MIN_FONT_TEX_SIZE = 256;
   protected static int MAX_FONT_TEX_SIZE = 1024;
 
-  /**
-   * Minimum stroke weight needed to apply the full path stroking algorithm that
-   * properly generates caps and joins.
+  /** Minimum stroke weight needed to apply the full path stroking
+   * algorithm that properly generates caps and joins.
    */
   protected static float MIN_CAPS_JOINS_WEIGHT = 2f;
 
-  /**
-   * Maximum length of linear paths to be stroked with the full algorithm that
-   * generates accurate caps and joins.
+  /** Maximum length of linear paths to be stroked with the
+   * full algorithm that generates accurate caps and joins.
    */
   protected static int MAX_CAPS_JOINS_LENGTH = 5000;
 
-  /**
-   * Minimum array size to use arrayCopy method().
-   */
+  /** Minimum array size to use arrayCopy method(). */
   protected static int MIN_ARRAYCOPY_SIZE = 2;
 
-  /**
-   * Factor used to displace the stroke vertices towards the camera in order to
-   * make sure the lines are always on top of the fill geometry
-   */
+  /** Factor used to displace the stroke vertices towards the camera in
+   * order to make sure the lines are always on top of the fill geometry */
   protected static float STROKE_DISPLACEMENT = 0.999f;
 
   // ........................................................
+
   // Variables to handle single-buffered situations (i.e.: Android)
+
   protected IntBuffer firstFrame;
   protected static boolean SINGLE_BUFFERED = false;
 
   // ........................................................
+
   // FBO layer
+
   protected boolean fboLayerEnabled = false;
   protected boolean fboLayerCreated = false;
   protected boolean fboLayerEnabledReq = false;
@@ -178,14 +161,14 @@ public abstract class PGL {
   protected int fboWidth, fboHeight;
   protected int backTex, frontTex;
 
-  /**
-   * Flags used to handle the creation of a separate front texture
-   */
+  /** Flags used to handle the creation of a separate front texture */
   protected boolean usingFrontTex = false;
   protected boolean needSepFrontTex = false;
 
   // ........................................................
+
   // Texture rendering
+
   protected boolean loadedTex2DShader = false;
   protected int tex2DShaderProgram;
   protected int tex2DVertShader;
@@ -215,11 +198,11 @@ public abstract class PGL {
   };
   protected FloatBuffer texData;
 
-  protected static final String SHADER_PREPROCESSOR_DIRECTIVE
-    = "#ifdef GL_ES\n"
-    + "precision mediump float;\n"
-    + "precision mediump int;\n"
-    + "#endif\n";
+  protected static final String SHADER_PREPROCESSOR_DIRECTIVE =
+    "#ifdef GL_ES\n" +
+    "precision mediump float;\n" +
+    "precision mediump int;\n" +
+    "#endif\n";
 
   protected static String[] texVertShaderSource = {
     "attribute vec2 position;",
@@ -236,7 +219,7 @@ public abstract class PGL {
     "uniform sampler2D texMap;",
     "varying vec2 vertTexCoord;",
     "void main() {",
-    "  gl_FragColor = texture2D(texMap, vertTexCoord.st);",
+   "  gl_FragColor = texture2D(texMap, vertTexCoord.st);",
     "}"
   };
 
@@ -249,26 +232,26 @@ public abstract class PGL {
     "}"
   };
 
-  /**
-   * Which texturing targets are enabled
-   */
-  protected boolean[] texturingTargets = {false, false};
+  /** Which texturing targets are enabled */
+  protected boolean[] texturingTargets = { false, false };
 
-  /**
-   * Used to keep track of which textures are bound to each target
-   */
+  /** Used to keep track of which textures are bound to each target */
   protected int maxTexUnits;
   protected int activeTexUnit = 0;
   protected int[][] boundTextures;
 
   // ........................................................
+
   // Framerate handling
+
   protected float targetFps = 60;
   protected float currentFps = 60;
   protected boolean setFps = false;
 
   // ........................................................
+
   // Utility buffers
+
   protected ByteBuffer byteBuffer;
   protected IntBuffer intBuffer;
   protected IntBuffer viewBuffer;
@@ -278,16 +261,14 @@ public abstract class PGL {
   protected ByteBuffer stencilBuffer;
 
   //........................................................
+
   // Rendering information
-  /**
-   * Used to register amount of geometry rendered in each frame.
-   */
+
+  /** Used to register amount of geometry rendered in each frame. */
   protected int geomCount = 0;
   protected int pgeomCount;
 
-  /**
-   * Used to register calls to background.
-   */
+  /** Used to register calls to background. */
   protected boolean clearColor = false;
   protected boolean pclearColor;
 
@@ -297,58 +278,58 @@ public abstract class PGL {
   protected boolean clearStencil = false;
   protected boolean pclearStencil;
 
+
   // ........................................................
+
   // Error messages
-  public static final String WIKI
-    = " Read http://wiki.processing.org/w/OpenGL_Issues for help.";
 
-  public static final String FRAMEBUFFER_ERROR
-    = "Framebuffer error (%1$s), rendering will probably not work as expected" + WIKI;
+  public static final String WIKI =
+    " Read http://wiki.processing.org/w/OpenGL_Issues for help.";
 
-  public static final String MISSING_FBO_ERROR
-    = "Framebuffer objects are not supported by this hardware (or driver)" + WIKI;
+  public static final String FRAMEBUFFER_ERROR =
+    "Framebuffer error (%1$s), rendering will probably not work as expected" + WIKI;
 
-  public static final String MISSING_GLSL_ERROR
-    = "GLSL shaders are not supported by this hardware (or driver)" + WIKI;
+  public static final String MISSING_FBO_ERROR =
+    "Framebuffer objects are not supported by this hardware (or driver)" + WIKI;
 
-  public static final String MISSING_GLFUNC_ERROR
-    = "GL function %1$s is not available on this hardware (or driver)" + WIKI;
+  public static final String MISSING_GLSL_ERROR =
+    "GLSL shaders are not supported by this hardware (or driver)" + WIKI;
 
-  public static final String UNSUPPORTED_GLPROF_ERROR
-    = "Unsupported OpenGL profile.";
+  public static final String MISSING_GLFUNC_ERROR =
+    "GL function %1$s is not available on this hardware (or driver)" + WIKI;
 
-  public static final String TEXUNIT_ERROR
-    = "Number of texture units not supported by this hardware (or driver)" + WIKI;
+  public static final String UNSUPPORTED_GLPROF_ERROR =
+    "Unsupported OpenGL profile.";
 
-  public static final String NONPRIMARY_ERROR
-    = "The renderer is trying to call a PGL function that can only be called on a primary PGL. "
-    + "This is most likely due to a bug in the renderer's code, please report it with an "
-    + "issue on Processing's github page https://github.com/processing/processing/issues?state=open "
-    + "if using any of the built-in OpenGL renderers. If you are using a contributed "
-    + "library, contact the library's developers.";
+  public static final String TEXUNIT_ERROR =
+    "Number of texture units not supported by this hardware (or driver)" + WIKI;
 
-  protected static final String DEPTH_READING_NOT_ENABLED_ERROR
-    = "Reading depth and stencil values from this multisampled buffer is not enabled. "
-    + "You can enable it by calling hint(ENABLE_DEPTH_READING) once. "
-    + "If your sketch becomes too slow, disable multisampling with noSmooth() instead.";
+  public static final String NONPRIMARY_ERROR =
+    "The renderer is trying to call a PGL function that can only be called on a primary PGL. " +
+    "This is most likely due to a bug in the renderer's code, please report it with an " +
+    "issue on Processing's github page https://github.com/processing/processing/issues?state=open " +
+    "if using any of the built-in OpenGL renderers. If you are using a contributed " +
+    "library, contact the library's developers.";
+
+  protected static final String DEPTH_READING_NOT_ENABLED_ERROR =
+    "Reading depth and stencil values from this multisampled buffer is not enabled. " +
+    "You can enable it by calling hint(ENABLE_DEPTH_READING) once. " +
+    "If your sketch becomes too slow, disable multisampling with noSmooth() instead.";
 
   // ........................................................
+
   // Constants
-  /**
-   * Size of different types in bytes
-   */
+
+  /** Size of different types in bytes */
   protected static int SIZEOF_SHORT = Short.SIZE / 8;
-  protected static int SIZEOF_INT = Integer.SIZE / 8;
+  protected static int SIZEOF_INT   = Integer.SIZE / 8;
   protected static int SIZEOF_FLOAT = Float.SIZE / 8;
-  protected static int SIZEOF_BYTE = Byte.SIZE / 8;
+  protected static int SIZEOF_BYTE  = Byte.SIZE / 8;
   protected static int SIZEOF_INDEX = SIZEOF_SHORT;
-  protected static int INDEX_TYPE = 0x1403; // GL_UNSIGNED_SHORT
+  protected static int INDEX_TYPE   = 0x1403; // GL_UNSIGNED_SHORT
 
-  /**
-   * Machine Epsilon for float precision.
-   */
+  /** Machine Epsilon for float precision. */
   protected static float FLOAT_EPS = Float.MIN_VALUE;
-
   // Calculation of the Machine Epsilon for float precision. From:
   // http://en.wikipedia.org/wiki/Machine_epsilon#Approximation_using_Java
   static {
@@ -356,7 +337,7 @@ public abstract class PGL {
 
     do {
       eps /= 2.0f;
-    } while ((float) (1.0 + (eps / 2.0)) != 1.0);
+    } while ((float)(1.0 + (eps / 2.0)) != 1.0);
 
     FLOAT_EPS = eps;
   }
@@ -365,13 +346,17 @@ public abstract class PGL {
    * Set to true if the host system is big endian (PowerPC, MIPS, SPARC), false
    * if little endian (x86 Intel for Mac or PC).
    */
-  protected static boolean BIG_ENDIAN
-    = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN;
+  protected static boolean BIG_ENDIAN =
+    ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN;
 
   // ........................................................
+
   // Present mode
+
   // ........................................................
+
   // Present mode
+
   protected boolean presentMode = false;
   protected boolean showStopButton = true;
   public float presentX;
@@ -398,10 +383,14 @@ public abstract class PGL {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0};
 
+
   ///////////////////////////////////////////////////////////////
+
   // Initialization, finalization
-  public PGL() {
-  }
+
+
+  public PGL() { }
+
 
   public PGL(PGraphicsOpenGL pg) {
     this.graphics = pg;
@@ -424,107 +413,126 @@ public abstract class PGL {
     viewBuffer = allocateIntBuffer(4);
   }
 
+
   public void dispose() {
     destroyFBOLayer();
   }
+
 
   public void setPrimary(boolean primary) {
     primaryPGL = primary;
   }
 
+
   static public int smoothToSamples(int smooth) {
-    switch (smooth) {
-      case 0:
-        // smooth(0) is noSmooth(), which is 1x sampling
-        return 1;
-      case 1:
-        // smooth(1) means "default smoothing", which is 2x for OpenGL
-        return 2;
-      default:
-        // smooth(N) can be used for 4x, 8x, etc
-        return smooth;
+    if (smooth == 0) {
+      // smooth(0) is noSmooth(), which is 1x sampling
+      return 1;
+    } else if (smooth == 1) {
+      // smooth(1) means "default smoothing", which is 2x for OpenGL
+      return 2;
+    } else {
+      // smooth(N) can be used for 4x, 8x, etc
+      return smooth;
     }
   }
+
 
   abstract public Object getNative();
 
+
   abstract protected void setFrameRate(float fps);
+
 
   abstract protected void initSurface(int antialias);
 
+
   abstract protected void reinitSurface();
+
 
   abstract protected void registerListeners();
 
-  protected int getReadFramebuffer() {
+
+  protected int getReadFramebuffer()  {
     return fboLayerEnabled ? glColorFbo.get(0) : 0;
   }
 
-  protected int getDrawFramebuffer() {
-    if (fboLayerEnabled) {
-      return 1 < numSamples ? glMultiFbo.get(0)
-        : glColorFbo.get(0);
-    } else {
-      return 0;
-    }
+
+  protected int getDrawFramebuffer()  {
+    if (fboLayerEnabled) return 1 < numSamples ? glMultiFbo.get(0) :
+                                                 glColorFbo.get(0);
+    else return 0;
   }
 
-  protected int getDefaultDrawBuffer() {
+
+  protected int getDefaultDrawBuffer()  {
     return fboLayerEnabled ? COLOR_ATTACHMENT0 : BACK;
   }
 
-  protected int getDefaultReadBuffer() {
+
+  protected int getDefaultReadBuffer()  {
     return fboLayerEnabled ? COLOR_ATTACHMENT0 : FRONT;
   }
 
-  protected boolean isFBOBacked() {
+
+  protected boolean isFBOBacked() {;
     return fboLayerEnabled;
   }
+
 
   @Deprecated
   public void requestFBOLayer() {
     enableFBOLayer();
   }
 
+
   public void enableFBOLayer() {
     fboLayerEnabledReq = true;
   }
+
 
   public void disableFBOLayer() {
     fboLayerDisableReq = true;
   }
 
+
   public void resetFBOLayer() {
     fbolayerResetReq = true;
   }
+
 
   protected boolean isMultisampled() {
     return 1 < numSamples;
   }
 
+
   abstract protected int getDepthBits();
 
+
   abstract protected int getStencilBits();
+
 
   protected boolean getDepthTest() {
     intBuffer.rewind();
     getBooleanv(DEPTH_TEST, intBuffer);
-    return intBuffer.get(0) != 0;
+    return intBuffer.get(0) == 0 ? false : true;
   }
+
 
   protected boolean getDepthWriteMask() {
     intBuffer.rewind();
     getBooleanv(DEPTH_WRITEMASK, intBuffer);
-    return intBuffer.get(0) != 0;
+    return intBuffer.get(0) == 0 ? false : true;
   }
+
 
   protected Texture wrapBackTexture(Texture texture) {
     if (texture == null) {
       texture = new Texture(graphics);
       texture.init(graphics.width, graphics.height,
-        glColorTex.get(backTex), TEXTURE_2D, RGBA,
-        fboWidth, fboHeight, NEAREST, NEAREST,
-        CLAMP_TO_EDGE, CLAMP_TO_EDGE);
+                   glColorTex.get(backTex), TEXTURE_2D, RGBA,
+                   fboWidth, fboHeight, NEAREST, NEAREST,
+                   CLAMP_TO_EDGE, CLAMP_TO_EDGE);
       texture.invertedY(true);
       texture.colorBuffer(true);
       graphics.setCache(graphics, texture);
@@ -534,13 +542,14 @@ public abstract class PGL {
     return texture;
   }
 
-  protected Texture wrapFrontTexture(Texture texture) {
+
+  protected Texture wrapFrontTexture(Texture texture)  {
     if (texture == null) {
       texture = new Texture(graphics);
       texture.init(graphics.width, graphics.height,
-        glColorTex.get(frontTex), TEXTURE_2D, RGBA,
-        fboWidth, fboHeight, NEAREST, NEAREST,
-        CLAMP_TO_EDGE, CLAMP_TO_EDGE);
+                   glColorTex.get(frontTex), TEXTURE_2D, RGBA,
+                   fboWidth, fboHeight, NEAREST, NEAREST,
+                   CLAMP_TO_EDGE, CLAMP_TO_EDGE);
       texture.invertedY(true);
       texture.colorBuffer(true);
     } else {
@@ -549,6 +558,7 @@ public abstract class PGL {
     return texture;
   }
 
+
   protected void bindFrontTexture() {
     usingFrontTex = true;
     if (!texturingIsEnabled(TEXTURE_2D)) {
@@ -556,6 +566,7 @@ public abstract class PGL {
     }
     bindTexture(TEXTURE_2D, glColorTex.get(frontTex));
   }
+
 
   protected void unbindFrontTexture() {
     if (textureIsBound(TEXTURE_2D, glColorTex.get(frontTex))) {
@@ -571,10 +582,9 @@ public abstract class PGL {
     }
   }
 
+
   protected void syncBackTexture() {
-    if (usingFrontTex) {
-      needSepFrontTex = true;
-    }
+    if (usingFrontTex) needSepFrontTex = true;
     if (1 < numSamples) {
       bindFramebufferImpl(READ_FRAMEBUFFER, glMultiFbo.get(0));
       bindFramebufferImpl(DRAW_FRAMEBUFFER, glColorFbo.get(0));
@@ -583,15 +593,19 @@ public abstract class PGL {
         mask |= DEPTH_BUFFER_BIT | STENCIL_BUFFER_BIT;
       }
       blitFramebuffer(0, 0, fboWidth, fboHeight,
-        0, 0, fboWidth, fboHeight,
-        mask, NEAREST);
+                      0, 0, fboWidth, fboHeight,
+                      mask, NEAREST);
     }
   }
+
 
   abstract protected float getPixelScale();
 
   ///////////////////////////////////////////////////////////
+
   // Present mode
+
+
   public void initPresentMode(float x, float y, int stopColor) {
     presentMode = true;
     showStopButton = stopColor != 0;
@@ -601,28 +615,34 @@ public abstract class PGL {
     enableFBOLayer();
   }
 
+
   public boolean presentMode() {
     return presentMode;
   }
+
 
   public float presentX() {
     return presentX;
   }
 
+
   public float presentY() {
     return presentY;
   }
 
+
   public boolean insideStopButton(float x, float y) {
-    if (!showStopButton) {
-      return false;
-    }
-    return stopButtonX < x && x < stopButtonX + stopButtonWidth
-      && -(closeButtonY + stopButtonHeight) < y && y < -closeButtonY;
+    if (!showStopButton) return false;
+    return stopButtonX < x && x < stopButtonX + stopButtonWidth &&
+           -(closeButtonY + stopButtonHeight) < y && y < -closeButtonY;
   }
 
+
   ///////////////////////////////////////////////////////////
+
   // Frame rendering
+
+
   protected void clearDepthStencil() {
     if (!pclearDepth && !pclearStencil) {
       depthMask(true);
@@ -639,8 +659,9 @@ public abstract class PGL {
     }
   }
 
+
   protected void clearBackground(float r, float g, float b, float a,
-    boolean depth, boolean stencil) {
+                                 boolean depth, boolean stencil) {
     clearColor(r, g, b, a);
     if (depth && stencil) {
       clearDepth(1);
@@ -669,6 +690,7 @@ public abstract class PGL {
       clearColor = true;
     }
   }
+
 
   protected void beginRender() {
     if (sketch == null) {
@@ -708,7 +730,7 @@ public abstract class PGL {
       // Draw to the back texture
       bindFramebufferImpl(FRAMEBUFFER, glColorFbo.get(0));
       framebufferTexture2D(FRAMEBUFFER, COLOR_ATTACHMENT0,
-        TEXTURE_2D, glColorTex.get(backTex), 0);
+                           TEXTURE_2D, glColorTex.get(backTex), 0);
 
       if (1 < numSamples) {
         bindFramebufferImpl(FRAMEBUFFER, glMultiFbo.get(0));
@@ -729,17 +751,18 @@ public abstract class PGL {
         int x = 0;
         int y = 0;
         if (presentMode) {
-          x = (int) presentX;
-          y = (int) presentY;
+          x = (int)presentX;
+          y = (int)presentY;
         }
         float scale = getPixelScale();
         drawTexture(TEXTURE_2D, glColorTex.get(frontTex), fboWidth, fboHeight,
-          x, y, graphics.width, graphics.height,
-          0, 0, (int) (scale * graphics.width), (int) (scale * graphics.height),
-          0, 0, graphics.width, graphics.height);
+                    x, y, graphics.width, graphics.height,
+                    0, 0, (int)(scale * graphics.width), (int)(scale * graphics.height),
+                    0, 0, graphics.width, graphics.height);
       }
     }
   }
+
 
   protected void endRender(int windowColor) {
     if (fboLayerEnabled) {
@@ -749,7 +772,7 @@ public abstract class PGL {
       bindFramebufferImpl(FRAMEBUFFER, 0);
 
       if (presentMode) {
-        float wa = ((windowColor >> 24) & 0xff) / 255.0f;
+        float wa = ((windowColor >> 24) & 0xff)  / 255.0f;
         float wr = ((windowColor >> 16) & 0xff) / 255.0f;
         float wg = ((windowColor >> 8) & 0xff) / 255.0f;
         float wb = (windowColor & 0xff) / 255.0f;
@@ -771,17 +794,18 @@ public abstract class PGL {
             int[] color = new int[closeButtonPix.length];
             PApplet.arrayCopy(closeButtonPix, color);
 
+
             // Multiply the texture by the button color
             float ba = ((stopButtonColor >> 24) & 0xFF) / 255f;
             float br = ((stopButtonColor >> 16) & 0xFF) / 255f;
-            float bg = ((stopButtonColor >> 8) & 0xFF) / 255f;
-            float bb = ((stopButtonColor) & 0xFF) / 255f;
+            float bg = ((stopButtonColor >>  8) & 0xFF) / 255f;
+            float bb = ((stopButtonColor >>  0) & 0xFF) / 255f;
             for (int i = 0; i < color.length; i++) {
               int c = closeButtonPix[i];
-              int a = (int) (ba * ((c >> 24) & 0xFF));
-              int r = (int) (br * ((c >> 16) & 0xFF));
-              int g = (int) (bg * ((c >> 8) & 0xFF));
-              int b = (int) (bb * ((c) & 0xFF));
+              int a = (int)(ba * ((c >> 24) & 0xFF));
+              int r = (int)(br * ((c >> 16) & 0xFF));
+              int g = (int)(bg * ((c >>  8) & 0xFF));
+              int b = (int)(bb * ((c >>  0) & 0xFF));
               color[i] = javaToNativeARGB((a << 24) | (r << 16) | (g << 8) | b);
             }
             IntBuffer buf = allocateIntBuffer(color);
@@ -789,10 +813,10 @@ public abstract class PGL {
             bindTexture(TEXTURE_2D, 0);
           }
           drawTexture(TEXTURE_2D, closeButtonTex.get(0), stopButtonWidth, stopButtonHeight,
-            0, 0, stopButtonX + stopButtonWidth, closeButtonY + stopButtonHeight,
-            0, stopButtonHeight, stopButtonWidth, 0,
-            stopButtonX, closeButtonY, stopButtonX + stopButtonWidth, closeButtonY + stopButtonHeight);
-        }
+                      0, 0, stopButtonX + stopButtonWidth, closeButtonY + stopButtonHeight,
+                      0, stopButtonHeight, stopButtonWidth, 0,
+                      stopButtonX, closeButtonY, stopButtonX + stopButtonWidth, closeButtonY + stopButtonHeight);
+          }
       } else {
         clearDepth(1);
         clearColor(0, 0, 0, 0);
@@ -804,15 +828,15 @@ public abstract class PGL {
       int x = 0;
       int y = 0;
       if (presentMode) {
-        x = (int) presentX;
-        y = (int) presentY;
+        x = (int)presentX;
+        y = (int)presentY;
       }
       float scale = getPixelScale();
       drawTexture(TEXTURE_2D, glColorTex.get(backTex),
-        fboWidth, fboHeight,
-        x, y, graphics.width, graphics.height,
-        0, 0, (int) (scale * graphics.width), (int) (scale * graphics.height),
-        0, 0, graphics.width, graphics.height);
+                  fboWidth, fboHeight,
+                  x, y, graphics.width, graphics.height,
+                  0, 0, (int)(scale * graphics.width), (int)(scale * graphics.height),
+                  0, 0, graphics.width, graphics.height);
 
       // Swapping front and back textures.
       int temp = frontTex;
@@ -837,39 +861,47 @@ public abstract class PGL {
     }
   }
 
+
   protected abstract void getGL(PGL pgl);
+
 
   protected abstract boolean canDraw();
 
+
   protected abstract void requestFocus();
+
 
   protected abstract void requestDraw();
 
+
   protected abstract void swapBuffers();
 
-  public boolean threadIsCurrent() {
+
+  public boolean threadIsCurrent()  {
     return Thread.currentThread() == glThread;
   }
+
 
   public void setThread(Thread thread) {
     glThread = thread;
   }
 
-  protected void beginGL() {
-  }
 
-  protected void endGL() {
-  }
+  protected void beginGL() { }
+
+
+  protected void endGL() { }
+
 
   private void createFBOLayer() {
     float scale = getPixelScale();
 
     if (hasNpotTexSupport()) {
-      fboWidth = (int) (scale * graphics.width);
-      fboHeight = (int) (scale * graphics.height);
+      fboWidth = (int)(scale * graphics.width);
+      fboHeight = (int)(scale * graphics.height);
     } else {
-      fboWidth = nextPowerOfTwo((int) (scale * graphics.width));
-      fboHeight = nextPowerOfTwo((int) (scale * graphics.height));
+      fboWidth = nextPowerOfTwo((int)(scale * graphics.width));
+      fboHeight = nextPowerOfTwo((int)(scale * graphics.height));
     }
 
     if (hasFboMultisampleSupport()) {
@@ -892,7 +924,7 @@ public abstract class PGL {
       texParameteri(TEXTURE_2D, TEXTURE_WRAP_S, CLAMP_TO_EDGE);
       texParameteri(TEXTURE_2D, TEXTURE_WRAP_T, CLAMP_TO_EDGE);
       texImage2D(TEXTURE_2D, 0, RGBA, fboWidth, fboHeight, 0,
-        RGBA, UNSIGNED_BYTE, null);
+                 RGBA, UNSIGNED_BYTE, null);
       initTexture(TEXTURE_2D, RGBA, fboWidth, fboHeight, graphics.backgroundColor);
     }
     bindTexture(TEXTURE_2D, 0);
@@ -903,7 +935,7 @@ public abstract class PGL {
     genFramebuffers(1, glColorFbo);
     bindFramebufferImpl(FRAMEBUFFER, glColorFbo.get(0));
     framebufferTexture2D(FRAMEBUFFER, COLOR_ATTACHMENT0, TEXTURE_2D,
-      glColorTex.get(backTex), 0);
+                         glColorTex.get(backTex), 0);
 
     if (!multisample || graphics.getHint(PConstants.ENABLE_BUFFER_READING)) {
       // If not multisampled, this is the only depth and stencil buffer.
@@ -921,9 +953,9 @@ public abstract class PGL {
       genRenderbuffers(1, glMultiColor);
       bindRenderbuffer(RENDERBUFFER, glMultiColor.get(0));
       renderbufferStorageMultisample(RENDERBUFFER, numSamples,
-        RGBA8, fboWidth, fboHeight);
+                                     RGBA8, fboWidth, fboHeight);
       framebufferRenderbuffer(FRAMEBUFFER, COLOR_ATTACHMENT0,
-        RENDERBUFFER, glMultiColor.get(0));
+                              RENDERBUFFER, glMultiColor.get(0));
 
       // Creating multisampled depth and stencil buffers
       createDepthAndStencilBuffer(true, depthBits, stencilBits, packed);
@@ -959,18 +991,16 @@ public abstract class PGL {
 
   protected abstract void initFBOLayer();
 
+
   protected void saveFirstFrame() {
     firstFrame = allocateDirectIntBuffer(graphics.width * graphics.height);
-    if (hasReadBuffer()) {
-      readBuffer(BACK);
-    }
+    if (hasReadBuffer()) readBuffer(BACK);
     readPixelsImpl(0, 0, graphics.width, graphics.height, RGBA, UNSIGNED_BYTE, firstFrame);
   }
 
+
   protected void restoreFirstFrame() {
-    if (firstFrame == null) {
-      return;
-    }
+    if (firstFrame == null) return;
 
     IntBuffer tex = allocateIntBuffer(1);
     genTextures(1, tex);
@@ -978,11 +1008,11 @@ public abstract class PGL {
     int w, h;
     float scale = getPixelScale();
     if (hasNpotTexSupport()) {
-      w = (int) (scale * graphics.width);
-      h = (int) (scale * graphics.height);
+      w = (int)(scale * graphics.width);
+      h = (int)(scale * graphics.height);
     } else {
-      w = nextPowerOfTwo((int) (scale * graphics.width));
-      h = nextPowerOfTwo((int) (scale * graphics.height));
+      w = nextPowerOfTwo((int)(scale * graphics.width));
+      h = nextPowerOfTwo((int)(scale * graphics.height));
     }
 
     bindTexture(TEXTURE_2D, tex.get(0));
@@ -994,9 +1024,9 @@ public abstract class PGL {
     texSubImage2D(TEXTURE_2D, 0, 0, 0, graphics.width, graphics.height, RGBA, UNSIGNED_BYTE, firstFrame);
 
     drawTexture(TEXTURE_2D, tex.get(0), w, h,
-      0, 0, graphics.width, graphics.height,
-      0, 0, (int) (scale * graphics.width), (int) (scale * graphics.height),
-      0, 0, graphics.width, graphics.height);
+                0, 0, graphics.width, graphics.height,
+                0, 0, (int)(scale * graphics.width), (int)(scale * graphics.height),
+                0, 0, graphics.width, graphics.height);
 
     deleteTextures(1, tex);
     firstFrame.clear();
@@ -1020,42 +1050,37 @@ public abstract class PGL {
     fboLayerCreated = false;
   }
 
+
   private void createDepthAndStencilBuffer(boolean multisample, int depthBits,
-    int stencilBits, boolean packed) {
+                                           int stencilBits, boolean packed) {
     // Creating depth and stencil buffers
     if (packed && depthBits == 24 && stencilBits == 8) {
       // packed depth+stencil buffer
-      IntBuffer depthStencilBuf
-        = multisample ? glMultiDepthStencil : glDepthStencil;
+      IntBuffer depthStencilBuf =
+          multisample ? glMultiDepthStencil : glDepthStencil;
       genRenderbuffers(1, depthStencilBuf);
       bindRenderbuffer(RENDERBUFFER, depthStencilBuf.get(0));
       if (multisample) {
         renderbufferStorageMultisample(RENDERBUFFER, numSamples,
-          DEPTH24_STENCIL8, fboWidth, fboHeight);
+                                       DEPTH24_STENCIL8, fboWidth, fboHeight);
       } else {
         renderbufferStorage(RENDERBUFFER, DEPTH24_STENCIL8,
-          fboWidth, fboHeight);
+                            fboWidth, fboHeight);
       }
       framebufferRenderbuffer(FRAMEBUFFER, DEPTH_ATTACHMENT, RENDERBUFFER,
-        depthStencilBuf.get(0));
+                              depthStencilBuf.get(0));
       framebufferRenderbuffer(FRAMEBUFFER, STENCIL_ATTACHMENT, RENDERBUFFER,
-        depthStencilBuf.get(0));
+                              depthStencilBuf.get(0));
     } else {
       // separate depth and stencil buffers
       if (0 < depthBits) {
         int depthComponent = DEPTH_COMPONENT16;
-        switch (depthBits) {
-          case 32:
-            depthComponent = DEPTH_COMPONENT32;
-            break;
-          case 24:
-            depthComponent = DEPTH_COMPONENT24;
-            break;
-          case 16:
-            depthComponent = DEPTH_COMPONENT16;
-            break;
-          default:
-            break;
+        if (depthBits == 32) {
+          depthComponent = DEPTH_COMPONENT32;
+        } else if (depthBits == 24) {
+          depthComponent = DEPTH_COMPONENT24;
+        } else if (depthBits == 16) {
+          depthComponent = DEPTH_COMPONENT16;
         }
 
         IntBuffer depthBuf = multisample ? glMultiDepth : glDepth;
@@ -1063,29 +1088,23 @@ public abstract class PGL {
         bindRenderbuffer(RENDERBUFFER, depthBuf.get(0));
         if (multisample) {
           renderbufferStorageMultisample(RENDERBUFFER, numSamples,
-            depthComponent, fboWidth, fboHeight);
+                                         depthComponent, fboWidth, fboHeight);
         } else {
           renderbufferStorage(RENDERBUFFER, depthComponent,
-            fboWidth, fboHeight);
+                              fboWidth, fboHeight);
         }
         framebufferRenderbuffer(FRAMEBUFFER, DEPTH_ATTACHMENT,
-          RENDERBUFFER, depthBuf.get(0));
+                                RENDERBUFFER, depthBuf.get(0));
       }
 
       if (0 < stencilBits) {
         int stencilIndex = STENCIL_INDEX1;
-        switch (stencilBits) {
-          case 8:
-            stencilIndex = STENCIL_INDEX8;
-            break;
-          case 4:
-            stencilIndex = STENCIL_INDEX4;
-            break;
-          case 1:
-            stencilIndex = STENCIL_INDEX1;
-            break;
-          default:
-            break;
+        if (stencilBits == 8) {
+          stencilIndex = STENCIL_INDEX8;
+        } else if (stencilBits == 4) {
+          stencilIndex = STENCIL_INDEX4;
+        } else if (stencilBits == 1) {
+          stencilIndex = STENCIL_INDEX1;
         }
 
         IntBuffer stencilBuf = multisample ? glMultiStencil : glStencil;
@@ -1093,32 +1112,42 @@ public abstract class PGL {
         bindRenderbuffer(RENDERBUFFER, stencilBuf.get(0));
         if (multisample) {
           renderbufferStorageMultisample(RENDERBUFFER, numSamples,
-            stencilIndex, fboWidth, fboHeight);
+                                         stencilIndex, fboWidth, fboHeight);
         } else {
           renderbufferStorage(RENDERBUFFER, stencilIndex,
-            fboWidth, fboHeight);
+                              fboWidth, fboHeight);
         }
         framebufferRenderbuffer(FRAMEBUFFER, STENCIL_ATTACHMENT,
-          RENDERBUFFER, stencilBuf.get(0));
+                                RENDERBUFFER, stencilBuf.get(0));
       }
     }
   }
 
+
   ///////////////////////////////////////////////////////////
+
   // Context interface
+
+
   protected int createEmptyContext() {
     return -1;
   }
+
 
   protected int getCurrentContext() {
     return glContext;
   }
 
+
   ///////////////////////////////////////////////////////////
+
   // Utility functions
+
+
   protected boolean contextIsCurrent(int other) {
     return other == -1 || other == glContext;
   }
+
 
   protected void enableTexturing(int target) {
     if (target == TEXTURE_2D) {
@@ -1128,6 +1157,7 @@ public abstract class PGL {
     }
   }
 
+
   protected void disableTexturing(int target) {
     if (target == TEXTURE_2D) {
       texturingTargets[0] = false;
@@ -1135,6 +1165,7 @@ public abstract class PGL {
       texturingTargets[1] = false;
     }
   }
+
 
   protected boolean texturingIsEnabled(int target) {
     if (target == TEXTURE_2D) {
@@ -1146,10 +1177,9 @@ public abstract class PGL {
     }
   }
 
+
   protected boolean textureIsBound(int target, int id) {
-    if (boundTextures == null) {
-      return false;
-    }
+    if (boundTextures == null) return false;
 
     if (target == TEXTURE_2D) {
       return boundTextures[activeTexUnit][0] == id;
@@ -1160,12 +1190,14 @@ public abstract class PGL {
     }
   }
 
+
   protected void initTexture(int target, int format, int width, int height) {
     initTexture(target, format, width, height, 0);
   }
 
+
   protected void initTexture(int target, int format, int width, int height,
-    int initColor) {
+                            int initColor) {
     int[] glcolor = new int[16 * 16];
     Arrays.fill(glcolor, javaToNativeARGB(initColor));
     IntBuffer texels = allocateDirectIntBuffer(16 * 16);
@@ -1180,14 +1212,15 @@ public abstract class PGL {
     }
   }
 
+
   protected void copyToTexture(int target, int format, int id, int x, int y,
-    int w, int h, int[] buffer) {
+                               int w, int h, int[] buffer) {
     copyToTexture(target, format, id, x, y, w, h, IntBuffer.wrap(buffer));
 
   }
 
   protected void copyToTexture(int target, int format, int id, int x, int y,
-    int w, int h, IntBuffer buffer) {
+                               int w, int h, IntBuffer buffer) {
     activeTexture(TEXTURE0);
     boolean enabledTex = false;
     if (!texturingIsEnabled(target)) {
@@ -1202,49 +1235,53 @@ public abstract class PGL {
     }
   }
 
+
   /**
    * Not an approved function, this will change or be removed in the future.
    */
   public void drawTexture(int target, int id, int width, int height,
-    int X0, int Y0, int X1, int Y1) {
+                          int X0, int Y0, int X1, int Y1) {
     // If a texture is drawing on a viewport of the same size as its resolution,
     // the pixel factor is 1:1, so we override the surface's pixel factor.
     drawTexture(target, id, width, height,
-      0, 0, width, height, 1,
-      X0, Y0, X1, Y1,
-      X0, Y0, X1, Y1);
+                0, 0, width, height, 1,
+                X0, Y0, X1, Y1,
+                X0, Y0, X1, Y1);
   }
+
 
   /**
    * Not an approved function, this will change or be removed in the future.
    */
-  public void drawTexture(int target, int id, int texW, int texH,
-    int viewX, int viewY, int viewW, int viewH,
-    int texX0, int texY0, int texX1, int texY1,
-    int scrX0, int scrY0, int scrX1, int scrY1) {
-    int viewF = (int) getPixelScale();
+  public void drawTexture(int target, int id,int texW, int texH,
+                          int viewX, int viewY, int viewW, int viewH,
+                          int texX0, int texY0, int texX1, int texY1,
+                          int scrX0, int scrY0, int scrX1, int scrY1) {
+    int viewF = (int)getPixelScale();
     drawTexture(target, id, texW, texH,
-      viewX, viewY, viewW, viewH, viewF,
-      texX0, texY0, texX1, texY1,
-      scrX0, scrY0, scrX1, scrY1);
+                viewX, viewY, viewW, viewH, viewF,
+                texX0, texY0, texX1, texY1,
+                scrX0, scrY0, scrX1, scrY1);
   }
 
-  public void drawTexture(int target, int id, int texW, int texH,
-    int viewX, int viewY, int viewW, int viewH, int viewF,
-    int texX0, int texY0, int texX1, int texY1,
-    int scrX0, int scrY0, int scrX1, int scrY1) {
+
+  public void drawTexture(int target, int id,int texW, int texH,
+                          int viewX, int viewY, int viewW, int viewH, int viewF,
+                          int texX0, int texY0, int texX1, int texY1,
+                          int scrX0, int scrY0, int scrX1, int scrY1) {
     if (target == TEXTURE_2D) {
       drawTexture2D(id, texW, texH,
-        viewX, viewY, viewW, viewH, viewF,
-        texX0, texY0, texX1, texY1,
-        scrX0, scrY0, scrX1, scrY1);
+                    viewX, viewY, viewW, viewH, viewF,
+                    texX0, texY0, texX1, texY1,
+                    scrX0, scrY0, scrX1, scrY1);
     } else if (target == TEXTURE_RECTANGLE) {
       drawTextureRect(id, texW, texH,
-        viewX, viewY, viewW, viewH, viewF,
-        texX0, texY0, texX1, texY1,
-        scrX0, scrY0, scrX1, scrY1);
+                      viewX, viewY, viewW, viewH, viewF,
+                      texX0, texY0, texX1, texY1,
+                      scrX0, scrY0, scrX1, scrY1);
     }
   }
+
 
   protected PGL initTex2DShader() {
     PGL ppgl = primaryPGL ? this : graphics.getPrimaryPGL();
@@ -1280,10 +1317,11 @@ public abstract class PGL {
     return ppgl;
   }
 
+
   protected void drawTexture2D(int id, int texW, int texH,
-    int viewX, int viewY, int viewW, int viewH, int viewF,
-    int texX0, int texY0, int texX1, int texY1,
-    int scrX0, int scrY0, int scrX1, int scrY1) {
+                               int viewX, int viewY, int viewW, int viewH, int viewF,
+                               int texX0, int texY0, int texX1, int texY1,
+                               int scrX0, int scrY0, int scrX1, int scrY1) {
     PGL ppgl = initTex2DShader();
 
     if (0 < ppgl.tex2DShaderProgram) {
@@ -1311,25 +1349,25 @@ public abstract class PGL {
       // Vertex coordinates of the textured quad are specified
       // in normalized screen space (-1, 1):
       // Corner 1
-      texCoords[0] = 2 * (float) scrX0 / viewW - 1;
-      texCoords[1] = 2 * (float) scrY0 / viewH - 1;
-      texCoords[2] = (float) texX0 / texW;
-      texCoords[3] = (float) texY0 / texH;
+      texCoords[ 0] = 2 * (float)scrX0 / viewW - 1;
+      texCoords[ 1] = 2 * (float)scrY0 / viewH - 1;
+      texCoords[ 2] = (float)texX0 / texW;
+      texCoords[ 3] = (float)texY0 / texH;
       // Corner 2
-      texCoords[4] = 2 * (float) scrX1 / viewW - 1;
-      texCoords[5] = 2 * (float) scrY0 / viewH - 1;
-      texCoords[6] = (float) texX1 / texW;
-      texCoords[7] = (float) texY0 / texH;
+      texCoords[ 4] = 2 * (float)scrX1 / viewW - 1;
+      texCoords[ 5] = 2 * (float)scrY0 / viewH - 1;
+      texCoords[ 6] = (float)texX1 / texW;
+      texCoords[ 7] = (float)texY0 / texH;
       // Corner 3
-      texCoords[8] = 2 * (float) scrX0 / viewW - 1;
-      texCoords[9] = 2 * (float) scrY1 / viewH - 1;
-      texCoords[10] = (float) texX0 / texW;
-      texCoords[11] = (float) texY1 / texH;
+      texCoords[ 8] = 2 * (float)scrX0 / viewW - 1;
+      texCoords[ 9] = 2 * (float)scrY1 / viewH - 1;
+      texCoords[10] = (float)texX0 / texW;
+      texCoords[11] = (float)texY1 / texH;
       // Corner 4
-      texCoords[12] = 2 * (float) scrX1 / viewW - 1;
-      texCoords[13] = 2 * (float) scrY1 / viewH - 1;
-      texCoords[14] = (float) texX1 / texW;
-      texCoords[15] = (float) texY1 / texH;
+      texCoords[12] = 2 * (float)scrX1 / viewW - 1;
+      texCoords[13] = 2 * (float)scrY1 / viewH - 1;
+      texCoords[14] = (float)texX1 / texW;
+      texCoords[15] = (float)texY1 / texH;
 
       texData.rewind();
       texData.put(texCoords);
@@ -1372,9 +1410,10 @@ public abstract class PGL {
       depthMask(depthMask);
 
       viewportImpl(viewBuffer.get(0), viewBuffer.get(1),
-        viewBuffer.get(2), viewBuffer.get(3));
+                   viewBuffer.get(2), viewBuffer.get(3));
     }
   }
+
 
   protected PGL initTexRectShader() {
     PGL ppgl = primaryPGL ? this : graphics.getPrimaryPGL();
@@ -1388,7 +1427,7 @@ public abstract class PGL {
       ppgl.texRectFragShader = createShader(FRAGMENT_SHADER, fragSource);
       if (0 < ppgl.texRectVertShader && 0 < ppgl.texRectFragShader) {
         ppgl.texRectShaderProgram = createProgram(ppgl.texRectVertShader,
-          ppgl.texRectFragShader);
+                                                  ppgl.texRectFragShader);
       }
       if (0 < ppgl.texRectShaderProgram) {
         ppgl.texRectVertLoc = getAttribLocation(ppgl.texRectShaderProgram, "position");
@@ -1407,10 +1446,11 @@ public abstract class PGL {
     return ppgl;
   }
 
+
   protected void drawTextureRect(int id, int texW, int texH,
-    int viewX, int viewY, int viewW, int viewH, int viewF,
-    int texX0, int texY0, int texX1, int texY1,
-    int scrX0, int scrY0, int scrX1, int scrY1) {
+                                 int viewX, int viewY, int viewW, int viewH, int viewF,
+                                 int texX0, int texY0, int texX1, int texY1,
+                                 int scrX0, int scrY0, int scrX1, int scrY1) {
     PGL ppgl = initTexRectShader();
 
     if (texData == null) {
@@ -1442,23 +1482,23 @@ public abstract class PGL {
       // Vertex coordinates of the textured quad are specified
       // in normalized screen space (-1, 1):
       // Corner 1
-      texCoords[0] = 2 * (float) scrX0 / viewW - 1;
-      texCoords[1] = 2 * (float) scrY0 / viewH - 1;
-      texCoords[2] = texX0;
-      texCoords[3] = texY0;
+      texCoords[ 0] = 2 * (float)scrX0 / viewW - 1;
+      texCoords[ 1] = 2 * (float)scrY0 / viewH - 1;
+      texCoords[ 2] = texX0;
+      texCoords[ 3] = texY0;
       // Corner 2
-      texCoords[4] = 2 * (float) scrX1 / viewW - 1;
-      texCoords[5] = 2 * (float) scrY0 / viewH - 1;
-      texCoords[6] = texX1;
-      texCoords[7] = texY0;
+      texCoords[ 4] = 2 * (float)scrX1 / viewW - 1;
+      texCoords[ 5] = 2 * (float)scrY0 / viewH - 1;
+      texCoords[ 6] = texX1;
+      texCoords[ 7] = texY0;
       // Corner 3
-      texCoords[8] = 2 * (float) scrX0 / viewW - 1;
-      texCoords[9] = 2 * (float) scrY1 / viewH - 1;
+      texCoords[ 8] = 2 * (float)scrX0 / viewW - 1;
+      texCoords[ 9] = 2 * (float)scrY1 / viewH - 1;
       texCoords[10] = texX0;
       texCoords[11] = texY1;
       // Corner 4
-      texCoords[12] = 2 * (float) scrX1 / viewW - 1;
-      texCoords[13] = 2 * (float) scrY1 / viewH - 1;
+      texCoords[12] = 2 * (float)scrX1 / viewW - 1;
+      texCoords[13] = 2 * (float)scrY1 / viewH - 1;
       texCoords[14] = texX1;
       texCoords[15] = texY1;
 
@@ -1503,9 +1543,10 @@ public abstract class PGL {
       depthMask(depthMask);
 
       viewportImpl(viewBuffer.get(0), viewBuffer.get(1),
-        viewBuffer.get(2), viewBuffer.get(3));
+                   viewBuffer.get(2), viewBuffer.get(3));
     }
   }
+
 
   protected int getColorValue(int scrX, int scrY) {
     if (colorBuffer == null) {
@@ -1513,9 +1554,10 @@ public abstract class PGL {
     }
     colorBuffer.rewind();
     readPixels(scrX, graphics.height - scrY - 1, 1, 1, RGBA, UNSIGNED_BYTE,
-      colorBuffer);
+               colorBuffer);
     return colorBuffer.get();
   }
+
 
   protected float getDepthValue(int scrX, int scrY) {
     if (depthBuffer == null) {
@@ -1523,9 +1565,10 @@ public abstract class PGL {
     }
     depthBuffer.rewind();
     readPixels(scrX, graphics.height - scrY - 1, 1, 1, DEPTH_COMPONENT, FLOAT,
-      depthBuffer);
+               depthBuffer);
     return depthBuffer.get(0);
   }
+
 
   protected byte getStencilValue(int scrX, int scrY) {
     if (stencilBuffer == null) {
@@ -1533,28 +1576,27 @@ public abstract class PGL {
     }
     stencilBuffer.rewind();
     readPixels(scrX, graphics.height - scrY - 1, 1, 1, STENCIL_INDEX,
-      UNSIGNED_BYTE, stencilBuffer);
+               UNSIGNED_BYTE, stencilBuffer);
     return stencilBuffer.get(0);
   }
+
 
   protected static boolean isPowerOfTwo(int val) {
     return (val & (val - 1)) == 0;
   }
 
+
   // bit shifting this might be more efficient
   protected static int nextPowerOfTwo(int val) {
     int ret = 1;
-    while (ret < val) {
-      ret <<= 1;
-    }
+    while (ret < val) ret <<= 1;
     return ret;
   }
+
 
   /**
    * Converts input native OpenGL value (RGBA on big endian, ABGR on little
    * endian) to Java ARGB.
-   * @param color
-   * @return 
    */
   protected static int nativeToJavaARGB(int color) {
     if (BIG_ENDIAN) { // RGBA to ARGB
@@ -1565,14 +1607,12 @@ public abstract class PGL {
     }
   }
 
+
   /**
    * Converts input array of native OpenGL values (RGBA on big endian, ABGR on
    * little endian) representing an image of width x height resolution to Java
-   * ARGB.It also rearranges the elements in the array so that the image is
+   * ARGB. It also rearranges the elements in the array so that the image is
    * flipped vertically.
-   * @param pixels
-   * @param width
-   * @param height
    */
   protected static void nativeToJavaARGB(int[] pixels, int width, int height) {
     int index = 0;
@@ -1611,32 +1651,29 @@ public abstract class PGL {
     }
   }
 
+
   /**
    * Converts input native OpenGL value (RGBA on big endian, ABGR on little
-   * endian) to Java RGB, so that the alpha component of the result is set to
-   * opaque (255).
-   * @param color
-   * @return 
+   * endian) to Java RGB, so that the alpha component of the result is set
+   * to opaque (255).
    */
   protected static int nativeToJavaRGB(int color) {
     if (BIG_ENDIAN) { // RGBA to ARGB
       return (color >>> 8) | 0xFF000000;
     } else { // ABGR to ARGB
       int rb = color & 0x00FF00FF;
-      return 0xFF000000 | (rb << 16)
-        | (color & 0x0000FF00) | (rb >> 16);
+      return 0xFF000000 | (rb << 16) |
+             (color & 0x0000FF00) | (rb >> 16);
     }
   }
+
 
   /**
    * Converts input array of native OpenGL values (RGBA on big endian, ABGR on
    * little endian) representing an image of width x height resolution to Java
-   * RGB, so that the alpha component of all pixels is set to opaque (255).It
+   * RGB, so that the alpha component of all pixels is set to opaque (255). It
    * also rearranges the elements in the array so that the image is flipped
    * vertically.
-   * @param pixels
-   * @param width
-   * @param height
    */
   protected static void nativeToJavaRGB(int[] pixels, int width, int height) {
     int index = 0;
@@ -1651,10 +1688,10 @@ public abstract class PGL {
         } else { // ABGR to ARGB
           int rbi = pixi & 0x00FF00FF;
           int rby = pixy & 0x00FF00FF;
-          pixels[index] = 0xFF000000 | (rby << 16)
-            | (pixy & 0x0000FF00) | (rby >> 16);
-          pixels[yindex] = 0xFF000000 | (rbi << 16)
-            | (pixi & 0x0000FF00) | (rbi >> 16);
+          pixels[index] = 0xFF000000 | (rby << 16) |
+                          (pixy & 0x0000FF00) | (rby >> 16);
+          pixels[yindex] = 0xFF000000 | (rbi << 16) |
+                           (pixi & 0x0000FF00) | (rbi >> 16);
         }
         index++;
         yindex++;
@@ -1670,19 +1707,18 @@ public abstract class PGL {
           pixels[index] = (pixi >>> 8) | 0xFF000000;
         } else { // ABGR to ARGB
           int rbi = pixi & 0x00FF00FF;
-          pixels[index] = 0xFF000000 | (rbi << 16)
-            | (pixi & 0x000FF00) | (rbi >> 16);
+          pixels[index] = 0xFF000000 | (rbi << 16) |
+                          (pixi & 0x000FF00) | (rbi >> 16);
         }
         index++;
       }
     }
   }
 
+
   /**
    * Converts input Java ARGB value to native OpenGL format (RGBA on big endian,
    * BGRA on little endian).
-   * @param color
-   * @return 
    */
   protected static int javaToNativeARGB(int color) {
     if (BIG_ENDIAN) { // ARGB to RGBA
@@ -1693,14 +1729,12 @@ public abstract class PGL {
     }
   }
 
+
   /**
    * Converts input array of Java ARGB values representing an image of width x
    * height resolution to native OpenGL format (RGBA on big endian, BGRA on
-   * little endian).It also rearranges the elements in the array so that the
+   * little endian). It also rearranges the elements in the array so that the
    * image is flipped vertically.
-   * @param pixels
-   * @param width
-   * @param height
    */
   protected static void javaToNativeARGB(int[] pixels, int width, int height) {
     int index = 0;
@@ -1739,11 +1773,10 @@ public abstract class PGL {
     }
   }
 
+
   /**
    * Converts input Java ARGB value to native OpenGL format (RGBA on big endian,
    * BGRA on little endian), setting alpha component to opaque (255).
-   * @param color
-   * @return 
    */
   protected static int javaToNativeRGB(int color) {
     if (BIG_ENDIAN) { // ARGB to RGB
@@ -1754,15 +1787,13 @@ public abstract class PGL {
     }
   }
 
+
   /**
    * Converts input array of Java ARGB values representing an image of width x
    * height resolution to native OpenGL format (RGBA on big endian, BGRA on
    * little endian), while setting alpha component of all pixels to opaque
-   * (255).It also rearranges the elements in the array so that the image is
+   * (255). It also rearranges the elements in the array so that the image is
    * flipped vertically.
-   * @param pixels
-   * @param width
-   * @param height
    */
   protected static void javaToNativeRGB(int[] pixels, int width, int height) {
     int index = 0;
@@ -1777,10 +1808,10 @@ public abstract class PGL {
         } else { // ARGB to BGR
           int rbi = pixi & 0x00FF00FF;
           int rby = pixy & 0x00FF00FF;
-          pixels[index] = 0xFF000000 | (rby << 16)
-            | (pixy & 0x0000FF00) | (rby >> 16);
-          pixels[yindex] = 0xFF000000 | (rbi << 16)
-            | (pixi & 0x0000FF00) | (rbi >> 16);
+          pixels[index] = 0xFF000000 | (rby << 16) |
+                          (pixy & 0x0000FF00) | (rby >> 16);
+          pixels[yindex] = 0xFF000000 | (rbi << 16) |
+                           (pixi & 0x0000FF00) | (rbi >> 16);
         }
         index++;
         yindex++;
@@ -1796,13 +1827,14 @@ public abstract class PGL {
           pixels[index] = 0xFF | (pixi << 8);
         } else { // ARGB to BGR
           int rbi = pixi & 0x00FF00FF;
-          pixels[index] = 0xFF000000 | (rbi << 16)
-            | (pixi & 0x0000FF00) | (rbi >> 16);
+          pixels[index] = 0xFF000000 | (rbi << 16) |
+                          (pixi & 0x0000FF00) | (rbi >> 16);
         }
         index++;
       }
     }
   }
+
 
   protected static int qualityToSamples(int quality) {
     if (quality <= 1) {
@@ -1814,17 +1846,20 @@ public abstract class PGL {
     }
   }
 
-  abstract protected int getGLSLVersion();
 
+  abstract protected int getGLSLVersion();
   abstract protected String getGLSLVersionSuffix();
+
 
   protected String[] loadVertexShader(String filename) {
     return sketch.loadStrings(filename);
   }
 
+
   protected String[] loadFragmentShader(String filename) {
     return sketch.loadStrings(filename);
   }
+
 
   protected String[] loadFragmentShader(URL url) {
     try {
@@ -1835,6 +1870,7 @@ public abstract class PGL {
     return null;
   }
 
+
   protected String[] loadVertexShader(URL url) {
     try {
       return PApplet.loadStrings(url.openStream());
@@ -1844,25 +1880,30 @@ public abstract class PGL {
     return null;
   }
 
+
   protected String[] loadVertexShader(String filename, int version, String versionSuffix) {
     return loadVertexShader(filename);
   }
+
 
   protected String[] loadFragmentShader(String filename, int version, String versionSuffix) {
     return loadFragmentShader(filename);
   }
 
+
   protected String[] loadFragmentShader(URL url, int version, String versionSuffix) {
     return loadFragmentShader(url);
   }
+
 
   protected String[] loadVertexShader(URL url, int version, String versionSuffix) {
     return loadVertexShader(url);
   }
 
+
   protected static String[] preprocessFragmentSource(String[] fragSrc0,
-    int version,
-    String versionSuffix) {
+                                                     int version,
+                                                     String versionSuffix) {
     if (containsVersionDirective(fragSrc0)) {
       // The user knows what she or he is doing
       return fragSrc0;
@@ -1871,8 +1912,8 @@ public abstract class PGL {
     String[] fragSrc;
 
     if (version < 130) {
-      Pattern[] search = {};
-      String[] replace = {};
+      Pattern[] search = { };
+      String[] replace = { };
       int offset = 1;
 
       fragSrc = preprocessShaderSource(fragSrc0, search, replace, offset);
@@ -1881,14 +1922,14 @@ public abstract class PGL {
       // We need to replace 'texture' uniform by 'texMap' uniform and
       // 'textureXXX()' functions by 'texture()' functions. Order of these
       // replacements is important to prevent collisions between these two.
-      Pattern[] search = new Pattern[]{
-        Pattern.compile(String.format(GLSL_ID_REGEX, "varying|attribute")),
-        Pattern.compile(String.format(GLSL_ID_REGEX, "texture")),
-        Pattern.compile(String.format(GLSL_FN_REGEX, "texture2DRect|texture2D|texture3D|textureCube")),
-        Pattern.compile(String.format(GLSL_ID_REGEX, "gl_FragColor"))
+      Pattern[] search = new Pattern[] {
+          Pattern.compile(String.format(GLSL_ID_REGEX, "varying|attribute")),
+          Pattern.compile(String.format(GLSL_ID_REGEX, "texture")),
+          Pattern.compile(String.format(GLSL_FN_REGEX, "texture2DRect|texture2D|texture3D|textureCube")),
+          Pattern.compile(String.format(GLSL_ID_REGEX, "gl_FragColor"))
       };
-      String[] replace = new String[]{
-        "in", "texMap", "texture", "_fragColor"
+      String[] replace = new String[] {
+          "in", "texMap", "texture", "_fragColor"
       };
       int offset = 2;
 
@@ -1905,8 +1946,8 @@ public abstract class PGL {
   }
 
   protected static String[] preprocessVertexSource(String[] vertSrc0,
-    int version,
-    String versionSuffix) {
+                                                   int version,
+                                                   String versionSuffix) {
     if (containsVersionDirective(vertSrc0)) {
       // The user knows what she or he is doing
       return vertSrc0;
@@ -1915,8 +1956,8 @@ public abstract class PGL {
     String[] vertSrc;
 
     if (version < 130) {
-      Pattern[] search = {};
-      String[] replace = {};
+      Pattern[] search = { };
+      String[] replace = { };
       int offset = 1;
 
       vertSrc = preprocessShaderSource(vertSrc0, search, replace, offset);
@@ -1925,14 +1966,15 @@ public abstract class PGL {
       // We need to replace 'texture' uniform by 'texMap' uniform and
       // 'textureXXX()' functions by 'texture()' functions. Order of these
       // replacements is important to prevent collisions between these two.
-      Pattern[] search = new Pattern[]{
-        Pattern.compile(String.format(GLSL_ID_REGEX, "varying")),
-        Pattern.compile(String.format(GLSL_ID_REGEX, "attribute")),
-        Pattern.compile(String.format(GLSL_ID_REGEX, "texture")),
-        Pattern.compile(String.format(GLSL_FN_REGEX, "texture2DRect|texture2D|texture3D|textureCube"))
+      Pattern[] search = new Pattern[] {
+          Pattern.compile(String.format(GLSL_ID_REGEX, "varying")),
+          Pattern.compile(String.format(GLSL_ID_REGEX, "attribute")),
+          Pattern.compile(String.format(GLSL_ID_REGEX, "texture")),
+          Pattern.compile(String.format(GLSL_FN_REGEX, "texture2DRect|texture2D|texture3D|textureCube"))
       };
-      String[] replace = new String[]{
-        "out", "in", "texMap", "texture",};
+      String[] replace = new String[] {
+          "out", "in", "texMap", "texture",
+      };
       int offset = 1;
 
       vertSrc = preprocessShaderSource(vertSrc0, search, replace, offset);
@@ -1942,14 +1984,16 @@ public abstract class PGL {
     return vertSrc;
   }
 
+
   protected static final String GLSL_ID_REGEX = "(?<![0-9A-Z_a-z])(%s)(?![0-9A-Z_a-z]|\\s*\\()";
   protected static final String GLSL_FN_REGEX = "(?<![0-9A-Z_a-z])(%s)(?=\\s*\\()";
 
+
   protected static String[] preprocessShaderSource(String[] src0,
-    Pattern[] search,
-    String[] replace,
-    int offset) {
-    String[] src = new String[src0.length + offset];
+                                                   Pattern[] search,
+                                                   String[] replace,
+                                                   int offset) {
+    String[] src = new String[src0.length+offset];
     for (int i = 0; i < src0.length; i++) {
       String line = src0[i];
       int versionIndex = line.indexOf("#version");
@@ -1959,13 +2003,14 @@ public abstract class PGL {
       for (int j = 0; j < search.length; j++) {
         line = search[j].matcher(line).replaceAll(replace[j]);
       }
-      src[i + offset] = line;
+      src[i+offset] = line;
     }
     return src;
   }
 
   protected static boolean containsVersionDirective(String[] shSrc) {
-    for (String line : shSrc) {
+    for (int i = 0; i < shSrc.length; i++) {
+      String line = shSrc[i];
       int versionIndex = line.indexOf("#version");
       if (versionIndex >= 0) {
         int commentIndex = line.indexOf("//");
@@ -1992,6 +2037,7 @@ public abstract class PGL {
     return shader;
   }
 
+
   protected int createProgram(int vertexShader, int fragmentShader) {
     int program = createProgram();
     if (program != 0) {
@@ -2008,17 +2054,20 @@ public abstract class PGL {
     return program;
   }
 
+
   protected boolean compiled(int shader) {
     intBuffer.rewind();
     getShaderiv(shader, COMPILE_STATUS, intBuffer);
-    return intBuffer.get(0) != 0;
+    return intBuffer.get(0) == 0 ? false : true;
   }
+
 
   protected boolean linked(int program) {
     intBuffer.rewind();
     getProgramiv(program, LINK_STATUS, intBuffer);
-    return intBuffer.get(0) != 0;
+    return intBuffer.get(0) == 0 ? false : true;
   }
+
 
   protected int validateFramebuffer() {
     int status = checkFramebufferStatus(FRAMEBUFFER);
@@ -2026,37 +2075,37 @@ public abstract class PGL {
       return 0;
     } else if (status == FRAMEBUFFER_UNDEFINED) {
       System.err.println(String.format(FRAMEBUFFER_ERROR,
-        "framebuffer undefined"));
+                                       "framebuffer undefined"));
     } else if (status == FRAMEBUFFER_INCOMPLETE_ATTACHMENT) {
       System.err.println(String.format(FRAMEBUFFER_ERROR,
-        "incomplete attachment"));
+                                       "incomplete attachment"));
     } else if (status == FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT) {
       System.err.println(String.format(FRAMEBUFFER_ERROR,
-        "incomplete missing attachment"));
+                                       "incomplete missing attachment"));
     } else if (status == FRAMEBUFFER_INCOMPLETE_DIMENSIONS) {
       System.err.println(String.format(FRAMEBUFFER_ERROR,
-        "incomplete dimensions"));
+                                       "incomplete dimensions"));
     } else if (status == FRAMEBUFFER_INCOMPLETE_FORMATS) {
       System.err.println(String.format(FRAMEBUFFER_ERROR,
-        "incomplete formats"));
+                                       "incomplete formats"));
     } else if (status == FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER) {
       System.err.println(String.format(FRAMEBUFFER_ERROR,
-        "incomplete draw buffer"));
+                                       "incomplete draw buffer"));
     } else if (status == FRAMEBUFFER_INCOMPLETE_READ_BUFFER) {
       System.err.println(String.format(FRAMEBUFFER_ERROR,
-        "incomplete read buffer"));
+                                       "incomplete read buffer"));
     } else if (status == FRAMEBUFFER_UNSUPPORTED) {
       System.err.println(String.format(FRAMEBUFFER_ERROR,
-        "framebuffer unsupported"));
+                                       "framebuffer unsupported"));
     } else if (status == FRAMEBUFFER_INCOMPLETE_MULTISAMPLE) {
       System.err.println(String.format(FRAMEBUFFER_ERROR,
-        "incomplete multisample buffer"));
+                                       "incomplete multisample buffer"));
     } else if (status == FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS) {
       System.err.println(String.format(FRAMEBUFFER_ERROR,
-        "incomplete layer targets"));
+                                       "incomplete layer targets"));
     } else {
       System.err.println(String.format(FRAMEBUFFER_ERROR,
-        "unknown error " + status));
+                                       "unknown error " + status));
     }
     return status;
   }
@@ -2076,24 +2125,21 @@ public abstract class PGL {
 
     int[] res = {0, 0, 0};
     String[] parts = version.split(" ");
-    for (String part : parts) {
-      if (0 < part.indexOf(".")) {
-        String[] nums = part.split("\\.");
+    for (int i = 0; i < parts.length; i++) {
+      if (0 < parts[i].indexOf(".")) {
+        String nums[] = parts[i].split("\\.");
         try {
           res[0] = Integer.parseInt(nums[0]);
-        } catch (NumberFormatException e) {
-        }
+        } catch (NumberFormatException e) { }
         if (1 < nums.length) {
           try {
             res[1] = Integer.parseInt(nums[1]);
-          } catch (NumberFormatException e) {
-          }
+          } catch (NumberFormatException e) { }
         }
         if (2 < nums.length) {
           try {
             res[2] = Integer.parseInt(nums[2]);
-          } catch (NumberFormatException e) {
-          }
+          } catch (NumberFormatException e) { }
         }
         break;
       }
@@ -2101,19 +2147,21 @@ public abstract class PGL {
     return res;
   }
 
+
   protected boolean hasFBOs() {
     // FBOs might still be available through extensions.
     int major = getGLVersion()[0];
     if (major < 2) {
       String ext = getString(EXTENSIONS);
-      return ext.contains("_framebuffer_object")
-        && ext.contains("_vertex_shader")
-        && ext.contains("_shader_objects")
-        && ext.contains("_shading_language");
+      return ext.indexOf("_framebuffer_object") != -1 &&
+             ext.indexOf("_vertex_shader")      != -1 &&
+             ext.indexOf("_shader_objects")     != -1 &&
+             ext.indexOf("_shading_language")   != -1;
     } else {
       return true;
     }
   }
+
 
   protected boolean hasShaders() {
     // GLSL might still be available through extensions. For instance,
@@ -2122,14 +2170,15 @@ public abstract class PGL {
     int major = getGLVersion()[0];
     if (major < 2) {
       String ext = getString(EXTENSIONS);
-      return ext.contains("_fragment_shader")
-        && ext.contains("_vertex_shader")
-        && ext.contains("_shader_objects")
-        && ext.contains("_shading_language");
+      return ext.indexOf("_fragment_shader")  != -1 &&
+             ext.indexOf("_vertex_shader")    != -1 &&
+             ext.indexOf("_shader_objects")   != -1 &&
+             ext.indexOf("_shading_language") != -1;
     } else {
       return true;
     }
   }
+
 
   protected boolean hasNpotTexSupport() {
     int major = getGLVersion()[0];
@@ -2145,6 +2194,7 @@ public abstract class PGL {
     }
   }
 
+
   protected boolean hasAutoMipmapGenSupport() {
     int major = getGLVersion()[0];
     if (isES() && major >= 2) {
@@ -2157,6 +2207,7 @@ public abstract class PGL {
     }
   }
 
+
   protected boolean hasFboMultisampleSupport() {
     int major = getGLVersion()[0];
     if (major < 3) {
@@ -2166,6 +2217,7 @@ public abstract class PGL {
       return true;
     }
   }
+
 
   protected boolean hasPackedDepthStencilSupport() {
     int major = getGLVersion()[0];
@@ -2177,6 +2229,7 @@ public abstract class PGL {
     }
   }
 
+
   protected boolean hasAnisoSamplingSupport() {
     int major = getGLVersion()[0];
     if (isES() || major < 3) {
@@ -2187,6 +2240,7 @@ public abstract class PGL {
     }
   }
 
+
   protected boolean hasSynchronization() {
     int[] version = getGLVersion();
     if (isES()) {
@@ -2194,6 +2248,7 @@ public abstract class PGL {
     }
     return (version[0] > 3) || (version[0] == 3 && version[1] >= 2);
   }
+
 
   protected boolean hasPBOs() {
     int[] version = getGLVersion();
@@ -2203,6 +2258,7 @@ public abstract class PGL {
     return (version[0] > 2) || (version[0] == 2 && version[1] >= 1);
   }
 
+
   protected boolean hasReadBuffer() {
     int[] version = getGLVersion();
     if (isES()) {
@@ -2210,6 +2266,7 @@ public abstract class PGL {
     }
     return version[0] >= 2;
   }
+
 
   protected boolean hasDrawBuffer() {
     int[] version = getGLVersion();
@@ -2219,11 +2276,13 @@ public abstract class PGL {
     return version[0] >= 2;
   }
 
+
   protected int maxSamples() {
     intBuffer.rewind();
     getIntegerv(MAX_SAMPLES, intBuffer);
     return intBuffer.get(0);
   }
+
 
   protected int getMaxTexUnits() {
     intBuffer.rewind();
@@ -2231,10 +2290,12 @@ public abstract class PGL {
     return intBuffer.get(0);
   }
 
+
   protected static ByteBuffer allocateDirectByteBuffer(int size) {
     int bytes = PApplet.max(MIN_DIRECT_BUFFER_SIZE, size) * SIZEOF_BYTE;
     return ByteBuffer.allocateDirect(bytes).order(ByteOrder.nativeOrder());
   }
+
 
   protected static ByteBuffer allocateByteBuffer(int size) {
     if (USE_DIRECT_BUFFERS) {
@@ -2243,6 +2304,7 @@ public abstract class PGL {
       return ByteBuffer.allocate(size);
     }
   }
+
 
   protected static ByteBuffer allocateByteBuffer(byte[] arr) {
     if (USE_DIRECT_BUFFERS) {
@@ -2255,8 +2317,9 @@ public abstract class PGL {
     }
   }
 
+
   protected static ByteBuffer updateByteBuffer(ByteBuffer buf, byte[] arr,
-    boolean wrap) {
+                                               boolean wrap) {
     if (USE_DIRECT_BUFFERS) {
       if (buf == null || buf.capacity() < arr.length) {
         buf = allocateDirectByteBuffer(arr.length);
@@ -2279,14 +2342,16 @@ public abstract class PGL {
     return buf;
   }
 
+
   protected static void updateByteBuffer(ByteBuffer buf, byte[] arr,
-    int offset, int size) {
+                                         int offset, int size) {
     if (USE_DIRECT_BUFFERS || (buf.hasArray() && buf.array() != arr)) {
       buf.position(offset);
       buf.put(arr, offset, size);
       buf.rewind();
     }
   }
+
 
   protected static void getByteArray(ByteBuffer buf, byte[] arr) {
     if (!buf.hasArray() || buf.array() != arr) {
@@ -2296,6 +2361,7 @@ public abstract class PGL {
     }
   }
 
+
   protected static void putByteArray(ByteBuffer buf, byte[] arr) {
     if (!buf.hasArray() || buf.array() != arr) {
       buf.position(0);
@@ -2304,8 +2370,9 @@ public abstract class PGL {
     }
   }
 
+
   protected static void fillByteBuffer(ByteBuffer buf, int i0, int i1,
-    byte val) {
+                                       byte val) {
     int n = i1 - i0;
     byte[] temp = new byte[n];
     Arrays.fill(temp, 0, n, val);
@@ -2314,11 +2381,13 @@ public abstract class PGL {
     buf.rewind();
   }
 
+
   protected static ShortBuffer allocateDirectShortBuffer(int size) {
     int bytes = PApplet.max(MIN_DIRECT_BUFFER_SIZE, size) * SIZEOF_SHORT;
     return ByteBuffer.allocateDirect(bytes).order(ByteOrder.nativeOrder()).
-      asShortBuffer();
+           asShortBuffer();
   }
+
 
   protected static ShortBuffer allocateShortBuffer(int size) {
     if (USE_DIRECT_BUFFERS) {
@@ -2327,6 +2396,7 @@ public abstract class PGL {
       return ShortBuffer.allocate(size);
     }
   }
+
 
   protected static ShortBuffer allocateShortBuffer(short[] arr) {
     if (USE_DIRECT_BUFFERS) {
@@ -2339,8 +2409,9 @@ public abstract class PGL {
     }
   }
 
+
   protected static ShortBuffer updateShortBuffer(ShortBuffer buf, short[] arr,
-    boolean wrap) {
+                                                 boolean wrap) {
     if (USE_DIRECT_BUFFERS) {
       if (buf == null || buf.capacity() < arr.length) {
         buf = allocateDirectShortBuffer(arr.length);
@@ -2363,14 +2434,16 @@ public abstract class PGL {
     return buf;
   }
 
+
   protected static void updateShortBuffer(ShortBuffer buf, short[] arr,
-    int offset, int size) {
+                                          int offset, int size) {
     if (USE_DIRECT_BUFFERS || (buf.hasArray() && buf.array() != arr)) {
       buf.position(offset);
       buf.put(arr, offset, size);
       buf.rewind();
     }
   }
+
 
   protected static void getShortArray(ShortBuffer buf, short[] arr) {
     if (!buf.hasArray() || buf.array() != arr) {
@@ -2380,6 +2453,7 @@ public abstract class PGL {
     }
   }
 
+
   protected static void putShortArray(ShortBuffer buf, short[] arr) {
     if (!buf.hasArray() || buf.array() != arr) {
       buf.position(0);
@@ -2388,8 +2462,9 @@ public abstract class PGL {
     }
   }
 
+
   protected static void fillShortBuffer(ShortBuffer buf, int i0, int i1,
-    short val) {
+                                        short val) {
     int n = i1 - i0;
     short[] temp = new short[n];
     Arrays.fill(temp, 0, n, val);
@@ -2398,11 +2473,13 @@ public abstract class PGL {
     buf.rewind();
   }
 
+
   protected static IntBuffer allocateDirectIntBuffer(int size) {
     int bytes = PApplet.max(MIN_DIRECT_BUFFER_SIZE, size) * SIZEOF_INT;
     return ByteBuffer.allocateDirect(bytes).order(ByteOrder.nativeOrder()).
-      asIntBuffer();
+           asIntBuffer();
   }
+
 
   protected static IntBuffer allocateIntBuffer(int size) {
     if (USE_DIRECT_BUFFERS) {
@@ -2411,6 +2488,7 @@ public abstract class PGL {
       return IntBuffer.allocate(size);
     }
   }
+
 
   protected static IntBuffer allocateIntBuffer(int[] arr) {
     if (USE_DIRECT_BUFFERS) {
@@ -2423,8 +2501,9 @@ public abstract class PGL {
     }
   }
 
+
   protected static IntBuffer updateIntBuffer(IntBuffer buf, int[] arr,
-    boolean wrap) {
+                                             boolean wrap) {
     if (USE_DIRECT_BUFFERS) {
       if (buf == null || buf.capacity() < arr.length) {
         buf = allocateDirectIntBuffer(arr.length);
@@ -2447,14 +2526,16 @@ public abstract class PGL {
     return buf;
   }
 
+
   protected static void updateIntBuffer(IntBuffer buf, int[] arr,
-    int offset, int size) {
-    if (USE_DIRECT_BUFFERS || (buf.hasArray() && buf.array() != arr)) {
-      buf.position(offset);
-      buf.put(arr, offset, size);
-      buf.rewind();
-    }
-  }
+                                        int offset, int size) {
+     if (USE_DIRECT_BUFFERS || (buf.hasArray() && buf.array() != arr)) {
+       buf.position(offset);
+       buf.put(arr, offset, size);
+       buf.rewind();
+     }
+   }
+
 
   protected static void getIntArray(IntBuffer buf, int[] arr) {
     if (!buf.hasArray() || buf.array() != arr) {
@@ -2464,6 +2545,7 @@ public abstract class PGL {
     }
   }
 
+
   protected static void putIntArray(IntBuffer buf, int[] arr) {
     if (!buf.hasArray() || buf.array() != arr) {
       buf.position(0);
@@ -2471,6 +2553,7 @@ public abstract class PGL {
       buf.rewind();
     }
   }
+
 
   protected static void fillIntBuffer(IntBuffer buf, int i0, int i1, int val) {
     int n = i1 - i0;
@@ -2481,11 +2564,13 @@ public abstract class PGL {
     buf.rewind();
   }
 
+
   protected static FloatBuffer allocateDirectFloatBuffer(int size) {
     int bytes = PApplet.max(MIN_DIRECT_BUFFER_SIZE, size) * SIZEOF_FLOAT;
     return ByteBuffer.allocateDirect(bytes).order(ByteOrder.nativeOrder()).
-      asFloatBuffer();
+           asFloatBuffer();
   }
+
 
   protected static FloatBuffer allocateFloatBuffer(int size) {
     if (USE_DIRECT_BUFFERS) {
@@ -2494,6 +2579,7 @@ public abstract class PGL {
       return FloatBuffer.allocate(size);
     }
   }
+
 
   protected static FloatBuffer allocateFloatBuffer(float[] arr) {
     if (USE_DIRECT_BUFFERS) {
@@ -2506,8 +2592,9 @@ public abstract class PGL {
     }
   }
 
+
   protected static FloatBuffer updateFloatBuffer(FloatBuffer buf, float[] arr,
-    boolean wrap) {
+                                                 boolean wrap) {
     if (USE_DIRECT_BUFFERS) {
       if (buf == null || buf.capacity() < arr.length) {
         buf = allocateDirectFloatBuffer(arr.length);
@@ -2530,14 +2617,16 @@ public abstract class PGL {
     return buf;
   }
 
+
   protected static void updateFloatBuffer(FloatBuffer buf, float[] arr,
-    int offset, int size) {
-    if (USE_DIRECT_BUFFERS || (buf.hasArray() && buf.array() != arr)) {
-      buf.position(offset);
-      buf.put(arr, offset, size);
-      buf.rewind();
-    }
-  }
+                                        int offset, int size) {
+     if (USE_DIRECT_BUFFERS || (buf.hasArray() && buf.array() != arr)) {
+       buf.position(offset);
+       buf.put(arr, offset, size);
+       buf.rewind();
+     }
+   }
+
 
   protected static void getFloatArray(FloatBuffer buf, float[] arr) {
     if (!buf.hasArray() || buf.array() != arr) {
@@ -2547,6 +2636,7 @@ public abstract class PGL {
     }
   }
 
+
   protected static void putFloatArray(FloatBuffer buf, float[] arr) {
     if (!buf.hasArray() || buf.array() != arr) {
       buf.position(0);
@@ -2555,8 +2645,9 @@ public abstract class PGL {
     }
   }
 
+
   protected static void fillFloatBuffer(FloatBuffer buf, int i0, int i1,
-    float val) {
+                                        float val) {
     int n = i1 - i0;
     float[] temp = new float[n];
     Arrays.fill(temp, 0, n, val);
@@ -2565,63 +2656,65 @@ public abstract class PGL {
     buf.rewind();
   }
 
+
   // TODO: the next three functions shouldn't be here...
   // Uses 'Object' so that the API can be used w/ Android Typeface objects
+
   abstract protected int getFontAscent(Object font);
+
 
   abstract protected int getFontDescent(Object font);
 
+
   abstract protected int getTextWidth(Object font, char[] buffer, int start, int stop);
+
 
   abstract protected Object getDerivedFont(Object font, float size);
 
+
   ///////////////////////////////////////////////////////////
+
   // Tessellator interface
+
+
   protected abstract Tessellator createTessellator(TessellatorCallback callback);
 
+
   protected interface Tessellator {
-
     public void setCallback(int flag);
-
     public void setWindingRule(int rule);
-
     public void setProperty(int property, int value);
 
     public void beginPolygon();
-
     public void beginPolygon(Object data);
-
     public void endPolygon();
-
     public void beginContour();
-
     public void endContour();
-
     public void addVertex(double[] v);
-
     public void addVertex(double[] v, int n, Object data);
   }
 
-  protected interface TessellatorCallback {
 
+  protected interface TessellatorCallback  {
     public void begin(int type);
-
     public void end();
-
     public void vertex(Object data);
-
     public void combine(double[] coords, Object[] data,
-      float[] weight, Object[] outData);
-
+                        float[] weight, Object[] outData);
     public void error(int errnum);
   }
+
 
   protected String tessError(int err) {
     return "";
   }
 
+
   ///////////////////////////////////////////////////////////
+
   // FontOutline interface
+
+
   protected static boolean SHAPE_TEXT_SUPPORTED;
   protected static int SEG_MOVETO;
   protected static int SEG_LINETO;
@@ -2629,16 +2722,16 @@ public abstract class PGL {
   protected static int SEG_CUBICTO;
   protected static int SEG_CLOSE;
 
+
   protected abstract FontOutline createFontOutline(char ch, Object font);
 
+
   protected interface FontOutline {
-
     public boolean isDone();
-
     public int currentSegment(float coords[]);
-
     public void next();
   }
+
 
   //////////////////////////////////////////////////////////////////////////////
   //
@@ -2659,7 +2752,9 @@ public abstract class PGL {
   // Also, keep in mind the note about the PGL constants below.
   //
   //////////////////////////////////////////////////////////////////////////////
+
   ///////////////////////////////////////////////////////////
+
   // Constants
   // Very important note: set the GL constants in your PGL subclass by using an
   // static initialization block as follows:
@@ -2672,6 +2767,7 @@ public abstract class PGL {
   // errors when the constants are accessed through PGL because they are not
   // overridden but hidden by the new declarations, and hence they keep their
   // initial values (all zeroes) when accessed through the superclass.
+
   public static int FALSE;
   public static int TRUE;
 
@@ -2966,80 +3062,72 @@ public abstract class PGL {
   public static int CONDITION_SATISFIED;
 
   ///////////////////////////////////////////////////////////
+
   // Special Functions
+
   public abstract void flush();
-
   public abstract void finish();
-
   public abstract void hint(int target, int hint);
 
   ///////////////////////////////////////////////////////////
+
   // State and State Requests
+
   public abstract void enable(int value);
-
   public abstract void disable(int value);
-
   public abstract void getBooleanv(int value, IntBuffer data);
-
   public abstract void getIntegerv(int value, IntBuffer data);
-
   public abstract void getFloatv(int value, FloatBuffer data);
-
   public abstract boolean isEnabled(int value);
-
   public abstract String getString(int name);
 
   ///////////////////////////////////////////////////////////
-  // Error Handling
-  public abstract int getError();
 
+  // Error Handling
+
+  public abstract int getError();
   public abstract String errorString(int err);
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Buffer Objects
+
   public abstract void genBuffers(int n, IntBuffer buffers);
-
   public abstract void deleteBuffers(int n, IntBuffer buffers);
-
   public abstract void bindBuffer(int target, int buffer);
-
   public abstract void bufferData(int target, int size, Buffer data, int usage);
-
   public abstract void bufferSubData(int target, int offset, int size, Buffer data);
-
   public abstract void isBuffer(int buffer);
-
   public abstract void getBufferParameteriv(int target, int value, IntBuffer data);
-
   public abstract ByteBuffer mapBuffer(int target, int access);
-
   public abstract ByteBuffer mapBufferRange(int target, int offset, int length, int access);
-
   public abstract void unmapBuffer(int target);
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Synchronization
+
   public abstract long fenceSync(int condition, int flags);
-
   public abstract void deleteSync(long sync);
-
   public abstract int clientWaitSync(long sync, int flags, long timeout);
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Viewport and Clipping
+
   public abstract void depthRangef(float n, float f);
-
   public abstract void viewport(int x, int y, int w, int h);
-
   protected abstract void viewportImpl(int x, int y, int w, int h);
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Reading Pixels
   // This is a special case: because the renderer might be using an FBO even on
   // the main surface, some extra handling might be needed before and after
   // reading the pixels. To make this transparent to the user, the actual call
   // to glReadPixels() should be done in readPixelsImpl().
-  public void readPixels(int x, int y, int width, int height, int format, int type, Buffer buffer) {
+
+  public void readPixels(int x, int y, int width, int height, int format, int type, Buffer buffer){
     boolean multisampled = isMultisampled() || graphics.offscreenMultisample;
     boolean depthReadingEnabled = graphics.getHint(PConstants.ENABLE_BUFFER_READING);
     boolean depthRequested = format == STENCIL_INDEX || format == DEPTH_COMPONENT || format == DEPTH_STENCIL;
@@ -3054,7 +3142,7 @@ public abstract class PGL {
     graphics.endReadPixels();
   }
 
-  public void readPixels(int x, int y, int width, int height, int format, int type, long offset) {
+  public void readPixels(int x, int y, int width, int height, int format, int type, long offset){
     boolean multisampled = isMultisampled() || graphics.offscreenMultisample;
     boolean depthReadingEnabled = graphics.getHint(PConstants.ENABLE_BUFFER_READING);
     boolean depthRequested = format == STENCIL_INDEX || format == DEPTH_COMPONENT || format == DEPTH_STENCIL;
@@ -3070,31 +3158,22 @@ public abstract class PGL {
   }
 
   protected abstract void readPixelsImpl(int x, int y, int width, int height, int format, int type, Buffer buffer);
-
   protected abstract void readPixelsImpl(int x, int y, int width, int height, int format, int type, long offset);
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Vertices
+
   public abstract void vertexAttrib1f(int index, float value);
-
   public abstract void vertexAttrib2f(int index, float value0, float value1);
-
   public abstract void vertexAttrib3f(int index, float value0, float value1, float value2);
-
   public abstract void vertexAttrib4f(int index, float value0, float value1, float value2, float value3);
-
   public abstract void vertexAttrib1fv(int index, FloatBuffer values);
-
   public abstract void vertexAttrib2fv(int index, FloatBuffer values);
-
   public abstract void vertexAttrib3fv(int index, FloatBuffer values);
-
   public abstract void vertexAttrib4fv(int index, FloatBuffer values);
-
   public abstract void vertexAttribPointer(int index, int size, int type, boolean normalized, int stride, int offset);
-
   public abstract void enableVertexAttribArray(int index);
-
   public abstract void disableVertexAttribArray(int index);
 
   public void drawArrays(int mode, int first, int count) {
@@ -3112,51 +3191,39 @@ public abstract class PGL {
   public abstract void drawElementsImpl(int mode, int count, int type, int offset);
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Rasterization
+
   public abstract void lineWidth(float width);
-
   public abstract void frontFace(int dir);
-
   public abstract void cullFace(int mode);
-
   public abstract void polygonOffset(float factor, float units);
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Pixel Rectangles
+
   public abstract void pixelStorei(int pname, int param);
 
   ///////////////////////////////////////////////////////////
+
   // Texturing
+
   public abstract void texImage2D(int target, int level, int internalFormat, int width, int height, int border, int format, int type, Buffer data);
-
   public abstract void copyTexImage2D(int target, int level, int internalFormat, int x, int y, int width, int height, int border);
-
   public abstract void texSubImage2D(int target, int level, int xOffset, int yOffset, int width, int height, int format, int type, Buffer data);
-
   public abstract void copyTexSubImage2D(int target, int level, int xOffset, int yOffset, int x, int y, int width, int height);
-
   public abstract void compressedTexImage2D(int target, int level, int internalFormat, int width, int height, int border, int imageSize, Buffer data);
-
   public abstract void compressedTexSubImage2D(int target, int level, int xOffset, int yOffset, int width, int height, int format, int imageSize, Buffer data);
-
   public abstract void texParameteri(int target, int pname, int param);
-
   public abstract void texParameterf(int target, int pname, float param);
-
   public abstract void texParameteriv(int target, int pname, IntBuffer params);
-
   public abstract void texParameterfv(int target, int pname, FloatBuffer params);
-
   public abstract void generateMipmap(int target);
-
   public abstract void genTextures(int n, IntBuffer textures);
-
   public abstract void deleteTextures(int n, IntBuffer textures);
-
   public abstract void getTexParameteriv(int target, int pname, IntBuffer params);
-
   public abstract void getTexParameterfv(int target, int pname, FloatBuffer params);
-
   public abstract boolean isTexture(int texture);
 
   // activeTexture() and bindTexture() have some extra logic to keep track of
@@ -3187,198 +3254,120 @@ public abstract class PGL {
       boundTextures[activeTexUnit][1] = texture;
     }
   }
-
   protected abstract void bindTextureImpl(int target, int texture);
 
   ///////////////////////////////////////////////////////////
+
   // Shaders and Programs
+
   public abstract int createShader(int type);
-
   public abstract void shaderSource(int shader, String source);
-
   public abstract void compileShader(int shader);
-
   public abstract void releaseShaderCompiler();
-
   public abstract void deleteShader(int shader);
-
   public abstract void shaderBinary(int count, IntBuffer shaders, int binaryFormat, Buffer binary, int length);
-
   public abstract int createProgram();
-
   public abstract void attachShader(int program, int shader);
-
   public abstract void detachShader(int program, int shader);
-
   public abstract void linkProgram(int program);
-
   public abstract void useProgram(int program);
-
   public abstract void deleteProgram(int program);
-
   public abstract String getActiveAttrib(int program, int index, IntBuffer size, IntBuffer type);
-
   public abstract int getAttribLocation(int program, String name);
-
   public abstract void bindAttribLocation(int program, int index, String name);
-
   public abstract int getUniformLocation(int program, String name);
-
   public abstract String getActiveUniform(int program, int index, IntBuffer size, IntBuffer type);
-
   public abstract void uniform1i(int location, int value);
-
   public abstract void uniform2i(int location, int value0, int value1);
-
   public abstract void uniform3i(int location, int value0, int value1, int value2);
-
   public abstract void uniform4i(int location, int value0, int value1, int value2, int value3);
-
   public abstract void uniform1f(int location, float value);
-
   public abstract void uniform2f(int location, float value0, float value1);
-
   public abstract void uniform3f(int location, float value0, float value1, float value2);
-
   public abstract void uniform4f(int location, float value0, float value1, float value2, float value3);
-
   public abstract void uniform1iv(int location, int count, IntBuffer v);
-
   public abstract void uniform2iv(int location, int count, IntBuffer v);
-
   public abstract void uniform3iv(int location, int count, IntBuffer v);
-
   public abstract void uniform4iv(int location, int count, IntBuffer v);
-
   public abstract void uniform1fv(int location, int count, FloatBuffer v);
-
   public abstract void uniform2fv(int location, int count, FloatBuffer v);
-
   public abstract void uniform3fv(int location, int count, FloatBuffer v);
-
   public abstract void uniform4fv(int location, int count, FloatBuffer v);
-
   public abstract void uniformMatrix2fv(int location, int count, boolean transpose, FloatBuffer mat);
-
   public abstract void uniformMatrix3fv(int location, int count, boolean transpose, FloatBuffer mat);
-
   public abstract void uniformMatrix4fv(int location, int count, boolean transpose, FloatBuffer mat);
-
   public abstract void validateProgram(int program);
-
   public abstract boolean isShader(int shader);
-
   public abstract void getShaderiv(int shader, int pname, IntBuffer params);
-
   public abstract void getAttachedShaders(int program, int maxCount, IntBuffer count, IntBuffer shaders);
-
   public abstract String getShaderInfoLog(int shader);
-
   public abstract String getShaderSource(int shader);
-
   public abstract void getShaderPrecisionFormat(int shaderType, int precisionType, IntBuffer range, IntBuffer precision);
-
   public abstract void getVertexAttribfv(int index, int pname, FloatBuffer params);
-
   public abstract void getVertexAttribiv(int index, int pname, IntBuffer params);
-
   public abstract void getVertexAttribPointerv(int index, int pname, ByteBuffer data);
-
   public abstract void getUniformfv(int program, int location, FloatBuffer params);
-
   public abstract void getUniformiv(int program, int location, IntBuffer params);
-
   public abstract boolean isProgram(int program);
-
   public abstract void getProgramiv(int program, int pname, IntBuffer params);
-
   public abstract String getProgramInfoLog(int program);
 
   ///////////////////////////////////////////////////////////
+
   // Per-Fragment Operations
+
   public abstract void scissor(int x, int y, int w, int h);
-
   public abstract void sampleCoverage(float value, boolean invert);
-
   public abstract void stencilFunc(int func, int ref, int mask);
-
   public abstract void stencilFuncSeparate(int face, int func, int ref, int mask);
-
   public abstract void stencilOp(int sfail, int dpfail, int dppass);
-
   public abstract void stencilOpSeparate(int face, int sfail, int dpfail, int dppass);
-
   public abstract void depthFunc(int func);
-
   public abstract void blendEquation(int mode);
-
   public abstract void blendEquationSeparate(int modeRGB, int modeAlpha);
-
   public abstract void blendFunc(int src, int dst);
-
   public abstract void blendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha);
-
   public abstract void blendColor(float red, float green, float blue, float alpha);
 
   ///////////////////////////////////////////////////////////
+
   // Whole Framebuffer Operations
+
   public abstract void colorMask(boolean r, boolean g, boolean b, boolean a);
-
   public abstract void depthMask(boolean mask);
-
   public abstract void stencilMask(int mask);
-
   public abstract void stencilMaskSeparate(int face, int mask);
-
   public abstract void clearColor(float r, float g, float b, float a);
-
   public abstract void clearDepth(float d);
-
   public abstract void clearStencil(int s);
-
   public abstract void clear(int buf);
 
   ///////////////////////////////////////////////////////////
+
   // Framebuffers Objects
+
   public void bindFramebuffer(int target, int framebuffer) {
     graphics.beginBindFramebuffer(target, framebuffer);
     bindFramebufferImpl(target, framebuffer);
     graphics.endBindFramebuffer(target, framebuffer);
   }
-
   protected abstract void bindFramebufferImpl(int target, int framebuffer);
 
   public abstract void deleteFramebuffers(int n, IntBuffer framebuffers);
-
   public abstract void genFramebuffers(int n, IntBuffer framebuffers);
-
   public abstract void bindRenderbuffer(int target, int renderbuffer);
-
   public abstract void deleteRenderbuffers(int n, IntBuffer renderbuffers);
-
   public abstract void genRenderbuffers(int n, IntBuffer renderbuffers);
-
   public abstract void renderbufferStorage(int target, int internalFormat, int width, int height);
-
   public abstract void framebufferRenderbuffer(int target, int attachment, int rendbuferfTarget, int renderbuffer);
-
   public abstract void framebufferTexture2D(int target, int attachment, int texTarget, int texture, int level);
-
   public abstract int checkFramebufferStatus(int target);
-
   public abstract boolean isFramebuffer(int framebuffer);
-
   public abstract void getFramebufferAttachmentParameteriv(int target, int attachment, int pname, IntBuffer params);
-
   public abstract boolean isRenderbuffer(int renderbuffer);
-
   public abstract void getRenderbufferParameteriv(int target, int pname, IntBuffer params);
-
   public abstract void blitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter);
-
   public abstract void renderbufferStorageMultisample(int target, int samples, int format, int width, int height);
-
   public abstract void readBuffer(int buf);
-
   public abstract void drawBuffer(int buf);
 }

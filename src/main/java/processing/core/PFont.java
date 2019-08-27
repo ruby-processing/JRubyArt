@@ -1,26 +1,27 @@
 /* -*- mode: java; c-basic-offset: 2; indent-tabs-mode: nil -*- */
 
- /*
-Part of the Processing project - http://processing.org
+/*
+  Part of the Processing project - http://processing.org
 
-Copyright (c) 2012-19 The Processing Foundation
-Copyright (c) 2004-12 Ben Fry & Casey Reas
-Copyright (c) 2001-04 Massachusetts Institute of Technology
+  Copyright (c) 2012-19 The Processing Foundation
+  Copyright (c) 2004-12 Ben Fry & Casey Reas
+  Copyright (c) 2001-04 Massachusetts Institute of Technology
 
-This library is free software; you can redistribute it and/or
-modify it under the terms of version 2.01 of the GNU Lesser General
-Public License as published by the Free Software Foundation.
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of version 2.01 of the GNU Lesser General
+  Public License as published by the Free Software Foundation.
 
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General
-Public License along with this library; if not, write to the
-Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-Boston, MA  02111-1307  USA
- */
+  You should have received a copy of the GNU Lesser General
+  Public License along with this library; if not, write to the
+  Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+  Boston, MA  02111-1307  USA
+*/
+
 package processing.core;
 
 import java.awt.*;
@@ -31,6 +32,7 @@ import java.awt.image.*;
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
+
 
 /**
  * Grayscale bitmap font class used by Processing.
@@ -53,7 +55,6 @@ import java.util.HashMap;
  *
  *   ^^^^^^^^^^^^^^ setWidth (width displaced by char)
  * </PRE>
- *
  * @webref typography
  * @see PApplet#loadFont(String)
  * @see PApplet#createFont(String, float, boolean, char[])
@@ -61,20 +62,18 @@ import java.util.HashMap;
  */
 public class PFont implements PConstants {
 
-  /**
-   * Number of character glyphs in this font.
-   */
+  /** Number of character glyphs in this font. */
   protected int glyphCount;
 
   /**
-   * Actual glyph data. The length of this array won't necessarily be the same
-   * size as glyphCount, in cases where lazy font loading is in use.
+   * Actual glyph data. The length of this array won't necessarily be the
+   * same size as glyphCount, in cases where lazy font loading is in use.
    */
   protected Glyph[] glyphs;
 
   /**
-   * Name of the font as seen by Java when it was created. If the font is
-   * available, the native version will be used.
+   * Name of the font as seen by Java when it was created.
+   * If the font is available, the native version will be used.
    */
   protected String name;
 
@@ -88,20 +87,16 @@ public class PFont implements PConstants {
    */
   protected int size;
 
-  /**
-   * Default density set to 1 for backwards compatibility with loadFont().
-   */
+  /** Default density set to 1 for backwards compatibility with loadFont(). */
   protected int density = 1;
 
-  /**
-   * true if smoothing was enabled for this font, used for native impl
-   */
+  /** true if smoothing was enabled for this font, used for native impl */
   protected boolean smooth;
 
   /**
-   * The ascent of the font. If the 'd' character is present in this PFont, this
-   * value is replaced with its pixel height, because the values returned by
-   * FontMetrics.getAscent() seem to be terrible.
+   * The ascent of the font. If the 'd' character is present in this PFont,
+   * this value is replaced with its pixel height, because the values returned
+   * by FontMetrics.getAscent() seem to be terrible.
    */
   protected int ascent;
 
@@ -126,17 +121,17 @@ public class PFont implements PConstants {
   protected boolean lazy;
 
   /**
-   * Native Java version of the font. If possible, this allows the PGraphics
-   * subclass to just use Java's font rendering stuff in situations where that's
-   * faster.
+   * Native Java version of the font. If possible, this allows the
+   * PGraphics subclass to just use Java's font rendering stuff
+   * in situations where that's faster.
    */
   protected Font font;
 
   /**
-   * True if this font was loaded from an InputStream, rather than by name from
-   * the OS. It's best to use the native version of a font loaded from a TTF
-   * file, since that will ensure that the font is available when the sketch is
-   * exported.
+   * True if this font was loaded from an InputStream, rather than by name
+   * from the OS. It's best to use the native version of a font loaded from
+   * a TTF file, since that will ensure that the font is available when the
+   * sketch is exported.
    */
   protected boolean stream;
 
@@ -147,21 +142,19 @@ public class PFont implements PConstants {
    */
   protected boolean subsetting;
 
-  /**
-   * True if already tried to find the native AWT version of this font.
-   */
+  /** True if already tried to find the native AWT version of this font. */
   protected boolean fontSearched;
 
   /**
-   * The name of the font that Java uses when a font isn't found. See
-   * {@link #findFont(String)} and {@link #loadFonts()} for more info.
+   * The name of the font that Java uses when a font isn't found.
+   * See {@link #findFont(String)} and {@link #loadFonts()} for more info.
    */
   static protected String systemFontName;
 
   /**
    * Array of the native system fonts. Used to lookup native fonts by their
-   * PostScript name. This is a workaround for a several year old Apple Java bug
-   * that they can't be bothered to fix.
+   * PostScript name. This is a workaround for a several year old Apple Java
+   * bug that they can't be bothered to fix.
    */
   static protected Font[] fonts;
   static protected HashMap<String, Font> fontDifferent;
@@ -171,26 +164,27 @@ public class PFont implements PConstants {
   protected FontMetrics lazyMetrics;
   protected int[] lazySamples;
 
+
   /**
    * @nowebref
    */
-  public PFont() {
-  }  // for subclasses
+  public PFont() { }  // for subclasses
+
 
   /**
    * ( begin auto-generated from PFont.xml )
    *
    * PFont is the font class for Processing. To create a font to use with
-   * Processing, select "Create Font..." from the Tools menu. This will create a
-   * font in the format Processing requires and also adds it to the current
-   * sketch's data directory. Processing displays fonts using the .vlw font
-   * format, which uses images for each letter, rather than defining them
-   * through vector data. The <b>loadFont()</b> function constructs a new font
-   * and <b>textFont()</b> makes a font active. The
-   * <b>list()</b> method creates a list of the fonts installed on the computer,
-   * which is useful information to use with the
-   * <b>createFont()</b> function for dynamically converting fonts into a format
-   * to use with Processing.
+   * Processing, select "Create Font..." from the Tools menu. This will
+   * create a font in the format Processing requires and also adds it to the
+   * current sketch's data directory. Processing displays fonts using the
+   * .vlw font format, which uses images for each letter, rather than
+   * defining them through vector data. The <b>loadFont()</b> function
+   * constructs a new font and <b>textFont()</b> makes a font active. The
+   * <b>list()</b> method creates a list of the fonts installed on the
+   * computer, which is useful information to use with the
+   * <b>createFont()</b> function for dynamically converting fonts into a
+   * format to use with Processing.
    *
    * ( end auto-generated )
    *
@@ -202,9 +196,10 @@ public class PFont implements PConstants {
     this(font, smooth, null);
   }
 
+
   /**
-   * Create a new image-based font on the fly. If charset is set to null, the
-   * characters will only be created as bitmaps when they're drawn.
+   * Create a new image-based font on the fly. If charset is set to null,
+   * the characters will only be created as bitmaps when they're drawn.
    *
    * @nowebref
    * @param charset array of all unicode chars that should be included
@@ -222,6 +217,7 @@ public class PFont implements PConstants {
     //lazy = true;
     // not sure what else to do here
     //mbox2 = 0;
+
     int initialCount = 10;
     glyphs = new Glyph[initialCount];
 
@@ -233,14 +229,14 @@ public class PFont implements PConstants {
     lazyImage = new BufferedImage(mbox3, mbox3, BufferedImage.TYPE_INT_RGB);
     lazyGraphics = (Graphics2D) lazyImage.getGraphics();
     lazyGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-      smooth
-        ? RenderingHints.VALUE_ANTIALIAS_ON
-        : RenderingHints.VALUE_ANTIALIAS_OFF);
+                                  smooth ?
+                                  RenderingHints.VALUE_ANTIALIAS_ON :
+                                  RenderingHints.VALUE_ANTIALIAS_OFF);
     // adding this for post-1.0.9
     lazyGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-      smooth
-        ? RenderingHints.VALUE_TEXT_ANTIALIAS_ON
-        : RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+                                  smooth ?
+                                  RenderingHints.VALUE_TEXT_ANTIALIAS_ON :
+                                  RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 
     lazyGraphics.setFont(font);
     lazyMetrics = lazyGraphics.getFontMetrics();
@@ -251,9 +247,10 @@ public class PFont implements PConstants {
     // calculate-by-hand method of measuring pixels in characters.
     //ascent = lazyMetrics.getAscent();
     //descent = lazyMetrics.getDescent();
+
     if (charset == null) {
       lazy = true;
-      //      lazyFont = font;
+//      lazyFont = font;
 
     } else {
       // charset needs to be sorted to make index lookup run more quickly
@@ -282,24 +279,24 @@ public class PFont implements PConstants {
       // foreign font, so just make ascent the max topExtent
       // for > 1.0.9, not doing this anymore.
       // instead using getAscent() and getDescent() values for these cases.
-      //      if ((ascent == 0) && (descent == 0)) {
-      //        //for (int i = 0; i < charCount; i++) {
-      //        for (Glyph glyph : glyphs) {
-      //          char cc = (char) glyph.value;
-      //          //char cc = (char) glyphs[i].value;
-      //          if (Character.isWhitespace(cc) ||
-      //              (cc == '\u00A0') || (cc == '\u2007') || (cc == '\u202F')) {
-      //            continue;
-      //          }
-      //          if (glyph.topExtent > ascent) {
-      //            ascent = glyph.topExtent;
-      //          }
-      //          int d = -glyph.topExtent + glyph.height;
-      //          if (d > descent) {
-      //            descent = d;
-      //          }
-      //        }
-      //      }
+//      if ((ascent == 0) && (descent == 0)) {
+//        //for (int i = 0; i < charCount; i++) {
+//        for (Glyph glyph : glyphs) {
+//          char cc = (char) glyph.value;
+//          //char cc = (char) glyphs[i].value;
+//          if (Character.isWhitespace(cc) ||
+//              (cc == '\u00A0') || (cc == '\u2007') || (cc == '\u202F')) {
+//            continue;
+//          }
+//          if (glyph.topExtent > ascent) {
+//            ascent = glyph.topExtent;
+//          }
+//          int d = -glyph.topExtent + glyph.height;
+//          if (d > descent) {
+//            descent = d;
+//          }
+//        }
+//      }
     }
 
     // If not already created, just create these two characters to calculate
@@ -325,21 +322,23 @@ public class PFont implements PConstants {
     }
   }
 
+
   /**
-   * Adds an additional parameter that indicates the font came from a file, not
-   * a built-in OS font.
+   * Adds an additional parameter that indicates the font came from a file,
+   * not a built-in OS font.
    *
    * @nowebref
    */
   public PFont(Font font, boolean smooth, char charset[],
-    boolean stream, int density) {
+               boolean stream, int density) {
     this(font, smooth, charset);
     this.stream = stream;
     this.density = density;
   }
 
   /**
-   * @nowebref @param input InputStream
+   * @nowebref
+   * @param input InputStream
    */
   public PFont(InputStream input) throws IOException {
     DataInputStream is = new DataInputStream(input);
@@ -360,7 +359,7 @@ public class PFont implements PConstants {
     // this will make new fonts downward compatible
     is.readInt();  // ignore the other mbox attribute
 
-    ascent = is.readInt();  // formerly baseHt (zero/ignored)
+    ascent  = is.readInt();  // formerly baseHt (zero/ignored)
     descent = is.readInt();  // formerly ignored struct padding
 
     // allocate enough space for the character info
@@ -383,8 +382,8 @@ public class PFont implements PConstants {
     // not a roman font, so throw an error and ask to re-build.
     // that way can avoid a bunch of error checking hacks in here.
     if ((ascent == 0) && (descent == 0)) {
-      throw new RuntimeException("Please use \"Create Font\" to "
-        + "re-create this font.");
+      throw new RuntimeException("Please use \"Create Font\" to " +
+                                 "re-create this font.");
     }
 
     for (Glyph glyph : glyphs) {
@@ -400,17 +399,18 @@ public class PFont implements PConstants {
     }
     // See if there's a native version of this font that can be used,
     // in case that's of interest later.
-    //    findNative();
+//    findNative();
   }
+
 
   /**
    * Write this PFont to an OutputStream.
    * <p>
-   * This is used by the Create Font tool, or whatever anyone else dreams up for
-   * messing with fonts themselves.
+   * This is used by the Create Font tool, or whatever anyone else dreams
+   * up for messing with fonts themselves.
    * <p>
-   * It is assumed that the calling class will handle closing the stream when
-   * finished.
+   * It is assumed that the calling class will handle closing
+   * the stream when finished.
    */
   public void save(OutputStream output) throws IOException {
     DataOutputStream os = new DataOutputStream(output);
@@ -444,9 +444,9 @@ public class PFont implements PConstants {
     os.flush();
   }
 
+
   /**
    * Create a new glyph, and add the character to the current font.
-   *
    * @param c character to create an image for.
    */
   protected void addGlyph(char c) {
@@ -462,7 +462,7 @@ public class PFont implements PConstants {
         ascii[glyph.value] = 0;
       }
 
-    } else if (glyphs[glyphCount - 1].value < glyph.value) {
+    } else if (glyphs[glyphCount-1].value < glyph.value) {
       glyphs[glyphCount] = glyph;
       if (glyph.value < 128) {
         ascii[glyph.value] = glyphCount;
@@ -472,7 +472,7 @@ public class PFont implements PConstants {
       for (int i = 0; i < glyphCount; i++) {
         if (glyphs[i].value > c) {
           for (int j = glyphCount; j > i; --j) {
-            glyphs[j] = glyphs[j - 1];
+            glyphs[j] = glyphs[j-1];
             if (glyphs[j].value < 128) {
               ascii[glyphs[j].value] = j;
             }
@@ -480,9 +480,7 @@ public class PFont implements PConstants {
           glyph.index = i;
           glyphs[i] = glyph;
           // cache locations of the ascii charset
-          if (c < 128) {
-            ascii[c] = i;
-          }
+          if (c < 128) ascii[c] = i;
           break;
         }
       }
@@ -490,22 +488,26 @@ public class PFont implements PConstants {
     glyphCount++;
   }
 
+
   public String getName() {
     return name;
   }
+
 
   public String getPostScriptName() {
     return psname;
   }
 
+
   /**
    * Set the native complement of this font. Might be set internally via the
-   * findFont() function, or externally by a deriveFont() call if the font is
-   * resized by PGraphicsJava2D.
+   * findFont() function, or externally by a deriveFont() call if the font
+   * is resized by PGraphicsJava2D.
    */
   public void setNative(Object font) {
     this.font = (Font) font;
   }
+
 
   /**
    * Use the getNative() method instead, which allows library interfaces to be
@@ -515,6 +517,7 @@ public class PFont implements PConstants {
   public Font getFont() {
     return font;
   }
+
 
   /**
    * Return the native java.awt.Font associated with this PFont (if any).
@@ -526,6 +529,7 @@ public class PFont implements PConstants {
     return font;
   }
 
+
   /**
    * Return size of this font.
    */
@@ -533,36 +537,43 @@ public class PFont implements PConstants {
     return size;
   }
 
-  //  public void setDefaultSize(int size) {
-  //    defaultSize = size;
-  //  }
+
+//  public void setDefaultSize(int size) {
+//    defaultSize = size;
+//  }
+
+
   /**
-   * Returns the size that will be used when textFont(font) is called. When
-   * drawing with 2x pixel density, bitmap fonts in OpenGL need to be created
-   * (behind the scenes) at double the requested size. This ensures that they're
-   * shown at half on displays (so folks don't have to change their sketch
-   * code).
+   * Returns the size that will be used when textFont(font) is called.
+   * When drawing with 2x pixel density, bitmap fonts in OpenGL need to be
+   * created (behind the scenes) at double the requested size. This ensures
+   * that they're shown at half on displays (so folks don't have to change
+   * their sketch code).
    */
   public int getDefaultSize() {
     //return defaultSize;
     return size / density;
   }
 
+
   public boolean isSmooth() {
     return smooth;
   }
+
 
   public boolean isStream() {
     return stream;
   }
 
+
   public void setSubsetting() {
     subsetting = true;
   }
 
+
   /**
-   * Attempt to find the native version of this font. (Public so that it can be
-   * used by OpenGL or other renderers.)
+   * Attempt to find the native version of this font.
+   * (Public so that it can be used by OpenGL or other renderers.)
    */
   public Object findNative() {
     if (font == null) {
@@ -587,14 +598,15 @@ public class PFont implements PConstants {
     return font;
   }
 
+
   public Glyph getGlyph(char c) {
     int index = index(c);
     return (index == -1) ? null : glyphs[index];
   }
 
+
   /**
    * Get index for the character.
-   *
    * @return index into arrays or -1 if not found
    */
   protected int index(char c) {
@@ -618,99 +630,97 @@ public class PFont implements PConstants {
     }
   }
 
+
   protected int indexActual(char c) {
     // degenerate case, but the find function will have trouble
     // if there are somehow zero chars in the lookup
     //if (value.length == 0) return -1;
-    if (glyphCount == 0) {
-      return -1;
-    }
+    if (glyphCount == 0) return -1;
 
     // quicker lookup for the ascii fellers
-    if (c < 128) {
-      return ascii[c];
-    }
+    if (c < 128) return ascii[c];
 
     // some other unicode char, hunt it out
     //return index_hunt(c, 0, value.length-1);
-    return indexHunt(c, 0, glyphCount - 1);
+    return indexHunt(c, 0, glyphCount-1);
   }
+
 
   protected int indexHunt(int c, int start, int stop) {
     int pivot = (start + stop) / 2;
 
     // if this is the char, then return it
-    if (c == glyphs[pivot].value) {
-      return pivot;
-    }
+    if (c == glyphs[pivot].value) return pivot;
 
     // char doesn't exist, otherwise would have been the pivot
     //if (start == stop) return -1;
-    if (start >= stop) {
-      return -1;
-    }
+    if (start >= stop) return -1;
 
     // if it's in the lower half, continue searching that
-    if (c < glyphs[pivot].value) {
-      return indexHunt(c, start, pivot - 1);
-    }
+    if (c < glyphs[pivot].value) return indexHunt(c, start, pivot-1);
 
     // if it's in the upper half, continue there
-    return indexHunt(c, pivot + 1, stop);
+    return indexHunt(c, pivot+1, stop);
   }
 
+
   /**
-   * Currently un-implemented for .vlw fonts, but honored for layout in case
-   * subclasses use it.
+   * Currently un-implemented for .vlw fonts,
+   * but honored for layout in case subclasses use it.
    */
   public float kern(char a, char b) {
     return 0;
   }
 
+
   /**
-   * Returns the ascent of this font from the baseline. The value is based on a
-   * font of size 1.
+   * Returns the ascent of this font from the baseline.
+   * The value is based on a font of size 1.
    */
   public float ascent() {
     return ((float) ascent / (float) size);
   }
 
+
   /**
-   * Returns how far this font descends from the baseline. The value is based on
-   * a font size of 1.
+   * Returns how far this font descends from the baseline.
+   * The value is based on a font size of 1.
    */
   public float descent() {
     return ((float) descent / (float) size);
   }
 
+
   /**
    * Width of this character for a font of size 1.
    */
   public float width(char c) {
-    if (c == 32) {
-      return width('i');
-    }
+    if (c == 32) return width('i');
 
     int cc = index(c);
-    if (cc == -1) {
-      return 0;
-    }
+    if (cc == -1) return 0;
 
     return ((float) glyphs[cc].setWidth / (float) size);
   }
 
+
   //////////////////////////////////////////////////////////////
-  public int getGlyphCount() {
+
+
+  public int getGlyphCount()  {
     return glyphCount;
   }
 
-  public Glyph getGlyph(int i) {
+
+  public Glyph getGlyph(int i)  {
     return glyphs[i];
   }
+
 
   public PShape getShape(char ch) {
     return getShape(ch, 0);
   }
+
 
   public PShape getShape(char ch, float detail) {
     Font font = (Font) getNative();
@@ -723,80 +733,82 @@ public class PFont implements PConstants {
     // six element array received from the Java2D path iterator
     float[] iterPoints = new float[6];
     // array passed to createGylphVector
-    char[] textArray = new char[]{ch};
+    char[] textArray = new char[] { ch };
 
     //Graphics2D graphics = (Graphics2D) this.getGraphics();
     //FontRenderContext frc = graphics.getFontRenderContext();
     @SuppressWarnings("deprecation")
-    FontRenderContext frc
-      = Toolkit.getDefaultToolkit().getFontMetrics(font).getFontRenderContext();
+    FontRenderContext frc =
+      Toolkit.getDefaultToolkit().getFontMetrics(font).getFontRenderContext();
     GlyphVector gv = font.createGlyphVector(frc, textArray);
     Shape shp = gv.getOutline();
     // make everything into moveto and lineto
-    PathIterator iter = (detail == 0)
-      ? shp.getPathIterator(null)
-      : // maintain curves
+    PathIterator iter = (detail == 0) ?
+      shp.getPathIterator(null) :  // maintain curves
       shp.getPathIterator(null, detail);  // convert to line segments
 
     int contours = 0;
     //boolean outer = true;
-    //    boolean contour = false;
+//    boolean contour = false;
     while (!iter.isDone()) {
       int type = iter.currentSegment(iterPoints);
       switch (type) {
-        case PathIterator.SEG_MOVETO:   // 1 point (2 vars) in textPoints
-          //        System.out.println("moveto");
-          //        if (!contour) {
-          if (contours == 0) {
-            s.beginShape();
-          } else {
-            s.beginContour();
-            //          contour = true;
-          }
-          contours++;
-          s.vertex(iterPoints[0], iterPoints[1]);
-          break;
+      case PathIterator.SEG_MOVETO:   // 1 point (2 vars) in textPoints
+//        System.out.println("moveto");
+//        if (!contour) {
+        if (contours == 0) {
+          s.beginShape();
+        } else {
+          s.beginContour();
+//          contour = true;
+        }
+        contours++;
+        s.vertex(iterPoints[0], iterPoints[1]);
+        break;
 
-        case PathIterator.SEG_LINETO:   // 1 point
-          //        System.out.println("lineto");
-          //        PApplet.println(PApplet.subset(iterPoints, 0, 2));
-          s.vertex(iterPoints[0], iterPoints[1]);
-          break;
+      case PathIterator.SEG_LINETO:   // 1 point
+//        System.out.println("lineto");
+//        PApplet.println(PApplet.subset(iterPoints, 0, 2));
+        s.vertex(iterPoints[0], iterPoints[1]);
+        break;
 
-        case PathIterator.SEG_QUADTO:   // 2 points
-          //        System.out.println("quadto");
-          //        PApplet.println(PApplet.subset(iterPoints, 0, 4));
-          s.quadraticVertex(iterPoints[0], iterPoints[1],
-            iterPoints[2], iterPoints[3]);
-          break;
+      case PathIterator.SEG_QUADTO:   // 2 points
+//        System.out.println("quadto");
+//        PApplet.println(PApplet.subset(iterPoints, 0, 4));
+        s.quadraticVertex(iterPoints[0], iterPoints[1],
+                          iterPoints[2], iterPoints[3]);
+        break;
 
-        case PathIterator.SEG_CUBICTO:  // 3 points
-          //        System.out.println("cubicto");
-          //        PApplet.println(iterPoints);
-          s.quadraticVertex(iterPoints[0], iterPoints[1],
-            iterPoints[2], iterPoints[3],
-            iterPoints[4], iterPoints[5]);
-          break;
+      case PathIterator.SEG_CUBICTO:  // 3 points
+//        System.out.println("cubicto");
+//        PApplet.println(iterPoints);
+        s.quadraticVertex(iterPoints[0], iterPoints[1],
+                          iterPoints[2], iterPoints[3],
+                          iterPoints[4], iterPoints[5]);
+        break;
 
-        case PathIterator.SEG_CLOSE:
-          //        System.out.println("close");
-          if (contours > 1) {
-            //        contours--;
-            //        if (contours == 0) {
-            ////          s.endShape();
-            //        } else {
-            s.endContour();
-          }
-          break;
+      case PathIterator.SEG_CLOSE:
+//        System.out.println("close");
+        if (contours > 1) {
+//        contours--;
+//        if (contours == 0) {
+////          s.endShape();
+//        } else {
+          s.endContour();
+        }
+        break;
       }
-      //      PApplet.println(iterPoints);
+//      PApplet.println(iterPoints);
       iter.next();
     }
     s.endShape(CLOSE);
     return s;
   }
 
+
   //////////////////////////////////////////////////////////////
+
+
   static final char[] EXTRA_CHARS = {
     0x0080, 0x0081, 0x0082, 0x0083, 0x0084, 0x0085, 0x0086, 0x0087,
     0x0088, 0x0089, 0x008A, 0x008B, 0x008C, 0x008D, 0x008E, 0x008F,
@@ -828,51 +840,49 @@ public class PFont implements PConstants {
     0xFB01, 0xFB02
   };
 
+
   /**
    * The default Processing character set.
    * <P>
-   * This is the union of the Mac Roman and Windows ANSI (CP1250) character
-   * sets. ISO 8859-1 Latin 1 is Unicode characters 0x80 -> 0xFF, and would seem
-   * a good standard, but in practice, most P5 users would rather have
-   * characters that they expect from their platform's fonts.
+   * This is the union of the Mac Roman and Windows ANSI (CP1250)
+   * character sets. ISO 8859-1 Latin 1 is Unicode characters 0x80 -> 0xFF,
+   * and would seem a good standard, but in practice, most P5 users would
+   * rather have characters that they expect from their platform's fonts.
    * <P>
-   * This is more of an interim solution until a much better font solution can
-   * be determined. (i.e. create fonts on the fly from some sort of vector
-   * format).
+   * This is more of an interim solution until a much better
+   * font solution can be determined. (i.e. create fonts on
+   * the fly from some sort of vector format).
    * <P>
    * Not that I expect that to happen.
    */
   static public char[] CHARSET;
-
   static {
-    CHARSET = new char[126 - 33 + 1 + EXTRA_CHARS.length];
+    CHARSET = new char[126-33+1 + EXTRA_CHARS.length];
     int index = 0;
     for (int i = 33; i <= 126; i++) {
-      CHARSET[index++] = (char) i;
+      CHARSET[index++] = (char)i;
     }
     for (int i = 0; i < EXTRA_CHARS.length; i++) {
       CHARSET[index++] = EXTRA_CHARS[i];
     }
-  }
-
-  ;
+  };
 
 
   /**
-  * ( begin auto-generated from PFont_list.xml )
-  *
-  * Gets a list of the fonts installed on the system. The data is returned
-  * as a String array. This list provides the names of each font for input
-  * into <b>createFont()</b>, which allows Processing to dynamically format
-  * fonts. This function is meant as a tool for programming local
-  * applications and is not recommended for use in applets.
-  *
-  * ( end auto-generated )
-  *
-  * @webref pfont
-  * @usage application
-  * @brief     Gets a list of the fonts installed on the system
-  */
+   * ( begin auto-generated from PFont_list.xml )
+   *
+   * Gets a list of the fonts installed on the system. The data is returned
+   * as a String array. This list provides the names of each font for input
+   * into <b>createFont()</b>, which allows Processing to dynamically format
+   * fonts. This function is meant as a tool for programming local
+   * applications and is not recommended for use in applets.
+   *
+   * ( end auto-generated )
+   *
+   * @webref pfont
+   * @usage application
+   * @brief     Gets a list of the fonts installed on the system
+   */
   static public String[] list() {
     loadFonts();
     String list[] = new String[fonts.length];
@@ -882,15 +892,16 @@ public class PFont implements PConstants {
     return list;
   }
 
+
   /**
    * Make an internal list of all installed fonts.
    *
-   * This can take a while with a lot of fonts installed, but running it on a
-   * separate thread may not help much. As of the commit that's adding this
+   * This can take a while with a lot of fonts installed, but running it on
+   * a separate thread may not help much. As of the commit that's adding this
    * note, loadFonts() will only be called by PFont.list() and when loading a
    * font by name, both of which are occasions when we'd need to block until
-   * this was finished anyway. It's also possible that running getAllFonts() on
-   * a non-EDT thread could cause graphics system issues. Further, the first
+   * this was finished anyway. It's also possible that running getAllFonts()
+   * on a non-EDT thread could cause graphics system issues. Further, the first
    * fonts are usually loaded at the beginning of a sketch, meaning that sketch
    * startup time will still be affected, even with threading in place.
    *
@@ -899,8 +910,8 @@ public class PFont implements PConstants {
    */
   static public void loadFonts() {
     if (fonts == null) {
-      GraphicsEnvironment ge
-        = GraphicsEnvironment.getLocalGraphicsEnvironment();
+      GraphicsEnvironment ge =
+        GraphicsEnvironment.getLocalGraphicsEnvironment();
       fonts = ge.getAllFonts();
 
       if (PApplet.platform == PConstants.MACOSX) {
@@ -914,15 +925,15 @@ public class PFont implements PConstants {
     }
   }
 
+
   /**
-   * Starting with Java 1.5, Apple broke the ability to specify most fonts. This
-   * bug was filed years ago as #4769141 at bugreporter.apple.com. More:
+   * Starting with Java 1.5, Apple broke the ability to specify most fonts.
+   * This bug was filed years ago as #4769141 at bugreporter.apple.com. More:
    * <a href="http://dev.processing.org/bugs/show_bug.cgi?id=407">Bug 407</a>.
    * <br>
-   * This function displays a warning when the font is not found and Java's
-   * system font is used. See:
-   * <a href="https://github.com/processing/processing/issues/5481">issue
-   * #5481</a>
+   * This function displays a warning when the font is not found
+   * and Java's system font is used.
+   * See: <a href="https://github.com/processing/processing/issues/5481">issue #5481</a>
    */
   static public Font findFont(String name) {
     if (PApplet.platform == PConstants.MACOSX) {
@@ -941,21 +952,23 @@ public class PFont implements PConstants {
     }
 
     // warn the user if they didn't get the font they want
-    if (!name.equals(systemFontName)
-      && font.getFontName().equals(systemFontName)) {
-      PGraphics.showWarning("\"" + name + "\" is not available, "
-        + "so another font will be used. "
-        + "Use PFont.list() to show available fonts.");
+    if (!name.equals(systemFontName) &&
+        font.getFontName().equals(systemFontName)) {
+      PGraphics.showWarning("\"" + name + "\" is not available, " +
+                            "so another font will be used. " +
+                            "Use PFont.list() to show available fonts.");
     }
     return font;
   }
 
+
   //////////////////////////////////////////////////////////////
+
+
   /**
    * A single character, and its visage.
    */
   public class Glyph {
-
     public PImage image;
     public int value;
     public int height;
@@ -965,15 +978,18 @@ public class PFont implements PConstants {
     public int topExtent;
     public int leftExtent;
 
+
     public Glyph() {
       index = -1;
       // used when reading from a stream or for subclasses
     }
 
+
     public Glyph(DataInputStream is) throws IOException {
       index = -1;
       readHeader(is);
     }
+
 
     protected void readHeader(DataInputStream is) throws IOException {
       value = is.readInt();
@@ -990,16 +1006,13 @@ public class PFont implements PConstants {
       // seem to be way too large.. perhaps they're the max?
       // as such, use a more traditional marker for ascent/descent
       if (value == 'd') {
-        if (ascent == 0) {
-          ascent = topExtent;
-        }
+        if (ascent == 0) ascent = topExtent;
       }
       if (value == 'p') {
-        if (descent == 0) {
-          descent = -topExtent + height;
-        }
+        if (descent == 0) descent = -topExtent + height;
       }
     }
+
 
     protected void writeHeader(DataOutputStream os) throws IOException {
       os.writeInt(value);
@@ -1010,6 +1023,7 @@ public class PFont implements PConstants {
       os.writeInt(leftExtent);
       os.writeInt(0); // padding
     }
+
 
     protected void readBitmap(DataInputStream is) throws IOException {
       image = new PImage(width, height, ALPHA);
@@ -1024,22 +1038,24 @@ public class PFont implements PConstants {
       int[] pixels = image.pixels;
       for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
-          pixels[y * width + x] = temp[y * w + x] & 0xff;
-          //          System.out.print((image.pixels[y*64+x] > 128) ? "*" : ".");
+          pixels[y * width + x] = temp[y*w + x] & 0xff;
+//          System.out.print((image.pixels[y*64+x] > 128) ? "*" : ".");
         }
-        //        System.out.println();
+//        System.out.println();
       }
-      //      System.out.println();
+//      System.out.println();
     }
 
+
     protected void writeBitmap(DataOutputStream os) throws IOException {
-      int[] pixels = image.pixels;
+      int[] pixels  = image.pixels;
       for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
           os.write(pixels[y * width + x] & 0xff);
         }
       }
     }
+
 
     protected Glyph(char c) {
       int mbox3 = size * 3;
@@ -1059,18 +1075,10 @@ public class PFont implements PConstants {
         for (int x = 0; x < mbox3; x++) {
           int sample = lazySamples[y * mbox3 + x] & 0xff;
           if (sample != 255) {
-            if (x < minX) {
-              minX = x;
-            }
-            if (y < minY) {
-              minY = y;
-            }
-            if (x > maxX) {
-              maxX = x;
-            }
-            if (y > maxY) {
-              maxY = y;
-            }
+            if (x < minX) minX = x;
+            if (y < minY) minY = y;
+            if (x > maxX) maxX = x;
+            if (y > maxY) maxY = y;
             pixelFound = true;
           }
         }
@@ -1090,7 +1098,7 @@ public class PFont implements PConstants {
 
       // offset from vertical location of baseline
       // of where the char was drawn (size*2)
-      topExtent = size * 2 - minY;
+      topExtent = size*2 - minY;
 
       // offset from left of where coord was drawn
       leftExtent = minX - size;
@@ -1107,14 +1115,10 @@ public class PFont implements PConstants {
 
       // replace the ascent/descent values with something.. err, decent.
       if (value == 'd') {
-        if (ascent == 0) {
-          ascent = topExtent;
-        }
+        if (ascent == 0) ascent = topExtent;
       }
       if (value == 'p') {
-        if (descent == 0) {
-          descent = -topExtent + height;
-        }
+        if (descent == 0) descent = -topExtent + height;
       }
     }
   }
