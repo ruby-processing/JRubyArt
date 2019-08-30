@@ -1,6 +1,6 @@
 /* -*- mode: java; c-basic-offset: 2; indent-tabs-mode: nil -*- */
 
- /*
+/*
   Part of the Processing project - http://processing.org
 
   Copyright (c) 2012-15 The Processing Foundation
@@ -20,7 +20,8 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
- */
+*/
+
 package processing.opengl;
 
 import processing.core.PApplet;
@@ -42,36 +43,36 @@ import processing.opengl.PGraphicsOpenGL.VertexAttribute;
 import java.nio.Buffer;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Stack;
 
 /**
- * This class holds a 3D model composed of vertices, normals, colors (per
- * vertex) and texture coordinates (also per vertex). All this data is stored in
- * Vertex Buffer Objects (VBO) in GPU memory for very fast access. OBJ loading
- * implemented using code from Saito's OBJLoader library:
- * http://code.google.com/p/saitoobjloader/ and OBJReader from Ahmet Kizilay
- * http://www.openprocessing.org/visuals/?visualID=191 By Andres Colubri
+ * This class holds a 3D model composed of vertices, normals, colors
+ * (per vertex) and texture coordinates (also per vertex). All this data is
+ * stored in Vertex Buffer Objects (VBO) in GPU memory for very fast access.
+ * OBJ loading implemented using code from Saito's OBJLoader library:
+ * http://code.google.com/p/saitoobjloader/
+ * and OBJReader from Ahmet Kizilay
+ * http://www.openprocessing.org/visuals/?visualID=191
+ * By Andres Colubri
  *
  *
- * Other formats to consider: AMF:
- * http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format STL:
- * http://en.wikipedia.org/wiki/STL_(file_format) OFF:
- * http://people.sc.fsu.edu/~jburkardt/data/off/off.html(file_format) DXF:
- * http://en.wikipedia.org/wiki/AutoCAD_DXF
+ * Other formats to consider:
+ * AMF: http://en.wikipedia.org/wiki/Additive_Manufacturing_File_Format
+ * STL: http://en.wikipedia.org/wiki/STL_(file_format)
+ * OFF: http://people.sc.fsu.edu/~jburkardt/data/off/off.html(file_format)
+ * DXF: http://en.wikipedia.org/wiki/AutoCAD_DXF
  */
 public class PShapeOpenGL extends PShape {
-
   // Testing these constants, not use as they might go away...
-  static public final int POSITION = 0;
-  static public final int NORMAL = 1;
-  static public final int TEXCOORD = 2;
+  static public final int POSITION  = 0;
+  static public final int NORMAL    = 1;
+  static public final int TEXCOORD  = 2;
   static public final int DIRECTION = 3;
-  static public final int OFFSET = 4;
+  static public final int OFFSET    = 4;
 
   static protected final int TRANSLATE = 0;
-  static protected final int ROTATE = 1;
-  static protected final int SCALE = 2;
-  static protected final int MATRIX = 3;
+  static protected final int ROTATE    = 1;
+  static protected final int SCALE     = 2;
+  static protected final int MATRIX    = 3;
 
   protected PGraphicsOpenGL pg;
   protected PGL pgl;
@@ -80,7 +81,9 @@ public class PShapeOpenGL extends PShape {
   protected PShapeOpenGL root;
 
   // ........................................................
+
   // Input, tessellated geometry
+
   protected InGeometry inGeo;
   protected TessGeometry tessGeo;
   protected Tessellator tessellator;
@@ -88,13 +91,17 @@ public class PShapeOpenGL extends PShape {
   protected AttributeMap polyAttribs;
 
   // ........................................................
+
   // Texturing
+
   protected HashSet<PImage> textures;
   protected boolean strokedTexture;
   protected boolean untexChild;
 
   // ........................................................
+
   // OpenGL buffers
+
   protected VertexBuffer bufPolyVertex;
   protected VertexBuffer bufPolyColor;
   protected VertexBuffer bufPolyNormal;
@@ -119,7 +126,9 @@ public class PShapeOpenGL extends PShape {
   public int glUsage = PGL.STATIC_DRAW;
 
   // ........................................................
+
   // Offsets for geometry aggregation and update.
+
   protected int polyVertCopyOffset;
   protected int polyIndCopyOffset;
   protected int lineVertCopyOffset;
@@ -157,12 +166,17 @@ public class PShapeOpenGL extends PShape {
   protected int lastPointVertex;
 
   // ........................................................
+
   // Geometric transformations.
+
   protected PMatrix transform;
-  protected Stack<PMatrix> transformStack;
+  protected PMatrix transformInv;
+  protected PMatrix matrixInv;
 
   // ........................................................
+
   // State/rendering flags
+
   protected boolean tessellated;
   protected boolean needBufferInit = false;
 
@@ -184,7 +198,9 @@ public class PShapeOpenGL extends PShape {
   protected boolean hasPoints;
 
   // ........................................................
+
   // Bezier and Catmull-Rom curves
+
   protected int bezierDetail;
   protected int curveDetail;
   protected float curveTightness;
@@ -194,7 +210,9 @@ public class PShapeOpenGL extends PShape {
   protected float savedCurveTightness;
 
   // ........................................................
+
   // Normals
+
   protected float normalX, normalY, normalZ;
 
   // normal calculated per triangle
@@ -208,7 +226,9 @@ public class PShapeOpenGL extends PShape {
   protected int normalMode;
 
   // ........................................................
+
   // Modification variables (used only by the root shape)
+
   protected boolean modified;
 
   protected boolean modifiedPolyVertices;
@@ -260,8 +280,10 @@ public class PShapeOpenGL extends PShape {
   protected int lastModifiedPointAttribute;
 
   // ........................................................
+
   // Saved style variables to style can be re-enabled after disableStyle,
   // although it won't work if properties are defined on a per-vertex basis.
+
   protected boolean savedStroke;
   protected int savedStrokeColor;
   protected float savedStrokeWeight;
@@ -281,8 +303,10 @@ public class PShapeOpenGL extends PShape {
 
   protected int savedTextureMode;
 
+
   PShapeOpenGL() {
   }
+
 
   public PShapeOpenGL(PGraphicsOpenGL pg, int family) {
     this.pg = pg;
@@ -325,7 +349,7 @@ public class PShapeOpenGL extends PShape {
     textureMode = pg.textureMode;
 
     colorMode(pg.colorMode,
-      pg.colorModeX, pg.colorModeY, pg.colorModeZ, pg.colorModeA);
+              pg.colorModeX, pg.colorModeY, pg.colorModeZ, pg.colorModeA);
 
     // Initial values for fill, stroke and tint colors are also imported from
     // the renderer. This is particular relevant for primitive shapes, since is
@@ -378,20 +402,20 @@ public class PShapeOpenGL extends PShape {
     perVertexStyles = true;
   }
 
-  /**
-   * Create a shape from the PRIMITIVE family, using this kind and these params
-   */
+
+  /** Create a shape from the PRIMITIVE family, using this kind and these params */
   public PShapeOpenGL(PGraphicsOpenGL pg, int kind, float... p) {
     this(pg, PRIMITIVE);
     setKind(kind);
     setParams(p);
   }
 
+
   @Override
   public void addChild(PShape who) {
     if (who instanceof PShapeOpenGL) {
       if (family == GROUP) {
-        PShapeOpenGL c3d = (PShapeOpenGL) who;
+        PShapeOpenGL c3d = (PShapeOpenGL)who;
 
         super.addChild(c3d);
         c3d.updateRoot(root);
@@ -399,9 +423,9 @@ public class PShapeOpenGL extends PShape {
 
         if (c3d.family == GROUP) {
           if (c3d.textures != null) {
-            c3d.textures.forEach((tex) -> {
+            for (PImage tex: c3d.textures) {
               addTexture(tex);
-            });
+            }
           } else {
             untexChild(true);
           }
@@ -427,11 +451,12 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public void addChild(PShape who, int idx) {
     if (who instanceof PShapeOpenGL) {
       if (family == GROUP) {
-        PShapeOpenGL c3d = (PShapeOpenGL) who;
+        PShapeOpenGL c3d = (PShapeOpenGL)who;
 
         super.addChild(c3d, idx);
         c3d.updateRoot(root);
@@ -439,9 +464,9 @@ public class PShapeOpenGL extends PShape {
 
         if (c3d.family == GROUP) {
           if (c3d.textures != null) {
-            c3d.textures.forEach((tex) -> {
+            for (PImage tex: c3d.textures) {
               addTexture(tex);
-            });
+            }
           } else {
             untexChild(true);
           }
@@ -466,6 +491,7 @@ public class PShapeOpenGL extends PShape {
       PGraphics.showWarning("Shape must be OpenGL to be added to the group.");
     }
   }
+
 
   @Override
   public void removeChild(int idx) {
@@ -475,44 +501,42 @@ public class PShapeOpenGL extends PShape {
     markForTessellation();
   }
 
+
   protected void updateRoot(PShape root) {
     this.root = (PShapeOpenGL) root;
     if (family == GROUP) {
       for (int i = 0; i < childCount; i++) {
-        PShapeOpenGL child = (PShapeOpenGL) children[i];
+        PShapeOpenGL child = (PShapeOpenGL)children[i];
         child.updateRoot(root);
       }
     }
   }
 
+
   ///////////////////////////////////////////////////////////
+
   //
   // Shape creation (temporary hack)
+
+
   public static PShapeOpenGL createShape(PGraphicsOpenGL pg, PShape src) {
     PShapeOpenGL dest = null;
-    switch (src.getFamily()) {
-      case GROUP:
-        //dest = PGraphics3D.createShapeImpl(pg, GROUP);
-        dest = (PShapeOpenGL) pg.createShapeFamily(GROUP);
-        copyGroup(pg, src, dest);
-        break;
-      case PRIMITIVE:
-        //dest = PGraphics3D.createShapeImpl(pg, src.getKind(), src.getParams());
-        dest = (PShapeOpenGL) pg.createShapePrimitive(src.getKind(), src.getParams());
-        PShape.copyPrimitive(src, dest);
-        break;
-      case GEOMETRY:
-        //dest = PGraphics3D.createShapeImpl(pg, PShape.GEOMETRY);
-        dest = (PShapeOpenGL) pg.createShapeFamily(PShape.GEOMETRY);
-        PShape.copyGeometry(src, dest);
-        break;
-      case PATH:
-        dest = (PShapeOpenGL) pg.createShapeFamily(PShape.PATH);
-        //dest = PGraphics3D.createShapeImpl(pg, PATH);
-        PShape.copyPath(src, dest);
-        break;
-      default:
-        break;
+    if (src.getFamily() == GROUP) {
+      //dest = PGraphics3D.createShapeImpl(pg, GROUP);
+      dest = (PShapeOpenGL) pg.createShapeFamily(GROUP);
+      copyGroup(pg, src, dest);
+    } else if (src.getFamily() == PRIMITIVE) {
+      //dest = PGraphics3D.createShapeImpl(pg, src.getKind(), src.getParams());
+      dest = (PShapeOpenGL) pg.createShapePrimitive(src.getKind(), src.getParams());
+      PShape.copyPrimitive(src, dest);
+    } else if (src.getFamily() == GEOMETRY) {
+      //dest = PGraphics3D.createShapeImpl(pg, PShape.GEOMETRY);
+      dest = (PShapeOpenGL) pg.createShapeFamily(PShape.GEOMETRY);
+      PShape.copyGeometry(src, dest);
+    } else if (src.getFamily() == PATH) {
+      dest = (PShapeOpenGL) pg.createShapeFamily(PShape.PATH);
+      //dest = PGraphics3D.createShapeImpl(pg, PATH);
+      PShape.copyPath(src, dest);
     }
     dest.setName(src.getName());
     dest.width = src.width;
@@ -547,7 +571,8 @@ public class PShapeOpenGL extends PShape {
     dest.height = src.height;
     return dest;
   }
-   */
+*/
+
   static public void copyGroup(PGraphicsOpenGL pg, PShape src, PShape dest) {
     copyMatrix(src, dest);
     copyStyles(src, dest);
@@ -571,16 +596,21 @@ public class PShapeOpenGL extends PShape {
       dest.addChild(c);
     }
   }
-   */
+*/
+
   ///////////////////////////////////////////////////////////
+
   //
+
   // Query methods
+
+
   @Override
   public float getWidth() {
     PVector min = new PVector(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY,
-      Float.POSITIVE_INFINITY);
+                              Float.POSITIVE_INFINITY);
     PVector max = new PVector(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY,
-      Float.NEGATIVE_INFINITY);
+                              Float.NEGATIVE_INFINITY);
     if (shapeCreated) {
       getVertexMin(min);
       getVertexMax(max);
@@ -589,12 +619,13 @@ public class PShapeOpenGL extends PShape {
     return width;
   }
 
+
   @Override
   public float getHeight() {
     PVector min = new PVector(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY,
-      Float.POSITIVE_INFINITY);
+                              Float.POSITIVE_INFINITY);
     PVector max = new PVector(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY,
-      Float.NEGATIVE_INFINITY);
+                              Float.NEGATIVE_INFINITY);
     if (shapeCreated) {
       getVertexMin(min);
       getVertexMax(max);
@@ -603,12 +634,13 @@ public class PShapeOpenGL extends PShape {
     return height;
   }
 
+
   @Override
   public float getDepth() {
     PVector min = new PVector(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY,
-      Float.POSITIVE_INFINITY);
+                              Float.POSITIVE_INFINITY);
     PVector max = new PVector(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY,
-      Float.NEGATIVE_INFINITY);
+                              Float.NEGATIVE_INFINITY);
     if (shapeCreated) {
       getVertexMin(min);
       getVertexMax(max);
@@ -616,6 +648,7 @@ public class PShapeOpenGL extends PShape {
     depth = max.z - min.z;
     return depth;
   }
+
 
   protected void getVertexMin(PVector min) {
     updateTessellation();
@@ -640,6 +673,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void getVertexMax(PVector max) {
     updateTessellation();
 
@@ -663,6 +697,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected int getVertexSum(PVector sum, int count) {
     updateTessellation();
 
@@ -678,20 +713,25 @@ public class PShapeOpenGL extends PShape {
       if (is3D()) {
         if (hasLines) {
           count += tessGeo.getLineVertexSum(sum, firstLineVertex,
-            lastLineVertex);
+                                                 lastLineVertex);
         }
         if (hasPoints) {
           count += tessGeo.getPointVertexSum(sum, firstPointVertex,
-            lastPointVertex);
+                                                  lastPointVertex);
         }
       }
     }
     return count;
   }
 
+
   ///////////////////////////////////////////////////////////
+
   //
+
   // Drawing methods
+
+
   @Override
   public void setTextureMode(int mode) {
     if (openShape) {
@@ -709,10 +749,9 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void setTextureModeImpl(int mode) {
-    if (textureMode == mode) {
-      return;
-    }
+    if (textureMode == mode) return;
     textureMode = mode;
     if (image != null) {
       float uFactor = image.width;
@@ -724,6 +763,7 @@ public class PShapeOpenGL extends PShape {
       scaleTextureUV(uFactor, vFactor);
     }
   }
+
 
   @Override
   public void setTexture(PImage tex) {
@@ -741,6 +781,7 @@ public class PShapeOpenGL extends PShape {
       setTextureImpl(tex);
     }
   }
+
 
   protected void setTextureImpl(PImage tex) {
     PImage image0 = image;
@@ -762,21 +803,20 @@ public class PShapeOpenGL extends PShape {
     }
 
     if (image0 != tex && parent != null) {
-      ((PShapeOpenGL) parent).removeTexture(image0, this);
+      ((PShapeOpenGL)parent).removeTexture(image0, this);
     }
     if (parent != null) {
-      ((PShapeOpenGL) parent).addTexture(image);
+      ((PShapeOpenGL)parent).addTexture(image);
       if (is2D() && stroke) {
-        ((PShapeOpenGL) parent).strokedTexture(true);
+        ((PShapeOpenGL)parent).strokedTexture(true);
       }
     }
   }
 
+
   protected void scaleTextureUV(float uFactor, float vFactor) {
-    if (PGraphicsOpenGL.same(uFactor, 1)
-      && PGraphicsOpenGL.same(vFactor, 1)) {
-      return;
-    }
+    if (PGraphicsOpenGL.same(uFactor, 1) &&
+        PGraphicsOpenGL.same(vFactor, 1)) return;
 
     for (int i = 0; i < inGeo.vertexCount; i++) {
       float u = inGeo.texcoords[2 * i + 0];
@@ -791,12 +831,8 @@ public class PShapeOpenGL extends PShape {
         last1 = lastPolyVertex + 1;
       } else if (is2D()) {
         last1 = lastPolyVertex + 1;
-        if (-1 < firstLineVertex) {
-          last1 = firstLineVertex;
-        }
-        if (-1 < firstPointVertex) {
-          last1 = firstPointVertex;
-        }
+        if (-1 < firstLineVertex) last1 = firstLineVertex;
+        if (-1 < firstPointVertex) last1 = firstPointVertex;
       }
       for (int i = firstLineVertex; i < last1; i++) {
         float u = tessGeo.polyTexCoords[2 * i + 0];
@@ -808,27 +844,26 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void addTexture(PImage tex) {
     if (textures == null) {
       textures = new HashSet<>();
     }
     textures.add(tex);
     if (parent != null) {
-      ((PShapeOpenGL) parent).addTexture(tex);
+      ((PShapeOpenGL)parent).addTexture(tex);
     }
   }
 
+
   protected void removeTexture(PImage tex, PShapeOpenGL caller) {
-    if (textures == null || !textures.contains(tex)) {
-      return; // Nothing to remove.
-    }
+    if (textures == null || !textures.contains(tex)) return; // Nothing to remove.
+
     // First check that none of the child shapes have texture tex...
     boolean childHasTex = false;
     for (int i = 0; i < childCount; i++) {
       PShapeOpenGL child = (PShapeOpenGL) children[i];
-      if (child == caller) {
-        continue;
-      }
+      if (child == caller) continue;
       if (child.hasTexture(tex)) {
         childHasTex = true;
         break;
@@ -838,7 +873,7 @@ public class PShapeOpenGL extends PShape {
     if (!childHasTex) {
       // ...if not, it is safe to remove from this shape.
       textures.remove(tex);
-      if (textures.isEmpty()) {
+      if (textures.size() == 0) {
         textures = null;
       }
     }
@@ -846,18 +881,19 @@ public class PShapeOpenGL extends PShape {
     // Since this shape and all its child shapes don't contain
     // tex anymore, we now can remove it from the parent.
     if (parent != null) {
-      ((PShapeOpenGL) parent).removeTexture(tex, this);
+      ((PShapeOpenGL)parent).removeTexture(tex, this);
     }
   }
+
 
   protected void strokedTexture(boolean newValue) {
     strokedTexture(newValue, null);
   }
 
+
   protected void strokedTexture(boolean newValue, PShapeOpenGL caller) {
-    if (strokedTexture == newValue) {
-      return; // Nothing to change.
-    }
+    if (strokedTexture == newValue) return; // Nothing to change.
+
     if (newValue) {
       strokedTexture = true;
     } else {
@@ -865,9 +901,7 @@ public class PShapeOpenGL extends PShape {
       strokedTexture = false;
       for (int i = 0; i < childCount; i++) {
         PShapeOpenGL child = (PShapeOpenGL) children[i];
-        if (child == caller) {
-          continue;
-        }
+        if (child == caller) continue;
         if (child.hasStrokedTexture()) {
           strokedTexture = true;
           break;
@@ -877,18 +911,19 @@ public class PShapeOpenGL extends PShape {
 
     // Now we can update the parent shape.
     if (parent != null) {
-      ((PShapeOpenGL) parent).strokedTexture(newValue, this);
+      ((PShapeOpenGL)parent).strokedTexture(newValue, this);
     }
   }
+
 
   protected void untexChild(boolean newValue) {
     untexChild(newValue, null);
   }
 
+
   protected void untexChild(boolean newValue, PShapeOpenGL caller) {
-    if (untexChild == newValue) {
-      return; // Nothing to change.
-    }
+    if (untexChild == newValue) return; // Nothing to change.
+
     if (newValue) {
       untexChild = true;
     } else {
@@ -896,9 +931,7 @@ public class PShapeOpenGL extends PShape {
       untexChild = false;
       for (int i = 0; i < childCount; i++) {
         PShapeOpenGL child = (PShapeOpenGL) children[i];
-        if (child == caller) {
-          continue;
-        }
+        if (child == caller) continue;
         if (!child.hasTexture()) {
           untexChild = true;
           break;
@@ -908,9 +941,10 @@ public class PShapeOpenGL extends PShape {
 
     // Now we can update the parent shape.
     if (parent != null) {
-      ((PShapeOpenGL) parent).untexChild(newValue, this);
+      ((PShapeOpenGL)parent).untexChild(newValue, this);
     }
   }
+
 
   protected boolean hasTexture() {
     if (family == GROUP) {
@@ -920,6 +954,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected boolean hasTexture(PImage tex) {
     if (family == GROUP) {
       return textures != null && textures.contains(tex);
@@ -928,6 +963,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected boolean hasStrokedTexture() {
     if (family == GROUP) {
       return strokedTexture;
@@ -935,6 +971,7 @@ public class PShapeOpenGL extends PShape {
       return image != null && stroke;
     }
   }
+
 
   @Override
   public void solid(boolean solid) {
@@ -948,40 +985,45 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   protected void beginContourImpl() {
     breakShape = true;
   }
 
+
   @Override
   protected void endContourImpl() {
   }
 
+
   @Override
   public void vertex(float x, float y) {
     vertexImpl(x, y, 0, 0, 0);
-    if (image != null) {
+    if (image != null)
       PGraphics.showWarning(PGraphicsOpenGL.MISSING_UV_TEXCOORDS_ERROR);
-    }
   }
+
 
   @Override
   public void vertex(float x, float y, float u, float v) {
     vertexImpl(x, y, 0, u, v);
   }
 
+
   @Override
   public void vertex(float x, float y, float z) {
     vertexImpl(x, y, z, 0, 0);
-    if (image != null) {
+    if (image != null)
       PGraphics.showWarning(PGraphicsOpenGL.MISSING_UV_TEXCOORDS_ERROR);
-    }
   }
+
 
   @Override
   public void vertex(float x, float y, float z, float u, float v) {
     vertexImpl(x, y, z, u, v);
   }
+
 
   protected void vertexImpl(float x, float y, float z, float u, float v) {
     if (!openShape) {
@@ -1021,15 +1063,16 @@ public class PShapeOpenGL extends PShape {
     }
 
     inGeo.addVertex(x, y, z,
-      fcolor,
-      normalX, normalY, normalZ,
-      u, v,
-      scolor, sweight,
-      ambientColor, specularColor, emissiveColor, shininess,
-      VERTEX, vertexBreak());
+                   fcolor,
+                   normalX, normalY, normalZ,
+                   u, v,
+                   scolor, sweight,
+                   ambientColor, specularColor, emissiveColor, shininess,
+                   VERTEX, vertexBreak());
 
     markForTessellation();
   }
+
 
   protected boolean vertexBreak() {
     if (breakShape) {
@@ -1038,6 +1081,7 @@ public class PShapeOpenGL extends PShape {
     }
     return false;
   }
+
 
   @Override
   public void normal(float nx, float ny, float nz) {
@@ -1066,58 +1110,53 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public void attribPosition(String name, float x, float y, float z) {
     VertexAttribute attrib = attribImpl(name, VertexAttribute.POSITION,
-      PGL.FLOAT, 3);
-    if (attrib != null) {
-      attrib.set(x, y, z);
-    }
+                                        PGL.FLOAT, 3);
+    if (attrib != null) attrib.set(x, y, z);
   }
+
 
   @Override
   public void attribNormal(String name, float nx, float ny, float nz) {
     VertexAttribute attrib = attribImpl(name, VertexAttribute.NORMAL,
-      PGL.FLOAT, 3);
-    if (attrib != null) {
-      attrib.set(nx, ny, nz);
-    }
+                                        PGL.FLOAT, 3);
+    if (attrib != null) attrib.set(nx, ny, nz);
   }
+
 
   @Override
   public void attribColor(String name, int color) {
     VertexAttribute attrib = attribImpl(name, VertexAttribute.COLOR, PGL.INT, 1);
-    if (attrib != null) {
-      attrib.set(new int[]{color});
-    }
+    if (attrib != null) attrib.set(new int[] {color});
   }
+
 
   @Override
   public void attrib(String name, float... values) {
     VertexAttribute attrib = attribImpl(name, VertexAttribute.OTHER, PGL.FLOAT,
-      values.length);
-    if (attrib != null) {
-      attrib.set(values);
-    }
+                                        values.length);
+    if (attrib != null) attrib.set(values);
   }
+
 
   @Override
   public void attrib(String name, int... values) {
     VertexAttribute attrib = attribImpl(name, VertexAttribute.OTHER, PGL.INT,
-      values.length);
-    if (attrib != null) {
-      attrib.set(values);
-    }
+                                        values.length);
+    if (attrib != null) attrib.set(values);
   }
+
 
   @Override
   public void attrib(String name, boolean... values) {
     VertexAttribute attrib = attribImpl(name, VertexAttribute.OTHER, PGL.BOOL,
-      values.length);
-    if (attrib != null) {
-      attrib.set(values);
-    }
+                                        values.length);
+    if (attrib != null) attrib.set(values);
   }
+
 
   protected VertexAttribute attribImpl(String name, int kind, int type, int size) {
     if (4 < size) {
@@ -1145,6 +1184,7 @@ public class PShapeOpenGL extends PShape {
     return attrib;
   }
 
+
   @Override
   public void endShape(int mode) {
     super.endShape(mode);
@@ -1158,6 +1198,7 @@ public class PShapeOpenGL extends PShape {
     shapeCreated = true;
   }
 
+
   @Override
   public void setParams(float[] source) {
     if (family != PRIMITIVE) {
@@ -1170,11 +1211,12 @@ public class PShapeOpenGL extends PShape {
     shapeCreated = true;
   }
 
+
   @Override
   public void setPath(int vcount, float[][] verts, int ccount, int[] codes) {
     if (family != PATH) {
-      PGraphics.showWarning("Vertex coordinates and codes can only be set to "
-        + "PATH shapes");
+      PGraphics.showWarning("Vertex coordinates and codes can only be set to " +
+                            "PATH shapes");
       return;
     }
 
@@ -1183,9 +1225,14 @@ public class PShapeOpenGL extends PShape {
     shapeCreated = true;
   }
 
+
   ///////////////////////////////////////////////////////////
+
   //
+
   // Geometric transformations
+
+
   @Override
   public void translate(float tx, float ty) {
     if (is3D) {
@@ -1195,35 +1242,42 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public void translate(float tx, float ty, float tz) {
     transform(TRANSLATE, tx, ty, tz);
   }
+
 
   @Override
   public void rotate(float angle) {
     transform(ROTATE, angle);
   }
 
+
   @Override
   public void rotateX(float angle) {
     rotate(angle, 1, 0, 0);
   }
+
 
   @Override
   public void rotateY(float angle) {
     rotate(angle, 0, 1, 0);
   }
 
+
   @Override
   public void rotateZ(float angle) {
     transform(ROTATE, angle);
   }
 
+
   @Override
   public void rotate(float angle, float v0, float v1, float v2) {
     transform(ROTATE, angle, v0, v1, v2);
   }
+
 
   @Override
   public void scale(float s) {
@@ -1234,6 +1288,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public void scale(float x, float y) {
     if (is3D) {
@@ -1243,69 +1298,70 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public void scale(float x, float y, float z) {
     transform(SCALE, x, y, z);
   }
 
+
   @Override
   public void applyMatrix(PMatrix2D source) {
     transform(MATRIX, source.m00, source.m01, source.m02,
-      source.m10, source.m11, source.m12);
+                      source.m10, source.m11, source.m12);
   }
+
 
   @Override
   public void applyMatrix(float n00, float n01, float n02,
-    float n10, float n11, float n12) {
+                          float n10, float n11, float n12) {
     transform(MATRIX, n00, n01, n02,
-      n10, n11, n12);
+                      n10, n11, n12);
   }
+
 
   @Override
   public void applyMatrix(float n00, float n01, float n02, float n03,
-    float n10, float n11, float n12, float n13,
-    float n20, float n21, float n22, float n23,
-    float n30, float n31, float n32, float n33) {
+                          float n10, float n11, float n12, float n13,
+                          float n20, float n21, float n22, float n23,
+                          float n30, float n31, float n32, float n33) {
     transform(MATRIX, n00, n01, n02, n03,
-      n10, n11, n12, n13,
-      n20, n21, n22, n23,
-      n30, n31, n32, n33);
+                      n10, n11, n12, n13,
+                      n20, n21, n22, n23,
+                      n30, n31, n32, n33);
   }
+
 
   @Override
   public void resetMatrix() {
-    if (shapeCreated && matrix != null && transformStack != null) {
+    if (shapeCreated && matrix != null && matrixInv != null) {
       if (family == GROUP) {
         updateTessellation();
       }
       if (tessellated) {
-        PMatrix mat = popTransform();
-        while (mat != null) {
-          boolean res = mat.invert();
-          if (res) {
-            applyMatrixImpl(mat);
-          } else {
-            PGraphics.showWarning("Transformation applied on the shape cannot be inverted");
-          }
-          mat = popTransform();
-        }
+        applyMatrixImpl(matrixInv);
       }
       matrix.reset();
-      transformStack.clear();
+      matrixInv.reset();
     }
   }
 
+
   protected void transform(int type, float... args) {
     int dimensions = is3D ? 3 : 2;
+    boolean invertible = true;
     checkMatrix(dimensions);
     if (transform == null) {
       if (dimensions == 2) {
         transform = new PMatrix2D();
+        transformInv = new PMatrix2D();
       } else {
         transform = new PMatrix3D();
+        transformInv = new PMatrix3D();
       }
     } else {
       transform.reset();
+      transformInv.reset();
     }
 
     int ncoords = args.length;
@@ -1316,98 +1372,112 @@ public class PShapeOpenGL extends PShape {
     }
 
     switch (type) {
-      case TRANSLATE:
-        if (ncoords == 3) {
-          transform.translate(args[0], args[1], args[2]);
-        } else {
-          transform.translate(args[0], args[1]);
-        }
-        break;
-      case ROTATE:
-        if (ncoords == 3) {
-          transform.rotate(args[0], args[1], args[2], args[3]);
-        } else {
-          transform.rotate(args[0]);
-        }
-        break;
-      case SCALE:
-        if (ncoords == 3) {
-          transform.scale(args[0], args[1], args[2]);
-        } else {
-          transform.scale(args[0], args[1]);
-        }
-        break;
-      case MATRIX:
-        if (ncoords == 3) {
-          transform.set(args[0], args[1], args[2], args[3],
-            args[4], args[5], args[6], args[7],
-            args[8], args[9], args[10], args[11],
-            args[12], args[13], args[14], args[15]);
-        } else {
-          transform.set(args[0], args[1], args[2],
-            args[3], args[4], args[5]);
-        }
-        break;
+    case TRANSLATE:
+      if (ncoords == 3) {
+        transform.translate(args[0], args[1], args[2]);
+        PGraphicsOpenGL.invTranslate((PMatrix3D)transformInv, args[0], args[1], args[2]);
+      } else {
+        transform.translate(args[0], args[1]);
+        PGraphicsOpenGL.invTranslate((PMatrix2D)transformInv, args[0], args[1]);
+      }
+      break;
+    case ROTATE:
+      if (ncoords == 3) {
+        transform.rotate(args[0], args[1], args[2], args[3]);
+        PGraphicsOpenGL.invRotate((PMatrix3D)transformInv, args[0], args[1], args[2], args[3]);
+      } else {
+        transform.rotate(args[0]);
+        PGraphicsOpenGL.invRotate((PMatrix2D)transformInv, -args[0]);
+      }
+      break;
+    case SCALE:
+      if (ncoords == 3) {
+        transform.scale(args[0], args[1], args[2]);
+        PGraphicsOpenGL.invScale((PMatrix3D)transformInv, args[0], args[1], args[2]);
+      } else {
+        transform.scale(args[0], args[1]);
+        PGraphicsOpenGL.invScale((PMatrix2D)transformInv, args[0], args[1]);
+      }
+      break;
+    case MATRIX:
+      if (ncoords == 3) {
+        transform.set(args[ 0], args[ 1], args[ 2], args[ 3],
+                      args[ 4], args[ 5], args[ 6], args[ 7],
+                      args[ 8], args[ 9], args[10], args[11],
+                      args[12], args[13], args[14], args[15]);
+      } else {
+        transform.set(args[0], args[1], args[2],
+                      args[3], args[4], args[5]);
+      }
+      transformInv.set(transform);
+      invertible = transformInv.invert();
+      break;
     }
     matrix.preApply(transform);
-    pushTransform();
-    if (tessellated) {
-      applyMatrixImpl(transform);
-    }
-  }
-
-  protected void pushTransform() {
-    if (transformStack == null) {
-      transformStack = new Stack<>();
-    }
-    PMatrix mat;
-    if (transform instanceof PMatrix2D) {
-      mat = new PMatrix2D();
+    if (invertible) {
+      matrixInv.apply(transformInv);
     } else {
-      mat = new PMatrix3D();
+      PGraphics.showWarning("Transformation applied on the shape cannot be inverted");
     }
-    mat.set(transform);
-    transformStack.push(mat);
+    if (tessellated) applyMatrixImpl(transform);
   }
 
-  protected PMatrix popTransform() {
-    if (transformStack == null || transformStack.isEmpty()) {
-      return null;
-    }
-    return transformStack.pop();
-  }
 
   protected void applyMatrixImpl(PMatrix matrix) {
     if (hasPolys) {
       tessGeo.applyMatrixOnPolyGeometry(matrix,
-        firstPolyVertex, lastPolyVertex);
+                                        firstPolyVertex, lastPolyVertex);
       root.setModifiedPolyVertices(firstPolyVertex, lastPolyVertex);
       root.setModifiedPolyNormals(firstPolyVertex, lastPolyVertex);
-      polyAttribs.values().stream().filter((attrib) -> (attrib.isPosition() || attrib.isNormal())).forEachOrdered((attrib) -> {
-        root.setModifiedPolyAttrib(attrib, firstPolyVertex, lastPolyVertex);
-      });
+      for (VertexAttribute attrib: polyAttribs.values()) {
+        if (attrib.isPosition() || attrib.isNormal()) {
+          root.setModifiedPolyAttrib(attrib, firstPolyVertex, lastPolyVertex);
+        }
+      }
     }
 
     if (is3D()) {
       if (hasLines) {
         tessGeo.applyMatrixOnLineGeometry(matrix,
-          firstLineVertex, lastLineVertex);
+                                          firstLineVertex, lastLineVertex);
         root.setModifiedLineVertices(firstLineVertex, lastLineVertex);
         root.setModifiedLineAttributes(firstLineVertex, lastLineVertex);
       }
 
       if (hasPoints) {
         tessGeo.applyMatrixOnPointGeometry(matrix,
-          firstPointVertex, lastPointVertex);
+                                           firstPointVertex, lastPointVertex);
         root.setModifiedPointVertices(firstPointVertex, lastPointVertex);
         root.setModifiedPointAttributes(firstPointVertex, lastPointVertex);
       }
     }
   }
 
+
+  @Override
+  protected void checkMatrix(int dimensions) {
+    if (matrix == null) {
+      if (dimensions == 2) {
+        matrix = new PMatrix2D();
+        matrixInv = new PMatrix2D();
+      } else {
+        matrix = new PMatrix3D();
+        matrixInv = new PMatrix3D();
+      }
+    } else if (dimensions == 3 && (matrix instanceof PMatrix2D)) {
+      matrix = new PMatrix3D(matrix);
+      matrixInv = new PMatrix3D(matrixInv);
+    }
+  }
+
+
   ///////////////////////////////////////////////////////////
+
   //
+
   // Bezier curves
+
+
   @Override
   public void bezierDetail(int detail) {
     bezierDetail = detail;
@@ -1417,61 +1487,72 @@ public class PShapeOpenGL extends PShape {
     //pg.bezierDetail(detail); // setting the detail in the renderer, WTF??
   }
 
+
   @Override
   public void bezierVertex(float x2, float y2,
-    float x3, float y3,
-    float x4, float y4) {
+                           float x3, float y3,
+                           float x4, float y4) {
     bezierVertexImpl(x2, y2, 0,
-      x3, y3, 0,
-      x4, y4, 0);
+                     x3, y3, 0,
+                     x4, y4, 0);
   }
+
 
   @Override
   public void bezierVertex(float x2, float y2, float z2,
-    float x3, float y3, float z3,
-    float x4, float y4, float z4) {
+                           float x3, float y3, float z3,
+                           float x4, float y4, float z4) {
     bezierVertexImpl(x2, y2, z2,
-      x3, y3, z3,
-      x4, y4, z4);
+                     x3, y3, z3,
+                     x4, y4, z4);
   }
 
+
   protected void bezierVertexImpl(float x2, float y2, float z2,
-    float x3, float y3, float z3,
-    float x4, float y4, float z4) {
+                                  float x3, float y3, float z3,
+                                  float x4, float y4, float z4) {
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
     inGeo.setNormal(normalX, normalY, normalZ);
     inGeo.addBezierVertex(x2, y2, z2,
-      x3, y3, z3,
-      x4, y4, z4, vertexBreak());
+                          x3, y3, z3,
+                          x4, y4, z4, vertexBreak());
   }
+
 
   @Override
   public void quadraticVertex(float cx, float cy,
-    float x3, float y3) {
+                              float x3, float y3) {
     quadraticVertexImpl(cx, cy, 0,
-      x3, y3, 0);
+                        x3, y3, 0);
   }
+
 
   @Override
   public void quadraticVertex(float cx, float cy, float cz,
-    float x3, float y3, float z3) {
+                              float x3, float y3, float z3) {
     quadraticVertexImpl(cx, cy, cz,
-      x3, y3, z3);
+                        x3, y3, z3);
   }
+
 
   protected void quadraticVertexImpl(float cx, float cy, float cz,
-    float x3, float y3, float z3) {
+                                     float x3, float y3, float z3) {
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
     inGeo.setNormal(normalX, normalY, normalZ);
     inGeo.addQuadraticVertex(cx, cy, cz,
-      x3, y3, z3, vertexBreak());
+                             x3, y3, z3, vertexBreak());
   }
 
+
   ///////////////////////////////////////////////////////////
+
   //
+
   // Catmull-Rom curves
+
+
   @Override
   public void curveDetail(int detail) {
     curveDetail = detail;
@@ -1480,6 +1561,7 @@ public class PShapeOpenGL extends PShape {
       markForTessellation();
     }
   }
+
 
   @Override
   public void curveTightness(float tightness) {
@@ -1490,31 +1572,38 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public void curveVertex(float x, float y) {
     curveVertexImpl(x, y, 0);
   }
+
 
   @Override
   public void curveVertex(float x, float y, float z) {
     curveVertexImpl(x, y, z);
   }
 
+
   protected void curveVertexImpl(float x, float y, float z) {
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
     inGeo.setNormal(normalX, normalY, normalZ);
     inGeo.addCurveVertex(x, y, z, vertexBreak());
   }
 
+
   ///////////////////////////////////////////////////////////
+
   //
+
   // Setters/getters of individual vertices
+
+
   @Override
   public int getVertexCount() {
-    if (family == GROUP) {
-      return 0; // Group shapes don't have vertices
-    } else {
+    if (family == GROUP) return 0; // Group shapes don't have vertices
+    else {
       if (family == PRIMITIVE || family == PATH) {
         // the input geometry of primitive and path shapes is built during
         // tessellation
@@ -1523,6 +1612,7 @@ public class PShapeOpenGL extends PShape {
       return inGeo.vertexCount;
     }
   }
+
 
   @Override
   public PVector getVertex(int index, PVector vec) {
@@ -1535,25 +1625,30 @@ public class PShapeOpenGL extends PShape {
     return vec;
   }
 
+
   @Override
   public float getVertexX(int index) {
     return inGeo.vertices[3 * index + 0];
   }
+
 
   @Override
   public float getVertexY(int index) {
     return inGeo.vertices[3 * index + 1];
   }
 
+
   @Override
   public float getVertexZ(int index) {
     return inGeo.vertices[3 * index + 2];
   }
 
+
   @Override
   public void setVertex(int index, float x, float y) {
     setVertex(index, x, y, 0);
   }
+
 
   @Override
   public void setVertex(int index, float x, float y, float z) {
@@ -1568,8 +1663,8 @@ public class PShapeOpenGL extends PShape {
     // situation, we would need a complete rethinking of the rendering architecture
     // in Processing :-)
     if (family == PATH) {
-      if (vertexCodes != null && vertexCodeCount > 0
-        && vertexCodes[index] != VERTEX) {
+      if (vertexCodes != null && vertexCodeCount > 0 &&
+          vertexCodes[index] != VERTEX) {
         PGraphics.showWarning(NOT_A_SIMPLE_VERTEX, "setVertex()");
         return;
       }
@@ -1587,6 +1682,7 @@ public class PShapeOpenGL extends PShape {
     markForTessellation();
   }
 
+
   @Override
   public void setVertex(int index, PVector vec) {
     if (openShape) {
@@ -1595,8 +1691,8 @@ public class PShapeOpenGL extends PShape {
     }
 
     if (family == PATH) {
-      if (vertexCodes != null && vertexCodeCount > 0
-        && vertexCodes[index] != VERTEX) {
+      if (vertexCodes != null && vertexCodeCount > 0 &&
+          vertexCodes[index] != VERTEX) {
         PGraphics.showWarning(NOT_A_SIMPLE_VERTEX, "setVertex()");
         return;
       }
@@ -1613,6 +1709,7 @@ public class PShapeOpenGL extends PShape {
     markForTessellation();
   }
 
+
   @Override
   public PVector getNormal(int index, PVector vec) {
     if (vec == null) {
@@ -1624,20 +1721,24 @@ public class PShapeOpenGL extends PShape {
     return vec;
   }
 
+
   @Override
   public float getNormalX(int index) {
     return inGeo.normals[3 * index + 0];
   }
+
 
   @Override
   public float getNormalY(int index) {
     return inGeo.normals[3 * index + 1];
   }
 
+
   @Override
   public float getNormalZ(int index) {
     return inGeo.normals[3 * index + 2];
   }
+
 
   @Override
   public void setNormal(int index, float nx, float ny, float nz) {
@@ -1652,6 +1753,7 @@ public class PShapeOpenGL extends PShape {
     markForTessellation();
   }
 
+
   @Override
   public void setAttrib(String name, int index, float... values) {
     if (openShape) {
@@ -1659,13 +1761,15 @@ public class PShapeOpenGL extends PShape {
       return;
     }
 
-    VertexAttribute attrib = polyAttribs.get(name);
+    VertexAttribute attrib = attribImpl(name, VertexAttribute.OTHER, PGL.FLOAT,
+                                        values.length);
     float[] array = inGeo.fattribs.get(name);
     for (int i = 0; i < values.length; i++) {
-      array[attrib.size * index + 0] = values[i];
+      array[attrib.size * index + i] = values[i];
     }
     markForTessellation();
   }
+
 
   @Override
   public void setAttrib(String name, int index, int... values) {
@@ -1674,13 +1778,15 @@ public class PShapeOpenGL extends PShape {
       return;
     }
 
-    VertexAttribute attrib = polyAttribs.get(name);
+    VertexAttribute attrib = attribImpl(name, VertexAttribute.OTHER, PGL.INT,
+                                        values.length);
     int[] array = inGeo.iattribs.get(name);
     for (int i = 0; i < values.length; i++) {
-      array[attrib.size * index + 0] = values[i];
+      array[attrib.size * index + i] = values[i];
     }
     markForTessellation();
   }
+
 
   @Override
   public void setAttrib(String name, int index, boolean... values) {
@@ -1689,23 +1795,27 @@ public class PShapeOpenGL extends PShape {
       return;
     }
 
-    VertexAttribute attrib = polyAttribs.get(name);
+    VertexAttribute attrib = attribImpl(name, VertexAttribute.OTHER, PGL.BOOL,
+                                        values.length);
     byte[] array = inGeo.battribs.get(name);
     for (int i = 0; i < values.length; i++) {
-      array[attrib.size * index + 0] = (byte) (values[i] ? 1 : 0);
+      array[attrib.size * index + i] = (byte)(values[i]?1:0);
     }
     markForTessellation();
   }
+
 
   @Override
   public float getTextureU(int index) {
     return inGeo.texcoords[2 * index + 0];
   }
 
+
   @Override
   public float getTextureV(int index) {
     return inGeo.texcoords[2 * index + 1];
   }
+
 
   @Override
   public void setTextureUV(int index, float u, float v) {
@@ -1724,6 +1834,7 @@ public class PShapeOpenGL extends PShape {
     markForTessellation();
   }
 
+
   @Override
   public int getFill(int index) {
     if (family != GROUP && image == null) {
@@ -1732,6 +1843,7 @@ public class PShapeOpenGL extends PShape {
       return 0;
     }
   }
+
 
   @Override
   public void setFill(boolean fill) {
@@ -1751,6 +1863,7 @@ public class PShapeOpenGL extends PShape {
     this.fill = fill;
   }
 
+
   @Override
   public void setFill(int fill) {
     if (openShape) {
@@ -1768,30 +1881,25 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void setFillImpl(int fill) {
-    if (fillColor == fill) {
-      return;
-    }
+    if (fillColor == fill) return;
     fillColor = fill;
 
     if (image == null) {
       Arrays.fill(inGeo.colors, 0, inGeo.vertexCount,
-        PGL.javaToNativeARGB(fillColor));
+                  PGL.javaToNativeARGB(fillColor));
       if (shapeCreated && tessellated && hasPolys) {
         if (is3D()) {
           Arrays.fill(tessGeo.polyColors, firstPolyVertex, lastPolyVertex + 1,
-            PGL.javaToNativeARGB(fillColor));
+                      PGL.javaToNativeARGB(fillColor));
           root.setModifiedPolyColors(firstPolyVertex, lastPolyVertex);
         } else if (is2D()) {
           int last1 = lastPolyVertex + 1;
-          if (-1 < firstLineVertex) {
-            last1 = firstLineVertex;
-          }
-          if (-1 < firstPointVertex) {
-            last1 = firstPointVertex;
-          }
+          if (-1 < firstLineVertex) last1 = firstLineVertex;
+          if (-1 < firstPointVertex) last1 = firstPointVertex;
           Arrays.fill(tessGeo.polyColors, firstPolyVertex, last1,
-            PGL.javaToNativeARGB(fillColor));
+                      PGL.javaToNativeARGB(fillColor));
           root.setModifiedPolyColors(firstPolyVertex, last1 - 1);
         }
       }
@@ -1807,6 +1915,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public void setFill(int index, int fill) {
     if (openShape) {
@@ -1820,6 +1929,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public int getTint(int index) {
     if (family != GROUP && image != null) {
@@ -1828,6 +1938,7 @@ public class PShapeOpenGL extends PShape {
       return 0;
     }
   }
+
 
   @Override
   public void setTint(boolean tint) {
@@ -1847,6 +1958,7 @@ public class PShapeOpenGL extends PShape {
     this.tint = tint;
   }
 
+
   @Override
   public void setTint(int tint) {
     if (openShape) {
@@ -1864,35 +1976,31 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void setTintImpl(int tint) {
-    if (tintColor == tint) {
-      return;
-    }
+    if (tintColor == tint) return;
     tintColor = tint;
 
     if (image != null) {
       Arrays.fill(inGeo.colors, 0, inGeo.vertexCount,
-        PGL.javaToNativeARGB(tintColor));
+                  PGL.javaToNativeARGB(tintColor));
       if (shapeCreated && tessellated && hasPolys) {
         if (is3D()) {
           Arrays.fill(tessGeo.polyColors, firstPolyVertex, lastPolyVertex + 1,
-            PGL.javaToNativeARGB(tintColor));
+                      PGL.javaToNativeARGB(tintColor));
           root.setModifiedPolyColors(firstPolyVertex, lastPolyVertex);
         } else if (is2D()) {
           int last1 = lastPolyVertex + 1;
-          if (-1 < firstLineVertex) {
-            last1 = firstLineVertex;
-          }
-          if (-1 < firstPointVertex) {
-            last1 = firstPointVertex;
-          }
+          if (-1 < firstLineVertex) last1 = firstLineVertex;
+          if (-1 < firstPointVertex) last1 = firstPointVertex;
           Arrays.fill(tessGeo.polyColors, firstPolyVertex, last1,
-            PGL.javaToNativeARGB(tintColor));
+                      PGL.javaToNativeARGB(tintColor));
           root.setModifiedPolyColors(firstPolyVertex, last1 - 1);
         }
       }
     }
   }
+
 
   @Override
   public void setTint(int index, int tint) {
@@ -1907,6 +2015,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public int getStroke(int index) {
     if (family != GROUP) {
@@ -1915,6 +2024,7 @@ public class PShapeOpenGL extends PShape {
       return 0;
     }
   }
+
 
   @Override
   public void setStroke(boolean stroke) {
@@ -1934,6 +2044,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void setStrokeImpl(boolean stroke) {
     if (this.stroke != stroke) {
       if (stroke) {
@@ -1947,12 +2058,13 @@ public class PShapeOpenGL extends PShape {
 
       markForTessellation();
       if (is2D() && parent != null) {
-        ((PShapeOpenGL) parent).strokedTexture(stroke && image != null);
+        ((PShapeOpenGL)parent).strokedTexture(stroke && image != null);
       }
 
       this.stroke = stroke;
     }
   }
+
 
   @Override
   public void setStroke(int stroke) {
@@ -1971,39 +2083,39 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void setStrokeImpl(int stroke) {
-    if (strokeColor == stroke) {
-      return;
-    }
+    if (strokeColor == stroke) return;
     strokeColor = stroke;
 
     Arrays.fill(inGeo.strokeColors, 0, inGeo.vertexCount,
-      PGL.javaToNativeARGB(strokeColor));
+                PGL.javaToNativeARGB(strokeColor));
     if (shapeCreated && tessellated && (hasLines || hasPoints)) {
       if (hasLines) {
         if (is3D()) {
           Arrays.fill(tessGeo.lineColors, firstLineVertex, lastLineVertex + 1,
-            PGL.javaToNativeARGB(strokeColor));
+                      PGL.javaToNativeARGB(strokeColor));
           root.setModifiedLineColors(firstLineVertex, lastLineVertex);
         } else if (is2D()) {
           Arrays.fill(tessGeo.polyColors, firstLineVertex, lastLineVertex + 1,
-            PGL.javaToNativeARGB(strokeColor));
+                      PGL.javaToNativeARGB(strokeColor));
           root.setModifiedPolyColors(firstLineVertex, lastLineVertex);
         }
       }
       if (hasPoints) {
         if (is3D()) {
           Arrays.fill(tessGeo.pointColors, firstPointVertex, lastPointVertex + 1,
-            PGL.javaToNativeARGB(strokeColor));
+                      PGL.javaToNativeARGB(strokeColor));
           root.setModifiedPointColors(firstPointVertex, lastPointVertex);
         } else if (is2D()) {
           Arrays.fill(tessGeo.polyColors, firstPointVertex, lastPointVertex + 1,
-            PGL.javaToNativeARGB(strokeColor));
+                      PGL.javaToNativeARGB(strokeColor));
           root.setModifiedPolyColors(firstPointVertex, lastPointVertex);
         }
       }
     }
   }
+
 
   @Override
   public void setStroke(int index, int stroke) {
@@ -2016,6 +2128,7 @@ public class PShapeOpenGL extends PShape {
     markForTessellation();
   }
 
+
   @Override
   public float getStrokeWeight(int index) {
     if (family != GROUP) {
@@ -2024,6 +2137,7 @@ public class PShapeOpenGL extends PShape {
       return 0;
     }
   }
+
 
   @Override
   public void setStrokeWeight(float weight) {
@@ -2042,10 +2156,9 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void setStrokeWeightImpl(float weight) {
-    if (PGraphicsOpenGL.same(strokeWeight, weight)) {
-      return;
-    }
+    if (PGraphicsOpenGL.same(strokeWeight, weight)) return;
     float oldWeight = strokeWeight;
     strokeWeight = weight;
 
@@ -2082,6 +2195,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public void setStrokeWeight(int index, float weight) {
     if (openShape) {
@@ -2092,6 +2206,7 @@ public class PShapeOpenGL extends PShape {
     inGeo.strokeWeights[index] = weight;
     markForTessellation();
   }
+
 
   @Override
   public void setStrokeJoin(int join) {
@@ -2116,6 +2231,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public void setStrokeCap(int cap) {
     if (openShape) {
@@ -2139,6 +2255,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   public int getAmbient(int index) {
     if (family != GROUP) {
@@ -2147,6 +2264,7 @@ public class PShapeOpenGL extends PShape {
       return 0;
     }
   }
+
 
   @Override
   public void setAmbient(int ambient) {
@@ -2165,34 +2283,30 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void setAmbientImpl(int ambient) {
-    if (ambientColor == ambient) {
-      return;
-    }
+    if (ambientColor == ambient) return;
     ambientColor = ambient;
 
     Arrays.fill(inGeo.ambient, 0, inGeo.vertexCount,
-      PGL.javaToNativeARGB(ambientColor));
+                PGL.javaToNativeARGB(ambientColor));
     if (shapeCreated && tessellated && hasPolys) {
       if (is3D()) {
         Arrays.fill(tessGeo.polyAmbient, firstPolyVertex, lastPolyVertex + 1,
-          PGL.javaToNativeARGB(ambientColor));
+                    PGL.javaToNativeARGB(ambientColor));
         root.setModifiedPolyAmbient(firstPolyVertex, lastPolyVertex);
       } else if (is2D()) {
         int last1 = lastPolyVertex + 1;
-        if (-1 < firstLineVertex) {
-          last1 = firstLineVertex;
-        }
-        if (-1 < firstPointVertex) {
-          last1 = firstPointVertex;
-        }
+        if (-1 < firstLineVertex) last1 = firstLineVertex;
+        if (-1 < firstPointVertex) last1 = firstPointVertex;
         Arrays.fill(tessGeo.polyAmbient, firstPolyVertex, last1,
-          PGL.javaToNativeARGB(ambientColor));
+                    PGL.javaToNativeARGB(ambientColor));
         root.setModifiedPolyColors(firstPolyVertex, last1 - 1);
       }
     }
     setAmbient = true;
   }
+
 
   @Override
   public void setAmbient(int index, int ambient) {
@@ -2206,6 +2320,7 @@ public class PShapeOpenGL extends PShape {
     setAmbient = true;
   }
 
+
   @Override
   public int getSpecular(int index) {
     if (family == GROUP) {
@@ -2214,6 +2329,7 @@ public class PShapeOpenGL extends PShape {
       return 0;
     }
   }
+
 
   @Override
   public void setSpecular(int specular) {
@@ -2232,33 +2348,29 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void setSpecularImpl(int specular) {
-    if (specularColor == specular) {
-      return;
-    }
+    if (specularColor == specular) return;
     specularColor = specular;
 
     Arrays.fill(inGeo.specular, 0, inGeo.vertexCount,
-      PGL.javaToNativeARGB(specularColor));
+                PGL.javaToNativeARGB(specularColor));
     if (shapeCreated && tessellated && hasPolys) {
       if (is3D()) {
         Arrays.fill(tessGeo.polySpecular, firstPolyVertex, lastPolyVertex + 1,
-          PGL.javaToNativeARGB(specularColor));
+                    PGL.javaToNativeARGB(specularColor));
         root.setModifiedPolySpecular(firstPolyVertex, lastPolyVertex);
       } else if (is2D()) {
         int last1 = lastPolyVertex + 1;
-        if (-1 < firstLineVertex) {
-          last1 = firstLineVertex;
-        }
-        if (-1 < firstPointVertex) {
-          last1 = firstPointVertex;
-        }
+        if (-1 < firstLineVertex) last1 = firstLineVertex;
+        if (-1 < firstPointVertex) last1 = firstPointVertex;
         Arrays.fill(tessGeo.polySpecular, firstPolyVertex, last1,
-          PGL.javaToNativeARGB(specularColor));
+                    PGL.javaToNativeARGB(specularColor));
         root.setModifiedPolyColors(firstPolyVertex, last1 - 1);
       }
     }
   }
+
 
   @Override
   public void setSpecular(int index, int specular) {
@@ -2271,6 +2383,7 @@ public class PShapeOpenGL extends PShape {
     markForTessellation();
   }
 
+
   @Override
   public int getEmissive(int index) {
     if (family == GROUP) {
@@ -2279,6 +2392,7 @@ public class PShapeOpenGL extends PShape {
       return 0;
     }
   }
+
 
   @Override
   public void setEmissive(int emissive) {
@@ -2297,33 +2411,29 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void setEmissiveImpl(int emissive) {
-    if (emissiveColor == emissive) {
-      return;
-    }
+    if (emissiveColor == emissive) return;
     emissiveColor = emissive;
 
     Arrays.fill(inGeo.emissive, 0, inGeo.vertexCount,
-      PGL.javaToNativeARGB(emissiveColor));
+                PGL.javaToNativeARGB(emissiveColor));
     if (shapeCreated && tessellated && 0 < tessGeo.polyVertexCount) {
       if (is3D()) {
         Arrays.fill(tessGeo.polyEmissive, firstPolyVertex, lastPolyVertex + 1,
-          PGL.javaToNativeARGB(emissiveColor));
+                    PGL.javaToNativeARGB(emissiveColor));
         root.setModifiedPolyEmissive(firstPolyVertex, lastPolyVertex);
       } else if (is2D()) {
         int last1 = lastPolyVertex + 1;
-        if (-1 < firstLineVertex) {
-          last1 = firstLineVertex;
-        }
-        if (-1 < firstPointVertex) {
-          last1 = firstPointVertex;
-        }
+        if (-1 < firstLineVertex) last1 = firstLineVertex;
+        if (-1 < firstPointVertex) last1 = firstPointVertex;
         Arrays.fill(tessGeo.polyEmissive, firstPolyVertex, last1,
-          PGL.javaToNativeARGB(emissiveColor));
+                    PGL.javaToNativeARGB(emissiveColor));
         root.setModifiedPolyColors(firstPolyVertex, last1 - 1);
       }
     }
   }
+
 
   @Override
   public void setEmissive(int index, int emissive) {
@@ -2336,6 +2446,7 @@ public class PShapeOpenGL extends PShape {
     markForTessellation();
   }
 
+
   @Override
   public float getShininess(int index) {
     if (family == GROUP) {
@@ -2344,6 +2455,7 @@ public class PShapeOpenGL extends PShape {
       return 0;
     }
   }
+
 
   @Override
   public void setShininess(float shininess) {
@@ -2362,31 +2474,27 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void setShininessImpl(float shininess) {
-    if (PGraphicsOpenGL.same(this.shininess, shininess)) {
-      return;
-    }
+    if (PGraphicsOpenGL.same(this.shininess, shininess)) return;
     this.shininess = shininess;
 
     Arrays.fill(inGeo.shininess, 0, inGeo.vertexCount, shininess);
     if (shapeCreated && tessellated && hasPolys) {
       if (is3D()) {
         Arrays.fill(tessGeo.polyShininess, firstPolyVertex, lastPolyVertex + 1,
-          shininess);
+                    shininess);
         root.setModifiedPolyShininess(firstPolyVertex, lastPolyVertex);
       } else if (is2D()) {
         int last1 = lastPolyVertex + 1;
-        if (-1 < firstLineVertex) {
-          last1 = firstLineVertex;
-        }
-        if (-1 < firstPointVertex) {
-          last1 = firstPointVertex;
-        }
+        if (-1 < firstLineVertex) last1 = firstLineVertex;
+        if (-1 < firstPointVertex) last1 = firstPointVertex;
         Arrays.fill(tessGeo.polyShininess, firstPolyVertex, last1, shininess);
         root.setModifiedPolyColors(firstPolyVertex, last1 - 1);
       }
     }
   }
+
 
   @Override
   public void setShininess(int index, float shine) {
@@ -2400,30 +2508,31 @@ public class PShapeOpenGL extends PShape {
   }
 
   ///////////////////////////////////////////////////////////
+
   //
+
   // Vertex codes
+
+
   @Override
   public int[] getVertexCodes() {
-    if (family == GROUP) {
-      return null;
-    } else {
+    if (family == GROUP) return null;
+    else {
       if (family == PRIMITIVE || family == PATH) {
         // the input geometry of primitive and path shapes is built during
         // tessellation
         updateTessellation();
       }
-      if (inGeo.codes == null) {
-        return null;
-      }
+      if (inGeo.codes == null) return null;
       return inGeo.codes;
     }
   }
 
+
   @Override
   public int getVertexCodeCount() {
-    if (family == GROUP) {
-      return 0;
-    } else {
+    if (family == GROUP) return 0;
+    else {
       if (family == PRIMITIVE || family == PATH) {
         // the input geometry of primitive and path shapes is built during
         // tessellation
@@ -2433,6 +2542,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   /**
    * One of VERTEX, BEZIER_VERTEX, CURVE_VERTEX, or BREAK.
    */
@@ -2441,9 +2551,14 @@ public class PShapeOpenGL extends PShape {
     return inGeo.codes[index];
   }
 
+
   ///////////////////////////////////////////////////////////
+
   //
+
   // Tessellated geometry getter.
+
+
   @Override
   public PShape getTessellation() {
     updateTessellation();
@@ -2546,107 +2661,88 @@ public class PShapeOpenGL extends PShape {
   public float[] getTessellation(int kind, int data) {
     updateTessellation();
 
-    switch (kind) {
-      case TRIANGLES:
-      switch (data) {
-        case POSITION:
-          if (is3D()) {
-            root.setModifiedPolyVertices(firstPolyVertex, lastPolyVertex);
-          } else if (is2D()) {
-            int last1 = lastPolyVertex + 1;
-            if (-1 < firstLineVertex) {
-              last1 = firstLineVertex;
-            }
-            if (-1 < firstPointVertex) {
-              last1 = firstPointVertex;
-            }
-            root.setModifiedPolyVertices(firstPolyVertex, last1 - 1);
-          }
-          return tessGeo.polyVertices;
-        case NORMAL:
-          if (is3D()) {
-            root.setModifiedPolyNormals(firstPolyVertex, lastPolyVertex);
-          } else if (is2D()) {
-            int last1 = lastPolyVertex + 1;
-            if (-1 < firstLineVertex) {
-              last1 = firstLineVertex;
-            }
-            if (-1 < firstPointVertex) {
-              last1 = firstPointVertex;
-            }
-            root.setModifiedPolyNormals(firstPolyVertex, last1 - 1);
-          }
-          return tessGeo.polyNormals;
-        case TEXCOORD:
-          if (is3D()) {
-            root.setModifiedPolyTexCoords(firstPolyVertex, lastPolyVertex);
-          } else if (is2D()) {
-            int last1 = lastPolyVertex + 1;
-            if (-1 < firstLineVertex) {
-              last1 = firstLineVertex;
-            }
-            if (-1 < firstPointVertex) {
-              last1 = firstPointVertex;
-            }
-            root.setModifiedPolyTexCoords(firstPolyVertex, last1 - 1);
-          }
-          return tessGeo.polyTexCoords;
-        default:
-          break;
+    if (kind == TRIANGLES) {
+      if (data == POSITION) {
+        if (is3D()) {
+          root.setModifiedPolyVertices(firstPolyVertex, lastPolyVertex);
+        } else if (is2D()) {
+          int last1 = lastPolyVertex + 1;
+          if (-1 < firstLineVertex) last1 = firstLineVertex;
+          if (-1 < firstPointVertex) last1 = firstPointVertex;
+          root.setModifiedPolyVertices(firstPolyVertex, last1 - 1);
+        }
+        return tessGeo.polyVertices;
+      } else if (data == NORMAL) {
+        if (is3D()) {
+          root.setModifiedPolyNormals(firstPolyVertex, lastPolyVertex);
+        } else if (is2D()) {
+          int last1 = lastPolyVertex + 1;
+          if (-1 < firstLineVertex) last1 = firstLineVertex;
+          if (-1 < firstPointVertex) last1 = firstPointVertex;
+          root.setModifiedPolyNormals(firstPolyVertex, last1 - 1);
+        }
+        return tessGeo.polyNormals;
+      } else if (data == TEXCOORD) {
+        if (is3D()) {
+          root.setModifiedPolyTexCoords(firstPolyVertex, lastPolyVertex);
+        } else if (is2D()) {
+          int last1 = lastPolyVertex + 1;
+          if (-1 < firstLineVertex) last1 = firstLineVertex;
+          if (-1 < firstPointVertex) last1 = firstPointVertex;
+          root.setModifiedPolyTexCoords(firstPolyVertex, last1 - 1);
+        }
+        return tessGeo.polyTexCoords;
       }
-        break;
-
-      case LINES:
-        if (data == POSITION) {
-          if (is3D()) {
-            root.setModifiedLineVertices(firstLineVertex, lastLineVertex);
-          } else if (is2D()) {
-            root.setModifiedPolyVertices(firstLineVertex, lastLineVertex);
-          }
-          return tessGeo.lineVertices;
-        } else if (data == DIRECTION) {
-          if (is2D()) {
-            root.setModifiedLineAttributes(firstLineVertex, lastLineVertex);
-          }
-          return tessGeo.lineDirections;
+    } else if (kind == LINES) {
+      if (data == POSITION) {
+        if (is3D()) {
+          root.setModifiedLineVertices(firstLineVertex, lastLineVertex);
+        } else if (is2D()) {
+          root.setModifiedPolyVertices(firstLineVertex, lastLineVertex);
         }
-        break;
-      case POINTS:
-        if (data == POSITION) {
-          if (is3D()) {
-            root.setModifiedPointVertices(firstPointVertex, lastPointVertex);
-          } else if (is2D()) {
-            root.setModifiedPolyVertices(firstPointVertex, lastPointVertex);
-          }
-          return tessGeo.pointVertices;
-        } else if (data == OFFSET) {
-          if (is2D()) {
-            root.setModifiedPointAttributes(firstPointVertex, lastPointVertex);
-          }
-          return tessGeo.pointOffsets;
+        return tessGeo.lineVertices;
+      } else if (data == DIRECTION) {
+        if (is2D()) {
+          root.setModifiedLineAttributes(firstLineVertex, lastLineVertex);
         }
-        break;
-      default:
-        break;
+        return tessGeo.lineDirections;
+      }
+    } else if (kind == POINTS) {
+      if (data == POSITION) {
+        if (is3D()) {
+          root.setModifiedPointVertices(firstPointVertex, lastPointVertex);
+        } else if (is2D()) {
+          root.setModifiedPolyVertices(firstPointVertex, lastPointVertex);
+        }
+        return tessGeo.pointVertices;
+      } else if (data == OFFSET) {
+        if (is2D()) {
+          root.setModifiedPointAttributes(firstPointVertex, lastPointVertex);
+        }
+        return tessGeo.pointOffsets;
+      }
     }
     return null;
   }
 
   ///////////////////////////////////////////////////////////
+
   //
+
   // Geometry utils
+
   // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
   @Override
   public boolean contains(float x, float y) {
     if (family == PATH) {
       boolean c = false;
-      for (int i = 0, j = inGeo.vertexCount - 1; i < inGeo.vertexCount; j = i++) {
-        if (((inGeo.vertices[3 * i + 1] > y) != (inGeo.vertices[3 * j + 1] > y))
-          && (x
-          < (inGeo.vertices[3 * j] - inGeo.vertices[3 * i])
-          * (y - inGeo.vertices[3 * i + 1])
-          / (inGeo.vertices[3 * j + 1] - inGeo.vertices[3 * i + 1])
-          + inGeo.vertices[3 * i])) {
+      for (int i = 0, j = inGeo.vertexCount-1; i < inGeo.vertexCount; j = i++) {
+        if (((inGeo.vertices[3 * i + 1] > y) != (inGeo.vertices[3 * j + 1] > y)) &&
+            (x <
+                (inGeo.vertices[3 * j]-inGeo.vertices[3 * i]) *
+                (y-inGeo.vertices[3 * i + 1]) /
+                (inGeo.vertices[3 * j + 1]-inGeo.vertices[3 * i + 1]) +
+                inGeo.vertices[3 * i])) {
           c = !c;
         }
       }
@@ -2656,9 +2752,14 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   ///////////////////////////////////////////////////////////
+
   //
+
   // Tessellation
+
+
   protected void updateTessellation() {
     if (!root.tessellated) {
       root.tessellate();
@@ -2668,10 +2769,12 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void markForTessellation() {
     root.tessellated = false;
     tessellated = false;
   }
+
 
   protected void initModified() {
     modified = false;
@@ -2725,17 +2828,24 @@ public class PShapeOpenGL extends PShape {
     lastModifiedPointAttribute = PConstants.MIN_INT;
   }
 
+
   protected void tessellate() {
     if (root == this && parent == null) { // Root shape
+      boolean initAttr = false;
       if (polyAttribs == null) {
         polyAttribs = PGraphicsOpenGL.newAttributeMap();
-        collectPolyAttribs();
+        initAttr = true;
       }
 
       if (tessGeo == null) {
         tessGeo = PGraphicsOpenGL.newTessGeometry(pg, polyAttribs, PGraphicsOpenGL.RETAINED);
       }
       tessGeo.clear();
+
+      if (initAttr) {
+        collectPolyAttribs();
+      }
+
       for (int i = 0; i < polyAttribs.size(); i++) {
         VertexAttribute attrib = polyAttribs.get(i);
         tessGeo.initAttrib(attrib);
@@ -2750,8 +2860,10 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void collectPolyAttribs() {
     AttributeMap rootAttribs = root.polyAttribs;
+    tessGeo = root.tessGeo;
 
     if (family == GROUP) {
       for (int i = 0; i < childCount; i++) {
@@ -2815,141 +2927,81 @@ public class PShapeOpenGL extends PShape {
         tessellator.setTransform(matrix);
         tessellator.set3D(is3D());
 
-        switch (family) {
-          case GEOMETRY:
-          switch (kind) {
-            case POINTS:
-              tessellator.tessellatePoints();
-              break;
-            case LINES:
-              tessellator.tessellateLines();
-              break;
-            case LINE_STRIP:
-              tessellator.tessellateLineStrip();
-              break;
-            case LINE_LOOP:
-              tessellator.tessellateLineLoop();
-              break;
-            case TRIANGLE:
-            case TRIANGLES:
-              if (stroke) {
-                inGeo.addTrianglesEdges();
-              }
-              if (normalMode == NORMAL_MODE_AUTO) {
-                inGeo.calcTrianglesNormals();
-              }
-              tessellator.tessellateTriangles();
-              break;
-            case TRIANGLE_FAN:
-              if (stroke) {
-                inGeo.addTriangleFanEdges();
-              }
-              if (normalMode == NORMAL_MODE_AUTO) {
-                inGeo.calcTriangleFanNormals();
-              }
-              tessellator.tessellateTriangleFan();
-              break;
-            case TRIANGLE_STRIP:
-              if (stroke) {
-                inGeo.addTriangleStripEdges();
-              }
-              if (normalMode == NORMAL_MODE_AUTO) {
-                inGeo.calcTriangleStripNormals();
-              }
-              tessellator.tessellateTriangleStrip();
-              break;
-            case QUAD:
-            case QUADS:
-              if (stroke) {
-                inGeo.addQuadsEdges();
-              }
-              if (normalMode == NORMAL_MODE_AUTO) {
-                inGeo.calcQuadsNormals();
-              }
-              tessellator.tessellateQuads();
-              break;
-            case QUAD_STRIP:
-              if (stroke) {
-                inGeo.addQuadStripEdges();
-              }
-              if (normalMode == NORMAL_MODE_AUTO) {
-                inGeo.calcQuadStripNormals();
-              }
-              tessellator.tessellateQuadStrip();
-              break;
-            case POLYGON:
-              boolean bez = inGeo.hasBezierVertex();
-              boolean quad = inGeo.hasQuadraticVertex();
-              boolean curv = inGeo.hasCurveVertex();
-              if (bez || quad) {
-                saveBezierVertexSettings();
-              }
-              if (curv) {
-                saveCurveVertexSettings();
-                tessellator.resetCurveVertexCount();
-              }
-              tessellator.tessellatePolygon(solid, close,
-                normalMode == NORMAL_MODE_AUTO);
-              if (bez || quad) {
-                restoreBezierVertexSettings();
-              }
-              if (curv) {
-                restoreCurveVertexSettings();
-              }
-              break;
-            default:
-              break;
-          }
-            break;
-
-          case PRIMITIVE:
-            // The input geometry needs to be cleared because the geometry
-            // generation methods in InGeometry add the vertices of the
-            // new primitive to what is already stored.
-            inGeo.clear();
-            switch (kind) {
-              case POINT:
-                tessellatePoint();
-                break;
-              case LINE:
-                tessellateLine();
-                break;
-              case TRIANGLE:
-                tessellateTriangle();
-                break;
-              case QUAD:
-                tessellateQuad();
-                break;
-              case RECT:
-                tessellateRect();
-                break;
-              case ELLIPSE:
-                tessellateEllipse();
-                break;
-              case ARC:
-                tessellateArc();
-                break;
-              case BOX:
-                tessellateBox();
-                break;
-              case SPHERE:
-                tessellateSphere();
-                break;
-              default:
-                break;
+        if (family == GEOMETRY) {
+          if (kind == POINTS) {
+            tessellator.tessellatePoints();
+          } else if (kind == LINES) {
+            tessellator.tessellateLines();
+          } else if (kind == LINE_STRIP) {
+            tessellator.tessellateLineStrip();
+          } else if (kind == LINE_LOOP) {
+            tessellator.tessellateLineLoop();
+          } else if (kind == TRIANGLE || kind == TRIANGLES) {
+            if (stroke) inGeo.addTrianglesEdges();
+            if (normalMode == NORMAL_MODE_AUTO) inGeo.calcTrianglesNormals();
+            tessellator.tessellateTriangles();
+          } else if (kind == TRIANGLE_FAN) {
+            if (stroke) inGeo.addTriangleFanEdges();
+            if (normalMode == NORMAL_MODE_AUTO) inGeo.calcTriangleFanNormals();
+            tessellator.tessellateTriangleFan();
+          } else if (kind == TRIANGLE_STRIP) {
+            if (stroke) inGeo.addTriangleStripEdges();
+            if (normalMode == NORMAL_MODE_AUTO) inGeo.calcTriangleStripNormals();
+            tessellator.tessellateTriangleStrip();
+          } else if (kind == QUAD || kind == QUADS) {
+            if (stroke) inGeo.addQuadsEdges();
+            if (normalMode == NORMAL_MODE_AUTO) inGeo.calcQuadsNormals();
+            tessellator.tessellateQuads();
+          } else if (kind == QUAD_STRIP) {
+            if (stroke) inGeo.addQuadStripEdges();
+            if (normalMode == NORMAL_MODE_AUTO) inGeo.calcQuadStripNormals();
+            tessellator.tessellateQuadStrip();
+          } else if (kind == POLYGON) {
+            boolean bez = inGeo.hasBezierVertex();
+            boolean quad = inGeo.hasQuadraticVertex();
+            boolean curv = inGeo.hasCurveVertex();
+            if (bez || quad) saveBezierVertexSettings();
+            if (curv) {
+              saveCurveVertexSettings();
+              tessellator.resetCurveVertexCount();
             }
-            break;
+            tessellator.tessellatePolygon(solid, close,
+                                          normalMode == NORMAL_MODE_AUTO);
+            if (bez ||quad) restoreBezierVertexSettings();
+            if (curv) restoreCurveVertexSettings();
+          }
+        } else if (family == PRIMITIVE) {
+          // The input geometry needs to be cleared because the geometry
+          // generation methods in InGeometry add the vertices of the
+          // new primitive to what is already stored.
+          inGeo.clear();
 
-          case PATH:
-            inGeo.clear();
-            tessellatePath();
-            break;
-          default:
-            break;
+          if (kind == POINT) {
+            tessellatePoint();
+          } else if (kind == LINE) {
+            tessellateLine();
+          } else if (kind == TRIANGLE) {
+            tessellateTriangle();
+          } else if (kind == QUAD) {
+            tessellateQuad();
+          } else if (kind == RECT) {
+            tessellateRect();
+          } else if (kind == ELLIPSE) {
+            tessellateEllipse();
+          } else if (kind == ARC) {
+            tessellateArc();
+          } else if (kind == BOX) {
+            tessellateBox();
+          } else if (kind == SPHERE) {
+            tessellateSphere();
+          }
+        } else if (family == PATH) {
+          inGeo.clear();
+          tessellatePath();
         }
 
         if (image != null && parent != null) {
-          ((PShapeOpenGL) parent).addTexture(image);
+          ((PShapeOpenGL)parent).addTexture(image);
         }
 
         firstPolyIndexCache = tessellator.firstPolyIndexCache;
@@ -2968,6 +3020,7 @@ public class PShapeOpenGL extends PShape {
     tessellated = true;
   }
 
+
   protected void tessellatePoint() {
     float x = 0, y = 0, z = 0;
     if (params.length == 2) {
@@ -2981,11 +3034,12 @@ public class PShapeOpenGL extends PShape {
     }
 
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
     inGeo.setNormal(normalX, normalY, normalZ);
     inGeo.addPoint(x, y, z, fill, stroke);
     tessellator.tessellatePoints();
   }
+
 
   protected void tessellateLine() {
     float x1 = 0, y1 = 0, z1 = 0;
@@ -3005,13 +3059,14 @@ public class PShapeOpenGL extends PShape {
     }
 
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
     inGeo.setNormal(normalX, normalY, normalZ);
     inGeo.addLine(x1, y1, z1,
-      x2, y2, z2,
-      fill, stroke);
+                  x2, y2, z2,
+                  fill, stroke);
     tessellator.tessellateLines();
   }
+
 
   protected void tessellateTriangle() {
     float x1 = 0, y1 = 0;
@@ -3027,14 +3082,15 @@ public class PShapeOpenGL extends PShape {
     }
 
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
     inGeo.setNormal(normalX, normalY, normalZ);
     inGeo.addTriangle(x1, y1, 0,
-      x2, y2, 0,
-      x3, y3, 0,
-      fill, stroke);
+                      x2, y2, 0,
+                      x3, y3, 0,
+                      fill, stroke);
     tessellator.tessellateTriangles();
   }
+
 
   protected void tessellateQuad() {
     float x1 = 0, y1 = 0;
@@ -3053,15 +3109,16 @@ public class PShapeOpenGL extends PShape {
     }
 
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
     inGeo.setNormal(normalX, normalY, normalZ);
     inGeo.addQuad(x1, y1, 0,
-      x2, y2, 0,
-      x3, y3, 0,
-      x4, y4, 0,
-      stroke);
+               x2, y2, 0,
+               x3, y3, 0,
+               x4, y4, 0,
+               stroke);
     tessellator.tessellateQuads();
   }
+
 
   protected void tessellateRect() {
     float a = 0, b = 0, c = 0, d = 0;
@@ -3096,57 +3153,44 @@ public class PShapeOpenGL extends PShape {
 
     float hradius, vradius;
     switch (mode) {
-      case CORNERS:
-        break;
-      case CORNER:
-        c += a;
-        d += b;
-        break;
-      case RADIUS:
-        hradius = c;
-        vradius = d;
-        c = a + hradius;
-        d = b + vradius;
-        a -= hradius;
-        b -= vradius;
-        break;
-      case CENTER:
-        hradius = c / 2.0f;
-        vradius = d / 2.0f;
-        c = a + hradius;
-        d = b + vradius;
-        a -= hradius;
-        b -= vradius;
+    case CORNERS:
+      break;
+    case CORNER:
+      c += a; d += b;
+      break;
+    case RADIUS:
+      hradius = c;
+      vradius = d;
+      c = a + hradius;
+      d = b + vradius;
+      a -= hradius;
+      b -= vradius;
+      break;
+    case CENTER:
+      hradius = c / 2.0f;
+      vradius = d / 2.0f;
+      c = a + hradius;
+      d = b + vradius;
+      a -= hradius;
+      b -= vradius;
     }
 
     if (a > c) {
-      float temp = a;
-      a = c;
-      c = temp;
+      float temp = a; a = c; c = temp;
     }
 
     if (b > d) {
-      float temp = b;
-      b = d;
-      d = temp;
+      float temp = b; b = d; d = temp;
     }
 
     float maxRounding = PApplet.min((c - a) / 2, (d - b) / 2);
-    if (tl > maxRounding) {
-      tl = maxRounding;
-    }
-    if (tr > maxRounding) {
-      tr = maxRounding;
-    }
-    if (br > maxRounding) {
-      br = maxRounding;
-    }
-    if (bl > maxRounding) {
-      bl = maxRounding;
-    }
+    if (tl > maxRounding) tl = maxRounding;
+    if (tr > maxRounding) tr = maxRounding;
+    if (br > maxRounding) br = maxRounding;
+    if (bl > maxRounding) bl = maxRounding;
 
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
     inGeo.setNormal(normalX, normalY, normalZ);
     if (rounded) {
       saveBezierVertexSettings();
@@ -3158,6 +3202,7 @@ public class PShapeOpenGL extends PShape {
       tessellator.tessellateQuads();
     }
   }
+
 
   protected void tessellateEllipse() {
     float a = 0, b = 0, c = 0, d = 0;
@@ -3175,23 +3220,19 @@ public class PShapeOpenGL extends PShape {
     float w = c;
     float h = d;
 
-    switch (mode) {
-      case CORNERS:
-        w = c - a;
-        h = d - b;
-        break;
-      case RADIUS:
-        x = a - c;
-        y = b - d;
-        w = c * 2;
-        h = d * 2;
-        break;
-      case DIAMETER:
-        x = a - c / 2f;
-        y = b - d / 2f;
-        break;
-      default:
-        break;
+    if (mode == CORNERS) {
+      w = c - a;
+      h = d - b;
+
+    } else if (mode == RADIUS) {
+      x = a - c;
+      y = b - d;
+      w = c * 2;
+      h = d * 2;
+
+    } else if (mode == DIAMETER) {
+      x = a - c/2f;
+      y = b - d/2f;
     }
 
     if (w < 0) {  // undo negative width
@@ -3205,11 +3246,12 @@ public class PShapeOpenGL extends PShape {
     }
 
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
     inGeo.setNormal(normalX, normalY, normalZ);
     inGeo.addEllipse(x, y, w, h, fill, stroke);
     tessellator.tessellateTriangleFan();
   }
+
 
   protected void tessellateArc() {
     float a = 0, b = 0, c = 0, d = 0;
@@ -3225,7 +3267,7 @@ public class PShapeOpenGL extends PShape {
       start = params[4];
       stop = params[5];
       if (params.length == 7) {
-        arcMode = (int) (params[6]);
+        arcMode = (int)(params[6]);
       }
     }
 
@@ -3234,23 +3276,19 @@ public class PShapeOpenGL extends PShape {
     float w = c;
     float h = d;
 
-    switch (mode) {
-      case CORNERS:
-        w = c - a;
-        h = d - b;
-        break;
-      case RADIUS:
-        x = a - c;
-        y = b - d;
-        w = c * 2;
-        h = d * 2;
-        break;
-      case CENTER:
-        x = a - c / 2f;
-        y = b - d / 2f;
-        break;
-      default:
-        break;
+    if (mode == CORNERS) {
+      w = c - a;
+      h = d - b;
+
+    } else if (mode == RADIUS) {
+      x = a - c;
+      y = b - d;
+      w = c * 2;
+      h = d * 2;
+
+    } else if (mode == CENTER) {
+      x = a - c/2f;
+      y = b - d/2f;
     }
 
     // make sure the loop will exit before starting while
@@ -3268,13 +3306,14 @@ public class PShapeOpenGL extends PShape {
           stop = start + TWO_PI;
         }
         inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-          ambientColor, specularColor, emissiveColor, shininess);
+                          ambientColor, specularColor, emissiveColor, shininess);
         inGeo.setNormal(normalX, normalY, normalZ);
         inGeo.addArc(x, y, w, h, start, stop, fill, stroke, arcMode);
         tessellator.tessellateTriangleFan();
       }
     }
   }
+
 
   protected void tessellateBox() {
     float w = 0, h = 0, d = 0;
@@ -3287,10 +3326,11 @@ public class PShapeOpenGL extends PShape {
     }
 
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
     inGeo.addBox(w, h, d, fill, stroke);
     tessellator.tessellateQuads();
   }
+
 
   protected void tessellateSphere() {
     float r = 0;
@@ -3299,10 +3339,10 @@ public class PShapeOpenGL extends PShape {
     if (1 <= params.length) {
       r = params[0];
       if (params.length == 2) {
-        nu = nv = (int) params[1];
+        nu = nv = (int)params[1];
       } else if (params.length == 3) {
-        nu = (int) params[1];
-        nv = (int) params[2];
+        nu = (int)params[1];
+        nv = (int)params[2];
       }
     }
 
@@ -3316,23 +3356,22 @@ public class PShapeOpenGL extends PShape {
     }
 
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
     int[] indices = inGeo.addSphere(r, nu, nv, fill, stroke);
     tessellator.tessellateTriangles(indices);
 
-    if ((0 < savedDetailU && savedDetailU != nu)
-      || (0 < savedDetailV && savedDetailV != nv)) {
+    if ((0 < savedDetailU && savedDetailU != nu) ||
+        (0 < savedDetailV && savedDetailV != nv)) {
       pg.sphereDetail(savedDetailU, savedDetailV);
     }
   }
 
+
   protected void tessellatePath() {
-    if (vertices == null) {
-      return;
-    }
+    if (vertices == null) return;
 
     inGeo.setMaterial(fillColor, strokeColor, strokeWeight,
-      ambientColor, specularColor, emissiveColor, shininess);
+                      ambientColor, specularColor, emissiveColor, shininess);
 
     if (vertexCodeCount == 0) {  // each point is a simple vertex
       if (vertices[0].length == 2) {  // tessellating 2D vertices
@@ -3342,7 +3381,7 @@ public class PShapeOpenGL extends PShape {
       } else {  // drawing 3D vertices
         for (int i = 0; i < vertexCount; i++) {
           inGeo.addVertex(vertices[i][X], vertices[i][Y], vertices[i][Z],
-            VERTEX, false);
+                          VERTEX, false);
         }
       }
     } else {  // coded set of vertices
@@ -3354,88 +3393,88 @@ public class PShapeOpenGL extends PShape {
         for (int j = 0; j < vertexCodeCount; j++) {
           switch (vertexCodes[j]) {
 
-            case VERTEX:
-              inGeo.addVertex(vertices[idx][X], vertices[idx][Y], VERTEX, brk);
-              brk = false;
-              idx++;
-              break;
+          case VERTEX:
+            inGeo.addVertex(vertices[idx][X], vertices[idx][Y], VERTEX, brk);
+            brk = false;
+            idx++;
+            break;
 
-            case QUADRATIC_VERTEX:
-              inGeo.addQuadraticVertex(vertices[idx + 0][X], vertices[idx + 0][Y], 0,
-                vertices[idx + 1][X], vertices[idx + 1][Y], 0,
-                brk);
-              brk = false;
-              idx += 2;
-              break;
+          case QUADRATIC_VERTEX:
+            inGeo.addQuadraticVertex(vertices[idx+0][X], vertices[idx+0][Y], 0,
+                                     vertices[idx+1][X], vertices[idx+1][Y], 0,
+                                     brk);
+            brk = false;
+            idx += 2;
+            break;
 
-            case BEZIER_VERTEX:
-              inGeo.addBezierVertex(vertices[idx + 0][X], vertices[idx + 0][Y], 0,
-                vertices[idx + 1][X], vertices[idx + 1][Y], 0,
-                vertices[idx + 2][X], vertices[idx + 2][Y], 0,
-                brk);
-              brk = false;
-              idx += 3;
-              break;
+          case BEZIER_VERTEX:
+            inGeo.addBezierVertex(vertices[idx+0][X], vertices[idx+0][Y], 0,
+                                  vertices[idx+1][X], vertices[idx+1][Y], 0,
+                                  vertices[idx+2][X], vertices[idx+2][Y], 0,
+                                  brk);
+            brk = false;
+            idx += 3;
+            break;
 
-            case CURVE_VERTEX:
-              inGeo.addCurveVertex(vertices[idx][X], vertices[idx][Y], 0, brk);
-              brk = false;
-              idx++;
-              break;
+          case CURVE_VERTEX:
+            inGeo.addCurveVertex(vertices[idx][X], vertices[idx][Y], 0, brk);
+            brk = false;
+            idx++;
+            break;
 
-            case BREAK:
-              brk = true;
+          case BREAK:
+            brk = true;
           }
         }
       } else {  // tessellating a 3D path
         for (int j = 0; j < vertexCodeCount; j++) {
           switch (vertexCodes[j]) {
 
-            case VERTEX:
-              inGeo.addVertex(vertices[idx][X], vertices[idx][Y],
-                vertices[idx][Z], brk);
-              brk = false;
-              idx++;
-              break;
+          case VERTEX:
+            inGeo.addVertex(vertices[idx][X], vertices[idx][Y],
+                            vertices[idx][Z], brk);
+            brk = false;
+            idx++;
+            break;
 
-            case QUADRATIC_VERTEX:
-              inGeo.addQuadraticVertex(vertices[idx + 0][X],
-                vertices[idx + 0][Y],
-                vertices[idx + 0][Z],
-                vertices[idx + 1][X],
-                vertices[idx + 1][Y],
-                vertices[idx + 0][Z],
-                brk);
-              brk = false;
-              idx += 2;
-              break;
+          case QUADRATIC_VERTEX:
+            inGeo.addQuadraticVertex(vertices[idx+0][X],
+                                     vertices[idx+0][Y],
+                                     vertices[idx+0][Z],
+                                     vertices[idx+1][X],
+                                     vertices[idx+1][Y],
+                                     vertices[idx+0][Z],
+                                     brk);
+            brk = false;
+            idx += 2;
+            break;
 
-            case BEZIER_VERTEX:
-              inGeo.addBezierVertex(vertices[idx + 0][X],
-                vertices[idx + 0][Y],
-                vertices[idx + 0][Z],
-                vertices[idx + 1][X],
-                vertices[idx + 1][Y],
-                vertices[idx + 1][Z],
-                vertices[idx + 2][X],
-                vertices[idx + 2][Y],
-                vertices[idx + 2][Z],
-                brk);
-              brk = false;
-              idx += 3;
-              break;
+          case BEZIER_VERTEX:
+            inGeo.addBezierVertex(vertices[idx+0][X],
+                                  vertices[idx+0][Y],
+                                  vertices[idx+0][Z],
+                                  vertices[idx+1][X],
+                                  vertices[idx+1][Y],
+                                  vertices[idx+1][Z],
+                                  vertices[idx+2][X],
+                                  vertices[idx+2][Y],
+                                  vertices[idx+2][Z],
+                                  brk);
+            brk = false;
+            idx += 3;
+            break;
 
-            case CURVE_VERTEX:
-              inGeo.addCurveVertex(vertices[idx][X],
-                vertices[idx][Y],
-                vertices[idx][Z],
-                brk);
-              brk = false;
-              idx++;
-              break;
+          case CURVE_VERTEX:
+            inGeo.addCurveVertex(vertices[idx][X],
+                                 vertices[idx][Y],
+                                 vertices[idx][Z],
+                                 brk);
+            brk = false;
+            idx++;
+            break;
 
-            case BREAK:
-              brk = true;
+          case BREAK:
+            brk = true;
           }
         }
       }
@@ -3444,20 +3483,14 @@ public class PShapeOpenGL extends PShape {
     boolean bez = inGeo.hasBezierVertex();
     boolean quad = inGeo.hasQuadraticVertex();
     boolean curv = inGeo.hasCurveVertex();
-    if (bez || quad) {
-      saveBezierVertexSettings();
-    }
+    if (bez || quad) saveBezierVertexSettings();
     if (curv) {
       saveCurveVertexSettings();
       tessellator.resetCurveVertexCount();
     }
     tessellator.tessellatePolygon(true, close, true);
-    if (bez || quad) {
-      restoreBezierVertexSettings();
-    }
-    if (curv) {
-      restoreCurveVertexSettings();
-    }
+    if (bez || quad) restoreBezierVertexSettings();
+    if (curv) restoreCurveVertexSettings();
   }
 
   protected void saveBezierVertexSettings() {
@@ -3494,8 +3527,12 @@ public class PShapeOpenGL extends PShape {
   }
 
   ///////////////////////////////////////////////////////////
+
   //
+
   // Aggregation
+
+
   protected void aggregate() {
     if (root == this && parent == null) {
       // Initializing auxiliary variables in root node
@@ -3519,6 +3556,7 @@ public class PShapeOpenGL extends PShape {
       aggregateImpl();
     }
   }
+
 
   // This method is very important, as it is responsible of generating the
   // correct vertex and index offsets for each level of the shape hierarchy.
@@ -3570,12 +3608,8 @@ public class PShapeOpenGL extends PShape {
       updatePolyIndexCache();
     }
     if (is3D()) {
-      if (hasLines) {
-        updateLineIndexCache();
-      }
-      if (hasPoints) {
-        updatePointIndexCache();
-      }
+      if (hasLines) updateLineIndexCache();
+      if (hasPoints) updatePointIndexCache();
     }
 
     if (matrix != null) {
@@ -3583,20 +3617,21 @@ public class PShapeOpenGL extends PShape {
       // this shape before tessellation, so they are applied now.
       if (hasPolys) {
         tessGeo.applyMatrixOnPolyGeometry(matrix,
-          firstPolyVertex, lastPolyVertex);
+                                          firstPolyVertex, lastPolyVertex);
       }
       if (is3D()) {
         if (hasLines) {
           tessGeo.applyMatrixOnLineGeometry(matrix,
-            firstLineVertex, lastLineVertex);
+                                            firstLineVertex, lastLineVertex);
         }
         if (hasPoints) {
           tessGeo.applyMatrixOnPointGeometry(matrix,
-            firstPointVertex, lastPointVertex);
+                                             firstPointVertex, lastPointVertex);
         }
       }
     }
   }
+
 
   // Updates the index cache for the range that corresponds to this shape.
   protected void updatePolyIndexCache() {
@@ -3613,6 +3648,7 @@ public class PShapeOpenGL extends PShape {
 
       // The index ranges of the child shapes that share the vertex offset
       // are unified into a single range in the parent level.
+
       firstPolyIndexCache = lastPolyIndexCache = -1;
       int gindex = -1;
 
@@ -3633,7 +3669,7 @@ public class PShapeOpenGL extends PShape {
               // This is a result of how the indices are updated for the
               // leaf shapes.
               cache.incCounts(gindex,
-                cache.indexCount[n], cache.vertexCount[n]);
+                              cache.indexCount[n], cache.vertexCount[n]);
             } else {
               gindex = cache.addNew(n);
             }
@@ -3665,22 +3701,21 @@ public class PShapeOpenGL extends PShape {
       // root shape. When this happens, the indices in the child shape need
       // to be restarted as well to reflect the new index offset.
 
-      firstPolyVertex = lastPolyVertex
-        = cache.vertexOffset[firstPolyIndexCache];
+      firstPolyVertex = lastPolyVertex =
+                        cache.vertexOffset[firstPolyIndexCache];
       for (int n = firstPolyIndexCache; n <= lastPolyIndexCache; n++) {
         int ioffset = cache.indexOffset[n];
         int icount = cache.indexCount[n];
         int vcount = cache.vertexCount[n];
 
-        if (PGL.MAX_VERTEX_INDEX1 <= root.polyVertexRel + vcount
-          || // Too many vertices already signal the start of a new cache...
-          (is2D() && startStrokedTex(n))) {                      // ... or, in 2D, the beginning of line or points.
+        if (PGL.MAX_VERTEX_INDEX1 <= root.polyVertexRel + vcount || // Too many vertices already signal the start of a new cache...
+            (is2D() && startStrokedTex(n))) {                      // ... or, in 2D, the beginning of line or points.
           root.polyVertexRel = 0;
           root.polyVertexOffset = root.polyVertexAbs;
           cache.indexOffset[n] = root.polyIndexOffset;
         } else {
           tessGeo.incPolyIndices(ioffset, ioffset + icount - 1,
-            root.polyVertexRel);
+                                          root.polyVertexRel);
         }
         cache.vertexOffset[n] = root.polyVertexOffset;
         if (is2D()) {
@@ -3699,10 +3734,12 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected boolean startStrokedTex(int n) {
-    return image != null && (n == firstLineIndexCache
-      || n == firstPointIndexCache);
+    return image != null && (n == firstLineIndexCache ||
+                               n == firstPointIndexCache);
   }
+
 
   protected void setFirstStrokeVertex(int n, int vert) {
     if (n == firstLineIndexCache && firstLineVertex == -1) {
@@ -3740,7 +3777,7 @@ public class PShapeOpenGL extends PShape {
           } else {
             if (cache.vertexOffset[gindex] == cache.vertexOffset[n]) {
               cache.incCounts(gindex, cache.indexCount[n],
-                cache.vertexCount[n]);
+                                      cache.vertexCount[n]);
             } else {
               gindex = cache.addNew(n);
             }
@@ -3749,9 +3786,7 @@ public class PShapeOpenGL extends PShape {
 
         // Updating the first and last line vertices for this group shape.
         if (-1 < child.firstLineVertex) {
-          if (firstLineVertex == -1) {
-            firstLineVertex = Integer.MAX_VALUE;
-          }
+          if (firstLineVertex == -1) firstLineVertex = Integer.MAX_VALUE;
           firstLineVertex = PApplet.min(firstLineVertex, child.firstLineVertex);
         }
         if (-1 < child.lastLineVertex) {
@@ -3760,8 +3795,8 @@ public class PShapeOpenGL extends PShape {
       }
       lastLineIndexCache = gindex;
     } else {
-      firstLineVertex = lastLineVertex
-        = cache.vertexOffset[firstLineIndexCache];
+      firstLineVertex = lastLineVertex =
+                        cache.vertexOffset[firstLineIndexCache];
       for (int n = firstLineIndexCache; n <= lastLineIndexCache; n++) {
         int ioffset = cache.indexOffset[n];
         int icount = cache.indexCount[n];
@@ -3773,7 +3808,7 @@ public class PShapeOpenGL extends PShape {
           cache.indexOffset[n] = root.lineIndexOffset;
         } else {
           tessGeo.incLineIndices(ioffset, ioffset + icount - 1,
-            root.lineVertexRel);
+                                          root.lineVertexRel);
         }
         cache.vertexOffset[n] = root.lineVertexOffset;
 
@@ -3785,6 +3820,7 @@ public class PShapeOpenGL extends PShape {
       lastLineVertex--;
     }
   }
+
 
   protected void updatePointIndexCache() {
     IndexCache cache = tessGeo.pointIndexCache;
@@ -3809,7 +3845,7 @@ public class PShapeOpenGL extends PShape {
               // This is a result of how the indices are updated for the
               // leaf shapes in aggregateImpl().
               cache.incCounts(gindex, cache.indexCount[n],
-                cache.vertexCount[n]);
+                                      cache.vertexCount[n]);
             } else {
               gindex = cache.addNew(n);
             }
@@ -3818,11 +3854,9 @@ public class PShapeOpenGL extends PShape {
 
         // Updating the first and last point vertices for this group shape.
         if (-1 < child.firstPointVertex) {
-          if (firstPointVertex == -1) {
-            firstPointVertex = Integer.MAX_VALUE;
-          }
+          if (firstPointVertex == -1) firstPointVertex = Integer.MAX_VALUE;
           firstPointVertex = PApplet.min(firstPointVertex,
-            child.firstPointVertex);
+                                         child.firstPointVertex);
         }
         if (-1 < child.lastPointVertex) {
           lastPointVertex = PApplet.max(lastPointVertex, child.lastPointVertex);
@@ -3830,8 +3864,8 @@ public class PShapeOpenGL extends PShape {
       }
       lastPointIndexCache = gindex;
     } else {
-      firstPointVertex = lastPointVertex
-        = cache.vertexOffset[firstPointIndexCache];
+      firstPointVertex = lastPointVertex =
+                         cache.vertexOffset[firstPointIndexCache];
       for (int n = firstPointIndexCache; n <= lastPointIndexCache; n++) {
         int ioffset = cache.indexOffset[n];
         int icount = cache.indexCount[n];
@@ -3843,7 +3877,7 @@ public class PShapeOpenGL extends PShape {
           cache.indexOffset[n] = root.pointIndexOffset;
         } else {
           tessGeo.incPointIndices(ioffset, ioffset + icount - 1,
-            root.pointVertexRel);
+                                           root.pointVertexRel);
         }
         cache.vertexOffset[n] = root.pointVertexOffset;
 
@@ -3856,9 +3890,14 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   ///////////////////////////////////////////////////////////
+
   //
+
   //  Buffer initialization
+
+
   protected void initBuffers() {
     boolean outdated = contextIsOutdated();
     context = pgl.getCurrentContext();
@@ -3878,99 +3917,90 @@ public class PShapeOpenGL extends PShape {
     needBufferInit = false;
   }
 
+
   protected void initPolyBuffers() {
     int size = tessGeo.polyVertexCount;
     int sizef = size * PGL.SIZEOF_FLOAT;
     int sizei = size * PGL.SIZEOF_INT;
 
     tessGeo.updatePolyVerticesBuffer();
-    if (bufPolyVertex == null) {
+    if (bufPolyVertex == null)
       bufPolyVertex = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 4, PGL.SIZEOF_FLOAT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyVertex.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, 4 * sizef,
-      tessGeo.polyVerticesBuffer, glUsage);
+                   tessGeo.polyVerticesBuffer, glUsage);
 
     tessGeo.updatePolyColorsBuffer();
-    if (bufPolyColor == null) {
+    if (bufPolyColor == null)
       bufPolyColor = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 1, PGL.SIZEOF_INT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyColor.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, sizei,
-      tessGeo.polyColorsBuffer, glUsage);
+                   tessGeo.polyColorsBuffer, glUsage);
 
     tessGeo.updatePolyNormalsBuffer();
-    if (bufPolyNormal == null) {
+    if (bufPolyNormal == null)
       bufPolyNormal = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 3, PGL.SIZEOF_FLOAT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyNormal.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, 3 * sizef,
-      tessGeo.polyNormalsBuffer, glUsage);
+                   tessGeo.polyNormalsBuffer, glUsage);
 
     tessGeo.updatePolyTexCoordsBuffer();
-    if (bufPolyTexcoord == null) {
+    if (bufPolyTexcoord == null)
       bufPolyTexcoord = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 2, PGL.SIZEOF_FLOAT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyTexcoord.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, 2 * sizef,
-      tessGeo.polyTexCoordsBuffer, glUsage);
+                   tessGeo.polyTexCoordsBuffer, glUsage);
 
     tessGeo.updatePolyAmbientBuffer();
-    if (bufPolyAmbient == null) {
+    if (bufPolyAmbient == null)
       bufPolyAmbient = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 1, PGL.SIZEOF_INT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyAmbient.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, sizei,
-      tessGeo.polyAmbientBuffer, glUsage);
+                   tessGeo.polyAmbientBuffer, glUsage);
 
     tessGeo.updatePolySpecularBuffer();
-    if (bufPolySpecular == null) {
+    if (bufPolySpecular == null)
       bufPolySpecular = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 1, PGL.SIZEOF_INT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolySpecular.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, sizei,
-      tessGeo.polySpecularBuffer, glUsage);
+                   tessGeo.polySpecularBuffer, glUsage);
 
     tessGeo.updatePolyEmissiveBuffer();
-    if (bufPolyEmissive == null) {
+    if (bufPolyEmissive == null)
       bufPolyEmissive = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 1, PGL.SIZEOF_INT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyEmissive.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, sizei,
-      tessGeo.polyEmissiveBuffer, glUsage);
+                   tessGeo.polyEmissiveBuffer, glUsage);
 
     tessGeo.updatePolyShininessBuffer();
-    if (bufPolyShininess == null) {
+    if (bufPolyShininess == null)
       bufPolyShininess = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 1, PGL.SIZEOF_FLOAT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyShininess.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, sizef,
-      tessGeo.polyShininessBuffer, glUsage);
+                   tessGeo.polyShininessBuffer, glUsage);
 
-    polyAttribs.keySet().forEach((name) -> {
+    for (String name: polyAttribs.keySet()) {
       VertexAttribute attrib = polyAttribs.get(name);
       tessGeo.updateAttribBuffer(attrib.name);
-      if (!attrib.bufferCreated()) {
-        attrib.createBuffer(pgl);
-      }
+      if (!attrib.bufferCreated()) attrib.createBuffer(pgl);
       pgl.bindBuffer(PGL.ARRAY_BUFFER, attrib.buf.glId);
       pgl.bufferData(PGL.ARRAY_BUFFER, attrib.sizeInBytes(size),
-        tessGeo.polyAttribBuffers.get(name), glUsage);
-    });
+                     tessGeo.polyAttribBuffers.get(name), glUsage);
+    }
 
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
 
     tessGeo.updatePolyIndicesBuffer();
-    if (bufPolyIndex == null) {
+    if (bufPolyIndex == null)
       bufPolyIndex = new VertexBuffer(pg, PGL.ELEMENT_ARRAY_BUFFER, 1, PGL.SIZEOF_INDEX, true);
-    }
     pgl.bindBuffer(PGL.ELEMENT_ARRAY_BUFFER, bufPolyIndex.glId);
     pgl.bufferData(PGL.ELEMENT_ARRAY_BUFFER,
-      tessGeo.polyIndexCount * PGL.SIZEOF_INDEX,
-      tessGeo.polyIndicesBuffer, glUsage);
+                   tessGeo.polyIndexCount * PGL.SIZEOF_INDEX,
+                   tessGeo.polyIndicesBuffer, glUsage);
 
     pgl.bindBuffer(PGL.ELEMENT_ARRAY_BUFFER, 0);
   }
+
 
   protected void initLineBuffers() {
     int size = tessGeo.lineVertexCount;
@@ -3978,42 +4008,39 @@ public class PShapeOpenGL extends PShape {
     int sizei = size * PGL.SIZEOF_INT;
 
     tessGeo.updateLineVerticesBuffer();
-    if (bufLineVertex == null) {
+    if (bufLineVertex == null)
       bufLineVertex = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 4, PGL.SIZEOF_FLOAT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufLineVertex.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, 4 * sizef,
-      tessGeo.lineVerticesBuffer, glUsage);
+                   tessGeo.lineVerticesBuffer, glUsage);
 
     tessGeo.updateLineColorsBuffer();
-    if (bufLineColor == null) {
+    if (bufLineColor == null)
       bufLineColor = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 1, PGL.SIZEOF_INT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufLineColor.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, sizei,
-      tessGeo.lineColorsBuffer, glUsage);
+                   tessGeo.lineColorsBuffer, glUsage);
 
     tessGeo.updateLineDirectionsBuffer();
-    if (bufLineAttrib == null) {
+    if (bufLineAttrib == null)
       bufLineAttrib = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 4, PGL.SIZEOF_FLOAT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufLineAttrib.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, 4 * sizef,
-      tessGeo.lineDirectionsBuffer, glUsage);
+                   tessGeo.lineDirectionsBuffer, glUsage);
 
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
 
     tessGeo.updateLineIndicesBuffer();
-    if (bufLineIndex == null) {
+    if (bufLineIndex == null)
       bufLineIndex = new VertexBuffer(pg, PGL.ELEMENT_ARRAY_BUFFER, 1, PGL.SIZEOF_INDEX, true);
-    }
     pgl.bindBuffer(PGL.ELEMENT_ARRAY_BUFFER, bufLineIndex.glId);
     pgl.bufferData(PGL.ELEMENT_ARRAY_BUFFER,
-      tessGeo.lineIndexCount * PGL.SIZEOF_INDEX,
-      tessGeo.lineIndicesBuffer, glUsage);
+                   tessGeo.lineIndexCount * PGL.SIZEOF_INDEX,
+                   tessGeo.lineIndicesBuffer, glUsage);
 
     pgl.bindBuffer(PGL.ELEMENT_ARRAY_BUFFER, 0);
   }
+
 
   protected void initPointBuffers() {
     int size = tessGeo.pointVertexCount;
@@ -4021,42 +4048,39 @@ public class PShapeOpenGL extends PShape {
     int sizei = size * PGL.SIZEOF_INT;
 
     tessGeo.updatePointVerticesBuffer();
-    if (bufPointVertex == null) {
+    if (bufPointVertex == null)
       bufPointVertex = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 4, PGL.SIZEOF_FLOAT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPointVertex.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, 4 * sizef,
-      tessGeo.pointVerticesBuffer, glUsage);
+                   tessGeo.pointVerticesBuffer, glUsage);
 
     tessGeo.updatePointColorsBuffer();
-    if (bufPointColor == null) {
+    if (bufPointColor == null)
       bufPointColor = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 1, PGL.SIZEOF_INT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPointColor.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, sizei,
-      tessGeo.pointColorsBuffer, glUsage);
+                   tessGeo.pointColorsBuffer, glUsage);
 
     tessGeo.updatePointOffsetsBuffer();
-    if (bufPointAttrib == null) {
+    if (bufPointAttrib == null)
       bufPointAttrib = new VertexBuffer(pg, PGL.ARRAY_BUFFER, 2, PGL.SIZEOF_FLOAT);
-    }
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPointAttrib.glId);
     pgl.bufferData(PGL.ARRAY_BUFFER, 2 * sizef,
-      tessGeo.pointOffsetsBuffer, glUsage);
+                   tessGeo.pointOffsetsBuffer, glUsage);
 
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
 
     tessGeo.updatePointIndicesBuffer();
-    if (bufPointIndex == null) {
+    if (bufPointIndex == null)
       bufPointIndex = new VertexBuffer(pg, PGL.ELEMENT_ARRAY_BUFFER, 1, PGL.SIZEOF_INDEX, true);
-    }
     pgl.bindBuffer(PGL.ELEMENT_ARRAY_BUFFER, bufPointIndex.glId);
     pgl.bufferData(PGL.ELEMENT_ARRAY_BUFFER,
-      tessGeo.pointIndexCount * PGL.SIZEOF_INDEX,
-      tessGeo.pointIndicesBuffer, glUsage);
+                   tessGeo.pointIndexCount * PGL.SIZEOF_INDEX,
+                   tessGeo.pointIndicesBuffer, glUsage);
 
     pgl.bindBuffer(PGL.ELEMENT_ARRAY_BUFFER, 0);
   }
+
 
   protected boolean contextIsOutdated() {
     boolean outdated = !pgl.contextIsCurrent(context);
@@ -4069,9 +4093,9 @@ public class PShapeOpenGL extends PShape {
       bufPolySpecular.dispose();
       bufPolyEmissive.dispose();
       bufPolyShininess.dispose();
-      polyAttribs.values().forEach((attrib) -> {
+      for (VertexAttribute attrib: polyAttribs.values()) {
         attrib.buf.dispose();
-      });
+      }
       bufPolyIndex.dispose();
 
       bufLineVertex.dispose();
@@ -4087,15 +4111,21 @@ public class PShapeOpenGL extends PShape {
     return outdated;
   }
 
+
   ///////////////////////////////////////////////////////////
+
   //
+
   //  Geometry update
+
+
   protected void updateGeometry() {
     root.initBuffers();
     if (root.modified) {
       root.updateGeometryImpl();
     }
   }
+
 
   protected void updateGeometryImpl() {
     if (modifiedPolyVertices) {
@@ -4162,20 +4192,17 @@ public class PShapeOpenGL extends PShape {
       firstModifiedPolyShininess = PConstants.MAX_INT;
       lastModifiedPolyShininess = PConstants.MIN_INT;
     }
-    polyAttribs.keySet().stream().map((name) -> polyAttribs.get(name)).filter((attrib) -> (attrib.modified)).map((attrib) -> {
-      int offset = firstModifiedPolyVertex;
-      int size = lastModifiedPolyVertex - offset + 1;
-      copyPolyAttrib(attrib, offset, size);
-      return attrib;
-    }).map((attrib) -> {
-      attrib.modified = false;
-      return attrib;
-    }).map((attrib) -> {
-      attrib.firstModified = PConstants.MAX_INT;
-      return attrib;
-    }).forEachOrdered((attrib) -> {
-      attrib.lastModified = PConstants.MIN_INT;
-    });
+    for (String name: polyAttribs.keySet()) {
+      VertexAttribute attrib = polyAttribs.get(name);
+      if (attrib.modified) {
+        int offset = firstModifiedPolyVertex;
+        int size = lastModifiedPolyVertex - offset + 1;
+        copyPolyAttrib(attrib, offset, size);
+        attrib.modified = false;
+        attrib.firstModified = PConstants.MAX_INT;
+        attrib.lastModified = PConstants.MIN_INT;
+      }
+    }
 
     if (modifiedLineVertices) {
       int offset = firstModifiedLineVertex;
@@ -4230,85 +4257,94 @@ public class PShapeOpenGL extends PShape {
     modified = false;
   }
 
+
   protected void copyPolyVertices(int offset, int size) {
     tessGeo.updatePolyVerticesBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyVertex.glId);
     tessGeo.polyVerticesBuffer.position(4 * offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, 4 * offset * PGL.SIZEOF_FLOAT,
-      4 * size * PGL.SIZEOF_FLOAT, tessGeo.polyVerticesBuffer);
+                      4 * size * PGL.SIZEOF_FLOAT, tessGeo.polyVerticesBuffer);
     tessGeo.polyVerticesBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyPolyColors(int offset, int size) {
     tessGeo.updatePolyColorsBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyColor.glId);
     tessGeo.polyColorsBuffer.position(offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, offset * PGL.SIZEOF_INT,
-      size * PGL.SIZEOF_INT, tessGeo.polyColorsBuffer);
+                      size * PGL.SIZEOF_INT, tessGeo.polyColorsBuffer);
     tessGeo.polyColorsBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyPolyNormals(int offset, int size) {
     tessGeo.updatePolyNormalsBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyNormal.glId);
     tessGeo.polyNormalsBuffer.position(3 * offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, 3 * offset * PGL.SIZEOF_FLOAT,
-      3 * size * PGL.SIZEOF_FLOAT, tessGeo.polyNormalsBuffer);
+                      3 * size * PGL.SIZEOF_FLOAT, tessGeo.polyNormalsBuffer);
     tessGeo.polyNormalsBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyPolyTexCoords(int offset, int size) {
     tessGeo.updatePolyTexCoordsBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyTexcoord.glId);
     tessGeo.polyTexCoordsBuffer.position(2 * offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, 2 * offset * PGL.SIZEOF_FLOAT,
-      2 * size * PGL.SIZEOF_FLOAT, tessGeo.polyTexCoordsBuffer);
+                      2 * size * PGL.SIZEOF_FLOAT, tessGeo.polyTexCoordsBuffer);
     tessGeo.polyTexCoordsBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyPolyAmbient(int offset, int size) {
     tessGeo.updatePolyAmbientBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyAmbient.glId);
     tessGeo.polyAmbientBuffer.position(offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, offset * PGL.SIZEOF_INT,
-      size * PGL.SIZEOF_INT, tessGeo.polyAmbientBuffer);
+                      size * PGL.SIZEOF_INT, tessGeo.polyAmbientBuffer);
     tessGeo.polyAmbientBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyPolySpecular(int offset, int size) {
     tessGeo.updatePolySpecularBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolySpecular.glId);
     tessGeo.polySpecularBuffer.position(offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, offset * PGL.SIZEOF_INT,
-      size * PGL.SIZEOF_INT, tessGeo.polySpecularBuffer);
+                      size * PGL.SIZEOF_INT, tessGeo.polySpecularBuffer);
     tessGeo.polySpecularBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyPolyEmissive(int offset, int size) {
     tessGeo.updatePolyEmissiveBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyEmissive.glId);
     tessGeo.polyEmissiveBuffer.position(offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, offset * PGL.SIZEOF_INT,
-      size * PGL.SIZEOF_INT, tessGeo.polyEmissiveBuffer);
+                      size * PGL.SIZEOF_INT, tessGeo.polyEmissiveBuffer);
     tessGeo.polyEmissiveBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyPolyShininess(int offset, int size) {
     tessGeo.updatePolyShininessBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPolyShininess.glId);
     tessGeo.polyShininessBuffer.position(offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, offset * PGL.SIZEOF_FLOAT,
-      size * PGL.SIZEOF_FLOAT, tessGeo.polyShininessBuffer);
+                      size * PGL.SIZEOF_FLOAT, tessGeo.polyShininessBuffer);
     tessGeo.polyShininessBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyPolyAttrib(VertexAttribute attrib, int offset, int size) {
     tessGeo.updateAttribBuffer(attrib.name, offset, size);
@@ -4316,239 +4352,205 @@ public class PShapeOpenGL extends PShape {
     Buffer buf = tessGeo.polyAttribBuffers.get(attrib.name);
     buf.position(attrib.size * offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, attrib.sizeInBytes(offset),
-      attrib.sizeInBytes(size), buf);
+                      attrib.sizeInBytes(size), buf);
     buf.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyLineVertices(int offset, int size) {
     tessGeo.updateLineVerticesBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufLineVertex.glId);
     tessGeo.lineVerticesBuffer.position(4 * offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, 4 * offset * PGL.SIZEOF_FLOAT,
-      4 * size * PGL.SIZEOF_FLOAT, tessGeo.lineVerticesBuffer);
+                      4 * size * PGL.SIZEOF_FLOAT, tessGeo.lineVerticesBuffer);
     tessGeo.lineVerticesBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyLineColors(int offset, int size) {
     tessGeo.updateLineColorsBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufLineColor.glId);
     tessGeo.lineColorsBuffer.position(offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, offset * PGL.SIZEOF_INT,
-      size * PGL.SIZEOF_INT, tessGeo.lineColorsBuffer);
+                      size * PGL.SIZEOF_INT, tessGeo.lineColorsBuffer);
     tessGeo.lineColorsBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyLineAttributes(int offset, int size) {
     tessGeo.updateLineDirectionsBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufLineAttrib.glId);
     tessGeo.lineDirectionsBuffer.position(4 * offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, 4 * offset * PGL.SIZEOF_FLOAT,
-      4 * size * PGL.SIZEOF_FLOAT, tessGeo.lineDirectionsBuffer);
+                      4 * size * PGL.SIZEOF_FLOAT, tessGeo.lineDirectionsBuffer);
     tessGeo.lineDirectionsBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyPointVertices(int offset, int size) {
     tessGeo.updatePointVerticesBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPointVertex.glId);
     tessGeo.pointVerticesBuffer.position(4 * offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, 4 * offset * PGL.SIZEOF_FLOAT,
-      4 * size * PGL.SIZEOF_FLOAT, tessGeo.pointVerticesBuffer);
+                      4 * size * PGL.SIZEOF_FLOAT, tessGeo.pointVerticesBuffer);
     tessGeo.pointVerticesBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyPointColors(int offset, int size) {
     tessGeo.updatePointColorsBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPointColor.glId);
     tessGeo.pointColorsBuffer.position(offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, offset * PGL.SIZEOF_INT,
-      size * PGL.SIZEOF_INT, tessGeo.pointColorsBuffer);
+                      size * PGL.SIZEOF_INT,tessGeo.pointColorsBuffer);
     tessGeo.pointColorsBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
+
 
   protected void copyPointAttributes(int offset, int size) {
     tessGeo.updatePointOffsetsBuffer(offset, size);
     pgl.bindBuffer(PGL.ARRAY_BUFFER, bufPointAttrib.glId);
     tessGeo.pointOffsetsBuffer.position(2 * offset);
     pgl.bufferSubData(PGL.ARRAY_BUFFER, 2 * offset * PGL.SIZEOF_FLOAT,
-      2 * size * PGL.SIZEOF_FLOAT, tessGeo.pointOffsetsBuffer);
+                      2 * size * PGL.SIZEOF_FLOAT, tessGeo.pointOffsetsBuffer);
     tessGeo.pointOffsetsBuffer.rewind();
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
   }
 
+
   protected void setModifiedPolyVertices(int first, int last) {
-    if (first < firstModifiedPolyVertex) {
-      firstModifiedPolyVertex = first;
-    }
-    if (last > lastModifiedPolyVertex) {
-      lastModifiedPolyVertex = last;
-    }
+    if (first < firstModifiedPolyVertex) firstModifiedPolyVertex = first;
+    if (last > lastModifiedPolyVertex) lastModifiedPolyVertex = last;
     modifiedPolyVertices = true;
     modified = true;
   }
 
+
   protected void setModifiedPolyColors(int first, int last) {
-    if (first < firstModifiedPolyColor) {
-      firstModifiedPolyColor = first;
-    }
-    if (last > lastModifiedPolyColor) {
-      lastModifiedPolyColor = last;
-    }
+    if (first < firstModifiedPolyColor) firstModifiedPolyColor = first;
+    if (last > lastModifiedPolyColor) lastModifiedPolyColor = last;
     modifiedPolyColors = true;
     modified = true;
   }
 
+
   protected void setModifiedPolyNormals(int first, int last) {
-    if (first < firstModifiedPolyNormal) {
-      firstModifiedPolyNormal = first;
-    }
-    if (last > lastModifiedPolyNormal) {
-      lastModifiedPolyNormal = last;
-    }
+    if (first < firstModifiedPolyNormal) firstModifiedPolyNormal = first;
+    if (last > lastModifiedPolyNormal) lastModifiedPolyNormal = last;
     modifiedPolyNormals = true;
     modified = true;
   }
 
+
   protected void setModifiedPolyTexCoords(int first, int last) {
-    if (first < firstModifiedPolyTexcoord) {
-      firstModifiedPolyTexcoord = first;
-    }
-    if (last > lastModifiedPolyTexcoord) {
-      lastModifiedPolyTexcoord = last;
-    }
+    if (first < firstModifiedPolyTexcoord) firstModifiedPolyTexcoord = first;
+    if (last > lastModifiedPolyTexcoord) lastModifiedPolyTexcoord = last;
     modifiedPolyTexCoords = true;
     modified = true;
   }
 
+
   protected void setModifiedPolyAmbient(int first, int last) {
-    if (first < firstModifiedPolyAmbient) {
-      firstModifiedPolyAmbient = first;
-    }
-    if (last > lastModifiedPolyAmbient) {
-      lastModifiedPolyAmbient = last;
-    }
+    if (first < firstModifiedPolyAmbient) firstModifiedPolyAmbient = first;
+    if (last > lastModifiedPolyAmbient) lastModifiedPolyAmbient = last;
     modifiedPolyAmbient = true;
     modified = true;
   }
 
+
   protected void setModifiedPolySpecular(int first, int last) {
-    if (first < firstModifiedPolySpecular) {
-      firstModifiedPolySpecular = first;
-    }
-    if (last > lastModifiedPolySpecular) {
-      lastModifiedPolySpecular = last;
-    }
+    if (first < firstModifiedPolySpecular) firstModifiedPolySpecular = first;
+    if (last > lastModifiedPolySpecular) lastModifiedPolySpecular = last;
     modifiedPolySpecular = true;
     modified = true;
   }
 
+
   protected void setModifiedPolyEmissive(int first, int last) {
-    if (first < firstModifiedPolyEmissive) {
-      firstModifiedPolyEmissive = first;
-    }
-    if (last > lastModifiedPolyEmissive) {
-      lastModifiedPolyEmissive = last;
-    }
+    if (first < firstModifiedPolyEmissive) firstModifiedPolyEmissive = first;
+    if (last > lastModifiedPolyEmissive) lastModifiedPolyEmissive = last;
     modifiedPolyEmissive = true;
     modified = true;
   }
 
+
   protected void setModifiedPolyShininess(int first, int last) {
-    if (first < firstModifiedPolyShininess) {
-      firstModifiedPolyShininess = first;
-    }
-    if (last > lastModifiedPolyShininess) {
-      lastModifiedPolyShininess = last;
-    }
+    if (first < firstModifiedPolyShininess) firstModifiedPolyShininess = first;
+    if (last > lastModifiedPolyShininess) lastModifiedPolyShininess = last;
     modifiedPolyShininess = true;
     modified = true;
   }
 
+
   protected void setModifiedPolyAttrib(VertexAttribute attrib, int first, int last) {
-    if (first < attrib.firstModified) {
-      attrib.firstModified = first;
-    }
-    if (last > attrib.lastModified) {
-      attrib.lastModified = last;
-    }
+    if (first < attrib.firstModified) attrib.firstModified = first;
+    if (last > attrib.lastModified) attrib.lastModified = last;
     attrib.modified = true;
     modified = true;
   }
 
+
   protected void setModifiedLineVertices(int first, int last) {
-    if (first < firstModifiedLineVertex) {
-      firstModifiedLineVertex = first;
-    }
-    if (last > lastModifiedLineVertex) {
-      lastModifiedLineVertex = last;
-    }
+    if (first < firstModifiedLineVertex) firstModifiedLineVertex = first;
+    if (last > lastModifiedLineVertex) lastModifiedLineVertex = last;
     modifiedLineVertices = true;
     modified = true;
   }
 
+
   protected void setModifiedLineColors(int first, int last) {
-    if (first < firstModifiedLineColor) {
-      firstModifiedLineColor = first;
-    }
-    if (last > lastModifiedLineColor) {
-      lastModifiedLineColor = last;
-    }
+    if (first < firstModifiedLineColor) firstModifiedLineColor = first;
+    if (last > lastModifiedLineColor) lastModifiedLineColor = last;
     modifiedLineColors = true;
     modified = true;
   }
 
+
   protected void setModifiedLineAttributes(int first, int last) {
-    if (first < firstModifiedLineAttribute) {
-      firstModifiedLineAttribute = first;
-    }
-    if (last > lastModifiedLineAttribute) {
-      lastModifiedLineAttribute = last;
-    }
+    if (first < firstModifiedLineAttribute) firstModifiedLineAttribute = first;
+    if (last > lastModifiedLineAttribute) lastModifiedLineAttribute = last;
     modifiedLineAttributes = true;
     modified = true;
   }
 
+
   protected void setModifiedPointVertices(int first, int last) {
-    if (first < firstModifiedPointVertex) {
-      firstModifiedPointVertex = first;
-    }
-    if (last > lastModifiedPointVertex) {
-      lastModifiedPointVertex = last;
-    }
+    if (first < firstModifiedPointVertex) firstModifiedPointVertex = first;
+    if (last > lastModifiedPointVertex) lastModifiedPointVertex = last;
     modifiedPointVertices = true;
     modified = true;
   }
 
+
   protected void setModifiedPointColors(int first, int last) {
-    if (first < firstModifiedPointColor) {
-      firstModifiedPointColor = first;
-    }
-    if (last > lastModifiedPointColor) {
-      lastModifiedPointColor = last;
-    }
+    if (first < firstModifiedPointColor) firstModifiedPointColor = first;
+    if (last > lastModifiedPointColor) lastModifiedPointColor = last;
     modifiedPointColors = true;
     modified = true;
   }
 
+
   protected void setModifiedPointAttributes(int first, int last) {
-    if (first < firstModifiedPointAttribute) {
-      firstModifiedPointAttribute = first;
-    }
-    if (last > lastModifiedPointAttribute) {
-      lastModifiedPointAttribute = last;
-    }
+    if (first < firstModifiedPointAttribute) firstModifiedPointAttribute = first;
+    if (last > lastModifiedPointAttribute) lastModifiedPointAttribute = last;
     modifiedPointAttributes = true;
     modified = true;
   }
 
+
   ///////////////////////////////////////////////////////////
+
   //
+
   // Style handling
+
+
   @Override
   public void disableStyle() {
     if (openShape) {
@@ -4574,6 +4576,7 @@ public class PShapeOpenGL extends PShape {
 
     super.disableStyle();
   }
+
 
   @Override
   public void enableStyle() {
@@ -4610,6 +4613,7 @@ public class PShapeOpenGL extends PShape {
 
     super.enableStyle();
   }
+
 
   @Override
   protected void styles(PGraphics g) {
@@ -4649,18 +4653,25 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   ///////////////////////////////////////////////////////////
+
   //
+
   // Rendering methods
+
+
   /*
   public void draw() {
     draw(pg);
   }
-   */
+  */
+
+
   @Override
   public void draw(PGraphics g) {
     if (g instanceof PGraphicsOpenGL) {
-      PGraphicsOpenGL gl = (PGraphicsOpenGL) g;
+      PGraphicsOpenGL gl = (PGraphicsOpenGL)g;
       if (visible) {
         pre(gl);
 
@@ -4675,7 +4686,7 @@ public class PShapeOpenGL extends PShape {
           } else {
             PImage tex = null;
             if (textures != null && textures.size() == 1) {
-              tex = (PImage) textures.toArray()[0];
+              tex = (PImage)textures.toArray()[0];
             }
             render(gl, tex);
           }
@@ -4694,6 +4705,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   private void inGeoToVertices() {
     vertexCount = 0;
     vertexCodeCount = 0;
@@ -4701,7 +4713,7 @@ public class PShapeOpenGL extends PShape {
       for (int i = 0; i < inGeo.vertexCount; i++) {
         int index = 3 * i;
         float x = inGeo.vertices[index++];
-        float y = inGeo.vertices[index];
+        float y = inGeo.vertices[index  ];
         super.vertex(x, y);
       }
     } else {
@@ -4715,63 +4727,63 @@ public class PShapeOpenGL extends PShape {
       for (int j = 0; j < inGeo.codeCount; j++) {
         switch (inGeo.codes[j]) {
 
-          case VERTEX:
-            v = 3 * idx;
-            x = inGeo.vertices[v++];
-            y = inGeo.vertices[v];
-            super.vertex(x, y);
+        case VERTEX:
+          v = 3 * idx;
+          x = inGeo.vertices[v++];
+          y = inGeo.vertices[v  ];
+          super.vertex(x, y);
 
-            idx++;
-            break;
+          idx++;
+          break;
 
-          case QUADRATIC_VERTEX:
-            v = 3 * idx;
-            cx = inGeo.vertices[v++];
-            cy = inGeo.vertices[v];
+        case QUADRATIC_VERTEX:
+          v = 3 * idx;
+          cx = inGeo.vertices[v++];
+          cy = inGeo.vertices[v];
 
-            v = 3 * (idx + 1);
-            x3 = inGeo.vertices[v++];
-            y3 = inGeo.vertices[v];
+          v = 3 * (idx + 1);
+          x3 = inGeo.vertices[v++];
+          y3 = inGeo.vertices[v];
 
-            super.quadraticVertex(cx, cy, x3, y3);
+          super.quadraticVertex(cx, cy, x3, y3);
 
-            idx += 2;
-            break;
+          idx += 2;
+          break;
 
-          case BEZIER_VERTEX:
-            v = 3 * idx;
-            x2 = inGeo.vertices[v++];
-            y2 = inGeo.vertices[v];
+        case BEZIER_VERTEX:
+          v = 3 * idx;
+          x2 = inGeo.vertices[v++];
+          y2 = inGeo.vertices[v  ];
 
-            v = 3 * (idx + 1);
-            x3 = inGeo.vertices[v++];
-            y3 = inGeo.vertices[v];
+          v = 3 * (idx + 1);
+          x3 = inGeo.vertices[v++];
+          y3 = inGeo.vertices[v  ];
 
-            v = 3 * (idx + 2);
-            x4 = inGeo.vertices[v++];
-            y4 = inGeo.vertices[v];
+          v = 3 * (idx + 2);
+          x4 = inGeo.vertices[v++];
+          y4 = inGeo.vertices[v  ];
 
-            super.bezierVertex(x2, y2, x3, y3, x4, y4);
+          super.bezierVertex(x2, y2, x3, y3, x4, y4);
 
-            idx += 3;
-            break;
+          idx += 3;
+          break;
 
-          case CURVE_VERTEX:
-            v = 3 * idx;
-            x = inGeo.vertices[v++];
-            y = inGeo.vertices[v];
+        case CURVE_VERTEX:
+          v = 3 * idx;
+          x = inGeo.vertices[v++];
+          y = inGeo.vertices[v  ];
 
-            super.curveVertex(x, y);
+          super.curveVertex(x, y);
 
-            idx++;
-            break;
+          idx++;
+          break;
 
-          case BREAK:
-            if (insideContour) {
-              super.endContourImpl();
-            }
-            super.beginContourImpl();
-            insideContour = true;
+        case BREAK:
+          if (insideContour) {
+            super.endContourImpl();
+          }
+          super.beginContourImpl();
+          insideContour = true;
         }
       }
       if (insideContour) {
@@ -4780,6 +4792,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   // Returns true if some child shapes below this one either
   // use different texture maps (or only one texture is used by some while
   // others are untextured), or have stroked textures,
@@ -4787,10 +4800,11 @@ public class PShapeOpenGL extends PShape {
   // Or accurate 2D mode is enabled, which forces each
   // shape to be rendered separately.
   protected boolean fragmentedGroup(PGraphicsOpenGL g) {
-    return g.getHint(DISABLE_OPTIMIZED_STROKE)
-      || (textures != null && (1 < textures.size() || untexChild))
-      || strokedTexture;
+    return g.getHint(DISABLE_OPTIMIZED_STROKE) ||
+           (textures != null && (1 < textures.size() || untexChild)) ||
+           strokedTexture;
   }
+
 
   @Override
   protected void pre(PGraphics g) {
@@ -4803,6 +4817,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   @Override
   protected void post(PGraphics g) {
     if (g instanceof PGraphicsOpenGL) {
@@ -4810,6 +4825,7 @@ public class PShapeOpenGL extends PShape {
       super.post(g);
     }
   }
+
 
   @Override
   protected void drawGeometry(PGraphics g) {
@@ -4822,13 +4838,14 @@ public class PShapeOpenGL extends PShape {
     vertices = null;
   }
 
+
   // Render the geometry stored in the root shape as VBOs, for the vertices
   // corresponding to this shape. Sometimes we can have root == this.
   protected void render(PGraphicsOpenGL g, PImage texture) {
     if (root == null) {
       // Some error. Root should never be null. At least it should be 'this'.
-      throw new RuntimeException("Error rendering PShapeOpenGL, root shape is "
-        + "null");
+      throw new RuntimeException("Error rendering PShapeOpenGL, root shape is " +
+                                 "null");
     }
 
     if (hasPolys) {
@@ -4857,6 +4874,7 @@ public class PShapeOpenGL extends PShape {
     }
   }
 
+
   protected void renderPolys(PGraphicsOpenGL g, PImage textureImage) {
     boolean customShader = g.polyShader != null;
     boolean needNormals = customShader ? g.polyShader.accessNormals() : false;
@@ -4868,10 +4886,10 @@ public class PShapeOpenGL extends PShape {
     PShader shader = null;
     IndexCache cache = tessGeo.polyIndexCache;
     for (int n = firstPolyIndexCache; n <= lastPolyIndexCache; n++) {
-      if (is3D() || (tex != null && (firstLineIndexCache == -1
-        || n < firstLineIndexCache)
-        && (firstPointIndexCache == -1
-        || n < firstPointIndexCache))) {
+      if (is3D() || (tex != null && (firstLineIndexCache == -1 ||
+                                     n < firstLineIndexCache) &&
+                                    (firstPointIndexCache == -1 ||
+                                     n < firstPointIndexCache))) {
         // Rendering fill triangles, which can be lit and textured.
         if (!renderingFill) {
           shader = g.getPolyShader(g.lights, tex != null);
@@ -4905,55 +4923,52 @@ public class PShapeOpenGL extends PShape {
       int voffset = cache.vertexOffset[n];
 
       shader.setVertexAttribute(root.bufPolyVertex.glId, 4, PGL.FLOAT,
-        0, 4 * voffset * PGL.SIZEOF_FLOAT);
+                                0, 4 * voffset * PGL.SIZEOF_FLOAT);
       shader.setColorAttribute(root.bufPolyColor.glId, 4, PGL.UNSIGNED_BYTE,
-        0, 4 * voffset * PGL.SIZEOF_BYTE);
+                               0, 4 * voffset * PGL.SIZEOF_BYTE);
 
       if (g.lights) {
         shader.setNormalAttribute(root.bufPolyNormal.glId, 3, PGL.FLOAT,
-          0, 3 * voffset * PGL.SIZEOF_FLOAT);
+                                  0, 3 * voffset * PGL.SIZEOF_FLOAT);
         shader.setAmbientAttribute(root.bufPolyAmbient.glId, 4, PGL.UNSIGNED_BYTE,
-          0, 4 * voffset * PGL.SIZEOF_BYTE);
+                                   0, 4 * voffset * PGL.SIZEOF_BYTE);
         shader.setSpecularAttribute(root.bufPolySpecular.glId, 4, PGL.UNSIGNED_BYTE,
-          0, 4 * voffset * PGL.SIZEOF_BYTE);
+                                    0, 4 * voffset * PGL.SIZEOF_BYTE);
         shader.setEmissiveAttribute(root.bufPolyEmissive.glId, 4, PGL.UNSIGNED_BYTE,
-          0, 4 * voffset * PGL.SIZEOF_BYTE);
+                                    0, 4 * voffset * PGL.SIZEOF_BYTE);
         shader.setShininessAttribute(root.bufPolyShininess.glId, 1, PGL.FLOAT,
-          0, voffset * PGL.SIZEOF_FLOAT);
+                                     0, voffset * PGL.SIZEOF_FLOAT);
       }
       if (g.lights || needNormals) {
         shader.setNormalAttribute(root.bufPolyNormal.glId, 3, PGL.FLOAT,
-          0, 3 * voffset * PGL.SIZEOF_FLOAT);
+                                  0, 3 * voffset * PGL.SIZEOF_FLOAT);
       }
 
       if (tex != null || needTexCoords) {
         shader.setTexcoordAttribute(root.bufPolyTexcoord.glId, 2, PGL.FLOAT,
-          0, 2 * voffset * PGL.SIZEOF_FLOAT);
+                                    0, 2 * voffset * PGL.SIZEOF_FLOAT);
         shader.setTexture(tex);
       }
 
-      for (VertexAttribute attrib : polyAttribs.values()) {
-        if (!attrib.active(shader)) {
-          continue;
-        }
+      for (VertexAttribute attrib: polyAttribs.values()) {
+        if (!attrib.active(shader)) continue;
         attrib.bind(pgl);
         shader.setAttributeVBO(attrib.glLoc, attrib.buf.glId,
-          attrib.tessSize, attrib.type,
-          attrib.isColor(), 0, attrib.sizeInBytes(voffset));
+                               attrib.tessSize, attrib.type,
+                               attrib.isColor(), 0, attrib.sizeInBytes(voffset));
       }
 
       shader.draw(root.bufPolyIndex.glId, icount, ioffset);
     }
 
-    for (VertexAttribute attrib : polyAttribs.values()) {
-      if (attrib.active(shader)) {
-        attrib.unbind(pgl);
-      }
+    for (VertexAttribute attrib: polyAttribs.values()) {
+      if (attrib.active(shader)) attrib.unbind(pgl);
     }
     if (shader != null && shader.bound()) {
       shader.unbind();
     }
   }
+
 
   protected void rawPolys(PGraphicsOpenGL g, PImage textureImage) {
     PGraphics raw = g.getRaw();
@@ -5049,6 +5064,7 @@ public class PShapeOpenGL extends PShape {
     raw.endShape();
   }
 
+
   protected void renderLines(PGraphicsOpenGL g) {
     PShader shader = g.getLineShader();
     shader.bind();
@@ -5060,17 +5076,18 @@ public class PShapeOpenGL extends PShape {
       int voffset = cache.vertexOffset[n];
 
       shader.setVertexAttribute(root.bufLineVertex.glId, 4, PGL.FLOAT,
-        0, 4 * voffset * PGL.SIZEOF_FLOAT);
+                                0, 4 * voffset * PGL.SIZEOF_FLOAT);
       shader.setColorAttribute(root.bufLineColor.glId, 4, PGL.UNSIGNED_BYTE,
-        0, 4 * voffset * PGL.SIZEOF_BYTE);
+                               0, 4 * voffset * PGL.SIZEOF_BYTE);
       shader.setLineAttribute(root.bufLineAttrib.glId, 4, PGL.FLOAT,
-        0, 4 * voffset * PGL.SIZEOF_FLOAT);
+                              0, 4 * voffset * PGL.SIZEOF_FLOAT);
 
       shader.draw(root.bufLineIndex.glId, icount, ioffset);
     }
 
     shader.unbind();
   }
+
 
   protected void rawLines(PGraphicsOpenGL g) {
     PGraphics raw = g.getRaw();
@@ -5103,9 +5120,8 @@ public class PShapeOpenGL extends PShape {
         float sw0 = 2 * attribs[4 * i0 + 3];
         float sw1 = 2 * attribs[4 * i1 + 3];
 
-        if (PGraphicsOpenGL.zero(sw0)) {
-          continue; // Bevel triangles, skip.
-        }
+        if (PGraphicsOpenGL.zero(sw0)) continue; // Bevel triangles, skip.
+
         float[] src0 = {0, 0, 0, 0};
         float[] src1 = {0, 0, 0, 0};
         float[] pt0 = {0, 0, 0, 0};
@@ -5145,6 +5161,7 @@ public class PShapeOpenGL extends PShape {
     raw.endShape();
   }
 
+
   protected void renderPoints(PGraphicsOpenGL g) {
     PShader shader = g.getPointShader();
     shader.bind();
@@ -5156,17 +5173,18 @@ public class PShapeOpenGL extends PShape {
       int voffset = cache.vertexOffset[n];
 
       shader.setVertexAttribute(root.bufPointVertex.glId, 4, PGL.FLOAT,
-        0, 4 * voffset * PGL.SIZEOF_FLOAT);
+                                0, 4 * voffset * PGL.SIZEOF_FLOAT);
       shader.setColorAttribute(root.bufPointColor.glId, 4, PGL.UNSIGNED_BYTE,
-        0, 4 * voffset * PGL.SIZEOF_BYTE);
+                               0, 4 * voffset * PGL.SIZEOF_BYTE);
       shader.setPointAttribute(root.bufPointAttrib.glId, 2, PGL.FLOAT,
-        0, 2 * voffset * PGL.SIZEOF_FLOAT);
+                               0, 2 * voffset * PGL.SIZEOF_FLOAT);
 
       shader.draw(root.bufPointIndex.glId, icount, ioffset);
     }
 
     shader.unbind();
   }
+
 
   protected void rawPoints(PGraphicsOpenGL g) {
     PGraphics raw = g.getRaw();
@@ -5195,9 +5213,9 @@ public class PShapeOpenGL extends PShape {
         if (0 < size) { // round point
           weight = +size / 0.5f;
           perim = PApplet.min(PGraphicsOpenGL.MAX_POINT_ACCURACY,
-            PApplet.max(PGraphicsOpenGL.MIN_POINT_ACCURACY,
-              (int) (TWO_PI * weight
-              / PGraphicsOpenGL.POINT_ACCURACY_FACTOR))) + 1;
+                  PApplet.max(PGraphicsOpenGL.MIN_POINT_ACCURACY,
+                              (int) (TWO_PI * weight /
+                              PGraphicsOpenGL.POINT_ACCURACY_FACTOR))) + 1;
         } else {        // Square point
           weight = -size / 0.5f;
           perim = 5;

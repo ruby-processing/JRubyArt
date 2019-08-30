@@ -1,6 +1,6 @@
 /* -*- mode: java; c-basic-offset: 2; indent-tabs-mode: nil -*- */
 
- /*
+/*
   Part of the Processing project - http://processing.org
 
   Copyright (c) 2012-15 The Processing Foundation
@@ -20,16 +20,16 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
- */
+*/
+
 package processing.opengl;
 
 import processing.opengl.PGraphicsOpenGL.GLResourceVertexBuffer;
 
 // TODO: need to combine with PGraphicsOpenGL.VertexAttribute
 public class VertexBuffer {
-
-  static protected final int INIT_VERTEX_BUFFER_SIZE = 256;
-  static protected final int INIT_INDEX_BUFFER_SIZE = 512;
+  static protected final int INIT_VERTEX_BUFFER_SIZE  = 256;
+  static protected final int INIT_INDEX_BUFFER_SIZE   = 512;
 
   public int glId;
   int target;
@@ -57,14 +57,14 @@ public class VertexBuffer {
     init();
   }
 
-  protected final void create() {
+  protected void create() {
     context = pgl.getCurrentContext();
     glres = new GLResourceVertexBuffer(this);
   }
 
-  protected final void init() {
-    int size = index ? ncoords * INIT_INDEX_BUFFER_SIZE * elementSize
-      : ncoords * INIT_VERTEX_BUFFER_SIZE * elementSize;
+  protected void init() {
+    int size = index ? ncoords * INIT_INDEX_BUFFER_SIZE * elementSize :
+                       ncoords * INIT_VERTEX_BUFFER_SIZE * elementSize;
     pgl.bindBuffer(target, glId);
     pgl.bufferData(target, size, null, PGL.STATIC_DRAW);
   }

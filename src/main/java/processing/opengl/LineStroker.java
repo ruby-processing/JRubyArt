@@ -1,6 +1,6 @@
 /* -*- mode: java; c-basic-offset: 2; indent-tabs-mode: nil -*- */
 
- /*
+/*
  * Copyright (c) 2007, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -24,12 +24,12 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
+
 package processing.opengl;
 
 import processing.core.PMatrix2D;
 
-public class LineStroker {
-
+public class LineStroker  {
   private LineStroker output;
   private int capStyle;
   private int joinStyle;
@@ -84,20 +84,26 @@ public class LineStroker {
   /**
    * Constructs a <code>LineStroker</code>.
    *
-   * @param output an output <code>LineStroker</code>.
-   * @param lineWidth the desired line width in pixels, in S15.16 format.
-   * @param capStyle the desired end cap style, one of <code>CAP_BUTT</code>,
-   * <code>CAP_ROUND</code> or <code>CAP_SQUARE</code>.
-   * @param joinStyle the desired line join style, one of
-   * <code>JOIN_MITER</code>, <code>JOIN_ROUND</code> or
-   * <code>JOIN_BEVEL</code>.
-   * @param miterLimit the desired miter limit, in S15.16 format.
-   * @param transform a <code>Transform4</code> object indicating the transform
-   * that has been previously applied to all incoming coordinates. This is
-   * required in order to produce consistently shaped end caps and joins.
+   * @param output
+   *          an output <code>LineStroker</code>.
+   * @param lineWidth
+   *          the desired line width in pixels, in S15.16 format.
+   * @param capStyle
+   *          the desired end cap style, one of <code>CAP_BUTT</code>,
+   *          <code>CAP_ROUND</code> or <code>CAP_SQUARE</code>.
+   * @param joinStyle
+   *          the desired line join style, one of <code>JOIN_MITER</code>,
+   *          <code>JOIN_ROUND</code> or <code>JOIN_BEVEL</code>.
+   * @param miterLimit
+   *          the desired miter limit, in S15.16 format.
+   * @param transform
+   *          a <code>Transform4</code> object indicating the transform that has
+   *          been previously applied to all incoming coordinates. This is
+   *          required in order to produce consistently shaped end caps and
+   *          joins.
    */
   public LineStroker(LineStroker output, int lineWidth, int capStyle, int joinStyle,
-    int miterLimit, PMatrix2D transform) {
+                 int miterLimit, PMatrix2D transform) {
     setOutput(output);
     setParameters(lineWidth, capStyle, joinStyle, miterLimit, transform);
   }
@@ -105,7 +111,8 @@ public class LineStroker {
   /**
    * Sets the output <code>LineStroker</code> of this <code>LineStroker</code>.
    *
-   * @param output an output <code>LineStroker</code>.
+   * @param output
+   *          an output <code>LineStroker</code>.
    */
   public void setOutput(LineStroker output) {
     this.output = output;
@@ -114,19 +121,24 @@ public class LineStroker {
   /**
    * Sets the parameters of this <code>LineStroker</code>.
    *
-   * @param lineWidth the desired line width in pixels, in S15.16 format.
-   * @param capStyle the desired end cap style, one of <code>CAP_BUTT</code>,
-   * <code>CAP_ROUND</code> or <code>CAP_SQUARE</code>.
-   * @param joinStyle the desired line join style, one of
-   * <code>JOIN_MITER</code>, <code>JOIN_ROUND</code> or
-   * <code>JOIN_BEVEL</code>.
-   * @param miterLimit the desired miter limit, in S15.16 format.
-   * @param transform a <code>Transform4</code> object indicating the transform
-   * that has been previously applied to all incoming coordinates. This is
-   * required in order to produce consistently shaped end caps and joins.
+   * @param lineWidth
+   *          the desired line width in pixels, in S15.16 format.
+   * @param capStyle
+   *          the desired end cap style, one of <code>CAP_BUTT</code>,
+   *          <code>CAP_ROUND</code> or <code>CAP_SQUARE</code>.
+   * @param joinStyle
+   *          the desired line join style, one of <code>JOIN_MITER</code>,
+   *          <code>JOIN_ROUND</code> or <code>JOIN_BEVEL</code>.
+   * @param miterLimit
+   *          the desired miter limit, in S15.16 format.
+   * @param transform
+   *          a <code>Transform4</code> object indicating the transform that has
+   *          been previously applied to all incoming coordinates. This is
+   *          required in order to produce consistently shaped end caps and
+   *          joins.
    */
   public void setParameters(int lineWidth, int capStyle, int joinStyle,
-    int miterLimit, PMatrix2D transform) {
+                            int miterLimit, PMatrix2D transform) {
     this.m00 = LinePath.FloatToS15_16(transform.m00);
     this.m01 = LinePath.FloatToS15_16(transform.m01);
     this.m10 = LinePath.FloatToS15_16(transform.m10);
@@ -238,7 +250,7 @@ public class LineStroker {
   }
 
   private int computeRoundJoin(int cx, int cy, int xa, int ya, int xb, int yb,
-    int side, boolean flip, int[] join) {
+                               int side, boolean flip, int[] join) {
     int px, py;
     int ncoords = 0;
 
@@ -246,14 +258,18 @@ public class LineStroker {
     if (side == 0) {
       centerSide = side(cx, cy, xa, ya, xb, yb);
     } else {
-      centerSide = (side == 1);
+      centerSide = (side == 1) ? true : false;
     }
     for (int i = 0; i < numPenSegments; i++) {
       px = cx + pen_dx[i];
       py = cy + pen_dy[i];
 
       boolean penSide = side(px, py, xa, ya, xb, yb);
-      penIncluded[i] = penSide != centerSide;
+      if (penSide != centerSide) {
+        penIncluded[i] = true;
+      } else {
+        penIncluded[i] = false;
+      }
     }
 
     int start = -1, end = -1;
@@ -302,8 +318,8 @@ public class LineStroker {
   private static final long ROUND_JOIN_INTERNAL_THRESHOLD = 1000000000L;
 
   private void drawRoundJoin(int x, int y, int omx, int omy, int mx, int my,
-    int side, int color,
-    boolean flip, boolean rev, long threshold) {
+                             int side, int color,
+                             boolean flip, boolean rev, long threshold) {
     if ((omx == 0 && omy == 0) || (mx == 0 && my == 0)) {
       return;
     }
@@ -336,7 +352,7 @@ public class LineStroker {
   // Return the intersection point of the lines (ix0, iy0) -> (ix1, iy1)
   // and (ix0p, iy0p) -> (ix1p, iy1p) in m[0] and m[1]
   private void computeMiter(int ix0, int iy0, int ix1, int iy1, int ix0p,
-    int iy0p, int ix1p, int iy1p, int[] m) {
+                            int iy0p, int ix1p, int iy1p, int[] m) {
     long x0 = ix0;
     long y0 = iy0;
     long x1 = ix1;
@@ -365,8 +381,8 @@ public class LineStroker {
   }
 
   private void drawMiter(int px0, int py0, int x0, int y0, int x1, int y1,
-    int omx, int omy, int mx, int my, int color,
-    boolean rev) {
+                         int omx, int omy, int mx, int my, int color,
+                         boolean rev) {
     if (mx == omx && my == omy) {
       return;
     }
@@ -472,12 +488,12 @@ public class LineStroker {
           drawMiter(px0, py0, x0, y0, x1, y1, omx, omy, mx, my, color0, ccw);
         } else if (joinStyle == LinePath.JOIN_ROUND) {
           drawRoundJoin(x0, y0, omx, omy, mx, my, 0, color0, false, ccw,
-            ROUND_JOIN_THRESHOLD);
+                        ROUND_JOIN_THRESHOLD);
         }
       } else {
         // Draw internal joins as round
         drawRoundJoin(x0, y0, omx, omy, mx, my, 0, color0, false, ccw,
-          ROUND_JOIN_INTERNAL_THRESHOLD);
+                      ROUND_JOIN_INTERNAL_THRESHOLD);
       }
 
       emitLineTo(x0, y0, color0, !ccw);
@@ -522,12 +538,12 @@ public class LineStroker {
         drawMiter(px0, py0, x0, y0, sx0, sy0, omx, omy, mx, my, pcolor0, ccw);
       } else if (joinStyle == LinePath.JOIN_ROUND) {
         drawRoundJoin(x0, y0, omx, omy, mx, my, 0, color0, false, ccw,
-          ROUND_JOIN_THRESHOLD);
+                      ROUND_JOIN_THRESHOLD);
       }
     } else {
       // Draw internal joins as round
       drawRoundJoin(x0, y0, omx, omy, mx, my, 0, color0, false, ccw,
-        ROUND_JOIN_INTERNAL_THRESHOLD);
+                    ROUND_JOIN_INTERNAL_THRESHOLD);
     }
 
     emitLineTo(x0 + mx, y0 + my, color0);
@@ -541,7 +557,7 @@ public class LineStroker {
         drawMiter(x0, y0, sx0, sy0, sx1, sy1, mx, my, mx0, my0, color0, false);
       } else if (joinStyle == LinePath.JOIN_ROUND) {
         drawRoundJoin(sx0, sy0, mx, my, mx0, my0, 0, scolor0, false, false,
-          ROUND_JOIN_THRESHOLD);
+                      ROUND_JOIN_THRESHOLD);
       }
     }
 
@@ -552,10 +568,10 @@ public class LineStroker {
     if (ccw) {
       if (joinStyle == LinePath.JOIN_MITER) {
         drawMiter(x0, y0, sx0, sy0, sx1, sy1, -mx, -my, -mx0, -my0, color0,
-          false);
+                  false);
       } else if (joinStyle == LinePath.JOIN_ROUND) {
         drawRoundJoin(sx0, sy0, -mx, -my, -mx0, -my0, 0, scolor0, true, false,
-          ROUND_JOIN_THRESHOLD);
+                      ROUND_JOIN_THRESHOLD);
       }
     }
 
@@ -601,7 +617,7 @@ public class LineStroker {
   private void finish() {
     if (capStyle == LinePath.CAP_ROUND) {
       drawRoundJoin(x0, y0, omx, omy, -omx, -omy, 1, color0, false, false,
-        ROUND_JOIN_THRESHOLD);
+                    ROUND_JOIN_THRESHOLD);
     } else if (capStyle == LinePath.CAP_SQUARE) {
       long ldx = px0 - x0;
       long ldy = py0 - y0;
@@ -624,12 +640,12 @@ public class LineStroker {
 
     if (capStyle == LinePath.CAP_ROUND) {
       drawRoundJoin(sx0, sy0, -mx0, -my0, mx0, my0, 1, scolor0, false, false,
-        ROUND_JOIN_THRESHOLD);
+                    ROUND_JOIN_THRESHOLD);
     } else if (capStyle == LinePath.CAP_SQUARE) {
       long ldx = sx1 - sx0;
       long ldy = sy1 - sy0;
       long llen = lineLength(ldx, ldy);
-      if (0 < llen) {
+      if (0  < llen) {
         long s = (long) lineWidth2 * 65536 / llen;
 
         int capx = sx0 - (int) (ldx * s >> 16);

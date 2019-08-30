@@ -21,7 +21,7 @@
 */
 
 package processing.core;
-import java.awt.desktop.*;
+
 import java.awt.*;
 
 

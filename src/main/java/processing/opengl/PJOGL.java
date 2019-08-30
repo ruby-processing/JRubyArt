@@ -1,6 +1,6 @@
 /* -*- mode: java; c-basic-offset: 2; indent-tabs-mode: nil -*- */
 
- /*
+/*
   Part of the Processing project - http://processing.org
 
   Copyright (c) 2012-15 The Processing Foundation
@@ -20,7 +20,8 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
- */
+*/
+
 package processing.opengl;
 
 import java.awt.Font;
@@ -59,8 +60,8 @@ import processing.core.PGraphics;
 import processing.core.PMatrix3D;
 import processing.core.PSurface;
 
-public class PJOGL extends PGL {
 
+public class PJOGL extends PGL {
   // OpenGL profile to use (2, 3 or 4)
   public static int profile = 2;
 
@@ -68,128 +69,129 @@ public class PJOGL extends PGL {
   protected static String[] icons = null;
 
   // The two windowing toolkits available to use in JOGL:
-  public static final int AWT = 0; // http://jogamp.org/wiki/index.php/Using_JOGL_in_AWT_SWT_and_Swing
+  public static final int AWT  = 0; // http://jogamp.org/wiki/index.php/Using_JOGL_in_AWT_SWT_and_Swing
   public static final int NEWT = 1; // http://jogamp.org/jogl/doc/NEWT-Overview.html
 
   // ........................................................
+
   // Public members to access the underlying GL objects and context
-  /**
-   * Basic GL functionality, common to all profiles
-   */
+
+  /** Basic GL functionality, common to all profiles */
   public GL gl;
 
-  /**
-   * GLU interface *
-   */
+  /** GLU interface **/
   public GLU glu;
 
-  /**
-   * The rendering context (holds rendering state info)
-   */
+  /** The rendering context (holds rendering state info) */
   public GLContext context;
 
   // ........................................................
+
   // Additional parameters
-  /**
-   * Time that the Processing's animation thread will wait for JOGL's rendering
+
+  /** Time that the Processing's animation thread will wait for JOGL's rendering
    * thread to be done with a single frame.
    */
   protected static int DRAW_TIMEOUT_MILLIS = 500;
 
   // ........................................................
+
   // Protected JOGL-specific objects needed to access the GL profiles
-  /**
-   * The capabilities of the OpenGL rendering surface
-   */
+
+  /** The capabilities of the OpenGL rendering surface */
   protected GLCapabilitiesImmutable capabilities;
 
-  /**
-   * The rendering surface
-   */
+  /** The rendering surface */
   protected GLDrawable drawable;
 
-  /**
-   * GLES2 functionality (shaders, etc)
-   */
+  /** GLES2 functionality (shaders, etc) */
   protected GL2ES2 gl2;
 
-  /**
-   * GL3 interface
-   */
+  /** GL3 interface */
   protected GL2GL3 gl3;
 
-  /**
-   * GL2 desktop functionality (blit framebuffer, map buffer range, multisampled
-   * renderbuffers)
-   */
+  /** GL2 desktop functionality (blit framebuffer, map buffer range,
+   * multisampled renderbuffers) */
   protected GL2 gl2x;
 
-  /**
-   * GL3ES3 interface
-   */
+  /** GL3ES3 interface */
   protected GL3ES3 gl3es3;
 
-  /**
-   * Stores exceptions that ocurred during drawing
-   */
+  /** Stores exceptions that ocurred during drawing */
   protected Exception drawException;
 
   // ........................................................
+
   // Utility arrays to copy projection/modelview matrices to GL
+
   protected float[] projMatrix;
   protected float[] mvMatrix;
 
   // ........................................................
+
   // Static initialization for some parameters that need to be different for
   // JOGL
+
   static {
     MIN_DIRECT_BUFFER_SIZE = 2;
-    INDEX_TYPE = GL.GL_UNSIGNED_SHORT;
+    INDEX_TYPE             = GL.GL_UNSIGNED_SHORT;
   }
 
+
   ///////////////////////////////////////////////////////////////
+
   // Initialization, finalization
+
+
   public PJOGL(PGraphicsOpenGL pg) {
     super(pg);
     glu = new GLU();
   }
+
 
   @Override
   public Object getNative() {
     return sketch.getSurface().getNative();
   }
 
-  @Override
-  protected void setFrameRate(float fps) {
-  }
 
   @Override
-  protected void initSurface(int antialias) {
-  }
+  protected void setFrameRate(float fps) {}
+
 
   @Override
-  protected void reinitSurface() {
-  }
+  protected void initSurface(int antialias) {}
+
 
   @Override
-  protected void registerListeners() {
-  }
+  protected void reinitSurface() {}
+
+
+  @Override
+  protected void registerListeners() {}
+
 
   static public void setIcon(String... icons) {
     PJOGL.icons = new String[icons.length];
     PApplet.arrayCopy(icons, PJOGL.icons);
   }
 
+
   ///////////////////////////////////////////////////////////////
+
   // Public methods to get/set renderer's properties
+
+
   public void setCaps(GLCapabilities caps) {
     reqNumSamples = caps.getNumSamples();
     capabilities = caps;
   }
 
+
   public GLCapabilitiesImmutable getCaps() {
     return capabilities;
   }
+
 
   public void setFps(float fps) {
     if (!setFps || targetFps != fps) {
@@ -206,15 +208,18 @@ public class PJOGL extends PGL {
     }
   }
 
+
   @Override
   protected int getDepthBits() {
     return capabilities.getDepthBits();
   }
 
+
   @Override
   protected int getStencilBits() {
     return capabilities.getStencilBits();
   }
+
 
   @Override
   protected float getPixelScale() {
@@ -222,15 +227,16 @@ public class PJOGL extends PGL {
     if (surf == null) {
       return graphics.pixelDensity;
     } else if (surf instanceof PSurfaceJOGL) {
-      return ((PSurfaceJOGL) surf).getPixelScale();
+      return ((PSurfaceJOGL)surf).getPixelScale();
     } else {
       throw new RuntimeException("Renderer cannot find a JOGL surface");
     }
   }
 
+
   @Override
   protected void getGL(PGL pgl) {
-    PJOGL pjogl = (PJOGL) pgl;
+    PJOGL pjogl = (PJOGL)pgl;
 
     this.drawable = pjogl.drawable;
     this.context = pjogl.context;
@@ -243,6 +249,7 @@ public class PJOGL extends PGL {
     this.gl3 = pjogl.gl3;
     this.gl3es3 = pjogl.gl3es3;
   }
+
 
   public void getGL(GLAutoDrawable glDrawable) {
     context = glDrawable.getContext();
@@ -268,42 +275,39 @@ public class PJOGL extends PGL {
     }
   }
 
-  @Override
-  protected boolean canDraw() {
-    return true;
-  }
 
   @Override
-  protected void requestFocus() {
-  }
+  protected boolean canDraw() { return true; }
+
 
   @Override
-  protected void requestDraw() {
-  }
+  protected  void requestFocus() {}
+
 
   @Override
-  protected void swapBuffers() {
-    PSurfaceJOGL surf = (PSurfaceJOGL) sketch.getSurface();
+  protected  void requestDraw() {}
+
+
+  @Override
+  protected void swapBuffers()  {
+    PSurfaceJOGL surf = (PSurfaceJOGL)sketch.getSurface();
     surf.window.swapBuffers();
   }
+
 
   @Override
   protected void initFBOLayer() {
     if (0 < sketch.frameCount) {
-      if (isES()) {
-        initFBOLayerES();
-      } else {
-        initFBOLayerGL();
-      }
+      if (isES()) initFBOLayerES();
+      else initFBOLayerGL();
     }
   }
+
 
   private void initFBOLayerES() {
     IntBuffer buf = allocateDirectIntBuffer(fboWidth * fboHeight);
 
-    if (hasReadBuffer()) {
-      readBuffer(BACK);
-    }
+    if (hasReadBuffer()) readBuffer(BACK);
     readPixelsImpl(0, 0, fboWidth, fboHeight, RGBA, UNSIGNED_BYTE, buf);
     bindTexture(TEXTURE_2D, glColorTex.get(frontTex));
     texSubImage2D(TEXTURE_2D, 0, 0, 0, fboWidth, fboHeight, RGBA, UNSIGNED_BYTE, buf);
@@ -315,6 +319,7 @@ public class PJOGL extends PGL {
     bindFramebufferImpl(FRAMEBUFFER, 0);
   }
 
+
   private void initFBOLayerGL() {
     // Copy the contents of the front and back screen buffers to the textures
     // of the FBO, so they are properly initialized. Note that the front buffer
@@ -322,9 +327,7 @@ public class PJOGL extends PGL {
     // https://www.opengl.org/wiki/Default_Framebuffer
     // so it is copied to the front texture of the FBO layer:
     if (pclearColor || 0 < pgeomCount || !sketch.isLooping()) {
-      if (hasReadBuffer()) {
-        readBuffer(FRONT);
-      }
+      if (hasReadBuffer()) readBuffer(FRONT);
     } else {
       // ...except when the previous frame has not been cleared and nothing was
       // rendered while looping. In this case the back buffer, which holds the
@@ -334,25 +337,24 @@ public class PJOGL extends PGL {
     }
     bindFramebufferImpl(DRAW_FRAMEBUFFER, glColorFbo.get(0));
     framebufferTexture2D(FRAMEBUFFER, COLOR_ATTACHMENT0,
-      TEXTURE_2D, glColorTex.get(frontTex), 0);
-    if (hasDrawBuffer()) {
-      drawBuffer(COLOR_ATTACHMENT0);
-    }
+                         TEXTURE_2D, glColorTex.get(frontTex), 0);
+    if (hasDrawBuffer()) drawBuffer(COLOR_ATTACHMENT0);
     blitFramebuffer(0, 0, fboWidth, fboHeight,
-      0, 0, fboWidth, fboHeight,
-      COLOR_BUFFER_BIT, NEAREST);
+                    0, 0, fboWidth, fboHeight,
+                    COLOR_BUFFER_BIT, NEAREST);
 
     readBuffer(BACK);
     bindFramebufferImpl(DRAW_FRAMEBUFFER, glColorFbo.get(0));
     framebufferTexture2D(FRAMEBUFFER, COLOR_ATTACHMENT0,
-      TEXTURE_2D, glColorTex.get(backTex), 0);
+                         TEXTURE_2D, glColorTex.get(backTex), 0);
     drawBuffer(COLOR_ATTACHMENT0);
     blitFramebuffer(0, 0, fboWidth, fboHeight,
-      0, 0, fboWidth, fboHeight,
-      COLOR_BUFFER_BIT, NEAREST);
+                    0, 0, fboWidth, fboHeight,
+                    COLOR_BUFFER_BIT, NEAREST);
 
     bindFramebufferImpl(FRAMEBUFFER, 0);
   }
+
 
   @Override
   protected void beginGL() {
@@ -363,16 +365,16 @@ public class PJOGL extends PGL {
         projMatrix = new float[16];
       }
       gl2x.glMatrixMode(GLMatrixFunc.GL_PROJECTION);
-      projMatrix[0] = proj.m00;
-      projMatrix[1] = proj.m10;
-      projMatrix[2] = proj.m20;
-      projMatrix[3] = proj.m30;
-      projMatrix[4] = proj.m01;
-      projMatrix[5] = proj.m11;
-      projMatrix[6] = proj.m21;
-      projMatrix[7] = proj.m31;
-      projMatrix[8] = proj.m02;
-      projMatrix[9] = proj.m12;
+      projMatrix[ 0] = proj.m00;
+      projMatrix[ 1] = proj.m10;
+      projMatrix[ 2] = proj.m20;
+      projMatrix[ 3] = proj.m30;
+      projMatrix[ 4] = proj.m01;
+      projMatrix[ 5] = proj.m11;
+      projMatrix[ 6] = proj.m21;
+      projMatrix[ 7] = proj.m31;
+      projMatrix[ 8] = proj.m02;
+      projMatrix[ 9] = proj.m12;
       projMatrix[10] = proj.m22;
       projMatrix[11] = proj.m32;
       projMatrix[12] = proj.m03;
@@ -385,16 +387,16 @@ public class PJOGL extends PGL {
         mvMatrix = new float[16];
       }
       gl2x.glMatrixMode(GLMatrixFunc.GL_MODELVIEW);
-      mvMatrix[0] = mdl.m00;
-      mvMatrix[1] = mdl.m10;
-      mvMatrix[2] = mdl.m20;
-      mvMatrix[3] = mdl.m30;
-      mvMatrix[4] = mdl.m01;
-      mvMatrix[5] = mdl.m11;
-      mvMatrix[6] = mdl.m21;
-      mvMatrix[7] = mdl.m31;
-      mvMatrix[8] = mdl.m02;
-      mvMatrix[9] = mdl.m12;
+      mvMatrix[ 0] = mdl.m00;
+      mvMatrix[ 1] = mdl.m10;
+      mvMatrix[ 2] = mdl.m20;
+      mvMatrix[ 3] = mdl.m30;
+      mvMatrix[ 4] = mdl.m01;
+      mvMatrix[ 5] = mdl.m11;
+      mvMatrix[ 6] = mdl.m21;
+      mvMatrix[ 7] = mdl.m31;
+      mvMatrix[ 8] = mdl.m02;
+      mvMatrix[ 9] = mdl.m12;
       mvMatrix[10] = mdl.m22;
       mvMatrix[11] = mdl.m32;
       mvMatrix[12] = mdl.m03;
@@ -405,23 +407,20 @@ public class PJOGL extends PGL {
     }
   }
 
+
   @Override
   protected boolean hasFBOs() {
-    if (context.hasBasicFBOSupport()) {
-      return true;
-    } else {
-      return super.hasFBOs();
-    }
+    if (context.hasBasicFBOSupport()) return true;
+    else return super.hasFBOs();
   }
+
 
   @Override
   protected boolean hasShaders() {
-    if (context.hasGLSL()) {
-      return true;
-    } else {
-      return super.hasShaders();
-    }
+    if (context.hasGLSL()) return true;
+    else return super.hasShaders();
   }
+
 
   public void init(GLAutoDrawable glDrawable) {
     capabilities = glDrawable.getChosenGLCapabilities();
@@ -433,8 +432,12 @@ public class PJOGL extends PGL {
     }
   }
 
+
   ///////////////////////////////////////////////////////////
+
   // Utility functions
+
+
   @Override
   protected void enableTexturing(int target) {
     if (target == TEXTURE_2D) {
@@ -444,6 +447,7 @@ public class PJOGL extends PGL {
     }
   }
 
+
   @Override
   protected void disableTexturing(int target) {
     if (target == TEXTURE_2D) {
@@ -452,6 +456,7 @@ public class PJOGL extends PGL {
       texturingTargets[1] = false;
     }
   }
+
 
   /**
    * Convenience method to get a legit FontMetrics object. Where possible,
@@ -463,6 +468,7 @@ public class PJOGL extends PGL {
     return Toolkit.getDefaultToolkit().getFontMetrics(font);
   }
 
+
   /**
    * Convenience method to jump through some Java2D hoops and get an FRC.
    */
@@ -470,15 +476,18 @@ public class PJOGL extends PGL {
     return getFontMetrics(font).getFontRenderContext();
   }
 
+
   @Override
   protected int getFontAscent(Object font) {
     return getFontMetrics((Font) font).getAscent();
   }
 
+
   @Override
   protected int getFontDescent(Object font) {
     return getFontMetrics((Font) font).getDescent();
   }
+
 
   @Override
   protected int getTextWidth(Object font, char[] buffer, int start, int stop) {
@@ -488,16 +497,19 @@ public class PJOGL extends PGL {
     return metrics.charsWidth(buffer, start, length);
   }
 
+
   @Override
   protected Object getDerivedFont(Object font, float size) {
     return ((Font) font).deriveFont(size);
   }
+
 
   @Override
   protected int getGLSLVersion() {
     VersionNumber vn = context.getGLSLVersionNumber();
     return vn.getMajor() * 100 + vn.getMinor();
   }
+
 
   @Override
   protected String getGLSLVersionSuffix() {
@@ -509,25 +521,30 @@ public class PJOGL extends PGL {
     }
   }
 
+
   @Override
   protected String[] loadVertexShader(String filename) {
     return loadVertexShader(filename, getGLSLVersion(), getGLSLVersionSuffix());
   }
+
 
   @Override
   protected String[] loadFragmentShader(String filename) {
     return loadFragmentShader(filename, getGLSLVersion(), getGLSLVersionSuffix());
   }
 
+
   @Override
   protected String[] loadVertexShader(URL url) {
     return loadVertexShader(url, getGLSLVersion(), getGLSLVersionSuffix());
   }
 
+
   @Override
   protected String[] loadFragmentShader(URL url) {
     return loadFragmentShader(url, getGLSLVersion(), getGLSLVersionSuffix());
   }
+
 
   @Override
   protected String[] loadFragmentShader(String filename, int version, String versionSuffix) {
@@ -535,11 +552,13 @@ public class PJOGL extends PGL {
     return preprocessFragmentSource(fragSrc0, version, versionSuffix);
   }
 
+
   @Override
   protected String[] loadVertexShader(String filename, int version, String versionSuffix) {
     String[] vertSrc0 = sketch.loadStrings(filename);
     return preprocessVertexSource(vertSrc0, version, versionSuffix);
   }
+
 
   @Override
   protected String[] loadFragmentShader(URL url, int version, String versionSuffix) {
@@ -552,6 +571,7 @@ public class PJOGL extends PGL {
     return null;
   }
 
+
   @Override
   protected String[] loadVertexShader(URL url, int version, String versionSuffix) {
     try {
@@ -563,15 +583,19 @@ public class PJOGL extends PGL {
     return null;
   }
 
+
   ///////////////////////////////////////////////////////////
+
   // Tessellator
+
+
   @Override
   protected Tessellator createTessellator(TessellatorCallback callback) {
     return new Tessellator(callback);
   }
 
-  protected static class Tessellator implements PGL.Tessellator {
 
+  protected static class Tessellator implements PGL.Tessellator {
     protected GLUtessellator tess;
     protected TessellatorCallback callback;
     protected GLUCallback gluCallback;
@@ -598,7 +622,6 @@ public class PJOGL extends PGL {
       setProperty(GLU.GLU_TESS_WINDING_RULE, rule);
     }
 
-    @Override
     public void setProperty(int property, int value) {
       GLU.gluTessProperty(tess, property, value);
     }
@@ -639,7 +662,6 @@ public class PJOGL extends PGL {
     }
 
     protected class GLUCallback extends GLUtessellatorCallbackAdapter {
-
       @Override
       public void begin(int type) {
         callback.begin(type);
@@ -657,7 +679,7 @@ public class PJOGL extends PGL {
 
       @Override
       public void combine(double[] coords, Object[] data,
-        float[] weight, Object[] outData) {
+                          float[] weight, Object[] outData) {
         callback.combine(coords, data, weight, outData);
       }
 
@@ -668,186 +690,192 @@ public class PJOGL extends PGL {
     }
   }
 
+
   @Override
   protected String tessError(int err) {
     return glu.gluErrorString(err);
   }
 
+
   ///////////////////////////////////////////////////////////
+
   // Font outline
+
+
   static {
     SHAPE_TEXT_SUPPORTED = true;
-    SEG_MOVETO = PathIterator.SEG_MOVETO;
-    SEG_LINETO = PathIterator.SEG_LINETO;
-    SEG_QUADTO = PathIterator.SEG_QUADTO;
+    SEG_MOVETO  = PathIterator.SEG_MOVETO;
+    SEG_LINETO  = PathIterator.SEG_LINETO;
+    SEG_QUADTO  = PathIterator.SEG_QUADTO;
     SEG_CUBICTO = PathIterator.SEG_CUBICTO;
-    SEG_CLOSE = PathIterator.SEG_CLOSE;
+    SEG_CLOSE   = PathIterator.SEG_CLOSE;
   }
+
 
   @Override
   protected FontOutline createFontOutline(char ch, Object font) {
     return new FontOutline(ch, (Font) font);
   }
 
-  protected class FontOutline implements PGL.FontOutline {
 
+  protected class FontOutline implements PGL.FontOutline {
     PathIterator iter;
 
     public FontOutline(char ch, Font font) {
-      char textArray[] = new char[]{ch};
+      char textArray[] = new char[] { ch };
       FontRenderContext frc = getFontRenderContext(font);
       GlyphVector gv = font.createGlyphVector(frc, textArray);
       Shape shp = gv.getOutline();
       iter = shp.getPathIterator(null);
     }
 
-    @Override
     public boolean isDone() {
       return iter.isDone();
     }
 
-    @Override
     public int currentSegment(float coords[]) {
       return iter.currentSegment(coords);
     }
 
-    @Override
     public void next() {
       iter.next();
     }
   }
 
+
   ///////////////////////////////////////////////////////////
+
   // Constants
+
   static {
     FALSE = GL.GL_FALSE;
-    TRUE = GL.GL_TRUE;
+    TRUE  = GL.GL_TRUE;
 
-    INT = GL2ES2.GL_INT;
-    BYTE = GL.GL_BYTE;
-    SHORT = GL.GL_SHORT;
-    FLOAT = GL.GL_FLOAT;
-    BOOL = GL2ES2.GL_BOOL;
-    UNSIGNED_INT = GL.GL_UNSIGNED_INT;
-    UNSIGNED_BYTE = GL.GL_UNSIGNED_BYTE;
+    INT            = GL2ES2.GL_INT;
+    BYTE           = GL.GL_BYTE;
+    SHORT          = GL.GL_SHORT;
+    FLOAT          = GL.GL_FLOAT;
+    BOOL           = GL2ES2.GL_BOOL;
+    UNSIGNED_INT   = GL.GL_UNSIGNED_INT;
+    UNSIGNED_BYTE  = GL.GL_UNSIGNED_BYTE;
     UNSIGNED_SHORT = GL.GL_UNSIGNED_SHORT;
 
-    RGB = GL.GL_RGB;
-    RGBA = GL.GL_RGBA;
-    ALPHA = GL.GL_ALPHA;
-    LUMINANCE = GL.GL_LUMINANCE;
+    RGB             = GL.GL_RGB;
+    RGBA            = GL.GL_RGBA;
+    ALPHA           = GL.GL_ALPHA;
+    LUMINANCE       = GL.GL_LUMINANCE;
     LUMINANCE_ALPHA = GL.GL_LUMINANCE_ALPHA;
 
-    UNSIGNED_SHORT_5_6_5 = GL.GL_UNSIGNED_SHORT_5_6_5;
+    UNSIGNED_SHORT_5_6_5   = GL.GL_UNSIGNED_SHORT_5_6_5;
     UNSIGNED_SHORT_4_4_4_4 = GL.GL_UNSIGNED_SHORT_4_4_4_4;
     UNSIGNED_SHORT_5_5_5_1 = GL.GL_UNSIGNED_SHORT_5_5_5_1;
 
-    RGBA4 = GL.GL_RGBA4;
+    RGBA4   = GL.GL_RGBA4;
     RGB5_A1 = GL.GL_RGB5_A1;
-    RGB565 = GL.GL_RGB565;
-    RGB8 = GL.GL_RGB8;
-    RGBA8 = GL.GL_RGBA8;
-    ALPHA8 = GL.GL_ALPHA8;
+    RGB565  = GL.GL_RGB565;
+    RGB8    = GL.GL_RGB8;
+    RGBA8   = GL.GL_RGBA8;
+    ALPHA8  = GL.GL_ALPHA8;
 
-    READ_ONLY = GL2ES3.GL_READ_ONLY;
+    READ_ONLY  = GL2ES3.GL_READ_ONLY;
     WRITE_ONLY = GL.GL_WRITE_ONLY;
     READ_WRITE = GL2ES3.GL_READ_WRITE;
 
     TESS_WINDING_NONZERO = GLU.GLU_TESS_WINDING_NONZERO;
-    TESS_WINDING_ODD = GLU.GLU_TESS_WINDING_ODD;
-    TESS_EDGE_FLAG = GLU.GLU_TESS_EDGE_FLAG;
+    TESS_WINDING_ODD     = GLU.GLU_TESS_WINDING_ODD;
+    TESS_EDGE_FLAG       = GLU.GLU_TESS_EDGE_FLAG;
 
     GENERATE_MIPMAP_HINT = GL.GL_GENERATE_MIPMAP_HINT;
-    FASTEST = GL.GL_FASTEST;
-    NICEST = GL.GL_NICEST;
-    DONT_CARE = GL.GL_DONT_CARE;
+    FASTEST              = GL.GL_FASTEST;
+    NICEST               = GL.GL_NICEST;
+    DONT_CARE            = GL.GL_DONT_CARE;
 
-    VENDOR = GL.GL_VENDOR;
-    RENDERER = GL.GL_RENDERER;
-    VERSION = GL.GL_VERSION;
-    EXTENSIONS = GL.GL_EXTENSIONS;
+    VENDOR                   = GL.GL_VENDOR;
+    RENDERER                 = GL.GL_RENDERER;
+    VERSION                  = GL.GL_VERSION;
+    EXTENSIONS               = GL.GL_EXTENSIONS;
     SHADING_LANGUAGE_VERSION = GL2ES2.GL_SHADING_LANGUAGE_VERSION;
 
     MAX_SAMPLES = GL.GL_MAX_SAMPLES;
-    SAMPLES = GL.GL_SAMPLES;
+    SAMPLES     = GL.GL_SAMPLES;
 
     ALIASED_LINE_WIDTH_RANGE = GL.GL_ALIASED_LINE_WIDTH_RANGE;
     ALIASED_POINT_SIZE_RANGE = GL.GL_ALIASED_POINT_SIZE_RANGE;
 
-    DEPTH_BITS = GL.GL_DEPTH_BITS;
+    DEPTH_BITS   = GL.GL_DEPTH_BITS;
     STENCIL_BITS = GL.GL_STENCIL_BITS;
 
     CCW = GL.GL_CCW;
-    CW = GL.GL_CW;
+    CW  = GL.GL_CW;
 
     VIEWPORT = GL.GL_VIEWPORT;
 
-    ARRAY_BUFFER = GL.GL_ARRAY_BUFFER;
+    ARRAY_BUFFER         = GL.GL_ARRAY_BUFFER;
     ELEMENT_ARRAY_BUFFER = GL.GL_ELEMENT_ARRAY_BUFFER;
-    PIXEL_PACK_BUFFER = GL2ES3.GL_PIXEL_PACK_BUFFER;
+    PIXEL_PACK_BUFFER    = GL2ES3.GL_PIXEL_PACK_BUFFER;
 
-    MAX_VERTEX_ATTRIBS = GL2ES2.GL_MAX_VERTEX_ATTRIBS;
+    MAX_VERTEX_ATTRIBS  = GL2ES2.GL_MAX_VERTEX_ATTRIBS;
 
-    STATIC_DRAW = GL.GL_STATIC_DRAW;
+    STATIC_DRAW  = GL.GL_STATIC_DRAW;
     DYNAMIC_DRAW = GL.GL_DYNAMIC_DRAW;
-    STREAM_DRAW = GL2ES2.GL_STREAM_DRAW;
-    STREAM_READ = GL2ES3.GL_STREAM_READ;
+    STREAM_DRAW  = GL2ES2.GL_STREAM_DRAW;
+    STREAM_READ  = GL2ES3.GL_STREAM_READ;
 
-    BUFFER_SIZE = GL.GL_BUFFER_SIZE;
+    BUFFER_SIZE  = GL.GL_BUFFER_SIZE;
     BUFFER_USAGE = GL.GL_BUFFER_USAGE;
 
-    POINTS = GL.GL_POINTS;
-    LINE_STRIP = GL.GL_LINE_STRIP;
-    LINE_LOOP = GL.GL_LINE_LOOP;
-    LINES = GL.GL_LINES;
-    TRIANGLE_FAN = GL.GL_TRIANGLE_FAN;
+    POINTS         = GL.GL_POINTS;
+    LINE_STRIP     = GL.GL_LINE_STRIP;
+    LINE_LOOP      = GL.GL_LINE_LOOP;
+    LINES          = GL.GL_LINES;
+    TRIANGLE_FAN   = GL.GL_TRIANGLE_FAN;
     TRIANGLE_STRIP = GL.GL_TRIANGLE_STRIP;
-    TRIANGLES = GL.GL_TRIANGLES;
+    TRIANGLES      = GL.GL_TRIANGLES;
 
-    CULL_FACE = GL.GL_CULL_FACE;
-    FRONT = GL.GL_FRONT;
-    BACK = GL.GL_BACK;
+    CULL_FACE      = GL.GL_CULL_FACE;
+    FRONT          = GL.GL_FRONT;
+    BACK           = GL.GL_BACK;
     FRONT_AND_BACK = GL.GL_FRONT_AND_BACK;
 
     POLYGON_OFFSET_FILL = GL.GL_POLYGON_OFFSET_FILL;
 
     UNPACK_ALIGNMENT = GL.GL_UNPACK_ALIGNMENT;
-    PACK_ALIGNMENT = GL.GL_PACK_ALIGNMENT;
+    PACK_ALIGNMENT   = GL.GL_PACK_ALIGNMENT;
 
-    TEXTURE_2D = GL.GL_TEXTURE_2D;
+    TEXTURE_2D        = GL.GL_TEXTURE_2D;
     TEXTURE_RECTANGLE = GL2GL3.GL_TEXTURE_RECTANGLE;
 
-    TEXTURE_BINDING_2D = GL.GL_TEXTURE_BINDING_2D;
+    TEXTURE_BINDING_2D        = GL.GL_TEXTURE_BINDING_2D;
     TEXTURE_BINDING_RECTANGLE = GL2GL3.GL_TEXTURE_BINDING_RECTANGLE;
 
-    MAX_TEXTURE_SIZE = GL.GL_MAX_TEXTURE_SIZE;
-    TEXTURE_MAX_ANISOTROPY = GL.GL_TEXTURE_MAX_ANISOTROPY_EXT;
+    MAX_TEXTURE_SIZE           = GL.GL_MAX_TEXTURE_SIZE;
+    TEXTURE_MAX_ANISOTROPY     = GL.GL_TEXTURE_MAX_ANISOTROPY_EXT;
     MAX_TEXTURE_MAX_ANISOTROPY = GL.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT;
 
-    MAX_VERTEX_TEXTURE_IMAGE_UNITS = GL2ES2.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS;
-    MAX_TEXTURE_IMAGE_UNITS = GL2ES2.GL_MAX_TEXTURE_IMAGE_UNITS;
+    MAX_VERTEX_TEXTURE_IMAGE_UNITS   = GL2ES2.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS;
+    MAX_TEXTURE_IMAGE_UNITS          = GL2ES2.GL_MAX_TEXTURE_IMAGE_UNITS;
     MAX_COMBINED_TEXTURE_IMAGE_UNITS = GL2ES2.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS;
 
     NUM_COMPRESSED_TEXTURE_FORMATS = GL.GL_NUM_COMPRESSED_TEXTURE_FORMATS;
-    COMPRESSED_TEXTURE_FORMATS = GL.GL_COMPRESSED_TEXTURE_FORMATS;
+    COMPRESSED_TEXTURE_FORMATS     = GL.GL_COMPRESSED_TEXTURE_FORMATS;
 
-    NEAREST = GL.GL_NEAREST;
-    LINEAR = GL.GL_LINEAR;
+    NEAREST               = GL.GL_NEAREST;
+    LINEAR                = GL.GL_LINEAR;
     LINEAR_MIPMAP_NEAREST = GL.GL_LINEAR_MIPMAP_NEAREST;
-    LINEAR_MIPMAP_LINEAR = GL.GL_LINEAR_MIPMAP_LINEAR;
+    LINEAR_MIPMAP_LINEAR  = GL.GL_LINEAR_MIPMAP_LINEAR;
 
     CLAMP_TO_EDGE = GL.GL_CLAMP_TO_EDGE;
-    REPEAT = GL.GL_REPEAT;
+    REPEAT        = GL.GL_REPEAT;
 
-    TEXTURE0 = GL.GL_TEXTURE0;
-    TEXTURE1 = GL.GL_TEXTURE1;
-    TEXTURE2 = GL.GL_TEXTURE2;
-    TEXTURE3 = GL.GL_TEXTURE3;
+    TEXTURE0           = GL.GL_TEXTURE0;
+    TEXTURE1           = GL.GL_TEXTURE1;
+    TEXTURE2           = GL.GL_TEXTURE2;
+    TEXTURE3           = GL.GL_TEXTURE3;
     TEXTURE_MIN_FILTER = GL.GL_TEXTURE_MIN_FILTER;
     TEXTURE_MAG_FILTER = GL.GL_TEXTURE_MAG_FILTER;
-    TEXTURE_WRAP_S = GL.GL_TEXTURE_WRAP_S;
-    TEXTURE_WRAP_T = GL.GL_TEXTURE_WRAP_T;
-    TEXTURE_WRAP_R = GL2ES2.GL_TEXTURE_WRAP_R;
+    TEXTURE_WRAP_S     = GL.GL_TEXTURE_WRAP_S;
+    TEXTURE_WRAP_T     = GL.GL_TEXTURE_WRAP_T;
+    TEXTURE_WRAP_R     = GL2ES2.GL_TEXTURE_WRAP_R;
 
     TEXTURE_CUBE_MAP = GL.GL_TEXTURE_CUBE_MAP;
     TEXTURE_CUBE_MAP_POSITIVE_X = GL.GL_TEXTURE_CUBE_MAP_POSITIVE_X;
@@ -857,166 +885,168 @@ public class PJOGL extends PGL {
     TEXTURE_CUBE_MAP_NEGATIVE_Y = GL.GL_TEXTURE_CUBE_MAP_NEGATIVE_Y;
     TEXTURE_CUBE_MAP_NEGATIVE_Z = GL.GL_TEXTURE_CUBE_MAP_NEGATIVE_Z;
 
-    VERTEX_SHADER = GL2ES2.GL_VERTEX_SHADER;
-    FRAGMENT_SHADER = GL2ES2.GL_FRAGMENT_SHADER;
-    INFO_LOG_LENGTH = GL2ES2.GL_INFO_LOG_LENGTH;
+    VERTEX_SHADER        = GL2ES2.GL_VERTEX_SHADER;
+    FRAGMENT_SHADER      = GL2ES2.GL_FRAGMENT_SHADER;
+    INFO_LOG_LENGTH      = GL2ES2.GL_INFO_LOG_LENGTH;
     SHADER_SOURCE_LENGTH = GL2ES2.GL_SHADER_SOURCE_LENGTH;
-    COMPILE_STATUS = GL2ES2.GL_COMPILE_STATUS;
-    LINK_STATUS = GL2ES2.GL_LINK_STATUS;
-    VALIDATE_STATUS = GL2ES2.GL_VALIDATE_STATUS;
-    SHADER_TYPE = GL2ES2.GL_SHADER_TYPE;
-    DELETE_STATUS = GL2ES2.GL_DELETE_STATUS;
+    COMPILE_STATUS       = GL2ES2.GL_COMPILE_STATUS;
+    LINK_STATUS          = GL2ES2.GL_LINK_STATUS;
+    VALIDATE_STATUS      = GL2ES2.GL_VALIDATE_STATUS;
+    SHADER_TYPE          = GL2ES2.GL_SHADER_TYPE;
+    DELETE_STATUS        = GL2ES2.GL_DELETE_STATUS;
 
-    FLOAT_VEC2 = GL2ES2.GL_FLOAT_VEC2;
-    FLOAT_VEC3 = GL2ES2.GL_FLOAT_VEC3;
-    FLOAT_VEC4 = GL2ES2.GL_FLOAT_VEC4;
-    FLOAT_MAT2 = GL2ES2.GL_FLOAT_MAT2;
-    FLOAT_MAT3 = GL2ES2.GL_FLOAT_MAT3;
-    FLOAT_MAT4 = GL2ES2.GL_FLOAT_MAT4;
-    INT_VEC2 = GL2ES2.GL_INT_VEC2;
-    INT_VEC3 = GL2ES2.GL_INT_VEC3;
-    INT_VEC4 = GL2ES2.GL_INT_VEC4;
-    BOOL_VEC2 = GL2ES2.GL_BOOL_VEC2;
-    BOOL_VEC3 = GL2ES2.GL_BOOL_VEC3;
-    BOOL_VEC4 = GL2ES2.GL_BOOL_VEC4;
-    SAMPLER_2D = GL2ES2.GL_SAMPLER_2D;
+    FLOAT_VEC2   = GL2ES2.GL_FLOAT_VEC2;
+    FLOAT_VEC3   = GL2ES2.GL_FLOAT_VEC3;
+    FLOAT_VEC4   = GL2ES2.GL_FLOAT_VEC4;
+    FLOAT_MAT2   = GL2ES2.GL_FLOAT_MAT2;
+    FLOAT_MAT3   = GL2ES2.GL_FLOAT_MAT3;
+    FLOAT_MAT4   = GL2ES2.GL_FLOAT_MAT4;
+    INT_VEC2     = GL2ES2.GL_INT_VEC2;
+    INT_VEC3     = GL2ES2.GL_INT_VEC3;
+    INT_VEC4     = GL2ES2.GL_INT_VEC4;
+    BOOL_VEC2    = GL2ES2.GL_BOOL_VEC2;
+    BOOL_VEC3    = GL2ES2.GL_BOOL_VEC3;
+    BOOL_VEC4    = GL2ES2.GL_BOOL_VEC4;
+    SAMPLER_2D   = GL2ES2.GL_SAMPLER_2D;
     SAMPLER_CUBE = GL2ES2.GL_SAMPLER_CUBE;
 
-    LOW_FLOAT = GL2ES2.GL_LOW_FLOAT;
+    LOW_FLOAT    = GL2ES2.GL_LOW_FLOAT;
     MEDIUM_FLOAT = GL2ES2.GL_MEDIUM_FLOAT;
-    HIGH_FLOAT = GL2ES2.GL_HIGH_FLOAT;
-    LOW_INT = GL2ES2.GL_LOW_INT;
-    MEDIUM_INT = GL2ES2.GL_MEDIUM_INT;
-    HIGH_INT = GL2ES2.GL_HIGH_INT;
+    HIGH_FLOAT   = GL2ES2.GL_HIGH_FLOAT;
+    LOW_INT      = GL2ES2.GL_LOW_INT;
+    MEDIUM_INT   = GL2ES2.GL_MEDIUM_INT;
+    HIGH_INT     = GL2ES2.GL_HIGH_INT;
 
     CURRENT_VERTEX_ATTRIB = GL2ES2.GL_CURRENT_VERTEX_ATTRIB;
 
     VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING;
-    VERTEX_ATTRIB_ARRAY_ENABLED = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_ENABLED;
-    VERTEX_ATTRIB_ARRAY_SIZE = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_SIZE;
-    VERTEX_ATTRIB_ARRAY_STRIDE = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_STRIDE;
-    VERTEX_ATTRIB_ARRAY_TYPE = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_TYPE;
-    VERTEX_ATTRIB_ARRAY_NORMALIZED = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_NORMALIZED;
-    VERTEX_ATTRIB_ARRAY_POINTER = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_POINTER;
+    VERTEX_ATTRIB_ARRAY_ENABLED        = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_ENABLED;
+    VERTEX_ATTRIB_ARRAY_SIZE           = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_SIZE;
+    VERTEX_ATTRIB_ARRAY_STRIDE         = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_STRIDE;
+    VERTEX_ATTRIB_ARRAY_TYPE           = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_TYPE;
+    VERTEX_ATTRIB_ARRAY_NORMALIZED     = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_NORMALIZED;
+    VERTEX_ATTRIB_ARRAY_POINTER        = GL2ES2.GL_VERTEX_ATTRIB_ARRAY_POINTER;
 
-    BLEND = GL.GL_BLEND;
-    ONE = GL.GL_ONE;
-    ZERO = GL.GL_ZERO;
-    SRC_ALPHA = GL.GL_SRC_ALPHA;
-    DST_ALPHA = GL.GL_DST_ALPHA;
+    BLEND               = GL.GL_BLEND;
+    ONE                 = GL.GL_ONE;
+    ZERO                = GL.GL_ZERO;
+    SRC_ALPHA           = GL.GL_SRC_ALPHA;
+    DST_ALPHA           = GL.GL_DST_ALPHA;
     ONE_MINUS_SRC_ALPHA = GL.GL_ONE_MINUS_SRC_ALPHA;
     ONE_MINUS_DST_COLOR = GL.GL_ONE_MINUS_DST_COLOR;
     ONE_MINUS_SRC_COLOR = GL.GL_ONE_MINUS_SRC_COLOR;
-    DST_COLOR = GL.GL_DST_COLOR;
-    SRC_COLOR = GL.GL_SRC_COLOR;
+    DST_COLOR           = GL.GL_DST_COLOR;
+    SRC_COLOR           = GL.GL_SRC_COLOR;
 
     SAMPLE_ALPHA_TO_COVERAGE = GL.GL_SAMPLE_ALPHA_TO_COVERAGE;
-    SAMPLE_COVERAGE = GL.GL_SAMPLE_COVERAGE;
+    SAMPLE_COVERAGE          = GL.GL_SAMPLE_COVERAGE;
 
-    KEEP = GL.GL_KEEP;
-    REPLACE = GL.GL_REPLACE;
-    INCR = GL.GL_INCR;
-    DECR = GL.GL_DECR;
-    INVERT = GL.GL_INVERT;
+    KEEP      = GL.GL_KEEP;
+    REPLACE   = GL.GL_REPLACE;
+    INCR      = GL.GL_INCR;
+    DECR      = GL.GL_DECR;
+    INVERT    = GL.GL_INVERT;
     INCR_WRAP = GL.GL_INCR_WRAP;
     DECR_WRAP = GL.GL_DECR_WRAP;
-    NEVER = GL.GL_NEVER;
-    ALWAYS = GL.GL_ALWAYS;
+    NEVER     = GL.GL_NEVER;
+    ALWAYS    = GL.GL_ALWAYS;
 
-    EQUAL = GL.GL_EQUAL;
-    LESS = GL.GL_LESS;
-    LEQUAL = GL.GL_LEQUAL;
-    GREATER = GL.GL_GREATER;
-    GEQUAL = GL.GL_GEQUAL;
+    EQUAL    = GL.GL_EQUAL;
+    LESS     = GL.GL_LESS;
+    LEQUAL   = GL.GL_LEQUAL;
+    GREATER  = GL.GL_GREATER;
+    GEQUAL   = GL.GL_GEQUAL;
     NOTEQUAL = GL.GL_NOTEQUAL;
 
-    FUNC_ADD = GL.GL_FUNC_ADD;
-    FUNC_MIN = GL2ES3.GL_MIN;
-    FUNC_MAX = GL2ES3.GL_MAX;
+    FUNC_ADD              = GL.GL_FUNC_ADD;
+    FUNC_MIN              = GL2ES3.GL_MIN;
+    FUNC_MAX              = GL2ES3.GL_MAX;
     FUNC_REVERSE_SUBTRACT = GL.GL_FUNC_REVERSE_SUBTRACT;
-    FUNC_SUBTRACT = GL.GL_FUNC_SUBTRACT;
+    FUNC_SUBTRACT         = GL.GL_FUNC_SUBTRACT;
 
     DITHER = GL.GL_DITHER;
 
-    CONSTANT_COLOR = GL2ES2.GL_CONSTANT_COLOR;
-    CONSTANT_ALPHA = GL2ES2.GL_CONSTANT_ALPHA;
+    CONSTANT_COLOR           = GL2ES2.GL_CONSTANT_COLOR;
+    CONSTANT_ALPHA           = GL2ES2.GL_CONSTANT_ALPHA;
     ONE_MINUS_CONSTANT_COLOR = GL2ES2.GL_ONE_MINUS_CONSTANT_COLOR;
     ONE_MINUS_CONSTANT_ALPHA = GL2ES2.GL_ONE_MINUS_CONSTANT_ALPHA;
-    SRC_ALPHA_SATURATE = GL.GL_SRC_ALPHA_SATURATE;
+    SRC_ALPHA_SATURATE       = GL.GL_SRC_ALPHA_SATURATE;
 
-    SCISSOR_TEST = GL.GL_SCISSOR_TEST;
-    STENCIL_TEST = GL.GL_STENCIL_TEST;
-    DEPTH_TEST = GL.GL_DEPTH_TEST;
+    SCISSOR_TEST    = GL.GL_SCISSOR_TEST;
+    STENCIL_TEST    = GL.GL_STENCIL_TEST;
+    DEPTH_TEST      = GL.GL_DEPTH_TEST;
     DEPTH_WRITEMASK = GL.GL_DEPTH_WRITEMASK;
 
-    COLOR_BUFFER_BIT = GL.GL_COLOR_BUFFER_BIT;
-    DEPTH_BUFFER_BIT = GL.GL_DEPTH_BUFFER_BIT;
+    COLOR_BUFFER_BIT   = GL.GL_COLOR_BUFFER_BIT;
+    DEPTH_BUFFER_BIT   = GL.GL_DEPTH_BUFFER_BIT;
     STENCIL_BUFFER_BIT = GL.GL_STENCIL_BUFFER_BIT;
 
-    FRAMEBUFFER = GL.GL_FRAMEBUFFER;
-    COLOR_ATTACHMENT0 = GL.GL_COLOR_ATTACHMENT0;
-    COLOR_ATTACHMENT1 = GL2ES2.GL_COLOR_ATTACHMENT1;
-    COLOR_ATTACHMENT2 = GL2ES2.GL_COLOR_ATTACHMENT2;
-    COLOR_ATTACHMENT3 = GL2ES2.GL_COLOR_ATTACHMENT3;
-    RENDERBUFFER = GL.GL_RENDERBUFFER;
-    DEPTH_ATTACHMENT = GL.GL_DEPTH_ATTACHMENT;
+    FRAMEBUFFER        = GL.GL_FRAMEBUFFER;
+    COLOR_ATTACHMENT0  = GL.GL_COLOR_ATTACHMENT0;
+    COLOR_ATTACHMENT1  = GL2ES2.GL_COLOR_ATTACHMENT1;
+    COLOR_ATTACHMENT2  = GL2ES2.GL_COLOR_ATTACHMENT2;
+    COLOR_ATTACHMENT3  = GL2ES2.GL_COLOR_ATTACHMENT3;
+    RENDERBUFFER       = GL.GL_RENDERBUFFER;
+    DEPTH_ATTACHMENT   = GL.GL_DEPTH_ATTACHMENT;
     STENCIL_ATTACHMENT = GL.GL_STENCIL_ATTACHMENT;
-    READ_FRAMEBUFFER = GL.GL_READ_FRAMEBUFFER;
-    DRAW_FRAMEBUFFER = GL.GL_DRAW_FRAMEBUFFER;
+    READ_FRAMEBUFFER   = GL.GL_READ_FRAMEBUFFER;
+    DRAW_FRAMEBUFFER   = GL.GL_DRAW_FRAMEBUFFER;
 
-    RGBA8 = GL.GL_RGBA8;
+    RGBA8            = GL.GL_RGBA8;
     DEPTH24_STENCIL8 = GL.GL_DEPTH24_STENCIL8;
 
-    DEPTH_COMPONENT = GL2ES2.GL_DEPTH_COMPONENT;
+    DEPTH_COMPONENT   = GL2ES2.GL_DEPTH_COMPONENT;
     DEPTH_COMPONENT16 = GL.GL_DEPTH_COMPONENT16;
     DEPTH_COMPONENT24 = GL.GL_DEPTH_COMPONENT24;
     DEPTH_COMPONENT32 = GL.GL_DEPTH_COMPONENT32;
 
-    STENCIL_INDEX = GL2ES2.GL_STENCIL_INDEX;
+    STENCIL_INDEX  = GL2ES2.GL_STENCIL_INDEX;
     STENCIL_INDEX1 = GL.GL_STENCIL_INDEX1;
     STENCIL_INDEX4 = GL.GL_STENCIL_INDEX4;
     STENCIL_INDEX8 = GL.GL_STENCIL_INDEX8;
 
     DEPTH_STENCIL = GL.GL_DEPTH_STENCIL;
 
-    FRAMEBUFFER_COMPLETE = GL.GL_FRAMEBUFFER_COMPLETE;
-    FRAMEBUFFER_UNDEFINED = GL2ES3.GL_FRAMEBUFFER_UNDEFINED;
-    FRAMEBUFFER_INCOMPLETE_ATTACHMENT = GL.GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT;
+    FRAMEBUFFER_COMPLETE                      = GL.GL_FRAMEBUFFER_COMPLETE;
+    FRAMEBUFFER_UNDEFINED                     = GL2ES3.GL_FRAMEBUFFER_UNDEFINED;
+    FRAMEBUFFER_INCOMPLETE_ATTACHMENT         = GL.GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT;
     FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT = GL.GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT;
-    FRAMEBUFFER_INCOMPLETE_DIMENSIONS = GL.GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS;
-    FRAMEBUFFER_INCOMPLETE_FORMATS = GL.GL_FRAMEBUFFER_INCOMPLETE_FORMATS;
-    FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER = GL2GL3.GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER;
-    FRAMEBUFFER_INCOMPLETE_READ_BUFFER = GL2GL3.GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER;
-    FRAMEBUFFER_UNSUPPORTED = GL.GL_FRAMEBUFFER_UNSUPPORTED;
-    FRAMEBUFFER_INCOMPLETE_MULTISAMPLE = GL.GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE;
-    FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS = GL3ES3.GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS;
+    FRAMEBUFFER_INCOMPLETE_DIMENSIONS         = GL.GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS;
+    FRAMEBUFFER_INCOMPLETE_FORMATS            = GL.GL_FRAMEBUFFER_INCOMPLETE_FORMATS;
+    FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER        = GL2GL3.GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER;
+    FRAMEBUFFER_INCOMPLETE_READ_BUFFER        = GL2GL3.GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER;
+    FRAMEBUFFER_UNSUPPORTED                   = GL.GL_FRAMEBUFFER_UNSUPPORTED;
+    FRAMEBUFFER_INCOMPLETE_MULTISAMPLE        = GL.GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE;
+    FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS      = GL3ES3.GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS;
 
-    FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE = GL.GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE;
-    FRAMEBUFFER_ATTACHMENT_OBJECT_NAME = GL.GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME;
-    FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL = GL.GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL;
+    FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE           = GL.GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE;
+    FRAMEBUFFER_ATTACHMENT_OBJECT_NAME           = GL.GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME;
+    FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL         = GL.GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL;
     FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE = GL.GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE;
 
-    RENDERBUFFER_WIDTH = GL.GL_RENDERBUFFER_WIDTH;
-    RENDERBUFFER_HEIGHT = GL.GL_RENDERBUFFER_HEIGHT;
-    RENDERBUFFER_RED_SIZE = GL.GL_RENDERBUFFER_RED_SIZE;
-    RENDERBUFFER_GREEN_SIZE = GL.GL_RENDERBUFFER_GREEN_SIZE;
-    RENDERBUFFER_BLUE_SIZE = GL.GL_RENDERBUFFER_BLUE_SIZE;
-    RENDERBUFFER_ALPHA_SIZE = GL.GL_RENDERBUFFER_ALPHA_SIZE;
-    RENDERBUFFER_DEPTH_SIZE = GL.GL_RENDERBUFFER_DEPTH_SIZE;
-    RENDERBUFFER_STENCIL_SIZE = GL.GL_RENDERBUFFER_STENCIL_SIZE;
+    RENDERBUFFER_WIDTH           = GL.GL_RENDERBUFFER_WIDTH;
+    RENDERBUFFER_HEIGHT          = GL.GL_RENDERBUFFER_HEIGHT;
+    RENDERBUFFER_RED_SIZE        = GL.GL_RENDERBUFFER_RED_SIZE;
+    RENDERBUFFER_GREEN_SIZE      = GL.GL_RENDERBUFFER_GREEN_SIZE;
+    RENDERBUFFER_BLUE_SIZE       = GL.GL_RENDERBUFFER_BLUE_SIZE;
+    RENDERBUFFER_ALPHA_SIZE      = GL.GL_RENDERBUFFER_ALPHA_SIZE;
+    RENDERBUFFER_DEPTH_SIZE      = GL.GL_RENDERBUFFER_DEPTH_SIZE;
+    RENDERBUFFER_STENCIL_SIZE    = GL.GL_RENDERBUFFER_STENCIL_SIZE;
     RENDERBUFFER_INTERNAL_FORMAT = GL.GL_RENDERBUFFER_INTERNAL_FORMAT;
 
-    MULTISAMPLE = GL.GL_MULTISAMPLE;
-    LINE_SMOOTH = GL.GL_LINE_SMOOTH;
+    MULTISAMPLE    = GL.GL_MULTISAMPLE;
+    LINE_SMOOTH    = GL.GL_LINE_SMOOTH;
     POLYGON_SMOOTH = GL2GL3.GL_POLYGON_SMOOTH;
 
     SYNC_GPU_COMMANDS_COMPLETE = GL3ES3.GL_SYNC_GPU_COMMANDS_COMPLETE;
-    ALREADY_SIGNALED = GL3ES3.GL_ALREADY_SIGNALED;
-    CONDITION_SATISFIED = GL3ES3.GL_CONDITION_SATISFIED;
+    ALREADY_SIGNALED           = GL3ES3.GL_ALREADY_SIGNALED;
+    CONDITION_SATISFIED        = GL3ES3.GL_CONDITION_SATISFIED;
   }
 
   ///////////////////////////////////////////////////////////
+
   // Special Functions
+
   @Override
   public void flush() {
     gl.glFlush();
@@ -1033,7 +1063,9 @@ public class PJOGL extends PGL {
   }
 
   ///////////////////////////////////////////////////////////
+
   // State and State Requests
+
   @Override
   public void enable(int value) {
     if (-1 < value) {
@@ -1092,7 +1124,9 @@ public class PJOGL extends PGL {
   }
 
   ///////////////////////////////////////////////////////////
+
   // Error Handling
+
   @Override
   public int getError() {
     return gl.glGetError();
@@ -1104,7 +1138,9 @@ public class PJOGL extends PGL {
   }
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Buffer Objects
+
   @Override
   public void genBuffers(int n, IntBuffer buffers) {
     gl.glGenBuffers(n, buffers);
@@ -1162,7 +1198,9 @@ public class PJOGL extends PGL {
   }
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Synchronization
+
   @Override
   public long fenceSync(int condition, int flags) {
     if (gl3es3 != null) {
@@ -1191,7 +1229,9 @@ public class PJOGL extends PGL {
   }
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Viewport and Clipping
+
   @Override
   public void depthRangef(float n, float f) {
     gl.glDepthRangef(n, f);
@@ -1200,7 +1240,7 @@ public class PJOGL extends PGL {
   @Override
   public void viewport(int x, int y, int w, int h) {
     float scale = getPixelScale();
-    viewportImpl((int) scale * x, (int) (scale * y), (int) (scale * w), (int) (scale * h));
+    viewportImpl((int)scale * x, (int)(scale * y), (int)(scale * w), (int)(scale * h));
   }
 
   @Override
@@ -1209,7 +1249,9 @@ public class PJOGL extends PGL {
   }
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Reading Pixels
+
   @Override
   protected void readPixelsImpl(int x, int y, int width, int height, int format, int type, Buffer buffer) {
     gl.glReadPixels(x, y, width, height, format, type, buffer);
@@ -1221,7 +1263,9 @@ public class PJOGL extends PGL {
   }
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Vertices
+
   @Override
   public void vertexAttrib1f(int index, float value) {
     gl2.glVertexAttrib1f(index, value);
@@ -1288,7 +1332,9 @@ public class PJOGL extends PGL {
   }
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Rasterization
+
   @Override
   public void lineWidth(float width) {
     gl.glLineWidth(width);
@@ -1310,14 +1356,18 @@ public class PJOGL extends PGL {
   }
 
   //////////////////////////////////////////////////////////////////////////////
+
   // Pixel Rectangles
+
   @Override
   public void pixelStorei(int pname, int param) {
     gl.glPixelStorei(pname, param);
   }
 
   ///////////////////////////////////////////////////////////
+
   // Texturing
+
   @Override
   public void texImage2D(int target, int level, int internalFormat, int width, int height, int border, int format, int type, Buffer data) {
     gl.glTexImage2D(target, level, internalFormat, width, height, border, format, type, data);
@@ -1409,7 +1459,9 @@ public class PJOGL extends PGL {
   }
 
   ///////////////////////////////////////////////////////////
+
   // Shaders and Programs
+
   @Override
   public int createShader(int type) {
     return gl2.glCreateShader(type);
@@ -1417,7 +1469,7 @@ public class PJOGL extends PGL {
 
   @Override
   public void shaderSource(int shader, String source) {
-    gl2.glShaderSource(shader, 1, new String[]{source}, (int[]) null, 0);
+    gl2.glShaderSource(shader, 1, new String[] { source }, (int[]) null, 0);
   }
 
   @Override
@@ -1498,7 +1550,7 @@ public class PJOGL extends PGL {
 
   @Override
   public String getActiveUniform(int program, int index, IntBuffer size, IntBuffer type) {
-    int[] tmp = {0, 0, 0};
+    int[] tmp= {0, 0, 0};
     byte[] namebuf = new byte[1024];
     gl2.glGetActiveUniform(program, index, 1024, tmp, 0, tmp, 1, tmp, 2, namebuf, 0);
     size.put(tmp[1]);
@@ -1624,7 +1676,7 @@ public class PJOGL extends PGL {
 
   @Override
   public String getShaderInfoLog(int shader) {
-    int[] val = {0};
+    int[] val = { 0 };
     gl2.glGetShaderiv(shader, GL2ES2.GL_INFO_LOG_LENGTH, val, 0);
     int length = val[0];
 
@@ -1683,7 +1735,7 @@ public class PJOGL extends PGL {
 
   @Override
   public String getProgramInfoLog(int program) {
-    int[] val = {0};
+    int[] val = { 0 };
     gl2.glGetProgramiv(program, GL2ES2.GL_INFO_LOG_LENGTH, val, 0);
     int length = val[0];
 
@@ -1697,11 +1749,13 @@ public class PJOGL extends PGL {
   }
 
   ///////////////////////////////////////////////////////////
+
   // Per-Fragment Operations
+
   @Override
   public void scissor(int x, int y, int w, int h) {
     float scale = getPixelScale();
-    gl.glScissor((int) scale * x, (int) (scale * y), (int) (scale * w), (int) (scale * h));
+    gl.glScissor((int)scale * x, (int)(scale * y), (int)(scale * w), (int)(scale * h));
 //    gl.glScissor(x, y, w, h);
   }
 
@@ -1761,7 +1815,9 @@ public class PJOGL extends PGL {
   }
 
   ///////////////////////////////////////////////////////////
+
   // Whole Framebuffer Operations
+
   @Override
   public void colorMask(boolean r, boolean g, boolean b, boolean a) {
     gl.glColorMask(r, g, b, a);
@@ -1803,7 +1859,9 @@ public class PJOGL extends PGL {
   }
 
   ///////////////////////////////////////////////////////////
+
   // Framebuffers Objects
+
   @Override
   protected void bindFramebufferImpl(int target, int framebuffer) {
     gl.glBindFramebuffer(target, framebuffer);
@@ -1920,10 +1978,10 @@ public class PJOGL extends PGL {
     } else if (gl3 != null) {
       gl3.glDrawBuffer(buf);
     } else if (gl3es3 != null) {
-      IntBuffer localIntBuffer = IntBuffer.allocate(1);
-      localIntBuffer.put(buf);
-      localIntBuffer.rewind();
-      gl3es3.glDrawBuffers(1, localIntBuffer);
+      IntBuffer intBuffer = IntBuffer.allocate(1);
+      intBuffer.put(buf);
+      intBuffer.rewind();
+      gl3es3.glDrawBuffers(1, intBuffer);
     } else {
       throw new RuntimeException(String.format(MISSING_GLFUNC_ERROR, "glDrawBuffer()"));
     }

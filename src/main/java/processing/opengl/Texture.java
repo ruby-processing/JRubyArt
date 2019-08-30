@@ -1,6 +1,6 @@
 /* -*- mode: java; c-basic-offset: 2; indent-tabs-mode: nil -*- */
 
- /*
+/*
   Part of the Processing project - http://processing.org
 
   Copyright (c) 2012-15 The Processing Foundation
@@ -20,10 +20,10 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
- */
+*/
+
 package processing.opengl;
 
-import java.lang.reflect.InvocationTargetException;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
@@ -37,43 +37,36 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 /**
- * This class wraps an OpenGL texture. By Andres Colubri
+ * This class wraps an OpenGL texture.
+ * By Andres Colubri
  *
  */
 public class Texture implements PConstants {
-
   /**
    * Texture with normalized UV.
    */
-  protected static final int TEX2D = 0;
+  protected static final int TEX2D   = 0;
   /**
    * Texture with un-normalized UV.
    */
   protected static final int TEXRECT = 1;
 
-  /**
-   * Point sampling: both magnification and minification filtering are set to
-   * nearest
-   */
+  /** Point sampling: both magnification and minification filtering are set
+   * to nearest */
   protected static final int POINT = 2;
-  /**
-   * Linear sampling: magnification filtering is nearest, minification set to
-   * linear
-   */
+  /** Linear sampling: magnification filtering is nearest, minification set
+   * to linear */
   protected static final int LINEAR = 3;
-  /**
-   * Bilinear sampling: both magnification filtering is set to linear and
+  /** Bilinear sampling: both magnification filtering is set to linear and
    * minification either to linear-mipmap-nearest (linear interpolation is used
-   * within a mipmap, but not between different mipmaps).
-   */
+   * within a mipmap, but not between different mipmaps). */
   protected static final int BILINEAR = 4;
-  /**
-   * Trilinear sampling: magnification filtering set to linear, minification to
+  /** Trilinear sampling: magnification filtering set to linear, minification to
    * linear-mipmap-linear, which offers the best mipmap quality since linear
    * interpolation to compute the value in each of two maps and then
-   * interpolates linearly between these two values.
-   */
+   * interpolates linearly between these two values. */
   protected static final int TRILINEAR = 5;
+
 
   // This constant controls how many times pixelBuffer and rgbaPixels can be
   // accessed before they are not released anymore. The idea is that if they
@@ -101,7 +94,7 @@ public class Texture implements PConstants {
   protected PGL pgl;                // The interface between Processing and OpenGL.
   protected int context;            // The context that created this texture.
   protected boolean colorBuffer;    // true if it is the color attachment of
-  // FrameBuffer object.
+                                    // FrameBuffer object.
 
   protected boolean usingMipmaps;
   protected boolean usingRepeat;
@@ -122,9 +115,7 @@ public class Texture implements PConstants {
   protected int pixBufUpdateCount = 0;
   protected int rgbaPixUpdateCount = 0;
 
-  /**
-   * Modified portion of the texture
-   */
+  /** Modified portion of the texture */
   protected boolean modified;
   protected int mx1, my1, mx2, my2;
 
@@ -135,7 +126,10 @@ public class Texture implements PConstants {
   public static final int MAX_BUFFER_CACHE_SIZE = 3;
 
   ////////////////////////////////////////////////////////////
+
   // Constructors.
+
+
   public Texture(PGraphicsOpenGL pg) {
     this.pg = pg;
     pgl = pg.pgl;
@@ -146,21 +140,21 @@ public class Texture implements PConstants {
     glName = 0;
   }
 
+
   /**
    * Creates an instance of PTexture with size width x height. The texture is
    * initialized (empty) to that size.
-   *
-   * @param width int
-   * @param height int
+   * @param width  int
+   * @param height  int
    */
   public Texture(PGraphicsOpenGL pg, int width, int height) {
     this(pg, width, height, new Parameters());
   }
 
+
   /**
    * Creates an instance of PTexture with size width x height and with the
    * specified parameters. The texture is initialized (empty) to that size.
-   *
    * @param width int
    * @param height int
    * @param params Parameters
@@ -174,16 +168,19 @@ public class Texture implements PConstants {
 
     glName = 0;
 
-    init(width, height, (Parameters) params);
+    init(width, height, (Parameters)params);
   }
 
+
   ////////////////////////////////////////////////////////////
+
   // Init, resize methods
+
+
   /**
    * Sets the size of the image and texture to width x height. If the texture is
    * already initialized, it first destroys the current OpenGL texture object
    * and then creates a new one with the specified size.
-   *
    * @param width int
    * @param height int
    */
@@ -200,30 +197,31 @@ public class Texture implements PConstants {
     init(width, height, params);
   }
 
+
   /**
    * Sets the size of the image and texture to width x height, and the
    * parameters of the texture to params. If the texture is already initialized,
    * it first destroys the current OpenGL texture object and then creates a new
    * one with the specified size.
-   *
    * @param width int
    * @param height int
    * @param params GLTextureParameters
    */
-  public final void init(int width, int height, Parameters params) {
+  public void init(int width, int height, Parameters params)  {
     setParameters(params);
     setSize(width, height);
     allocate();
   }
 
+
   /**
    * Initializes the texture using GL parameters
    */
   public void init(int width, int height,
-    int glName, int glTarget, int glFormat,
-    int glWidth, int glHeight,
-    int glMinFilter, int glMagFilter,
-    int glWrapS, int glWrapT) {
+                   int glName, int glTarget, int glFormat,
+                   int glWidth, int glHeight,
+                   int glMinFilter, int glMagFilter,
+                   int glWrapS, int glWrapT) {
     this.width = width;
     this.height = height;
 
@@ -237,14 +235,15 @@ public class Texture implements PConstants {
     this.glWrapS = glWrapS;
     this.glWrapT = glWrapT;
 
-    maxTexcoordU = (float) width / glWidth;
-    maxTexcoordV = (float) height / glHeight;
+    maxTexcoordU = (float)width / glWidth;
+    maxTexcoordV = (float)height / glHeight;
 
-    usingMipmaps = glMinFilter == PGL.LINEAR_MIPMAP_NEAREST
-      || glMinFilter == PGL.LINEAR_MIPMAP_LINEAR;
+    usingMipmaps = glMinFilter == PGL.LINEAR_MIPMAP_NEAREST ||
+                   glMinFilter == PGL.LINEAR_MIPMAP_LINEAR;
 
     usingRepeat = glWrapS == PGL.REPEAT || glWrapT == PGL.REPEAT;
   }
+
 
   public void resize(int wide, int high) {
     // Disposing current resources.
@@ -264,46 +263,57 @@ public class Texture implements PConstants {
     tempFbo = null;
   }
 
+
   /**
    * Returns true if the texture has been initialized.
-   *
    * @return boolean
    */
-  public boolean available() {
+  public boolean available()  {
     return 0 < glName;
   }
 
+
   ////////////////////////////////////////////////////////////
+
   // Set methods
+
+
   public void set(Texture tex) {
     copyTexture(tex, 0, 0, tex.width, tex.height, true);
   }
+
 
   public void set(Texture tex, int x, int y, int w, int h) {
     copyTexture(tex, x, y, w, h, true);
   }
 
+
   public void set(int texTarget, int texName, int texWidth, int texHeight,
-    int w, int h) {
+                  int w, int h) {
     copyTexture(texTarget, texName, texWidth, texHeight, 0, 0, w, h, true);
   }
 
+
   public void set(int texTarget, int texName, int texWidth, int texHeight,
-    int target, int tex, int x, int y, int w, int h) {
+                  int target, int tex, int x, int y, int w, int h) {
     copyTexture(texTarget, texName, texWidth, texHeight, x, y, w, h, true);
   }
+
 
   public void set(int[] pixels) {
     set(pixels, 0, 0, width, height, ARGB);
   }
 
+
   public void set(int[] pixels, int format) {
     set(pixels, 0, 0, width, height, format);
   }
 
+
   public void set(int[] pixels, int x, int y, int w, int h) {
     set(pixels, x, y, w, h, ARGB);
   }
+
 
   public void set(int[] pixels, int x, int y, int w, int h, int format) {
     if (pixels == null) {
@@ -311,9 +321,9 @@ public class Texture implements PConstants {
       return;
     }
     if (pixels.length < w * h) {
-      PGraphics.showWarning("The pixel array has a length of "
-        + pixels.length + ", but it should be at least "
-        + w * h);
+      PGraphics.showWarning("The pixel array has a length of " +
+                            pixels.length + ", but it should be at least " +
+                            w * h);
       return;
     }
 
@@ -330,15 +340,11 @@ public class Texture implements PConstants {
 
     loadPixels(w * h);
     convertToRGBA(pixels, format, w, h);
-    if (invertedX) {
-      flipArrayOnX(rgbaPixels, 1);
-    }
-    if (invertedY) {
-      flipArrayOnY(rgbaPixels, 1);
-    }
+    if (invertedX) flipArrayOnX(rgbaPixels, 1);
+    if (invertedY) flipArrayOnY(rgbaPixels, 1);
     updatePixelBuffer(rgbaPixels);
     pgl.texSubImage2D(glTarget, 0, x, y, w, h, PGL.RGBA, PGL.UNSIGNED_BYTE,
-      pixelBuffer);
+                      pixelBuffer);
     fillEdges(x, y, w, h);
 
     if (usingMipmaps) {
@@ -360,17 +366,23 @@ public class Texture implements PConstants {
     updateTexels(x, y, w, h);
   }
 
+
   ////////////////////////////////////////////////////////////
+
   // Native set methods
+
+
   public void setNative(int[] pixels) {
     setNative(pixels, 0, 0, width, height);
   }
+
 
   public void setNative(int[] pixels, int x, int y, int w, int h) {
     updatePixelBuffer(pixels);
     setNative(pixelBuffer, x, y, w, h);
     releasePixelBuffer();
   }
+
 
   public void setNative(IntBuffer pixBuf, int x, int y, int w, int h) {
     if (pixBuf == null) {
@@ -379,13 +391,13 @@ public class Texture implements PConstants {
       return;
     }
     if (pixBuf.capacity() < w * h) {
-      PGraphics.showWarning("The pixel bufer has a length of "
-        + pixBuf.capacity() + ", but it should be at least "
-        + w * h);
+      PGraphics.showWarning("The pixel bufer has a length of " +
+                            pixBuf.capacity()  + ", but it should be at least " +
+                            w * h);
       return;
     }
 
-    if (pixBuf.capacity() == 0) {
+    if (pixBuf.capacity()  == 0) {
       // Nothing to do (means that w == h == 0) but not an erroneous situation
       return;
     }
@@ -398,7 +410,7 @@ public class Texture implements PConstants {
     pgl.bindTexture(glTarget, glName);
 
     pgl.texSubImage2D(glTarget, 0, x, y, w, h, PGL.RGBA, PGL.UNSIGNED_BYTE,
-      pixBuf);
+                      pixBuf);
     fillEdges(x, y, w, h);
 
     if (usingMipmaps) {
@@ -416,21 +428,22 @@ public class Texture implements PConstants {
     updateTexels(x, y, w, h);
   }
 
+
   ////////////////////////////////////////////////////////////
+
   // Get methods
+
+
   /**
-   * Copy texture to pixels.Involves video memory to main memory transfer
-   * (slow).
-   *
-   * @param pixels
+   * Copy texture to pixels. Involves video memory to main memory transfer (slow).
    */
   public void get(int[] pixels) {
     if (pixels == null) {
       throw new RuntimeException("Trying to copy texture to null pixels array");
     }
     if (pixels.length != width * height) {
-      throw new RuntimeException("Trying to copy texture to pixels array of "
-        + "wrong size");
+      throw new RuntimeException("Trying to copy texture to pixels array of " +
+                                 "wrong size");
     }
 
     if (tempFbo == null) {
@@ -449,95 +462,92 @@ public class Texture implements PConstants {
     tempFbo.getPixels(pixels);
     convertToARGB(pixels);
 
-    if (invertedX) {
-      flipArrayOnX(pixels, 1);
-    }
-    if (invertedY) {
-      flipArrayOnY(pixels, 1);
-    }
+    if (invertedX) flipArrayOnX(pixels, 1);
+    if (invertedY) flipArrayOnY(pixels, 1);
   }
 
+
   ////////////////////////////////////////////////////////////
+
   // Put methods (the source texture is not resized to cover the entire
   // destination).
+
+
   public void put(Texture tex) {
     copyTexture(tex, 0, 0, tex.width, tex.height, false);
   }
+
 
   public void put(Texture tex, int x, int y, int w, int h) {
     copyTexture(tex, x, y, w, h, false);
   }
 
+
   public void put(int texTarget, int texName, int texWidth, int texHeight,
-    int w, int h) {
+                  int w, int h) {
     copyTexture(texTarget, texName, texWidth, texHeight, 0, 0, w, h, false);
   }
 
+
   public void put(int texTarget, int texName, int texWidth, int texHeight,
-    int target, int tex, int x, int y, int w, int h) {
+                  int target, int tex, int x, int y, int w, int h) {
     copyTexture(texTarget, texName, texWidth, texHeight, x, y, w, h, false);
   }
 
+
   ////////////////////////////////////////////////////////////
+
   // Get OpenGL parameters
+
+
   /**
    * Returns true or false whether or not the texture is using mipmaps.
-   *
    * @return boolean
    */
-  public boolean usingMipmaps() {
+  public boolean usingMipmaps()  {
     return usingMipmaps;
   }
 
-  public void usingMipmaps(boolean mipmaps, int sampling) {
+
+  public void usingMipmaps(boolean mipmaps, int sampling)  {
     int glMagFilter0 = glMagFilter;
     int glMinFilter0 = glMinFilter;
     if (mipmaps) {
-      switch (sampling) {
-        case POINT:
-          glMagFilter = PGL.NEAREST;
-          glMinFilter = PGL.NEAREST;
-          usingMipmaps = false;
-          break;
-        case LINEAR:
-          glMagFilter = PGL.NEAREST;
-          glMinFilter
-            = PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
-          usingMipmaps = true;
-          break;
-        case BILINEAR:
-          glMagFilter = PGL.LINEAR;
-          glMinFilter
-            = PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
-          usingMipmaps = true;
-          break;
-        case TRILINEAR:
-          glMagFilter = PGL.LINEAR;
-          glMinFilter
-            = PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_LINEAR : PGL.LINEAR;
-          usingMipmaps = true;
-          break;
-        default:
-          throw new RuntimeException("Unknown texture filtering mode");
+      if (sampling == POINT) {
+        glMagFilter = PGL.NEAREST;
+        glMinFilter = PGL.NEAREST;
+        usingMipmaps = false;
+      } else if (sampling == LINEAR)  {
+        glMagFilter = PGL.NEAREST;
+        glMinFilter =
+          PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
+        usingMipmaps = true;
+      } else if (sampling == BILINEAR)  {
+        glMagFilter = PGL.LINEAR;
+        glMinFilter =
+          PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
+        usingMipmaps = true;
+      } else if (sampling == TRILINEAR)  {
+        glMagFilter = PGL.LINEAR;
+        glMinFilter =
+          PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_LINEAR : PGL.LINEAR;
+        usingMipmaps = true;
+      } else {
+        throw new RuntimeException("Unknown texture filtering mode");
       }
     } else {
       usingMipmaps = false;
-      switch (sampling) {
-        case POINT:
-          glMagFilter = PGL.NEAREST;
-          glMinFilter = PGL.NEAREST;
-          break;
-        case LINEAR:
-          glMagFilter = PGL.NEAREST;
-          glMinFilter = PGL.LINEAR;
-          break;
-        case BILINEAR:
-        case TRILINEAR:
-          glMagFilter = PGL.LINEAR;
-          glMinFilter = PGL.LINEAR;
-          break;
-        default:
-          throw new RuntimeException("Unknown texture filtering mode");
+      if (sampling == POINT) {
+        glMagFilter = PGL.NEAREST;
+        glMinFilter = PGL.NEAREST;
+      } else if (sampling == LINEAR)  {
+        glMagFilter = PGL.NEAREST;
+        glMinFilter = PGL.LINEAR;
+      } else if (sampling == BILINEAR || sampling == TRILINEAR)  {
+        glMagFilter = PGL.LINEAR;
+        glMinFilter = PGL.LINEAR;
+      } else {
+        throw new RuntimeException("Unknown texture filtering mode");
       }
     }
 
@@ -556,17 +566,18 @@ public class Texture implements PConstants {
     }
   }
 
+
   /**
    * Returns true or false whether or not the texture is using repeat wrap mode
    * along either U or V directions.
-   *
    * @return boolean
    */
-  public boolean usingRepeat() {
+  public boolean usingRepeat()  {
     return usingRepeat;
   }
 
-  public void usingRepeat(boolean repeat) {
+
+  public void usingRepeat(boolean repeat)  {
     if (repeat) {
       glWrapS = PGL.REPEAT;
       glWrapT = PGL.REPEAT;
@@ -583,72 +594,73 @@ public class Texture implements PConstants {
     unbind();
   }
 
+
   /**
    * Returns the maximum possible value for the texture coordinate U
    * (horizontal).
-   *
    * @return float
    */
   public float maxTexcoordU() {
     return maxTexcoordU;
   }
 
+
   /**
    * Returns the maximum possible value for the texture coordinate V (vertical).
-   *
    * @return float
    */
   public float maxTexcoordV() {
     return maxTexcoordV;
   }
 
+
   /**
    * Returns true if the texture is inverted along the horizontal direction.
-   *
    * @return boolean;
    */
   public boolean invertedX() {
     return invertedX;
   }
 
+
   /**
    * Sets the texture as inverted or not along the horizontal direction.
-   *
    * @param v boolean;
    */
   public void invertedX(boolean v) {
     invertedX = v;
   }
 
+
   /**
    * Returns true if the texture is inverted along the vertical direction.
-   *
    * @return boolean;
    */
   public boolean invertedY() {
     return invertedY;
   }
 
+
   /**
    * Sets the texture as inverted or not along the vertical direction.
-   *
    * @param v boolean;
    */
   public void invertedY(boolean v) {
     invertedY = v;
   }
 
+
   public int currentSampling() {
     if (glMagFilter == PGL.NEAREST && glMinFilter == PGL.NEAREST) {
       return POINT;
-    } else if (glMagFilter == PGL.NEAREST
-      && glMinFilter == (PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR)) {
+    } else if (glMagFilter == PGL.NEAREST &&
+               glMinFilter == (PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR)) {
       return LINEAR;
-    } else if (glMagFilter == PGL.LINEAR
-      && glMinFilter == (PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR)) {
+    } else if (glMagFilter == PGL.LINEAR &&
+               glMinFilter == (PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR)) {
       return BILINEAR;
-    } else if (glMagFilter == PGL.LINEAR
-      && glMinFilter == PGL.LINEAR_MIPMAP_LINEAR) {
+    } else if (glMagFilter == PGL.LINEAR &&
+               glMinFilter == PGL.LINEAR_MIPMAP_LINEAR) {
       return TRILINEAR;
     } else {
       return -1;
@@ -656,7 +668,10 @@ public class Texture implements PConstants {
   }
 
   ////////////////////////////////////////////////////////////
+
   // Bind/unbind
+
+
   public void bind() {
     // Binding a texture automatically enables texturing for the
     // texture target from that moment onwards. Unbinding the texture
@@ -667,6 +682,7 @@ public class Texture implements PConstants {
     pgl.bindTexture(glTarget, glName);
     bound = true;
   }
+
 
   public void unbind() {
     if (pgl.textureIsBound(glTarget, glName)) {
@@ -683,49 +699,63 @@ public class Texture implements PConstants {
     bound = false;
   }
 
+
   public boolean bound() {
     // A true result might not necessarily mean that texturing is enabled
     // (a texture can be bound to the target, but texturing is disabled).
     return bound;
   }
 
+
   //////////////////////////////////////////////////////////////
+
   // Modified flag
+
+
   public boolean isModified() {
     return modified;
   }
+
 
   public void setModified() {
     modified = true;
   }
 
+
   public void setModified(boolean m) {
     modified = m;
   }
+
 
   public int getModifiedX1() {
     return mx1;
   }
 
+
   public int getModifiedX2() {
     return mx2;
   }
+
 
   public int getModifiedY1() {
     return my1;
   }
 
+
   public int getModifiedY2() {
     return my2;
   }
+
 
   public void updateTexels() {
     updateTexelsImpl(0, 0, width, height);
   }
 
+
   public void updateTexels(int x, int y, int w, int h) {
     updateTexelsImpl(x, y, w, h);
   }
+
 
   protected void updateTexelsImpl(int x, int y, int w, int h) {
     int x2 = x + w;
@@ -739,33 +769,18 @@ public class Texture implements PConstants {
       modified = true;
 
     } else {
-      if (x < mx1) {
-        mx1 = PApplet.max(0, x);
-      }
-      if (x > mx2) {
-        mx2 = PApplet.min(width - 1, x);
-      }
-      if (y < my1) {
-        my1 = PApplet.max(0, y);
-      }
-      if (y > my2) {
-        my2 = y;
-      }
+      if (x < mx1) mx1 = PApplet.max(0, x);
+      if (x > mx2) mx2 = PApplet.min(width - 1, x);
+      if (y < my1) my1 = PApplet.max(0, y);
+      if (y > my2) my2 = y;
 
-      if (x2 < mx1) {
-        mx1 = PApplet.max(0, x2);
-      }
-      if (x2 > mx2) {
-        mx2 = PApplet.min(width - 1, x2);
-      }
-      if (y2 < my1) {
-        my1 = PApplet.max(0, y2);
-      }
-      if (y2 > my2) {
-        my2 = PApplet.min(height - 1, y2);
-      }
+      if (x2 < mx1) mx1 = PApplet.max(0, x2);
+      if (x2 > mx2) mx2 = PApplet.min(width - 1, x2);
+      if (y2 < my1) my1 = PApplet.max(0, y2);
+      if (y2 > my2) my2 = PApplet.min(height - 1, y2);
     }
   }
+
 
   protected void loadPixels(int len) {
     if (rgbaPixels == null || rgbaPixels.length < len) {
@@ -773,27 +788,34 @@ public class Texture implements PConstants {
     }
   }
 
+
   protected void updatePixelBuffer(int[] pixels) {
     pixelBuffer = PGL.updateIntBuffer(pixelBuffer, pixels, true);
     pixBufUpdateCount++;
   }
+
 
   protected void manualMipmap() {
     // TODO: finish manual mipmap generation,
     // https://github.com/processing/processing/issues/3335
   }
 
+
   ////////////////////////////////////////////////////////////
+
   // Buffer sink interface.
+
+
   public void setBufferSource(Object source) {
     bufferSource = source;
     getSourceMethods();
   }
 
+
   public void copyBufferFromSource(Object natRef, ByteBuffer byteBuf,
-    int w, int h) {
+                                   int w, int h) {
     if (bufferCache == null) {
-      bufferCache = new LinkedList<>();
+      bufferCache = new LinkedList<BufferData>();
     }
 
     if (bufferCache.size() + 1 <= MAX_BUFFER_CACHE_SIZE) {
@@ -804,14 +826,14 @@ public class Texture implements PConstants {
       try {
         usedBuffers.add(new BufferData(natRef, byteBuf.asIntBuffer(), w, h));
       } catch (Exception e) {
+        e.printStackTrace();
       }
     }
   }
 
+
   public void disposeSourceBuffer() {
-    if (usedBuffers == null) {
-      return;
-    }
+    if (usedBuffers == null) return;
 
     while (0 < usedBuffers.size()) {
       BufferData data = null;
@@ -850,7 +872,7 @@ public class Texture implements PConstants {
       // renderer draws the texture, and hence put the pixels put of sync, we
       // simply empty the cache.
       if (usedBuffers == null) {
-        usedBuffers = new LinkedList<>();
+        usedBuffers = new LinkedList<BufferData>();
       }
       while (0 < bufferCache.size()) {
         data = bufferCache.remove(0);
@@ -859,14 +881,17 @@ public class Texture implements PConstants {
     }
   }
 
+
   public boolean hasBufferSource() {
     return bufferSource != null;
   }
 
+
   public boolean hasBuffers() {
-    return bufferSource != null && bufferCache != null
-      && 0 < bufferCache.size();
+    return bufferSource != null && bufferCache != null &&
+           0 < bufferCache.size();
   }
+
 
   protected boolean bufferUpdate() {
     BufferData data = null;
@@ -886,7 +911,7 @@ public class Texture implements PConstants {
       // Putting the buffer in the used buffers list to dispose at the end of
       // draw.
       if (usedBuffers == null) {
-        usedBuffers = new LinkedList<>();
+        usedBuffers = new LinkedList<BufferData>();
       }
       usedBuffers.add(data);
 
@@ -896,29 +921,33 @@ public class Texture implements PConstants {
     }
   }
 
+
   protected void getSourceMethods() {
     try {
       disposeBufferMethod = bufferSource.getClass().
-        getMethod("disposeBuffer", new Class[]{Object.class});
-    } catch (NoSuchMethodException | SecurityException e) {
-      throw new RuntimeException("Provided source object doesn't have a "
-        + "disposeBuffer method.");
+        getMethod("disposeBuffer", new Class[] { Object.class });
+    } catch (Exception e) {
+      throw new RuntimeException("Provided source object doesn't have a " +
+                                 "disposeBuffer method.");
     }
   }
 
+
   ////////////////////////////////////////////////////////////
+
   // Utilities
+
+
   /**
    * Flips intArray along the X axis.
-   *
    * @param intArray int[]
    * @param mult int
    */
-  protected void flipArrayOnX(int[] intArray, int mult) {
+  protected void flipArrayOnX(int[] intArray, int mult)  {
     int index = 0;
     int xindex = mult * (width - 1);
     for (int x = 0; x < width / 2; x++) {
-      for (int y = 0; y < height; y++) {
+      for (int y = 0; y < height; y++)  {
         int i = index + mult * y * width;
         int j = xindex + mult * y * width;
 
@@ -937,9 +966,9 @@ public class Texture implements PConstants {
     }
   }
 
+
   /**
    * Flips intArray along the Y axis.
-   *
    * @param intArray int[]
    * @param mult int
    */
@@ -959,41 +988,41 @@ public class Texture implements PConstants {
     }
   }
 
+
   /**
    * Reorders a pixel array in the given format into the order required by
    * OpenGL (RGBA) and stores it into rgbaPixels. The width and height
    * parameters are used in the YUV420 to RBGBA conversion.
-   *
    * @param pixels int[]
    * @param format int
    * @param w int
    * @param h int
    */
-  protected void convertToRGBA(int[] pixels, int format, int w, int h) {
-    if (PGL.BIG_ENDIAN) {
+  protected void convertToRGBA(int[] pixels, int format, int w, int h)  {
+    if (PGL.BIG_ENDIAN)  {
       switch (format) {
-        case ALPHA:
-          // Converting from xxxA into RGBA. RGB is set to white
-          // (0xFFFFFF, i.e.: (255, 255, 255))
-          for (int i = 0; i < pixels.length; i++) {
-            rgbaPixels[i] = 0xFFFFFF00 | pixels[i];
-          }
-          break;
-        case RGB:
-          // Converting xRGB into RGBA. A is set to 0xFF (255, full opacity).
-          for (int i = 0; i < pixels.length; i++) {
-            int pixel = pixels[i];
-            rgbaPixels[i] = (pixel << 8) | 0xFF;
-          }
-          break;
-        case ARGB:
-          // Converting ARGB into RGBA. Shifting RGB to 8 bits to the left,
-          // and bringing A to the first byte.
-          for (int i = 0; i < pixels.length; i++) {
-            int pixel = pixels[i];
-            rgbaPixels[i] = (pixel << 8) | ((pixel >> 24) & 0xFF);
-          }
-          break;
+      case ALPHA:
+        // Converting from xxxA into RGBA. RGB is set to white
+        // (0xFFFFFF, i.e.: (255, 255, 255))
+        for (int i = 0; i< pixels.length; i++) {
+          rgbaPixels[i] = 0xFFFFFF00 | pixels[i];
+        }
+        break;
+      case RGB:
+        // Converting xRGB into RGBA. A is set to 0xFF (255, full opacity).
+        for (int i = 0; i< pixels.length; i++) {
+          int pixel = pixels[i];
+          rgbaPixels[i] = (pixel << 8) | 0xFF;
+        }
+        break;
+      case ARGB:
+        // Converting ARGB into RGBA. Shifting RGB to 8 bits to the left,
+        // and bringing A to the first byte.
+        for (int i = 0; i< pixels.length; i++) {
+          int pixel = pixels[i];
+          rgbaPixels[i] = (pixel << 8) | ((pixel >> 24) & 0xFF);
+        }
+        break;
       }
     } else {
       // LITTLE_ENDIAN
@@ -1001,41 +1030,41 @@ public class Texture implements PConstants {
       // for the most part just need to swap two components here
       // the sun.cpu.endian here might be "false", oddly enough..
       // (that's why just using an "else", rather than check for "little")
-      switch (format) {
-        case ALPHA:
-          // Converting xxxA into ARGB, with RGB set to white.
-          for (int i = 0; i < pixels.length; i++) {
-            rgbaPixels[i] = (pixels[i] << 24) | 0x00FFFFFF;
-          }
-          break;
-        case RGB:
-          // We need to convert xRGB into ABGR,
-          // so R and B must be swapped, and the x just made 0xFF.
-          for (int i = 0; i < pixels.length; i++) {
-            int pixel = pixels[i];
-            rgbaPixels[i] = 0xFF000000
-              | ((pixel & 0xFF) << 16) | ((pixel & 0xFF0000) >> 16)
-              | (pixel & 0x0000FF00);
-          }
-          break;
-        case ARGB:
-          // We need to convert ARGB into ABGR,
-          // so R and B must be swapped, A and G just brought back in.
-          for (int i = 0; i < pixels.length; i++) {
-            int pixel = pixels[i];
-            rgbaPixels[i] = ((pixel & 0xFF) << 16) | ((pixel & 0xFF0000) >> 16)
-              | (pixel & 0xFF00FF00);
-          }
-          break;
+      switch (format)  {
+      case ALPHA:
+        // Converting xxxA into ARGB, with RGB set to white.
+        for (int i = 0; i< pixels.length; i++) {
+          rgbaPixels[i] = (pixels[i] << 24) | 0x00FFFFFF;
+        }
+        break;
+      case RGB:
+        // We need to convert xRGB into ABGR,
+        // so R and B must be swapped, and the x just made 0xFF.
+        for (int i = 0; i< pixels.length; i++) {
+          int pixel = pixels[i];
+          rgbaPixels[i] = 0xFF000000 |
+                          ((pixel & 0xFF) << 16) | ((pixel & 0xFF0000) >> 16) |
+                          (pixel & 0x0000FF00);
+        }
+        break;
+      case ARGB:
+        // We need to convert ARGB into ABGR,
+        // so R and B must be swapped, A and G just brought back in.
+        for (int i = 0; i < pixels.length; i++) {
+          int pixel = pixels[i];
+          rgbaPixels[i] = ((pixel & 0xFF) << 16) | ((pixel & 0xFF0000) >> 16) |
+                          (pixel & 0xFF00FF00);
+        }
+        break;
       }
     }
     rgbaPixUpdateCount++;
   }
 
+
   /**
-   * Reorders an OpenGL pixel array (RGBA) into ARGB. The array must be of size
-   * width * height.
-   *
+   * Reorders an OpenGL pixel array (RGBA) into ARGB. The array must be
+   * of size width * height.
    * @param pixels int[]
    */
   protected void convertToARGB(int[] pixels) {
@@ -1056,15 +1085,19 @@ public class Texture implements PConstants {
       for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
           int pixel = pixels[p++];
-          pixels[t++] = ((pixel & 0xFF) << 16) | ((pixel & 0xFF0000) >> 16)
-            | (pixel & 0xFF00FF00);
+          pixels[t++] = ((pixel & 0xFF) << 16) | ((pixel & 0xFF0000) >> 16) |
+                          (pixel & 0xFF00FF00);
         }
       }
     }
   }
 
+
   ///////////////////////////////////////////////////////////
+
   // Allocate/release texture.
+
+
   protected void setSize(int w, int h) {
     width = w;
     height = h;
@@ -1077,13 +1110,13 @@ public class Texture implements PConstants {
       glHeight = PGL.nextPowerOfTwo(h);
     }
 
-    if (glWidth > PGraphicsOpenGL.maxTextureSize
-      || glHeight > PGraphicsOpenGL.maxTextureSize) {
+    if (glWidth > PGraphicsOpenGL.maxTextureSize ||
+        glHeight > PGraphicsOpenGL.maxTextureSize) {
       glWidth = glHeight = 0;
-      throw new RuntimeException("Image width and height cannot be"
-        + " larger than "
-        + PGraphicsOpenGL.maxTextureSize
-        + " with this graphics card.");
+      throw new RuntimeException("Image width and height cannot be" +
+                                 " larger than " +
+                                 PGraphicsOpenGL.maxTextureSize +
+                                 " with this graphics card.");
     }
 
     // If non-power-of-two textures are not supported, and the specified width
@@ -1091,9 +1124,10 @@ public class Texture implements PConstants {
     // than w (h) because it is chosen to be the next power of two, and this
     // quotient will give the appropriate maximum texture coordinate value given
     // this situation.
-    maxTexcoordU = (float) width / glWidth;
-    maxTexcoordV = (float) height / glHeight;
+    maxTexcoordU = (float)width / glWidth;
+    maxTexcoordV = (float)height / glHeight;
   }
+
 
   /**
    * Allocates the opengl texture object.
@@ -1117,14 +1151,14 @@ public class Texture implements PConstants {
     pgl.texParameteri(glTarget, PGL.TEXTURE_WRAP_T, glWrapT);
     if (PGraphicsOpenGL.anisoSamplingSupported) {
       pgl.texParameterf(glTarget, PGL.TEXTURE_MAX_ANISOTROPY,
-        PGraphicsOpenGL.maxAnisoAmount);
+                        PGraphicsOpenGL.maxAnisoAmount);
     }
 
     // First, we use glTexImage2D to set the full size of the texture (glW/glH
     // might be diff from w/h in the case that the GPU doesn't support NPOT
     // textures)
     pgl.texImage2D(glTarget, 0, glFormat, glWidth, glHeight, 0,
-      PGL.RGBA, PGL.UNSIGNED_BYTE, null);
+                   PGL.RGBA, PGL.UNSIGNED_BYTE, null);
 
     // Makes sure that the texture buffer in video memory doesn't contain
     // any garbage.
@@ -1137,6 +1171,7 @@ public class Texture implements PConstants {
     bound = false;
   }
 
+
   /**
    * Marks the texture object for deletion.
    */
@@ -1148,6 +1183,7 @@ public class Texture implements PConstants {
     }
   }
 
+
   protected boolean contextIsOutdated() {
     boolean outdated = !pgl.contextIsCurrent(context);
     if (outdated) {
@@ -1156,19 +1192,25 @@ public class Texture implements PConstants {
     return outdated;
   }
 
+
   public void colorBuffer(boolean value) {
     colorBuffer = value;
   }
+
 
   public boolean colorBuffer() {
     return colorBuffer;
   }
 
+
   ///////////////////////////////////////////////////////////
+
   // Utilities.
+
+
   // Copies source texture tex into this.
   protected void copyTexture(Texture tex, int x, int y, int w, int h,
-    boolean scale) {
+                             boolean scale) {
     if (tex == null) {
       throw new RuntimeException("Source texture is null");
     }
@@ -1192,28 +1234,29 @@ public class Texture implements PConstants {
       // Rendering tex into "this", and scaling the source rectangle
       // to cover the entire destination region.
       pgl.drawTexture(tex.glTarget, tex.glName, tex.glWidth, tex.glHeight,
-        0, 0, tempFbo.width, tempFbo.height, 1,
-        x, y, x + w, y + h, 0, 0, width, height);
+                      0, 0, tempFbo.width, tempFbo.height, 1,
+                      x, y, x + w, y + h, 0, 0, width, height);
 
     } else {
       // Rendering tex into "this" but without scaling so the contents
       // of the source texture fall in the corresponding texels of the
       // destination.
       pgl.drawTexture(tex.glTarget, tex.glName, tex.glWidth, tex.glHeight,
-        0, 0, tempFbo.width, tempFbo.height, 1,
-        x, y, x + w, y + h, x, y, x + w, y + h);
+                      0, 0, tempFbo.width, tempFbo.height, 1,
+                      x, y, x + w, y + h, x, y, x + w, y + h);
     }
     pgl.flush(); // Needed to make sure that the change in this texture is
-    // available immediately.
+                 // available immediately.
     pg.popStyle();
     pg.popFramebuffer();
     updateTexels(x, y, w, h);
   }
 
+
   // Copies source texture tex into this.
   protected void copyTexture(int texTarget, int texName,
-    int texWidth, int texHeight,
-    int x, int y, int w, int h, boolean scale) {
+                             int texWidth, int texHeight,
+                             int x, int y, int w, int h, boolean scale) {
     if (tempFbo == null) {
       tempFbo = new FrameBuffer(pg, glWidth, glHeight);
     }
@@ -1233,23 +1276,24 @@ public class Texture implements PConstants {
       // Rendering tex into "this", and scaling the source rectangle
       // to cover the entire destination region.
       pgl.drawTexture(texTarget, texName, texWidth, texHeight,
-        0, 0, tempFbo.width, tempFbo.height,
-        x, y, w, h, 0, 0, width, height);
+                      0, 0, tempFbo.width, tempFbo.height,
+                      x, y, w, h, 0, 0, width, height);
 
     } else {
       // Rendering tex into "this" but without scaling so the contents
       // of the source texture fall in the corresponding texels of the
       // destination.
       pgl.drawTexture(texTarget, texName, texWidth, texHeight,
-        0, 0, tempFbo.width, tempFbo.height,
-        x, y, w, h, x, y, w, h);
+                      0, 0, tempFbo.width, tempFbo.height,
+                      x, y, w, h, x, y, w, h);
     }
     pgl.flush(); // Needed to make sure that the change in this texture is
-    // available immediately.
+                 // available immediately.
     pg.popStyle();
     pg.popFramebuffer();
     updateTexels(x, y, w, h);
   }
+
 
   protected void copyObject(Texture src) {
     // The OpenGL texture of this object is replaced with the one from the
@@ -1265,7 +1309,7 @@ public class Texture implements PConstants {
     glMinFilter = src.glMinFilter;
     glMagFilter = src.glMagFilter;
 
-    glWidth = src.glWidth;
+    glWidth= src.glWidth;
     glHeight = src.glHeight;
 
     usingMipmaps = src.usingMipmaps;
@@ -1277,6 +1321,7 @@ public class Texture implements PConstants {
     invertedY = src.invertedY;
   }
 
+
   // Releases the memory used by pixelBuffer either if the buffer hasn't been
   // used many times yet, or if the JVM is running low in free memory.
   protected void releasePixelBuffer() {
@@ -1285,6 +1330,7 @@ public class Texture implements PConstants {
       pixelBuffer = null;
     }
   }
+
 
   // Releases the memory used by rgbaPixels either if the array hasn't been
   // used many times yet, or if the JVM is running low in free memory.
@@ -1295,42 +1341,46 @@ public class Texture implements PConstants {
     }
   }
 
+
   ///////////////////////////////////////////////////////////
+
   // Parameter handling
+
+
   public Parameters getParameters() {
     Parameters res = new Parameters();
 
-    if (glTarget == PGL.TEXTURE_2D) {
+    if (glTarget == PGL.TEXTURE_2D)  {
       res.target = TEX2D;
     }
 
-    if (glFormat == PGL.RGB) {
+    if (glFormat == PGL.RGB)  {
       res.format = RGB;
-    } else if (glFormat == PGL.RGBA) {
+    } else  if (glFormat == PGL.RGBA) {
       res.format = ARGB;
-    } else if (glFormat == PGL.ALPHA) {
+    } else  if (glFormat == PGL.ALPHA) {
       res.format = ALPHA;
     }
 
     if (glMagFilter == PGL.NEAREST && glMinFilter == PGL.NEAREST) {
       res.sampling = POINT;
       res.mipmaps = false;
-    } else if (glMagFilter == PGL.NEAREST && glMinFilter == PGL.LINEAR) {
+    } else if (glMagFilter == PGL.NEAREST && glMinFilter == PGL.LINEAR)  {
       res.sampling = LINEAR;
       res.mipmaps = false;
-    } else if (glMagFilter == PGL.NEAREST
-      && glMinFilter == PGL.LINEAR_MIPMAP_NEAREST) {
+    } else if (glMagFilter == PGL.NEAREST &&
+               glMinFilter == PGL.LINEAR_MIPMAP_NEAREST)  {
       res.sampling = LINEAR;
       res.mipmaps = true;
-    } else if (glMagFilter == PGL.LINEAR && glMinFilter == PGL.LINEAR) {
+    } else if (glMagFilter == PGL.LINEAR && glMinFilter == PGL.LINEAR)  {
       res.sampling = BILINEAR;
       res.mipmaps = false;
-    } else if (glMagFilter == PGL.LINEAR
-      && glMinFilter == PGL.LINEAR_MIPMAP_NEAREST) {
+    } else if (glMagFilter == PGL.LINEAR &&
+               glMinFilter == PGL.LINEAR_MIPMAP_NEAREST)  {
       res.sampling = BILINEAR;
       res.mipmaps = true;
-    } else if (glMagFilter == PGL.LINEAR
-      && glMinFilter == PGL.LINEAR_MIPMAP_LINEAR) {
+    } else if (glMagFilter == PGL.LINEAR &&
+               glMinFilter == PGL.LINEAR_MIPMAP_LINEAR) {
       res.sampling = TRILINEAR;
       res.mipmaps = true;
     }
@@ -1350,94 +1400,80 @@ public class Texture implements PConstants {
     return res;
   }
 
+
   /**
-   * Sets texture target and internal format according to the target and type
-   * specified.
-   *
+   * Sets texture target and internal format according to the target and
+   * type specified.
    * @param target int
    * @param params GLTextureParameters
    */
   protected void setParameters(Parameters params) {
-    if (params.target == TEX2D) {
-      glTarget = PGL.TEXTURE_2D;
+    if (params.target == TEX2D)  {
+        glTarget = PGL.TEXTURE_2D;
     } else {
       throw new RuntimeException("Unknown texture target");
     }
 
-    switch (params.format) {
-      case RGB:
-        glFormat = PGL.RGB;
-        break;
-      case ARGB:
-        glFormat = PGL.RGBA;
-        break;
-      case ALPHA:
-        glFormat = PGL.ALPHA;
-        break;
-      default:
-        throw new RuntimeException("Unknown texture format");
+    if (params.format == RGB)  {
+      glFormat = PGL.RGB;
+    } else  if (params.format == ARGB) {
+      glFormat = PGL.RGBA;
+    } else  if (params.format == ALPHA) {
+      glFormat = PGL.ALPHA;
+    } else {
+      throw new RuntimeException("Unknown texture format");
     }
 
     boolean mipmaps = params.mipmaps && PGL.MIPMAPS_ENABLED;
     if (mipmaps && !PGraphicsOpenGL.autoMipmapGenSupported) {
-      PGraphics.showWarning("Mipmaps were requested but automatic mipmap "
-        + "generation is not supported and manual "
-        + "generation still not implemented, so mipmaps "
-        + "will be disabled.");
+      PGraphics.showWarning("Mipmaps were requested but automatic mipmap " +
+                            "generation is not supported and manual " +
+                            "generation still not implemented, so mipmaps " +
+                            "will be disabled.");
       mipmaps = false;
     }
 
-    switch (params.sampling) {
-      case POINT:
-        glMagFilter = PGL.NEAREST;
-        glMinFilter = PGL.NEAREST;
-        break;
-      case LINEAR:
-        glMagFilter = PGL.NEAREST;
-        glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
-        break;
-      case BILINEAR:
-        glMagFilter = PGL.LINEAR;
-        glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
-        break;
-      case TRILINEAR:
-        glMagFilter = PGL.LINEAR;
-        glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_LINEAR : PGL.LINEAR;
-        break;
-      default:
-        throw new RuntimeException("Unknown texture filtering mode");
+    if (params.sampling == POINT) {
+      glMagFilter = PGL.NEAREST;
+      glMinFilter = PGL.NEAREST;
+    } else if (params.sampling == LINEAR)  {
+      glMagFilter = PGL.NEAREST;
+      glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
+    } else if (params.sampling == BILINEAR)  {
+      glMagFilter = PGL.LINEAR;
+      glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
+    } else if (params.sampling == TRILINEAR)  {
+      glMagFilter = PGL.LINEAR;
+      glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_LINEAR : PGL.LINEAR;
+    } else {
+      throw new RuntimeException("Unknown texture filtering mode");
     }
 
-    switch (params.wrapU) {
-      case CLAMP:
-        glWrapS = PGL.CLAMP_TO_EDGE;
-        break;
-      case REPEAT:
-        glWrapS = PGL.REPEAT;
-        break;
-      default:
-        throw new RuntimeException("Unknown wrapping mode");
+    if (params.wrapU == CLAMP) {
+      glWrapS = PGL.CLAMP_TO_EDGE;
+    } else if (params.wrapU == REPEAT)  {
+      glWrapS = PGL.REPEAT;
+    } else {
+      throw new RuntimeException("Unknown wrapping mode");
     }
 
-    switch (params.wrapV) {
-      case CLAMP:
-        glWrapT = PGL.CLAMP_TO_EDGE;
-        break;
-      case REPEAT:
-        glWrapT = PGL.REPEAT;
-        break;
-      default:
-        throw new RuntimeException("Unknown wrapping mode");
+    if (params.wrapV == CLAMP) {
+      glWrapT = PGL.CLAMP_TO_EDGE;
+    } else if (params.wrapV == REPEAT)  {
+      glWrapT = PGL.REPEAT;
+    } else {
+      throw new RuntimeException("Unknown wrapping mode");
     }
 
-    usingMipmaps = glMinFilter == PGL.LINEAR_MIPMAP_NEAREST
-      || glMinFilter == PGL.LINEAR_MIPMAP_LINEAR;
+    usingMipmaps = glMinFilter == PGL.LINEAR_MIPMAP_NEAREST ||
+                   glMinFilter == PGL.LINEAR_MIPMAP_LINEAR;
 
     usingRepeat = glWrapS == PGL.REPEAT || glWrapT == PGL.REPEAT;
 
     invertedX = false;
     invertedY = false;
   }
+
 
   protected void fillEdges(int x, int y, int w, int h) {
     if ((width < glWidth || height < glHeight) && (x + w == width || y + h == height)) {
@@ -1450,7 +1486,7 @@ public class Texture implements PConstants {
         }
         edgeBuffer = PGL.updateIntBuffer(edgeBuffer, edgePixels, true);
         pgl.texSubImage2D(glTarget, 0, width, y, ew, h, PGL.RGBA,
-          PGL.UNSIGNED_BYTE, edgeBuffer);
+                          PGL.UNSIGNED_BYTE, edgeBuffer);
       }
 
       if (y + h == height) {
@@ -1461,7 +1497,7 @@ public class Texture implements PConstants {
         }
         edgeBuffer = PGL.updateIntBuffer(edgeBuffer, edgePixels, true);
         pgl.texSubImage2D(glTarget, 0, x, height, w, eh, PGL.RGBA,
-          PGL.UNSIGNED_BYTE, edgeBuffer);
+                          PGL.UNSIGNED_BYTE, edgeBuffer);
       }
 
       if (x + w == width && y + h == height) {
@@ -1472,19 +1508,21 @@ public class Texture implements PConstants {
         Arrays.fill(edgePixels, 0, eh * ew, c);
         edgeBuffer = PGL.updateIntBuffer(edgeBuffer, edgePixels, true);
         pgl.texSubImage2D(glTarget, 0, width, height, ew, eh, PGL.RGBA,
-          PGL.UNSIGNED_BYTE, edgeBuffer);
+                          PGL.UNSIGNED_BYTE, edgeBuffer);
       }
     }
   }
 
   ///////////////////////////////////////////////////////////////////////////
+
   // Parameters object
+
+
   /**
    * This class stores the parameters for a texture: target, internal format,
    * minimization filter and magnification filter.
    */
   static public class Parameters {
-
     /**
      * Texture target.
      */
@@ -1605,7 +1643,6 @@ public class Texture implements PConstants {
    *
    */
   protected class BufferData {
-
     int w, h;
     // Native buffer object.
     Object natBuf;
@@ -1622,10 +1659,11 @@ public class Texture implements PConstants {
     void dispose() {
       try {
         // Disposing the native buffer.
-        disposeBufferMethod.invoke(bufferSource, new Object[]{natBuf});
+        disposeBufferMethod.invoke(bufferSource, new Object[] { natBuf });
         natBuf = null;
         rgbBuf = null;
-      } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+      } catch (Exception e) {
+        e.printStackTrace();
       }
     }
   }
