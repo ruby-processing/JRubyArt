@@ -124,6 +124,18 @@ DO NOT MODIFIY - GENERATED CODE
             </archive>
           </configuration>
         </plugin>
+        <plugin>
+          <artifactId>maven-jdeps-plugin</artifactId>
+          <version>3.0.0</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>jdkinternals</goal>
+                <goal>test-jdkinternals</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
