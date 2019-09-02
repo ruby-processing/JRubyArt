@@ -33,22 +33,22 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
   overrides do
     plugin :resources, '2.7'
     plugin :dependency, '2.8'
-    plugin( :compiler, '3.8.0',
+    plugin( :compiler, '3.8.1',
             'release' =>  '11' )
     plugin( :javadoc, '2.10.4',
             'detectOfflineLinks' =>  'false',
             'links' => [ '${processing.api}',
                          '${jruby.api}' ] )
-    plugin( :jar, '3.1.0',
+    plugin( :jar, '3.1.1',
             'archive' => {
               'manifestEntries' => {
                 'Class-Path' =>  'gluegen-rt.jar jog-all.jar'
               }
             } )
-    plugin :jdeps, '3.0.0' do
+    plugin :jdeps, '3.1.2' do
       execute_goals 'jdkinternals', 'test-jdkinternals'
     end
-    
+
   end
 
 

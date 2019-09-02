@@ -97,7 +97,7 @@ DO NOT MODIFIY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
+          <version>3.8.1</version>
           <configuration>
             <release>11</release>
           </configuration>
@@ -115,7 +115,7 @@ DO NOT MODIFIY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.1.1</version>
           <configuration>
             <archive>
               <manifestEntries>
@@ -126,7 +126,7 @@ DO NOT MODIFIY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-jdeps-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.1.2</version>
           <executions>
             <execution>
               <goals>
