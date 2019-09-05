@@ -1,12 +1,13 @@
-
 # JRubyArt
 
-__Gem Version 2.0.0__ ![Travis CI](https://travis-ci.org/ruby-processing/JRubyArt.svg)
+**Gem Version 2.0.0** ![Travis CI](https://travis-ci.org/ruby-processing/JRubyArt.svg)
 
 A new version for jdk11 use, does not require an installed `vanilla processing`, however if installed you can use processing-ide to download libraries. Configuration file is incompatible with that of previous version of JRubyArt (and you should move or rename old `config.yml` to keep it). This version will run with a default configuration file but you won't be able to use processing libraries, until you match configuration to your setup.
 
 ## Requirements
-A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.8.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.  
+
+A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.8.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
+
 ## Requirements
 
 A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.2.8.0`) to download gem.
@@ -17,7 +18,7 @@ A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.2.8.0`) to download gem.
 
 You can if you wish leave configuration to the `new` autoconfig tool (delete or rename existing config to do this). The config file is `config.yml` in the `~/.jruby_art folder`, the autoconfig gets run on `k9 --install` expected to just work.
 
-__config.yml on linux__
+**config.yml on linux**
 
 ```yaml
 ---
@@ -32,20 +33,24 @@ java_args:
 ## Install Steps (assumes you have requirements above)
 
 ```bash
- gem install jruby_art --pre
+ gem install jruby_art
  k9 --install # installs jruby-complete-9.2.8.0 and downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
  k9 --run jwishy.rb # if you have jruby-9.2.8.0 installed or config `JRUBY: false`
  # to use jruby-complete set `JRUBY: false` in config
 ```
+
 ## Create sketches from built in templates
+
 ```bash
 k9 --create fred 200 200                # basic sketch fred.rb
 k9 --create fred 200 200 p2d            # basic P2D sketch fred.rb
 ```
+
 To create either a `class` wrapped sketch or `emacs` sketch set `template: class` or `template: emacs` in config.yml
 
 ## Simple Sketch
+
 ```ruby
 
 def setup
@@ -62,22 +67,27 @@ def settings
   size 400, 300
 end
 ```
+
 ## Run Sketch
-See above
-be prepared to `KILL` the odd java process (ie when sketch does not exit cleanly)
+
+See above be prepared to `KILL` the odd java process (ie when sketch does not exit cleanly)
 
 ## Watch sketches
+
 ```bash
 k9 --watch sketch.rb # NB: doesn't work with FX2D render mode
 ```
+
 ## Open pry console on sketch
+
 ```bash
 k9 --live sketch.rb # pry is bound to Processing.app # needs `jruby -S gem install pry`
 ```
+
 ## Example sketches
 
-[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) and, [The-Nature-of-Code-Examples-for-JRubyArt](https://github.com/ruby-processing/The-Nature-of-Code-for-JRubyArt) feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --install` please move existing `k9_samples` if you wish to keep them.  
+[Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) and, [The-Nature-of-Code-Examples-for-JRubyArt](https://github.com/ruby-processing/The-Nature-of-Code-for-JRubyArt) feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --install` please move existing `k9_samples` if you wish to keep them.
 
-[rubuto-processing3]:https://github.com/hoshi-sano/ruboto-processing3
-[testing]:http://ruby-processing.github.io/testing/testing/
-[pi]:http://ruby-processing.github.io/JRubyArt/raspberrypi_started/
+[pi]: http://ruby-processing.github.io/JRubyArt/raspberrypi_started/
+[rubuto-processing3]: https://github.com/hoshi-sano/ruboto-processing3
+[testing]: http://ruby-processing.github.io/testing/testing/
