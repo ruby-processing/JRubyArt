@@ -24,6 +24,8 @@ And this pretty much explains when you would use it. Ordinarily, don't. If you w
 
 One useful real-world use of reflection is when writing a framework that has to interoperate with user-defined classes, where the framework author doesn't know what the members (or even the classes) will be. Reflection allows them to deal with any class without knowing it in advance. For instance, I don't think it would be possible to write a complex aspect-oriented library without reflection.
 
+Since jdk9+ stronger encapsulation causes a lot of warnings about illegal reflective access, and one should explicitly open which classes are allowed such access (using `--add-opens` on the command line or within `module-info`). In future jdk releases reflective access without explicitly being enabled will be prohibited.
+
 [reflection]:https://docs.oracle.com/javase/tutorial/reflect/
 [inner]:https://docs.oracle.com/javase/tutorial/java/javaOO/innerclasses.html
 [pde]:{{site.github.url}}/magic/processing.html
