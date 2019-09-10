@@ -63,9 +63,9 @@ Possibly the simplest way to get MRI ruby on windows is via [rubyinstaller][ruby
 
 Configuration:-
 
-JRubyArt needs to know where you've installed processing, where your processing sketchbook lives (for the video and audio libraries etc), and whether you've done a system/user install of jruby.
+JRubyArt needs to know where your libraries are installed (for the video and audio libraries etc), and whether you've done a system/user install of jruby.
 
-Config file is `config.yml` in the `~/.jruby_art folder` so it can co-exist with a ruby-processing install (~/.rp5rc), it is advisable to have separate folders for processing-3.0 and processing-2.2.1 sketchbooks.
+Config file is `config.yml` in the `~/.jruby_art folder`.
 
 If you can/are using rvm or rbenv switch to using jruby-9.2+ then
 

@@ -2,7 +2,7 @@
 layout: post
 title:  "setup"
 ---
-Apart from nude sketches, all sketches will propably have a user defined [setup][setup] method. This is where you define the sketch title and where static code belongs.
+Apart from nude sketches, all sketches will probably have a user defined [setup][setup] method. This is where you define the sketch title and where static code belongs.
 
 ```ruby
 def setup
