@@ -46,7 +46,7 @@ sudo pacman -S processing # installs processing-3.5.3  (community)
 ```
 
 Configure in `~/.jruby_art/config.yml`:-
-```bash
+```yaml
 ---
 processing_ide: false
 library_path: "/home/tux/.jruby_art"
@@ -55,6 +55,8 @@ JRUBY: true
 template: bare
 java_args: --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED
 ```
+
+
 
 Install JRubyArt
 ```bash
@@ -92,14 +94,22 @@ sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.8.0/bin/j
 sudo update-alternatives --config jruby # to configure if required
 ```
 
-Configure in `~/.jruby_art/config.yml`:-
-```bash
-PROCESSING_ROOT: "/home/tux/processing-3.5.3" # `substitute` user for `tux`
-sketchbook_path: "/home/tux/sketchbook"
-MAX_WATCH: 30
+### JRubyArt
+
+JRubyArt needs to know where you've installed your libraries (_for the video and audio libraries etc_), and whether you've done a system/user install of jruby. Since jdk9 reflective access to certain methods and fields is warned about, it is possible to suppress these warnings by using java command-line flag `--add-opens`. See configuration file below (global) or locally in a `data/java_args.txt` text file.
+
+Config file is `config.yml` in the `~/.jruby_art folder`.
+
+```yaml
+---
+processing_ide: false
+library_path: "/home/tux/.jruby_art"
+MAX_WATCH: 32
 JRUBY: true
 template: bare
+java_args: --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED
 ```
+
 
 Otherwise you can check to see what platforms are officially supported [here][platforms].
 
@@ -115,16 +125,6 @@ Install MRI ruby (must be at least ruby-2.3)
 
 https://www.ruby-lang.org/en/documentation/installation/ (NB: most distros are hopelessly out of data)
 
-Download processing-3.5.3 from the [official website][official] and install, prefer to install in say `~/processing-3.5.3`.  When you're done, make sure to take note of the directory you installed the app to complete the configuration see below.
-
-Configure in `~/.jruby_art/config.yml`:-
-```bash
-PROCESSING_ROOT: "/home/tux/processing-3.5.3" # `substitute` user for `tux`
-sketchbook_path: "/home/tux/sketchbook"
-MAX_WATCH: 30
-JRUBY: false
-template: bare
-```
 
 If using `rvm` or `rbenv` make sure you are using ruby2.4+
 ```bash
