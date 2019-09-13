@@ -4,9 +4,9 @@ title:  "Hype Library Examples<sup>5</sup>"
 keywords: library, java, framework, hype, processing
 
 ---
-<sup>5</sup><i>A vanilla processing library</i> that you may need to [compile and install][build] yourself.  You could even use a [polyglot maven][polyglot] (see pom.rb) to build the jar, use a local processing core.jar if you want the latest version. I've put SNAPSHOT in version because library claims to be under heavy development (the commit history would argue otherwise).
+<sup>5</sup><i>A vanilla processing library</i> [download here][hype] yourself.  You could even use a [polyglot maven][polyglot] (see pom.rb) to build the jar, use a local processing core.jar if you want the latest version. I've put SNAPSHOT in version because library claims to be under heavy development (the commit history would argue otherwise).
 
-Here is an index of my blogposts about using the [Hype processing framework][] by Joshua Davis in JRubyArt. The code [examples][] are included with the JRubyArt examples.
+Here is an index of my blogposts about using the [Hype processing framework][hype] by Joshua Davis in JRubyArt. The code [examples][] are included with the JRubyArt examples.
 
 1. [A Basic Sketch](https://monkstone.github.io/jruby_art/update/2016/04/18/hype.html)
 
@@ -46,7 +46,7 @@ Here is an index of my blogposts about using the [Hype processing framework][] b
     Using hype utilities to pixellate an image.
 
 [examples]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/external_library/java/hype
-[Hype processing framework]:https://www.hypeframework.org/
+[hype]:https://www.hypeframework.com/
 [color]: {{ site.url }}/alternatives/
 [polyglot]:https://github.com/takari/polyglot-maven/
 [build]:http://ruby-processing.github.io/building/hype/
