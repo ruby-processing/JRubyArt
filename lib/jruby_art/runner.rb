@@ -157,9 +157,9 @@ module Processing
 
     def show_version
       require 'erb'
-      warning = 'WARNING: JDK11 is preferred'.freeze
+      warning = 'WARNING: JDK12 is preferred'.freeze
       if RUBY_PLATFORM == 'java'
-        warn warning unless ENV_JAVA['java.specification.version'] == '11'
+        warn warning unless ENV_JAVA['java.specification.version'] == '12'
       end
       template = ERB.new <<-EOF
         JRubyArt version <%= JRubyArt::VERSION %>
