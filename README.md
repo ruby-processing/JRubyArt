@@ -12,7 +12,7 @@ A clean start for `jruby_art` with custom processing core included, built for [j
 
 A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.2.8.0`) to download gem.
 
-`open-jdk11.03+` currently FX2D is not included. Currently you can ignore `illegal reflective access` warnings, [see here how to suppress them][warings].
+`open-jdk11.03+` currently FX2D is not included. Currently you can ignore `illegal reflective access` warnings, [see here how to suppress them][warnings].
 
 ## Configuration
 
