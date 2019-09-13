@@ -12,7 +12,7 @@ A clean start for `jruby_art` with custom processing core included, built for [j
 
 A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.2.8.0`) to download gem.
 
-`open-jdk11.03+` currently FX2D is not included.
+`open-jdk11.03+` currently FX2D is not included. Currently you can ignore `illegal reflective access` warnings, [see here how to suppress them][warings].
 
 ## Configuration
 
@@ -28,6 +28,7 @@ MAX_WATCH: 32
 JRUBY: true
 template: bare
 java_args:
+  # Global java_args can be used to suppress reflective access warn
 ```
 
 ## Install Steps (assumes you have requirements above)
@@ -91,3 +92,4 @@ k9 --live sketch.rb # pry is bound to Processing.app # needs `jruby -S gem insta
 [pi]: http://ruby-processing.github.io/JRubyArt/raspberrypi_started/
 [rubuto-processing3]: https://github.com/hoshi-sano/ruboto-processing3
 [testing]: http://ruby-processing.github.io/testing/testing/
+[warnings]: https://monkstone.github.io/jruby_art/update/2019/09/10/Reflective_Access.html
