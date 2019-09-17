@@ -12,7 +12,7 @@ A clean start for `jruby_art` with custom processing core included, built for [j
 
 A suitable version of ruby (MRI `ruby 2.3+` or `jruby-9.2.8.0`) to download gem.
 
-`open-jdk11.03+` currently FX2D is not included. Currently you can ignore `illegal reflective access` warnings, [see here how to suppress them][warnings].
+`open-jdk11.03+` currently FX2D is not included. Currently you can ignore `illegal reflective access` warnings, [see here how to suppress them][warnings]. There may be a linker issue with P2D or P3D sketches with stock openjdk with some linux distros, in which case you might find [Adopt open jdk binaries][adopt] will work for you.
 
 ## Configuration
 
@@ -89,6 +89,7 @@ k9 --live sketch.rb # pry is bound to Processing.app # needs `jruby -S gem insta
 
 [Worked Examples](https://github.com/ruby-processing/JRubyArt-examples) and, [The-Nature-of-Code-Examples-for-JRubyArt](https://github.com/ruby-processing/The-Nature-of-Code-for-JRubyArt) feel free to add your own, especially ruby-2.2+ syntax now we can. These can now be downloaded using `k9 --install` please move existing `k9_samples` if you wish to keep them.
 
+[adopt]: https://adoptopenjdk.net/
 [pi]: http://ruby-processing.github.io/JRubyArt/raspberrypi_started/
 [rubuto-processing3]: https://github.com/hoshi-sano/ruboto-processing3
 [testing]: http://ruby-processing.github.io/testing/testing/
