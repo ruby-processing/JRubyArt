@@ -1,7 +1,7 @@
 project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
 
   model_version '4.0.0'
-  id 'ruby-processing:jruby_art:2.2.0'
+  id 'ruby-processing:jruby_art:2.2.1'
   packaging 'jar'
 
   description 'Jar for JRubyArt'

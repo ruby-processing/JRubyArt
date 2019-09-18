@@ -207,12 +207,12 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * Array of hint[] items. These are hacks to get around various
    * temporary workarounds inside the environment.
-   * <p/>
+   * 
    * Note that this array cannot be static, as a hint() may result in a
    * runtime change specific to a renderer. For instance, calling
    * hint(DISABLE_DEPTH_TEST) has to call glDisable() right away on an
    * instance of PGraphicsOpenGL.
-   * <p/>
+   * 
    * The hints[] array is allocated early on because it might
    * be used inside beginDraw(), allocate(), etc.
    */
@@ -618,16 +618,16 @@ public class PGraphics extends PImage implements PConstants {
   // [toxi 031031]
   // changed table's precision to 0.5 degree steps
   // introduced new vars for more flexible code
-  static final protected float sinLUT[];
-  static final protected float cosLUT[];
+  static final protected float SIN_LUT[];
+  static final protected float COS_LUT[];
   static final protected float SINCOS_PRECISION = 0.5f;
   static final protected int SINCOS_LENGTH = (int) (360f / SINCOS_PRECISION);
   static {
-    sinLUT = new float[SINCOS_LENGTH];
-    cosLUT = new float[SINCOS_LENGTH];
+    SIN_LUT = new float[SINCOS_LENGTH];
+    COS_LUT = new float[SINCOS_LENGTH];
     for (int i = 0; i < SINCOS_LENGTH; i++) {
-      sinLUT[i] = (float) Math.sin(i * DEG_TO_RAD * SINCOS_PRECISION);
-      cosLUT[i] = (float) Math.cos(i * DEG_TO_RAD * SINCOS_PRECISION);
+      SIN_LUT[i] = (float) Math.sin(i * DEG_TO_RAD * SINCOS_PRECISION);
+      COS_LUT[i] = (float) Math.cos(i * DEG_TO_RAD * SINCOS_PRECISION);
     }
   }
 
@@ -737,9 +737,10 @@ public class PGraphics extends PImage implements PConstants {
 
 
   /**
-   * Set (or unset) this as the main drawing surface. Meaning that it can
-   * safely be set to opaque (and given a default gray background), or anything
-   * else that goes along with that.
+   * Set (or unset) this as the main drawing surface.Meaning that it can
+ safely be set to opaque (and given a default gray background), or anything
+ else that goes along with that.
+   * @param primary
    */
   public void setPrimary(boolean primary) {  // ignore
     this.primaryGraphics = primary;
@@ -910,7 +911,7 @@ public class PGraphics extends PImage implements PConstants {
    *
    * ( end auto-generated )
    * <h3>Advanced</h3>
-   * <p/>
+   * 
    * When creating your own PGraphics, you should call this when
    * you're finished drawing.
    *
@@ -1652,12 +1653,12 @@ public class PGraphics extends PImage implements PConstants {
    * coincident with a call to vertex. As of beta, this was moved to
    * the protected method you see here, and called from an optional
    * param of and overloaded vertex().
-   * <p/>
+   * 
    * The parameters depend on the current textureMode. When using
    * textureMode(IMAGE), the coordinates will be relative to the size
    * of the image texture, when used with textureMode(NORMAL),
    * they'll be in the range 0..1.
-   * <p/>
+   * 
    * Used by both PGraphics2D (for images) and PGraphics3D.
    */
   protected void vertexTexture(float u, float v) {
@@ -1724,6 +1725,7 @@ public class PGraphics extends PImage implements PConstants {
    * @see PShape
    * @see PGraphics#beginShape(int)
    */
+  
   public void endShape(int mode) {
   }
 
@@ -3081,8 +3083,8 @@ public class PGraphics extends PImage implements PConstants {
     float[] cz = new float[ures];
     // calc unit circle in XZ plane
     for (int i = 0; i < ures; i++) {
-      cx[i] = cosLUT[(int) (i*delta) % SINCOS_LENGTH];
-      cz[i] = sinLUT[(int) (i*delta) % SINCOS_LENGTH];
+      cx[i] = COS_LUT[(int) (i*delta) % SINCOS_LENGTH];
+      cz[i] = SIN_LUT[(int) (i*delta) % SINCOS_LENGTH];
     }
     // computing vertexlist
     // vertexlist starts at south pole
@@ -3099,8 +3101,8 @@ public class PGraphics extends PImage implements PConstants {
 
     // step along Y axis
     for (int i = 1; i < vres; i++) {
-      float curradius = sinLUT[(int) angle % SINCOS_LENGTH];
-      float currY = cosLUT[(int) angle % SINCOS_LENGTH];
+      float curradius = SIN_LUT[(int) angle % SINCOS_LENGTH];
+      float currY = COS_LUT[(int) angle % SINCOS_LENGTH];
       for (int j = 0; j < ures; j++) {
         sphereX[currVert] = cx[j] * curradius;
         sphereY[currVert] = currY;
@@ -3891,7 +3893,7 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * Expects x1, y1, x2, y2 coordinates where (x2 >= x1) and (y2 >= y1).
    * If tint() has been called, the image will be colored.
-   * <p/>
+   * 
    * The default implementation draws an image as a textured quad.
    * The (u, v) coordinates are in image space (they're ints, after all..)
    */

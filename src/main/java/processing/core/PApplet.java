@@ -5258,12 +5258,11 @@ public class PApplet implements PConstants {
   /**
    * ( begin auto-generated from noise.xml )
    *
-   * Returns the Perlin noise value at specified coordinates. Perlin noise is
-   * a random sequence generator producing a more natural ordered, harmonic
-   * succession of numbers compared to the standard <b>random()</b> function.
-   * It was invented by Ken Perlin in the 1980s and been used since in
-   * graphical applications to produce procedural textures, natural motion,
-   * shapes, terrains etc.<br /><br /> The main difference to the
+   * Returns the Perlin noise value at specified coordinates.Perlin noise is
+ a random sequence generator producing a more natural ordered, harmonic
+ succession of numbers compared to the standard <b>random()</b> function. It was invented by Ken Perlin in the 1980s and been used since in
+ graphical applications to produce procedural textures, natural motion,
+ shapes, terrains etc.<br /><br /> The main difference to the
    * <b>random()</b> function is that Perlin noise is defined in an infinite
    * n-dimensional space where each pair of coordinates corresponds to a
    * fixed semi-random value (fixed only for the lifespan of the program).
@@ -5286,6 +5285,7 @@ public class PApplet implements PConstants {
    *
    * ( end auto-generated )
    *
+   * @return 
    * @webref math:random
    * @param x x-coordinate in noise space
    * @param y y-coordinate in noise space
@@ -5306,7 +5306,7 @@ public class PApplet implements PConstants {
       // [toxi 031112]
       // noise broke due to recent change of cos table in PGraphics
       // this will take care of it
-      perlin_cosTable = PGraphics.cosLUT;
+      perlin_cosTable = PGraphics.COS_LUT;
       perlin_TWOPI = perlin_PI = PGraphics.SINCOS_LENGTH;
       perlin_PI >>= 1;
     }
@@ -5361,7 +5361,7 @@ public class PApplet implements PConstants {
   }
 
   // [toxi 031112]
-  // now adjusts to the size of the cosLUT used via
+  // now adjusts to the size of the COS_LUT used via
   // the new variables, defined above
   private float noise_fsc(float i) {
     // using bagel's cosine table instead

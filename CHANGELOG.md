@@ -1,3 +1,5 @@
+**v2.2.1** Add dxf export, re-brand with my wavy triangle icon.
+
 **v2.2.0** A standalone ruby version of processing which runs with jdk12 and essentially uses a develpment version of processing core (by Sam Pottinger). Use version 1.7.0 if you are using jdk8.
 
 **v2.1.0** JRubyArt is no longer dependent on an installed version of vanilla processing, but needs at least jdk11 to run. Anyone wanting to use jdk8 should install JRubyArt-1.7.0 and probably use bundler to freeze version.

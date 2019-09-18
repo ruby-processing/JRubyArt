@@ -8755,8 +8755,8 @@ public class PGraphicsOpenGL extends PGraphics {
       idx0 = pidx = idx = 0;
       float val = 0;
       for (int i = 0; i < accuracy; i++) {
-        idx = addVertex(centerX + cosLUT[(int) val] * radiusH,
-                        centerY + sinLUT[(int) val] * radiusV,
+        idx = addVertex(centerX + COS_LUT[(int) val] * radiusH,
+                        centerY + SIN_LUT[(int) val] * radiusV,
                         VERTEX, i == 0 && !fill);
         val = (val + inc) % SINCOS_LENGTH;
 
@@ -8769,8 +8769,8 @@ public class PGraphicsOpenGL extends PGraphics {
         pidx = idx;
       }
       // Back to the beginning
-      addVertex(centerX + cosLUT[0] * radiusH,
-                centerY + sinLUT[0] * radiusV,
+      addVertex(centerX + COS_LUT[0] * radiusH,
+                centerY + SIN_LUT[0] * radiusV,
                 VERTEX, false);
       if (stroke) {
         addEdge(idx, idx0, false, false);
@@ -8815,8 +8815,8 @@ public class PGraphicsOpenGL extends PGraphics {
       if (arcMode == CHORD || arcMode == OPEN) {
         // move center to the middle of flat side
         // to properly display arcs smaller than PI
-        float relX = (cosLUT[startLUT] + cosLUT[stopLUT]) * 0.5f * hr;
-        float relY = (sinLUT[startLUT] + sinLUT[stopLUT]) * 0.5f * vr;
+        float relX = (COS_LUT[startLUT] + COS_LUT[stopLUT]) * 0.5f * hr;
+        float relY = (SIN_LUT[startLUT] + SIN_LUT[stopLUT]) * 0.5f * vr;
         idx0 = addVertex(centerX + relX, centerY + relY, VERTEX, true);
       } else {
         idx0 = addVertex(centerX, centerY, VERTEX, true);
@@ -8853,8 +8853,8 @@ public class PGraphicsOpenGL extends PGraphics {
         if (ii >= SINCOS_LENGTH) ii -= SINCOS_LENGTH;
 
         pidx = idx;
-        idx = addVertex(centerX + cosLUT[ii] * hr,
-                        centerY + sinLUT[ii] * vr,
+        idx = addVertex(centerX + COS_LUT[ii] * hr,
+                        centerY + SIN_LUT[ii] * vr,
                         VERTEX, i == 0 && !fill);
 
         if (stroke) {
@@ -11132,9 +11132,9 @@ public class PGraphicsOpenGL extends PGraphics {
         float inc = (float) SINCOS_LENGTH / perim;
         for (int k = 0; k < perim; k++) {
           tess.pointOffsets[2 * attribIdx + 0] =
-            0.5f * cosLUT[(int) val] * transformScale() * strokeWeight;
+            0.5f * COS_LUT[(int) val] * transformScale() * strokeWeight;
           tess.pointOffsets[2 * attribIdx + 1] =
-            0.5f * sinLUT[(int) val] * transformScale() * strokeWeight;
+            0.5f * SIN_LUT[(int) val] * transformScale() * strokeWeight;
           val = (val + inc) % SINCOS_LENGTH;
           attribIdx++;
         }
@@ -11184,8 +11184,8 @@ public class PGraphicsOpenGL extends PGraphics {
         vertIdx++;
         for (int k = 0; k < perim; k++) {
           tess.setPolyVertex(vertIdx,
-                             x0 + 0.5f * cosLUT[(int) val] * strokeWeight,
-                             y0 + 0.5f * sinLUT[(int) val] * strokeWeight,
+                             x0 + 0.5f * COS_LUT[(int) val] * strokeWeight,
+                             y0 + 0.5f * SIN_LUT[(int) val] * strokeWeight,
                              0, rgba, false);
           vertIdx++;
           val = (val + inc) % SINCOS_LENGTH;
