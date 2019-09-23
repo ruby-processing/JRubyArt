@@ -38,8 +38,9 @@ Why was ruby-processing not updated to use processing3.0+? The [major changes][c
 
 Install Software as required:-
 
+Currently stock OpenJDK12 has a linking problem affecting P2D and P3D sketches, install adopt-openjdk12 instead.
+
 ```bash
-sudo pacman -S jdk-openjdk # installs openjdk jdk11 also seems to work OK if somewhat noisy
 sudo pacman -S java-openjfx # installs openjfx
 sudo pacman -S jruby # installs jruby-9.2.8.0
 sudo pacman -S processing # installs processing-3.5.3  (community)
