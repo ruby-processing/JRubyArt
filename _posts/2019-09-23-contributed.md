@@ -33,7 +33,7 @@ id=004
 
 ### Installing a library ###
 
-Install libraries to your `~/.JRubyArt/libraries` folder.  NB: this created for you when you install the `video` or `sound` libraries.
+Install libraries to your `~/.jruby_art/libraries` folder.  NB: this created for you when you install the `video` or `sound` libraries.
 
 ```bash
 jruby_art -i Sound
