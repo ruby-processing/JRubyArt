@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Installing Contributed Java Libraries for JRubyArt"
-date: 2019-092305 06:00:00
+date: 2019-09-23 06:00:00
 keywords: JRubyArt, wget, java, libraries, contributed
 permalink: contributed
 ---
