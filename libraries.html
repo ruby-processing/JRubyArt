@@ -17,4 +17,10 @@ title: Libraries
 <li>Regular processing libraries (see also gems for toxiclibs etc)</li>
 </ol>
 
-Since JRubyArt-2.0 you should configure the `library_path:` in `config.yml` to point to where you have your libraries folder. To use the processing built in libraries put the `pdf`, `serial` and `net` libraries in that folder.
+Since JRubyArt-2.0 you do not need to install vanilla processing. However you can if you wish use it to install contributed libraries (and load_library will find the library int the `library_path:` in `config.yml`). Otherwise you should put your libraries in the `~/.jruby_art/libraries` folder. The `sound` and `video` libraries can be installed as follows:-
+
+```bash
+k9 -d sound
+k9 -d video
+```
+Other libraries require a manual install.
