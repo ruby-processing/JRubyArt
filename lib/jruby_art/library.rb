@@ -35,10 +35,11 @@ class Library
   end
 
   def locate_installed_java
-    prefix = library_path
-    @dir = Pathname.new(
-      File.join(prefix, "libraries/#{name}/library")
-    )
+    unless dir.directory?
+      @dir = Pathname.new(
+        File.join(ENV['HOME'], '.jruby_art', 'libraries', name, 'library')
+      )
+    end
     @path = dir.join(Pathname.new("#{name}.jar"))
   end
 

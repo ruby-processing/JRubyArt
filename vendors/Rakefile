@@ -8,9 +8,12 @@ WARNING = <<-WARN.freeze
    may also require 'sudo' access to install, NB: this is untested....
 
 WARN
-
+# https://github.com/processing/processing-video/releases/download/r6-v2.0-beta4/video-2.0-beta4.zip
 JRUBYC_VERSION     = '9.2.8.0'.freeze
-
+SOUND = 'sound.zip'
+SOUND_VERSION = 'v2.2.2'
+VIDEO = 'video-2.0-beta4.zip'.freeze
+VIDEO_VERSION = 'r6-v2.0-beta4'.freeze
 EXAMPLES           = '3.4'.freeze
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
@@ -65,6 +68,37 @@ def check_sha256(filename, expected_hash)
   return if sha256.hexdigest == expected_hash
 
   raise "bad sha256 checksum for #{filename} (expected #{expected_hash} got #{sha256.hexdigest})"
+end
+
+desc 'initialize ~/.jruby_art directories'
+task :init_dir do
+  unless File.exist? "#{HOME_DIR}/.jruby_art/libraries"
+    FileUtils.mkdir_p "#{HOME_DIR}/.jruby_art/libraries"
+  end
+end
+
+desc 'download sound library'
+task :download_sound do
+  wget_base = 'wget https://github.com/processing/processing-sound'
+  wget_string = [wget_base, 'releases/download/latest', SOUND].join('/')
+  puts wget_string
+  begin
+    sh wget_string
+  rescue
+    puts 'Not Currently Available'
+    # warn(WARNING)
+  end
+end
+
+desc 'download video library'
+task :download_video do
+  wget_base = 'wget https://github.com/processing/processing-video'
+  wget_string = [wget_base, 'releases/download', VIDEO_VERSION, VIDEO].join('/')
+  begin
+    sh wget_string
+  rescue
+    warn(WARNING)
+  end
 end
 
 desc 'download, and copy to jruby_art'
