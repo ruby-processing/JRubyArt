@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'fileutils'
 require 'rake/clean'
 
-WARNING = <<-WARN.freeze
+WARNING = <<-WARN
    WARNING: you may not have wget installed, you could just download
    the correct version of jruby-complete to the vendors folder, and
    re-run k9 setup install instead of installing wget. Some systems
@@ -9,12 +11,12 @@ WARNING = <<-WARN.freeze
 
 WARN
 # https://github.com/processing/processing-video/releases/download/r6-v2.0-beta4/video-2.0-beta4.zip
-JRUBYC_VERSION     = '9.2.8.0'.freeze
+JRUBYC_VERSION = '9.2.8.0'
 SOUND = 'sound.zip'
 SOUND_VERSION = 'v2.2.2'
-VIDEO = 'video-2.0-beta4.zip'.freeze
-VIDEO_VERSION = 'r6-v2.0-beta4'.freeze
-EXAMPLES           = '3.4'.freeze
+VIDEO = 'video-2.0-beta4.zip'
+VIDEO_VERSION = 'r6-v2.0-beta4'
+EXAMPLES = '3.4'
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
 
@@ -24,7 +26,7 @@ CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
 file "jruby-complete-#{JRUBYC_VERSION}.jar.sha256" do
   begin
     system "wget https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
-  rescue
+  rescue NameError
     warn(WARNING)
   end
 end
@@ -41,7 +43,7 @@ task download: ["jruby-complete-#{JRUBYC_VERSION}.jar"]
 file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   begin
     system "wget https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar"
-  rescue
+  rescue NameError
     warn(WARNING)
   end
   value = File.read("jruby-complete-#{JRUBYC_VERSION}.jar.sha256")
@@ -90,7 +92,7 @@ task :download_sound do
   puts wget_string
   begin
     sh wget_string
-  rescue
+  rescue NameError
     puts 'Not Currently Available'
     # warn(WARNING)
   end
@@ -102,7 +104,7 @@ task :download_video do
   wget_string = [wget_base, 'releases/download', VIDEO_VERSION, VIDEO].join('/')
   begin
     sh wget_string
-  rescue
+  rescue NameError
     warn(WARNING)
   end
 end
@@ -136,7 +138,7 @@ file file_name do
     else
       system "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
     end
-  rescue
+  rescue NameError
     warn(WARNING)
   end
 end

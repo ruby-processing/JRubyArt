@@ -39,7 +39,7 @@ class Library
           if Processing::RP_CONFIG.fetch('processing_ide', false)
             prefix = library_path
             @dir = Pathname.new(
-              File.join(prefix, "libraries/#{name}/library")
+              File.join(prefix, 'libraries', name, 'library')
             )
             @path = dir.join(Pathname.new("#{name}.jar"))
           else
@@ -85,4 +85,3 @@ class Library
         native_loader.add_native_path(ppath)
       end
     end
-  
