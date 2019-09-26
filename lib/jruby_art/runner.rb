@@ -48,6 +48,7 @@ module Processing
       create if options[:create]
       check if options[:check]
       install if options[:install]
+      download(filename) if options[:download]
     end
 
     # Parse the command-line options.
@@ -65,6 +66,12 @@ module Processing
         options[:install] = false
         opts.on('-i', '--install', 'Installs jruby-complete and examples') do
           options[:install] = true
+        end
+
+        options[:download] = false
+        message = 'Download and install <Video><Sound> library'
+        opts.on('-d', '--download', message) do
+          options[:download] = true
         end
 
         options[:check] = false
@@ -138,11 +145,26 @@ module Processing
       spin_up('watch.rb', filename, argc)
     end
 
+    # def install
+    #   if argc.length.zero?
+    #   choice = library.downcase
+    #   valid = Regexp.union('samples', 'sound', 'video', 'glvideo')
+    #   return warn format('No installer for %s', choice) unless valid =~ choice
+    #   system "cd #{JRUBY_ROOT}/vendors && rake download_and_copy_#{choice}"
+    # end
+
     def install
       require_relative 'installer'
       Installer.new.install
       JRubyCompleteInstall.new.install
       UnpackSamples.new.install
+    end
+
+    def download(library)
+      choice = library.downcase
+      valid = Regexp.union('sound', 'video')
+      return warn format('No installer for %s', choice) unless valid =~ choice
+      system "cd #{K9_ROOT}/vendors && rake download_and_copy_#{choice}"
     end
 
     def check
@@ -162,8 +184,8 @@ module Processing
         warn warning unless ENV_JAVA['java.specification.version'] == '12'
       end
       template = ERB.new <<-EOF
-        JRubyArt version <%= JRubyArt::VERSION %>
-        Ruby version <%= RUBY_VERSION %>
+      JRubyArt version <%= JRubyArt::VERSION %>
+      Ruby version <%= RUBY_VERSION %>
       EOF
       puts template.result(binding)
     end

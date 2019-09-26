@@ -77,6 +77,12 @@ task :init_dir do
   end
 end
 
+desc 'download and copy sound library to ~/.jruby_art'
+task download_and_copy_sound: %i[init_dir download_sound copy_sound clobber]
+
+desc 'download and copy video library to ~/.jruby_art'
+task download_and_copy_video: %i[init_dir download_video copy_video clobber]
+
 desc 'download sound library'
 task :download_sound do
   wget_base = 'wget https://github.com/processing/processing-sound'
@@ -99,6 +105,22 @@ task :download_video do
   rescue
     warn(WARNING)
   end
+end
+
+desc 'copy sound library'
+task copy_sound: SOUND do
+  sh "unzip #{SOUND}"
+  FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/sound" if File.exist? "#{HOME_DIR}/.jruby_art/libraries/sound"
+  FileUtils.cp_r 'sound', "#{HOME_DIR}/.jruby_art/libraries"
+  FileUtils.rm_r 'sound'
+end
+
+desc 'copy video library'
+task copy_video: VIDEO do
+  sh "unzip #{VIDEO}"
+  FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/video" if File.exist? "#{HOME_DIR}/.jruby_art/libraries/video"
+  FileUtils.cp_r 'video', "#{HOME_DIR}/.jruby_art/libraries/video"
+  FileUtils.rm_r 'video'
 end
 
 desc 'download, and copy to jruby_art'
