@@ -8,13 +8,13 @@ require_relative '../app'
 # More processing module
 module Processing
   # For use with "bare" sketches that don't want to define a class or methods
-  BARE_WRAP = <<-EOS.freeze
+  BARE_WRAP = <<-BARE
   class Sketch < Processing::App
     %s
   end
-  EOS
+  BARE
 
-  NAKED_WRAP = <<-EOS.freeze
+  NAKED_WRAP = <<-NAKED
   class Sketch < Processing::App
     def setup
       sketch_title '%s'
@@ -26,7 +26,7 @@ module Processing
       size(%d, %d)
     end
   end
-  EOS
+  NAKED
 
   # This method is the common entry point to run a sketch, bare or complete.
   def self.load_and_run_sketch

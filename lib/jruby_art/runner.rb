@@ -9,12 +9,12 @@ require_relative '../jruby_art/java_opts'
 require_relative '../jruby_art/launcher'
 # processing wrapper module
 module Processing
-  # Utility class to handle the different commands that the 'k9' command
-  # offers. Able to run, watch, live, create, app, and unpack
   unless defined? RP_CONFIG
     conf = Config.new.load_config
     RP_CONFIG = conf.config
   end
+  # Utility class to handle the different commands that the 'k9' command
+  # offers. Able to run, watch, live, create, app, and unpack
   class Runner
     WIN_PATTERNS = [
       /bccwin/i,
@@ -23,7 +23,12 @@ module Processing
       /ming/i,
       /mswin/i,
       /wince/i
-    ].freeze
+    ]
+
+    INSTALL = <<~MSG
+    <Config|JRuby-Complete|Samples>
+                                         or <Sound|Video> library
+    MSG
 
     attr_reader :options, :argc, :filename, :os
 
@@ -35,20 +40,19 @@ module Processing
     def self.execute
       runner = new
       runner.parse_options(ARGV)
-      runner.execute!
+      runner.execute
     end
 
     # Dispatch central.
-    def execute!
-      show_help if options.empty?
+    def execute
+      parse_options('-h') if options.empty?
       show_version if options[:version]
       run_sketch if options[:run]
       watch_sketch if options[:watch]
       live if options[:live]
       create if options[:create]
       check if options[:check]
-      install if options[:install]
-      download(filename) if options[:download]
+      install(filename) if options[:install]
     end
 
     # Parse the command-line options.
@@ -58,55 +62,40 @@ module Processing
         # of the help screen.
         opts.banner = 'Usage: k9 [options] [<filename.rb>]'
         # Define the options, and what they do
-        options[:version] = false
+
         opts.on('-v', '--version', 'JRubyArt Version') do
           options[:version] = true
         end
 
-        options[:install] = false
-        opts.on('-i', '--install', 'Installs jruby-complete and examples') do
-          options[:install] = true
-        end
-
-        options[:download] = false
-        message = 'Download and install <Video><Sound> library'
-        opts.on('-d', '--download', message) do
-          options[:download] = true
-        end
-
-        options[:check] = false
         opts.on('-?', '--check', 'Prints configuration') do
           options[:check] = true
         end
 
-        options[:app] = false
-        opts.on('-a', '--app', 'Export as app NOT IMPLEMENTED YET') do
-          options[:export] = true
+        opts.on('-i', '--install', INSTALL) do
+          options[:install] = true
         end
 
-        options[:watch] = false
-        opts.on('-w', '--watch', 'Watch/run the sketch') do
-          options[:watch] = true
-        end
-
-        options[:run] = false
-        opts.on('-r', '--run', 'Run the sketch') do
-          options[:run] = true
-        end
-
-        options[:live] = false
-        opts.on('-l', '--live', 'As above, with pry console bound to Processing.app') do
-          options[:live] = true
-        end
-
-        options[:create] = false
         opts.on('-c', '--create', 'Create new outline sketch') do
           options[:create] = true
         end
 
-        # This displays the help screen, all programs are
-        # assumed to have this option.
-        opts.on('-h', '--help', 'Display this screen') do
+        opts.on('-r', '--run', 'Run the sketch') do
+          options[:run] = true
+        end
+
+        opts.on('-w', '--watch', 'Watch/run the sketch') do
+          options[:watch] = true
+        end
+
+        opts.on('-l', '--live', 'As above, with pry console bound to Processing.app') do
+          options[:live] = true
+        end
+
+        opts.on('-a', '--app', 'Export as app NOT IMPLEMENTED YET') do
+          options[:export] = true
+        end
+
+        opts.on_tail('-h', '--help', 'Display this screen') do
           puts opts
           exit
         end
@@ -145,26 +134,24 @@ module Processing
       spin_up('watch.rb', filename, argc)
     end
 
-    # def install
-    #   if argc.length.zero?
-    #   choice = library.downcase
-    #   valid = Regexp.union('samples', 'sound', 'video', 'glvideo')
-    #   return warn format('No installer for %s', choice) unless valid =~ choice
-    #   system "cd #{JRUBY_ROOT}/vendors && rake download_and_copy_#{choice}"
-    # end
-
-    def install
+    def install(library)
       require_relative 'installer'
-      Installer.new.install
-      JRubyCompleteInstall.new.install
-      UnpackSamples.new.install
-    end
+      case library.downcase
+      when /sound|video/
+        system "cd #{K9_ROOT}/vendors && rake download_and_copy_#{choice}"
+      when /samples/
+        system "cd #{K9_ROOT}/vendors && rake unpack_samples"
+      when /jruby/
+        system "cd #{K9_ROOT}/vendors && rake"
+      when /config/
+        Installer.new.install
+      else
+        return warn "No loader for #{library}" if library
 
-    def download(library)
-      choice = library.downcase
-      valid = Regexp.union('sound', 'video')
-      return warn format('No installer for %s', choice) unless valid =~ choice
-      system "cd #{K9_ROOT}/vendors && rake download_and_copy_#{choice}"
+        Installer.new.install
+        system "cd #{K9_ROOT}/vendors && rake"
+        system "cd #{K9_ROOT}/vendors && rake unpack_samples"
+      end
     end
 
     def check
@@ -174,7 +161,7 @@ module Processing
 
     # Show the standard help/usage message.
     def show_help
-      puts HELP_MESSAGE
+      puts HELP_INSTALL
     end
 
     def show_version
@@ -183,10 +170,10 @@ module Processing
       if RUBY_PLATFORM == 'java'
         warn warning unless ENV_JAVA['java.specification.version'] == '12'
       end
-      template = ERB.new <<-EOF
+      template = ERB.new <<-VERSION
       JRubyArt version <%= JRubyArt::VERSION %>
       Ruby version <%= RUBY_VERSION %>
-      EOF
+      VERSION
       puts template.result(binding)
     end
 
@@ -206,7 +193,6 @@ module Processing
     end
 
     # NB: We really do mean to use 'and' not '&&' for flow control purposes
-
     def ensure_exists(filename)
       puts("Couldn't find: #{filename}") and exit unless FileTest.exist?(filename)
     end
@@ -214,12 +200,11 @@ module Processing
     def jruby_complete
       rcomplete = File.join(K9_ROOT, 'lib/ruby/jruby-complete.jar')
       return [rcomplete] if FileTest.exist?(rcomplete)
+
       warn "#{rcomplete} does not exist\nTry running `k9 --install`"
       exit
     end
-
-    def libraries
-      %w(video sound).map { |library| Sketchbook.library(library) }.flatten
-    end
-  end # class Runner
-end # module Processing
+    # class Runner
+  end
+  # module Processing
+end
