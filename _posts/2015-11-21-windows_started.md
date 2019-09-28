@@ -1,27 +1,15 @@
 ---
 layout: post
 title:  "Getting Started On Windows"
-date:   2015-11-21 14:15:13
+date:   2019-09-28 06:00:00
 categories: jruby_art update
 permalink: /windows_start/
 ---
-### Getting Started With JRubyArt (stolen from [Ben Lewis][ben])
+### Getting Started With JRubyArt ###
 
 If you love to code because it is a creative process, then you should give JRubyArt a try because it can be used to create music, art, animations, videos and much more. Also since it is based on the latest [Processing][processing] you can access a vast range of libraries to make the difficult things easier.
 
-### What Is Processing?
-
-Processing is a simple language, based on Java, that you can use to create digital graphics. It's easy to learn, fun to use, and has an amazing online community comprised of programmers, visual artists, musicians, and interdisciplinary artists of all kinds.
-
-Processing was built by Benjamin Fry and [Casey Reas][casey] ☯, two protegés of interdisciplinary digital art guru John Maeda at the MIT Media Lab.
-
-Since the project began in 2001, it's been helping teach people to program in a visual art context using a simplified version of Java. It comes packaged as an IDE that can be downloaded and used to create and save digital art “sketches”.
-
-In 2009, Jeremy Ashkenas (aka jashkenas, creator of Backbone.JS, Underscore.JS, and Coffeescript), published the original [ruby-processing gem][gem]. It wraps Processing in a shim that makes it even easier to get started if you know Ruby. It has been since updated to use processing-2.2.1 by Martin Prout (final version using jruby-1.7.27 corresponding to ruby-2.3.0 syntax), NB: no more releases are expected, and ruby-processing is not compatible with processing-3.0+.
-
-In 2015, Martin Prout (aka monkstone) published the [JRubyArt gem][jrubyart], loosely based on the original ruby-processing, but updated to use processing-3.5.3 and jruby-9.2+ (ruby2.4+ syntax)
-
-### Why JRubyArt?
+### Why JRubyArt? ###
 
 Since Processing already comes wrapped in an easy-to-use package, you may ask: "why should I bother with JRubyArt?"
 
@@ -31,25 +19,12 @@ Additionally, you don't have to declare types, voids, or understand the differen
 
 Although there are some drawbacks to using the Ruby version Processing (slower start up time, and sometimes performance), having Ruby's API available to translate your ideas into sketches more than makes up for them.
 
-Why was ruby-processing not updated to use processing3.0+? The [major changes][changes] between processing-2.2.1 and processing-3.0 are not backward compatible. Furthermore since JRubyArt was designed to use jruby-9.0.0.0 from the outset, it makes use of the more literate ruby-2.2 syntax (although the original ruby-processing might run with jruby-9.2+, the examples and the ruby-processing library are all based on ruby-2.3.0 syntax).
 
 ### Setup
 
-Setting JRubyArt since JRubyArt-2.0 does not require a vanilla processing install, but still requires some configutation to point to your libraries folder.
+Setting JRubyArt since JRubyArt-2.0 does not require a vanilla processing install, but still requires some configuration to point to your libraries folder.
 
 Install [wget][wget] which is also available as [cygwin][cygwin] package, openjdk (11.0.3+), and some version of ruby-2.2+ preferably jruby-9.2+.
-### Processing
-
-Installing processing is optional but you could us it download the processing and contributed libraries.
-You can check to see what platforms are supported [here][platforms].
-Download processing-3.5.3 from the [official website][official] and install, prefer to install in say `C:/Java/Processing` ie folders without special characters or spaces.  When you're done, make sure to take note of the directory you installed the app to complete the configuration.
-
-__Finishing up__
-
-Fire up processing, and use the processing ide to install the sound and video libraries as these are no longer included in the
-download (but you will surely want them):-
-
-`Sketch/Import Library/Add Library/Video` _ide menu_
 
 ### JRuby
 
@@ -62,78 +37,76 @@ Possibly the simplest way to get MRI ruby on windows is via [rubyinstaller][ruby
 
 ### JRubyArt
 
-Configuration:-
-
-JRubyArt needs to know where your libraries are installed (for the video and audio libraries etc), and whether you've done a system/user install of jruby.
-
-Config file is `config.yml` in the `~/.jruby_art folder`.
-
-If you can/are using rvm or rbenv switch to using jruby-9.2+ then
+Installing JRubyArt assumes you have installed a recent version of ruby (which can be either MRI ruby or JRuby)
 
 ```bash
 gem install jruby_art
 ```
 
-if you are brave (or sensible) and have done an independent jruby install
+If you __haven't__ installed JRubyArt before, the simplest way to set the configuration, and to install samples is:-
 
 ```bash
-jruby -S gem install jruby_art # then install other gems eg toxiclibs the same way
+k9 --install # no arguments
 ```
 
-but you might find regular MRI gem install works (also tends to be quicker)
+this also installs `jruby-complete`
 
-
-After installing the the gem you can download and install jruby-complete,
-this is not included in the gem, because it would make it too big, however providing you've got wget installed all you need to do is:-
+If you __have__ installed JRubyArt before, the simplest way to set the configuration is:-
 
 ```bash
-k9 --install # downloads and installs jruby-complete and examples uses wget
+k9 -if config
 ```
 
+Using `-f` or `--force` flag forces the removal of the previous configuration.
 
-### Running examples
-
-To run a bunch of the samples as a demo:-
-
-cd to say contributed folder (containing a Rakefile) and run `rake` see below
+To check your configuration:-
 
 ```bash
-cd ~/k9_samples/contributed # for example
-rake # autoruns files in contributed folder
-k9 --run jwishy.rb # run the JWishy sketch, using an installed jruby
-cd ~/k9_samples/processing_app/topics/shaders
-rake # autoruns shader sketches
-k9 --run monjori.rb # run the Monjori sketch
+k9 --check # or -?
 ```
 
-### Creating your own sketch
+The config file is `config.yml` in the `~/.jruby_art folder`, which you should edit if required.
 
-All we ask is that you obey the ruby filename convention (ie snakecase) and we can create a template sketch for you as follows:-
+To explore command line options:-
 
 ```bash
-k9 --create fred_sketch 200 200 # creates a bare sketch fred_sketch.rb (see below)
-vim fred_sketch.rb # other editors are available
-:!k9 -r % # from vim runs the sketch
+k9 --help # or k9 -h
 ```
 
-As a windows user you may find [atom][atom] to be a more suitable editor.
+#### Running examples
 
-```ruby
-def setup
-  sketch_title 'Fred Sketch'
-end
+To explore the installed examples:-
+```bash
+cd ~/k9_samples
+rake # to run examples randomly as a demo
+# or check available tasks with
+rake --tasks
+# use a task to randomly run a group of sketches eg
+rake shaders # runs the shader examples
+```
+#### Create your own sketches
 
-def draw
+To create a simple sketch:-
+```bash
+k9 -c fred 200 200 # sketch name=Fred width=200 height=200 mode=default
+k9 -c my_sketch 300 300 p2d # sketch name=MySketch width=300 height=300 mode=P2D
+```
+Edit `fred.rb` or `my_sketch.rb` with your favourite editor preferably `vim`, `emacs` or `atom`.
 
-end
+To run sketch using the command line
 
-def settings
-  size 200, 200
-  # smooth # here
-end
+```bash
+k9 -r fred.rb
 ```
 
-PS: `k9 -c fred` also works with a bare template defaults, to `size 200 200`
+To run a sketch from editor see [editors][editors]
+
+Read more about using the [processing api here][api]
+
+#### Processing
+
+Installing processing is optional but you could us it download the processing.org and contributed libraries.
+You can check to see what platforms are supported [here][platforms].
 
 Read more about using the [processing api here][api]
 
@@ -153,3 +126,4 @@ Read more about using the [processing api here][api]
 [rvm]:https://blog.developwithpassion.com/2012/03/30/installing-rvm-with-cygwin-on-windows/
 [casey]:https://github.com/processing/processing/wiki/FAQ
 [wget]:http://gnuwin32.sourceforge.net/packages/wget.htm
+[editors]: {{site.github.url}}/started/
