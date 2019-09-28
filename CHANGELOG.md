@@ -1,4 +1,4 @@
-**v2.2.1** Add dxf export, re-brand with my wavy triangle icon, add --download option to menu to support installing video and sound libraries
+**v2.2.1** Added --force option for use with --install option to remove old configuration. Added support for installing video and sound libraries, without vanilla processing. Added dxf export library, re-branded app with a red wavy triangle icon.
 
 **v2.2.0** A standalone ruby version of processing which runs with jdk12 and essentially uses a develpment version of processing core (by Sam Pottinger). Use version 1.7.0 if you are using jdk8.
 

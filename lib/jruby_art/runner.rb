@@ -75,6 +75,10 @@ module Processing
           options[:install] = true
         end
 
+        opts.on('-f', '--force', 'Force removal of old Config') do
+          options[:force] = true
+        end
+
         opts.on('-c', '--create', 'Create new outline sketch') do
           options[:create] = true
         end
@@ -144,6 +148,7 @@ module Processing
       when /jruby/
         system "cd #{K9_ROOT}/vendors && rake"
       when /config/
+        remove_old_config if options[:force]
         Installer.new.install
       else
         return warn "No loader for #{library}" if library
@@ -204,6 +209,12 @@ module Processing
       warn "#{rcomplete} does not exist\nTry running `k9 --install`"
       exit
     end
+
+    def remove_old_config
+     old_config = File.join("#{ENV['HOME']}", '.jruby_art', 'config.yml')
+     puts "Removing #{old_config}"
+     system "rm #{old_config}"
+   end
     # class Runner
   end
   # module Processing
