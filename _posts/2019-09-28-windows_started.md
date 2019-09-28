@@ -24,7 +24,7 @@ Although there are some drawbacks to using the Ruby version Processing (slower s
 
 Setting JRubyArt since JRubyArt-2.0 does not require a vanilla processing install, but still requires some configuration to point to your libraries folder.
 
-Install [wget][wget] which is also available as [cygwin][cygwin] package, openjdk (11.0.3+), and some version of ruby-2.2+ preferably jruby-9.2+.
+Install [wget][wget] which is also available as [cygwin][cygwin] package, openjdk (11.0.3+), and some version of ruby-2.2+ preferably jruby-9.2+. If you encounter linkage problems it might be worth looking at [AdoptOpenJDK][adopt] distribution.
 
 ### JRuby
 
@@ -110,6 +110,7 @@ You can check to see what platforms are supported [here][platforms].
 
 Read more about using the [processing api here][api]
 
+[adopt]:https://adoptopenjdk.net/
 [api]: {{site.github.url}}/methods/processing_api
 [ben]:https://blog.engineyard.com/2015/getting-started-with-ruby-processing
 [processing]:https://processing.org/
