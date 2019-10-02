@@ -61,7 +61,7 @@ public class ThinkDifferent {
     getDesktop().setQuitHandler((event, quitResponse) -> {
       sketch.exit();
 
-      var noKnownCrash = PApplet.uncaughtThrowable == null;
+      boolean noKnownCrash = PApplet.uncaughtThrowable == null;
 
       if (noKnownCrash && !attemptedQuit) {  // haven't tried yet
         quitResponse.cancelQuit();  // tell OS X we'll handle this

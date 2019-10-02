@@ -25,6 +25,7 @@ package monkstone.slider;
  * when I was struggling with non functioning browser applet, 
  * probably superfluous here. 
  */
+@FunctionalInterface
 public interface WheelHandler { 
     /**
      * 

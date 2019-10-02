@@ -38,6 +38,7 @@ import java.io.File;
  * end
  * @author Martin Prout
  */
+@FunctionalInterface
 public interface Chooser {
     
     public void file_selected(File selection);
