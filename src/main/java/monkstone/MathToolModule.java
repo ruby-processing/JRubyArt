@@ -206,8 +206,14 @@ public class MathToolModule {
   }
 
   /**
-  * Provides JRubyArt grid method as a ruby module method
-  *
+  * Provides JRubyArt grid method as a ruby module method behaves like:-
+  * def grid(dx, dy, sx = 1, sy = 1)
+  *   (0...dx).step(sx) do |x|
+  *     (0...dy).step(sy) do |y|
+  *       yield(x, y)
+  *     end
+  *   end
+  * end
   * @param context ThreadContext
   * @param recv IRubyObject
   * @param args array of args should be Fixnum
@@ -227,12 +233,10 @@ public class MathToolModule {
     }
     if (block.isGiven()) {
       int tempRow = row / rowStep;
-      for (int z = 0; z < (tempRow * (column / colStep)); z++){
-        int x = z % tempRow;
-        // if (x == 0 && z > 0){
-        //   x = tempRow;
-        // }
-        int y = z / tempRow;
+      int tempColumn = column /colStep;
+      for (int z = 0; z < (tempRow * tempColumn); z++){
+        int y = z % tempColumn;
+        int x = z / tempColumn;
         block.yieldSpecific(context, ruby.newFixnum(x * rowStep), ruby.newFixnum(y * colStep));
       }
     }
@@ -240,6 +244,15 @@ public class MathToolModule {
   }
   /**
   * Provides JRubyArt mesh_grid method as a ruby module method
+  * def grid(dx, dy, dz, sx = 1, sy = 1, sz = 1)
+  *   (0...dx).step(sx) do |x|
+  *     (0...dy).step(sy) do |y|
+  *       (0...dz).step(sy) do |z|
+  *         yield(x, y, z)
+  *       end
+  *     end
+  *   end
+  * end
   *
   * @param context ThreadContext
   * @param recv IRubyObject
@@ -261,11 +274,11 @@ public class MathToolModule {
     int dimZ = zDim / zStep;
     if (block.isGiven()) {
       int count = dimX * dimY * dimZ;
-      for (int z = 0; z < zDim; z += zStep){        
-        for (int j = 0; j < (dimX * dimY); j++){
-          int x = j % dimX;
-          int y = j / dimX;
-          block.yieldSpecific(context, ruby.newFixnum(x * xStep), ruby.newFixnum(y * yStep), ruby.newFixnum(z));
+      for (int x = 0; x < xDim; x += xStep){
+        for (int j = 0; j < (dimZ * dimY); j++){
+          int z = j % dimZ;
+          int y = j / dimZ;
+          block.yieldSpecific(context, ruby.newFixnum(x), ruby.newFixnum(y * yStep), ruby.newFixnum(z * zStep));
         }
       }
     }
