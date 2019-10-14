@@ -27,7 +27,7 @@ module Processing
 
     INSTALL = <<~MSG
     <Config|JRuby-Complete|Samples>
-                                         or <Sound|Video> library
+    or <Sound|Video> library
     MSG
 
     attr_reader :options, :argc, :filename, :os
@@ -138,8 +138,9 @@ module Processing
       spin_up('watch.rb', filename, argc)
     end
 
-    def install(library)
+    def install(library = nil)
       require_relative 'installer'
+      library ||= 'new'
       case library.downcase
       when /sound|video/
         system "cd #{K9_ROOT}/vendors && rake download_and_copy_#{choice}"
@@ -150,14 +151,15 @@ module Processing
       when /config/
         remove_old_config if options[:force]
         Installer.new.install
-      else
-        return warn "No loader for #{library}" if library
-
-        Installer.new.install
+      when /new/
+        # install samples and config JRubyArt
         system "cd #{K9_ROOT}/vendors && rake"
-        system "cd #{K9_ROOT}/vendors && rake unpack_samples"
+        Installer.new.install
+      else
+        warn format('No installer for %s', library)
       end
     end
+
 
     def check
       require_relative '../jruby_art/config'
@@ -173,7 +175,7 @@ module Processing
       require 'erb'
       warning = 'WARNING: JDK12 is preferred'.freeze
       if RUBY_PLATFORM == 'java'
-        warn warning unless ENV_JAVA['java.specification.version'] == '12'
+        warn warning unless ENV_JAVA['java.specification.version'].to_i >= 11
       end
       template = ERB.new <<-VERSION
       JRubyArt version <%= JRubyArt::VERSION %>
@@ -211,10 +213,10 @@ module Processing
     end
 
     def remove_old_config
-     old_config = File.join("#{ENV['HOME']}", '.jruby_art', 'config.yml')
-     puts "Removing #{old_config}"
-     system "rm #{old_config}"
-   end
+      old_config = File.join("#{ENV['HOME']}", '.jruby_art', 'config.yml')
+      puts "Removing #{old_config}"
+      system "rm #{old_config}"
+    end
     # class Runner
   end
   # module Processing

@@ -35,7 +35,7 @@ desc 'get sha256'
 task get_sha256: ["jruby-complete-#{JRUBYC_VERSION}.jar.sha256"]
 
 desc 'download, and copy to jruby_art'
-task default: %i[get_sha256 download copy_ruby]
+task default: %i[get_sha256 download copy_ruby unpack_samples]
 
 desc 'download JRuby upstream sources'
 task download: ["jruby-complete-#{JRUBYC_VERSION}.jar"]

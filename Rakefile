@@ -23,7 +23,7 @@ end
 
 desc 'Compile'
 task :compile do
-  system 'mvn package'
+	system './mvnw package'
   FileUtils.mv "target/jruby_art-#{JRubyArt::VERSION}.jar", 'lib'
 end
 
