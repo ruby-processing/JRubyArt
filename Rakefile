@@ -1,13 +1,19 @@
+# frozen_string_literal: true
+
 require_relative 'lib/jruby_art/version'
 require 'erb'
 
-task default: [:compile, :install_jogl, :gem, :test]
+MVN = Gem.win_platform? ? File.expand_path('mvnw.cmd') : File.expand_path('mvnw')
+
+task default: %i[compile install_joglgem test]
 
 # depends on installed processing, with processing on path
 desc 'Copy Jars'
 task :install_jogl do
-  # processing_root = File.dirname(`readlink -f $(which processing)`) # for Archlinux etc
-  processing_root = File.join(ENV['HOME'], 'processing-3.5.3') # alternative for debian linux etc
+  # for MacOS Widows? and Archlinux etc
+  # processing_root = File.dirname(`readlink -f $(which processing)`)
+  # alternative for debian linux etc
+  processing_root = File.join(ENV['HOME'], 'processing-3.5.3')
   jar_dir = File.join(processing_root, 'core', 'library')
   opengl = Dir.entries(jar_dir).grep(/amd64|macosx-universal/)
   opengl.concat %w[jogl-all.jar gluegen-rt.jar]
@@ -23,7 +29,7 @@ end
 
 desc 'Compile'
 task :compile do
-	system './mvnw package'
+  system "#{MVN} package"
   FileUtils.mv "target/jruby_art-#{JRubyArt::VERSION}.jar", 'lib'
 end
 
@@ -41,13 +47,14 @@ task :test do
   if config
     ruby 'test/k9_run_test.rb'
   else
-    warn format('You should create %s/.jruby_art/config.yml to run sketch tests', home)
+    WNF = 'You should create %s/.jruby_art/config.yml to run sketch tests'
+    warn format(WNF, home)
   end
 end
 
 desc 'clean'
 task :clean do
-  Dir["./**/*.{jar,gem}"].each do |path|
+  Dir['./**/*.{jar,gem}'].each do |path|
     puts "Deleting #{path} ..."
     File.delete(path)
   end
