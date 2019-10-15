@@ -43,12 +43,13 @@ task :test do
   system 'jruby --dev test/create_test.rb'
   system 'jruby --dev test/color_group_test.rb'
   home = File.expand_path('~')
-  config = File.exist?(format('%s/.jruby_art/config.yml', home))
+  FLF = '%<home>s/.jruby_art/config.yml'
+  config = File.exist?(format(FLF, home: home))
   if config
     ruby 'test/k9_run_test.rb'
   else
-    WNF = 'You should create %s/.jruby_art/config.yml to run sketch tests'
-    warn format(WNF, home)
+    WNF = 'Create a config %<home>s/.jruby_art/config.yml to run sketch tests'
+    warn format(WNF, home: home)
   end
 end
 
