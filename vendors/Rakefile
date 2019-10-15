@@ -3,11 +3,11 @@
 require 'fileutils'
 require 'rake/clean'
 
-WARNING = <<-WARN
-   WARNING: you may not have wget installed, you could just download
-   the correct version of jruby-complete to the vendors folder, and
-   re-run k9 setup install instead of installing wget. Some systems
-   may also require 'sudo' access to install, NB: this is untested....
+WARNING = <<~WARN
+  WARNING: you may not have wget installed, you could just download
+  the correct version of jruby-complete to the vendors folder, and
+  re-run k9 setup install instead of installing wget. Some systems
+  may also require 'sudo' access to install, NB: this is untested....
 
 WARN
 # https://github.com/processing/processing-video/releases/download/r6-v2.0-beta4/video-2.0-beta4.zip
@@ -109,16 +109,12 @@ desc 'download video library'
 task :download_video do
   wget_base = "#{WGET} https://github.com/processing/processing-video"
   wget_string = [wget_base, 'releases/download', VIDEO_VERSION, VIDEO].join('/')
-  begin
-    sh wget_string
-  rescue NameError
-    warn(WARNING)
-  end
+  system wget_string
 end
 
 desc 'copy sound library'
 task copy_sound: SOUND do
-  sh "unzip #{SOUND}"
+  system "unzip #{SOUND}"
   FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/sound" if File.exist? "#{HOME_DIR}/.jruby_art/libraries/sound"
   FileUtils.cp_r 'sound', "#{HOME_DIR}/.jruby_art/libraries"
   FileUtils.rm_r 'sound'
@@ -126,7 +122,7 @@ end
 
 desc 'copy video library'
 task copy_video: VIDEO do
-  sh "unzip #{VIDEO}"
+  system "unzip #{VIDEO}"
   FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/video" if File.exist? "#{HOME_DIR}/.jruby_art/libraries/video"
   FileUtils.cp_r 'video', "#{HOME_DIR}/.jruby_art/libraries/video"
   FileUtils.rm_r 'video'
@@ -139,23 +135,19 @@ desc 'download and copy examples to user home'
 task :download_examples
 file_name = MAC_OR_LINUX.nil? ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
 file file_name do
-  begin
-    if MAC_OR_LINUX.nil?
-      system "#{WGET} https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"
-    else
-      system "#{WGET} https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
-    end
-  rescue NameError
-    warn(WARNING)
+  if MAC_OR_LINUX.nil?
+    system "#{WGET} https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"
+  else
+    system "#{WGET} https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
   end
 end
 
 desc 'copy examples'
 task copy_examples: file_name do
   if MAC_OR_LINUX.nil?
-    sh "unzip #{EXAMPLES}.zip"
+    system  "unzip #{EXAMPLES}.zip"
   else
-    sh "tar xzvf #{EXAMPLES}.tar.gz"
+    system  "tar xzvf #{EXAMPLES}.tar.gz"
   end
   FileUtils.rm_r("#{HOME_DIR}/k9_samples") if File.exist? "#{HOME_DIR}/k9_samples"
   FileUtils.cp_r("JRubyArt-examples-#{EXAMPLES}", "#{HOME_DIR}/k9_samples")
