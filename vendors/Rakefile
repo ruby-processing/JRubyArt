@@ -97,12 +97,7 @@ task :download_sound do
   wget_base = "#{WGET} https://github.com/processing/processing-sound"
   wget_string = [wget_base, 'releases/download/latest', SOUND].join('/')
   puts wget_string
-  begin
-    sh wget_string
-  rescue NameError
-    puts 'Not Currently Available'
-    # warn(WARNING)
-  end
+  system wget_string
 end
 
 desc 'download video library'
