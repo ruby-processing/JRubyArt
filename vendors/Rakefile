@@ -23,34 +23,34 @@ MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
 CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar"
 CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
 
+desc 'dependency check'
+task :wget_check do
+  WGET ||= `which wget`
+  warn WARNING unless WGET
+end
+
 file "jruby-complete-#{JRUBYC_VERSION}.jar.sha256" do
-  system "#{WGET} https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
+  system "wget https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
 end
-
-desc 'check dependency'
-task :check_dependency do
-  WGET ||= system 'which wget'
-  warn(WARNING) unless WGET
-end
-
-desc 'get sha256'
-task get_sha256: ["jruby-complete-#{JRUBYC_VERSION}.jar.sha256"]
-
-desc 'download, and copy to jruby_art'
-task default: %i[check_dependency get_sha256 download copy_ruby install_samples]
-
-desc 'download JRuby upstream sources'
-task download: ["jruby-complete-#{JRUBYC_VERSION}.jar"]
 
 file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   begin
-    system "#{WGET} https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar"
+    system "wget https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar"
   rescue NameError
     warn(WARNING)
   end
   value = File.read("jruby-complete-#{JRUBYC_VERSION}.jar.sha256")
   check_sha256("jruby-complete-#{JRUBYC_VERSION}.jar", value)
 end
+
+desc 'get sha256'
+task get_sha256: ['wget_check', "jruby-complete-#{JRUBYC_VERSION}.jar.sha256"]
+
+desc 'download, and copy to jruby_art'
+task default: %i[wget_check download copy_ruby install_samples]
+
+desc 'download JRuby upstream sources'
+task download: ['get_sha256', "jruby-complete-#{JRUBYC_VERSION}.jar"]
 
 directory '../lib/ruby'
 
@@ -82,14 +82,14 @@ task :init_dir do
 end
 
 desc 'download and copy sound library to ~/.jruby_art'
-task download_and_copy_sound: %i[check_dependency init_dir download_sound copy_sound clobber]
+task download_and_copy_sound: %i[wget_check init_dir download_sound copy_sound clobber]
 
 desc 'download and copy video library to ~/.jruby_art'
-task download_and_copy_video: %i[check_dependency init_dir download_video copy_video clobber]
+task download_and_copy_video: %i[wget_check init_dir download_video copy_video clobber]
 
 desc 'download sound library'
 task :download_sound do
-  wget_base = "#{WGET} https://github.com/processing/processing-sound"
+  wget_base = 'wget https://github.com/processing/processing-sound'
   wget_string = [wget_base, 'releases/download/latest', SOUND].join('/')
   puts wget_string
   system wget_string
@@ -97,7 +97,7 @@ end
 
 desc 'download video library'
 task :download_video do
-  wget_base = "#{WGET} https://github.com/processing/processing-video"
+  wget_base = 'wget https://github.com/processing/processing-video'
   wget_string = [wget_base, 'releases/download', VIDEO_VERSION, VIDEO].join('/')
   system wget_string
 end
@@ -126,9 +126,9 @@ task :download_examples
 file_name = MAC_OR_LINUX.nil? ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
 file file_name do
   if MAC_OR_LINUX.nil?
-    system "#{WGET} https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"
+    system "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"
   else
-    system "#{WGET} https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
+    system "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
   end
 end
 
