@@ -25,7 +25,7 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
               'jogl.version' => '2.3.2',
               'jruby.api' => 'http://jruby.org/apidocs/' )
 
-  pom 'org.jruby:jruby:9.2.8.0'
+  pom 'org.jruby:jruby:9.2.9.0'
   jar 'org.jogamp.jogl:jogl-all:${jogl.version}'
   jar 'org.jogamp.gluegen:gluegen-rt-main:${jogl.version}'
   jar 'org.processing:video:3.0.2'

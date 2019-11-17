@@ -2,7 +2,7 @@ language: java
 dist: trusty
 
 rvm:
-  - jruby-9.2.8.0
+  - jruby-9.2.9.0
 jdk:
   - openjdk11
 os:

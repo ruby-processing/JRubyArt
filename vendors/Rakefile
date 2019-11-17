@@ -11,7 +11,7 @@ WARNING = <<~WARN
 
 WARN
 # https://github.com/processing/processing-video/releases/download/r6-v2.0-beta4/video-2.0-beta4.zip
-JRUBYC_VERSION = '9.2.8.0'
+JRUBYC_VERSION = '9.2.9.0'
 SOUND = 'sound.zip'
 SOUND_VERSION = 'v2.2.2'
 VIDEO = 'video-2.0-beta4.zip'
@@ -24,18 +24,13 @@ CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar"
 CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
 
 file "jruby-complete-#{JRUBYC_VERSION}.jar.sha256" do
-  begin
-    system "#{WGET} https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
-  rescue NameError
-    warn(WARNING)
-  end
+  system "#{WGET} https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
 end
 
 desc 'check dependency'
 task :check_dependency do
   WGET ||= system 'which wget'
   warn(WARNING) unless WGET
-  puts WGET
 end
 
 desc 'get sha256'

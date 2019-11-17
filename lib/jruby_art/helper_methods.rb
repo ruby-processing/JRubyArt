@@ -57,7 +57,7 @@ module Processing
     end
 
     def web_to_color_array(web)
-      Java::Monkstone::ColorUtil.webArray(web)
+      Java::Monkstone::ColorUtil.webArray(web.to_java(:string))
     end
 
     def int_to_ruby_colors(p5color)

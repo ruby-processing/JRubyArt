@@ -5,7 +5,7 @@ require 'erb'
 
 MVN = Gem.win_platform? ? File.expand_path('mvnw.cmd') : File.expand_path('mvnw')
 
-task default: %i[compile install_joglgem test]
+task default: %i[compile install_jogl gem test]
 
 # depends on installed processing, with processing on path
 desc 'Copy Jars'
