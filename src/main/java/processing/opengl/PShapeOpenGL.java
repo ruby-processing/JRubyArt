@@ -1269,7 +1269,7 @@ public class PShapeOpenGL extends PShape {
 
   @Override
   public void rotateZ(float angle) {
-    transform(angle, 0, 0, 1);
+    rotate(angle, 0, 0, 1);
   }
 
 
@@ -2545,6 +2545,8 @@ public class PShapeOpenGL extends PShape {
 
   /**
    * One of VERTEX, BEZIER_VERTEX, CURVE_VERTEX, or BREAK.
+   * @param index
+   * @return 
    */
   @Override
   public int getVertexCode(int index) {
@@ -3979,14 +3981,14 @@ public class PShapeOpenGL extends PShape {
     pgl.bufferData(PGL.ARRAY_BUFFER, sizef,
                    tessGeo.polyShininessBuffer, glUsage);
 
-    for (String name: polyAttribs.keySet()) {
+    polyAttribs.keySet().forEach((name) -> {
       VertexAttribute attrib = polyAttribs.get(name);
       tessGeo.updateAttribBuffer(attrib.name);
       if (!attrib.bufferCreated()) attrib.createBuffer(pgl);
       pgl.bindBuffer(PGL.ARRAY_BUFFER, attrib.buf.glId);
       pgl.bufferData(PGL.ARRAY_BUFFER, attrib.sizeInBytes(size),
-                     tessGeo.polyAttribBuffers.get(name), glUsage);
-    }
+        tessGeo.polyAttribBuffers.get(name), glUsage);
+    });
 
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
 
