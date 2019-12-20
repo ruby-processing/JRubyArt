@@ -29,7 +29,7 @@ Currently stock OpenJDK12 has a linking problem affecting P2D and P3D sketches, 
 
 ```bash
 sudo pacman -S ruby # installs ruby-2.6
-sudo pacman -S jruby # installs jruby-9.2.8.0
+sudo pacman -S jruby # installs jruby-9.2.9.0
 ```
 
 Install gems as required
@@ -109,7 +109,7 @@ Download and install latest jruby (in the `/opt` folder makes sense)
 
 Use `update-alternatives` to install and maintain configuration eg for jruby:-
 ```bash
-sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.8.0/bin/jruby 100
+sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.9.0/bin/jruby 100
 sudo update-alternatives --config jruby # to configure if required
 ```
 
