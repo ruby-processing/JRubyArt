@@ -145,7 +145,7 @@ module Processing
       when /sound|video/
         system "cd #{K9_ROOT}/vendors && rake download_and_copy_#{choice}"
       when /samples/
-        system "cd #{K9_ROOT}/vendors && rake unpack_samples"
+        system "cd #{K9_ROOT}/vendors && rake install_samples"
       when /jruby/
         system "cd #{K9_ROOT}/vendors && rake"
       when /config/
