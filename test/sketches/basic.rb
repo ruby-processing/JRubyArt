@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def setup
   frame_rate(10)
 end

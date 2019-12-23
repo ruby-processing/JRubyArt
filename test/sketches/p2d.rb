@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 java_alias :background_int, :background, [Java::int]
 
 def setup
@@ -16,4 +18,3 @@ end
 def settings
   size(300, 300, P2D)
 end
-

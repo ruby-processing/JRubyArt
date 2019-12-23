@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'test_helper'
 
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)

@@ -1,11 +1,12 @@
-gem 'minitest'      # don't use bundled minitest
+# frozen_string_literal: true
+
+gem 'minitest' # don't use bundled minitest
 require 'minitest/autorun'
 require 'minitest/pride'
 
 Dir.chdir(File.dirname(__FILE__))
 
 class Rp5Test < Minitest::Test
-
   def test_normal
     out, _err_ = capture_io do
       open('|../bin/k9 -r sketches/basic.rb', 'r') do |io|
@@ -54,7 +55,7 @@ class Rp5Test < Minitest::Test
     skip 'TODO: create a test for library configuration'
     require 'psych'
     path = File.expand_path('~/.jruby_art/config.yml')
-    config = FileTest.exist?(path)? Psych.load_file(path) : {}
+    config = FileTest.exist?(path) ? Psych.load_file(path) : {}
     library = config.empty? ? '' : config['library_path']
     assert library =~ /librar/, 'You need to set your library_path in .jruby_art/config.yml'
   end
@@ -100,6 +101,6 @@ class Rp5Test < Minitest::Test
         end
       end
     end
-    assert out.index("undefined method `unknown_method"), 'Failed to raise exception?'
+    assert out.index('undefined method `unknown_method'), 'Failed to raise exception?'
   end
 end

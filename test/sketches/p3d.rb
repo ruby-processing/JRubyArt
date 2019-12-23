@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 java_alias :background_float_float_float, :background, [Java::float, Java::float, Java::float]
 
 def setup
@@ -15,4 +17,3 @@ end
 def settings
   size(300, 300, P3D)
 end
-
