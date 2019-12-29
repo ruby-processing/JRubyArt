@@ -941,13 +941,13 @@ public class PApplet implements PConstants {
     final String url = "https://processing.org/reference/" + method + "_.html";
     if (!external) {  // post a warning for users of Eclipse and other IDEs
       StringList argList = new StringList(args);
-      System.err.println("When not using the PDE, " + method + "() can only be used inside settings().");
+      System.err.println("In JRubyArt, " + method + " can only be used inside settings.");
       System.err.println("Remove the " + method + "() method from setup(), and add the following:");
-      System.err.println("public void settings() {");
-      System.err.println("  " + method + "(" + argList.join(", ") + ");");
-      System.err.println("}");
+      System.err.println("def settings");
+      System.err.println("  " + method + "(" + argList.join(", ") + ")");
+      System.err.println("end");
     }
-    throw new IllegalStateException(method + "() cannot be used here, see " + url);
+    throw new IllegalStateException(method + " cannot be used here, see " + url);
   }
 
 
@@ -1155,59 +1155,14 @@ public class PApplet implements PConstants {
   * @param display the display number to check
   */
   public int displayDensity(int display) {
-    if (PApplet.platform == PConstants.MACOSX) {
-      // This should probably be reset each time there's a display change.
-      // A 5-minute search didn't turn up any such event in the Java 7 API.
-      // Also, should we use the Toolkit associated with the editor window?
-      final String javaVendor = System.getProperty("java.vendor");
-      if (javaVendor.contains("Oracle")) {
-        GraphicsDevice device;
-        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    GraphicsDevice graphicsDevice = GraphicsEnvironment
+            .getLocalGraphicsEnvironment()
+            .getDefaultScreenDevice();
+    GraphicsConfiguration graphicsConfig = graphicsDevice
+            .getDefaultConfiguration();
 
-        if (display == -1) {
-          device = env.getDefaultScreenDevice();
-
-        } else if (display == SPAN) {
-          throw new RuntimeException("displayDensity() only works with specific display numbers");
-
-        } else {
-          GraphicsDevice[] devices = env.getScreenDevices();
-          if (display > 0 && display <= devices.length) {
-            device = devices[display - 1];
-          } else {
-            if (devices.length == 1) {
-              System.err.println("Only one display is currently known, use displayDensity(1).");
-            } else {
-              System.err.format("Your displays are numbered %d through %d, " +
-                "pass one of those numbers to displayDensity()%n", 1, devices.length);
-            }
-            throw new RuntimeException("Display " + display + " does not exist.");
-          }
-        }
-
-        try {
-          Field field = device.getClass().getDeclaredField("scale");
-          if (field != null) {
-            field.setAccessible(true);
-            Object scale = field.get(device);
-
-            if (scale instanceof Integer && ((Integer)scale).intValue() == 2) {
-              return 2;
-            }
-          }
-        } catch (Exception ignore) { }
-      }
-    } else if (PApplet.platform == PConstants.WINDOWS ||
-        PApplet.platform == PConstants.LINUX) {
-      if (suggestedDensity == -1) {
-        // TODO: detect and return DPI scaling using JNA; Windows has
-        //   a system-wide value, not sure how it works on Linux
-        return 1;
-      } else if (suggestedDensity == 1 || suggestedDensity == 2) {
-        return suggestedDensity;
-      }
-    }
-    return 1;
+    AffineTransform tx = graphicsConfig.getDefaultTransform();
+    return (int) Math.round(tx.getScaleX());
   }
 
 
@@ -1235,7 +1190,7 @@ public class PApplet implements PConstants {
         System.err.println("not inside settings");
         // this should only be reachable when not running in the PDE,
         // so saying it's a settings()--not just setup()--issue should be ok
-        throw new RuntimeException("pixelDensity() can only be used inside settings()");
+        throw new RuntimeException("pixel_density can only be used inside settings");
       }
     }
   }
@@ -1291,10 +1246,10 @@ public class PApplet implements PConstants {
 
   private void smoothWarning(String method) {
     // When running from the PDE, say setup(), otherwise say settings()
-    final String where = external ? "setup" : "settings";
-    PGraphics.showWarning("%s() can only be used inside %s()", method, where);
+    final String where = "settings";
+    PGraphics.showWarning("%s() can only be used inside %s", method, where);
     if (external) {
-      PGraphics.showWarning("When run from the PDE, %s() is automatically moved from setup() to settings()", method);
+      PGraphics.showWarning("In vanilla processing, %s() is automatically moved from setup() to settings()", method);
     }
   }
 
@@ -5285,7 +5240,7 @@ public class PApplet implements PConstants {
    *
    * ( end auto-generated )
    *
-   * @return 
+   * @return
    * @webref math:random
    * @param x x-coordinate in noise space
    * @param y y-coordinate in noise space
@@ -12166,11 +12121,11 @@ public class PApplet implements PConstants {
   /**
    * ( begin auto-generated from square.xml )
    *
-   * Draws a square to the screen. A square is a four-sided shape with 
-   * every angle at ninety degrees and each side is the same length. 
-   * By default, the first two parameters set the location of the 
-   * upper-left corner, the third sets the width and height. The way 
-   * these parameters are interpreted, however, may be changed with the 
+   * Draws a square to the screen. A square is a four-sided shape with
+   * every angle at ninety degrees and each side is the same length.
+   * By default, the first two parameters set the location of the
+   * upper-left corner, the third sets the width and height. The way
+   * these parameters are interpreted, however, may be changed with the
    * <b>rectMode()</b> function.
    *
    * ( end auto-generated )
@@ -12279,9 +12234,9 @@ public class PApplet implements PConstants {
   /**
    * ( begin auto-generated from circle.xml )
    *
-   * Draws a circle to the screen. By default, the first two parameters 
-   * set the location of the center, and the third sets the shape's width 
-   * and height. The origin may be changed with the <b>ellipseMode()</b> 
+   * Draws a circle to the screen. By default, the first two parameters
+   * set the location of the center, and the third sets the shape's width
+   * and height. The origin may be changed with the <b>ellipseMode()</b>
    * function.
    *
    * ( end auto-generated )
@@ -13323,28 +13278,28 @@ public class PApplet implements PConstants {
   /**
    * ( begin auto-generated from push.xml )
    *
-   * The <b>push()</b> function saves the current drawing style 
-   * settings and transformations, while <b>pop()</b> restores these 
-   * settings. Note that these functions are always used together. 
-   * They allow you to change the style and transformation settings 
-   * and later return to what you had. When a new state is started 
-   * with push(), it builds on the current style and transform 
+   * The <b>push()</b> function saves the current drawing style
+   * settings and transformations, while <b>pop()</b> restores these
+   * settings. Note that these functions are always used together.
+   * They allow you to change the style and transformation settings
+   * and later return to what you had. When a new state is started
+   * with push(), it builds on the current style and transform
    * information.<br />
    * <br />
-   * <b>push()</b> stores information related to the current 
-   * transformation state and style settings controlled by the 
-   * following functions: <b>rotate()</b>, <b>translate()</b>, 
-   * <b>scale()</b>, <b>fill()</b>, <b>stroke()</b>, <b>tint()</b>, 
-   * <b>strokeWeight()</b>, <b>strokeCap()</b>, <b>strokeJoin()</b>, 
-   * <b>imageMode()</b>, <b>rectMode()</b>, <b>ellipseMode()</b>, 
-   * <b>colorMode()</b>, <b>textAlign()</b>, <b>textFont()</b>, 
+   * <b>push()</b> stores information related to the current
+   * transformation state and style settings controlled by the
+   * following functions: <b>rotate()</b>, <b>translate()</b>,
+   * <b>scale()</b>, <b>fill()</b>, <b>stroke()</b>, <b>tint()</b>,
+   * <b>strokeWeight()</b>, <b>strokeCap()</b>, <b>strokeJoin()</b>,
+   * <b>imageMode()</b>, <b>rectMode()</b>, <b>ellipseMode()</b>,
+   * <b>colorMode()</b>, <b>textAlign()</b>, <b>textFont()</b>,
    * <b>textMode()</b>, <b>textSize()</b>, <b>textLeading()</b>.<br />
    * <br />
-   * The <b>push()</b> and <b>pop()</b> functions were added with 
-   * Processing 3.5. They can be used in place of <b>pushMatrix()</b>, 
-   * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>. 
-   * The difference is that push() and pop() control both the 
-   * transformations (rotate, scale, translate) and the drawing styles 
+   * The <b>push()</b> and <b>pop()</b> functions were added with
+   * Processing 3.5. They can be used in place of <b>pushMatrix()</b>,
+   * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>.
+   * The difference is that push() and pop() control both the
+   * transformations (rotate, scale, translate) and the drawing styles
    * at the same time.
    *
    * ( end auto-generated )
@@ -13361,28 +13316,28 @@ public class PApplet implements PConstants {
   /**
    * ( begin auto-generated from pop.xml )
    *
-   * The <b>pop()</b> function restores the previous drawing style 
-   * settings and transformations after <b>push()</b> has changed them. 
-   * Note that these functions are always used together. They allow 
-   * you to change the style and transformation settings and later 
-   * return to what you had. When a new state is started with push(), 
+   * The <b>pop()</b> function restores the previous drawing style
+   * settings and transformations after <b>push()</b> has changed them.
+   * Note that these functions are always used together. They allow
+   * you to change the style and transformation settings and later
+   * return to what you had. When a new state is started with push(),
    * it builds on the current style and transform information.<br />
    * <br />
    * <br />
-   * <b>push()</b> stores information related to the current 
-   * transformation state and style settings controlled by the 
-   * following functions: <b>rotate()</b>, <b>translate()</b>, 
-   * <b>scale()</b>, <b>fill()</b>, <b>stroke()</b>, <b>tint()</b>, 
-   * <b>strokeWeight()</b>, <b>strokeCap()</b>, <b>strokeJoin()</b>, 
-   * <b>imageMode()</b>, <b>rectMode()</b>, <b>ellipseMode()</b>, 
-   * <b>colorMode()</b>, <b>textAlign()</b>, <b>textFont()</b>, 
+   * <b>push()</b> stores information related to the current
+   * transformation state and style settings controlled by the
+   * following functions: <b>rotate()</b>, <b>translate()</b>,
+   * <b>scale()</b>, <b>fill()</b>, <b>stroke()</b>, <b>tint()</b>,
+   * <b>strokeWeight()</b>, <b>strokeCap()</b>, <b>strokeJoin()</b>,
+   * <b>imageMode()</b>, <b>rectMode()</b>, <b>ellipseMode()</b>,
+   * <b>colorMode()</b>, <b>textAlign()</b>, <b>textFont()</b>,
    * <b>textMode()</b>, <b>textSize()</b>, <b>textLeading()</b>.<br />
    * <br />
-   * The <b>push()</b> and <b>pop()</b> functions were added with 
-   * Processing 3.5. They can be used in place of <b>pushMatrix()</b>, 
-   * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>. 
-   * The difference is that push() and pop() control both the 
-   * transformations (rotate, scale, translate) and the drawing styles 
+   * The <b>push()</b> and <b>pop()</b> functions were added with
+   * Processing 3.5. They can be used in place of <b>pushMatrix()</b>,
+   * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>.
+   * The difference is that push() and pop() control both the
+   * transformations (rotate, scale, translate) and the drawing styles
    * at the same time.
    *
    * ( end auto-generated )
