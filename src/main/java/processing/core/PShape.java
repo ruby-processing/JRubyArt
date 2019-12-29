@@ -41,7 +41,7 @@ import java.util.Base64;
  * function is used to draw the shape to the display window. The
  * <b>PShape</b> object contain a group of methods, linked below, that can
  * operate on the shape data.
- * <br /><br />
+ * 
  * The <b>loadShape()</b> function supports SVG files created with Inkscape
  * and Adobe Illustrator. It is not a full SVG implementation, but offers
  * some straightforward support for handling vector data.
@@ -68,11 +68,11 @@ import java.util.Base64;
  * <p>For the time being, this class and its shape() and loadShape() friends in
  * PApplet exist as placeholders for more exciting things to come. If you'd
  * like to work with this class, make a subclass (see how PShapeSVG works)
- * and you can play with its internal methods all you like.</p>
+ * and you can play with its internal methods all you like.
  *
  * <p>Library developers are encouraged to create PShape objects when loading
  * shape data, so that they can eventually hook into the bounty that will be
- * the PShape interface, and the ease of loadShape() and shape().</p>
+ * the PShape interface, and the ease of loadShape() and shape().
  *
  * @webref shape
  * @usage Web &amp; Application
@@ -394,7 +394,7 @@ public class PShape implements PConstants {
    *
    * Returns a boolean value "true" if the image is set to be visible,
    * "false" if not. This is modified with the <b>setVisible()</b> parameter.
-   * <br/> <br/>
+   *  
    * The visibility of a shape is usually controlled by whatever program
    * created the SVG file. For instance, this parameter is controlled by
    * showing or hiding the shape in the layers palette in Adobe Illustrator.
@@ -415,7 +415,7 @@ public class PShape implements PConstants {
    *
    * Sets the shape to be visible or invisible. This is determined by the
    * value of the <b>visible</b> parameter.
-   * <br/> <br/>
+   *  
    * The visibility of a shape is usually controlled by whatever program
    * created the SVG file. For instance, this parameter is controlled by
    * showing or hiding the shape in the layers palette in Adobe Illustrator.
@@ -3037,7 +3037,7 @@ public class PShape implements PConstants {
    * <b>translate(20, 0)</b> is the same as <b>translate(70, 0)</b>. This
    * transformation is applied directly to the shape, it's not refreshed each
    * time <b>draw()</b> is run.
-   * <br /><br />
+   * 
    * Using this method with the <b>z</b> parameter requires using the P3D
    * parameter in combination with size.
    *
@@ -3070,14 +3070,14 @@ public class PShape implements PConstants {
    * Rotates a shape around the x-axis the amount specified by the
    * <b>angle</b> parameter. Angles should be specified in radians (values
    * from 0 to TWO_PI) or converted to radians with the <b>radians()</b> method.
-   * <br /><br />
+   * 
    * Shapes are always rotated around the upper-left corner of their bounding
    * box. Positive numbers rotate objects in a clockwise direction.
    * Subsequent calls to the method accumulates the effect. For example,
    * calling <b>rotateX(HALF_PI)</b> and then <b>rotateX(HALF_PI)</b> is the
    * same as <b>rotateX(PI)</b>. This transformation is applied directly to
    * the shape, it's not refreshed each time <b>draw()</b> is run.
-   * <br /><br />
+   * 
    * This method requires a 3D renderer. You need to use P3D as a third
    * parameter for the <b>size()</b> function as shown in the example above.
    *
@@ -3103,14 +3103,14 @@ public class PShape implements PConstants {
    * Rotates a shape around the y-axis the amount specified by the
    * <b>angle</b> parameter. Angles should be specified in radians (values
    * from 0 to TWO_PI) or converted to radians with the <b>radians()</b> method.
-   * <br /><br />
+   * 
    * Shapes are always rotated around the upper-left corner of their bounding
    * box. Positive numbers rotate objects in a clockwise direction.
    * Subsequent calls to the method accumulates the effect. For example,
    * calling <b>rotateY(HALF_PI)</b> and then <b>rotateY(HALF_PI)</b> is the
    * same as <b>rotateY(PI)</b>. This transformation is applied directly to
    * the shape, it's not refreshed each time <b>draw()</b> is run.
-   * <br /><br />
+   * 
    * This method requires a 3D renderer. You need to use P3D as a third
    * parameter for the <b>size()</b> function as shown in the example above.
    *
@@ -3138,14 +3138,14 @@ public class PShape implements PConstants {
    * Rotates a shape around the z-axis the amount specified by the
    * <b>angle</b> parameter. Angles should be specified in radians (values
    * from 0 to TWO_PI) or converted to radians with the <b>radians()</b> method.
-   * <br /><br />
+   * 
    * Shapes are always rotated around the upper-left corner of their bounding
    * box. Positive numbers rotate objects in a clockwise direction.
    * Subsequent calls to the method accumulates the effect. For example,
    * calling <b>rotateZ(HALF_PI)</b> and then <b>rotateZ(HALF_PI)</b> is the
    * same as <b>rotateZ(PI)</b>. This transformation is applied directly to
    * the shape, it's not refreshed each time <b>draw()</b> is run.
-   * <br /><br />
+   * 
    * This method requires a 3D renderer. You need to use P3D as a third
    * parameter for the <b>size()</b> function as shown in the example above.
    *
@@ -3171,7 +3171,7 @@ public class PShape implements PConstants {
    * Rotates a shape the amount specified by the <b>angle</b> parameter.
    * Angles should be specified in radians (values from 0 to TWO_PI) or
    * converted to radians with the <b>radians()</b> method.
-   * <br /><br />
+   * 
    * Shapes are always rotated around the upper-left corner of their bounding
    * box. Positive numbers rotate objects in a clockwise direction.
    * Transformations apply to everything that happens after and subsequent
@@ -3227,7 +3227,7 @@ public class PShape implements PConstants {
    * calling <b>scale(2.0)</b> and then <b>scale(1.5)</b> is the same as
    * <b>scale(3.0)</b>. This transformation is applied directly to the shape,
    * it's not refreshed each time <b>draw()</b> is run.
-   * <br /><br />
+   * 
    * Using this method with the <b>z</b> parameter requires using the P3D
    * parameter in combination with size.
    *

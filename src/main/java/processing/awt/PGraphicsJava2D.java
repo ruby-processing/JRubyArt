@@ -1913,7 +1913,7 @@ public class PGraphicsJava2D extends PGraphics {
 
   /**
    * Same as parent, but override for native version of the font.
-   * <p/>
+   * 
    * Called from textFontImpl and textSizeImpl, so the metrics
    * will get recorded properly.
    */

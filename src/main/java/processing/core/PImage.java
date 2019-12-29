@@ -43,11 +43,11 @@ import javax.imageio.metadata.*;
    * fields for the <b>width</b> and <b>height</b> of the image, as well as
    * an array called <b>pixels[]</b> that contains the values for every pixel
    * in the image. The methods described below allow easy access to the
-   * image's pixels and alpha channel and simplify the process of compositing.<br/>
-   * <br/> using the <b>pixels[]</b> array, be sure to use the
+   * image's pixels and alpha channel and simplify the process of compositing.
+   *  using the <b>pixels[]</b> array, be sure to use the
    * <b>loadPixels()</b> method on the image to make sure that the pixel data
-   * is properly loaded.<br/>
-   * <br/> create a new image, use the <b>createImage()</b> function. Do not
+   * is properly loaded.
+   *  create a new image, use the <b>createImage()</b> function. Do not
    * use the syntax <b>new PImage()</b>.
    *
    * ( end auto-generated )
@@ -89,8 +89,8 @@ public class PImage implements PConstants, Cloneable {
    * values. The <b>index</b> value defines the position of a value within
    * the array. For example, the statement <b>color b = pixels[230]</b> will
    * set the variable <b>b</b> to be equal to the value at that location in
-   * the array.<br />
-   * <br />
+   * the array.
+   * 
    * Before accessing this array, the data must loaded with the
    * <b>loadPixels()</b> function. After the array data has been modified,
    * the <b>updatePixels()</b> function must be run to update the changes.
@@ -198,11 +198,11 @@ public class PImage implements PConstants, Cloneable {
    * pixel in the image. A group of methods, described below, allow easy
    * access to the image's pixels and alpha channel and simplify the process
    * of compositing.
-   * <br/> <br/>
+   *  
    * Before using the <b>pixels[]</b> array, be sure to use the
    * <b>loadPixels()</b> method on the image to make sure that the pixel data
    * is properly loaded.
-   * <br/> <br/>
+   *  
    * To create a new image, use the <b>createImage()</b> function (do not use
    * <b>new PImage()</b>).
    * ( end auto-generated )
@@ -460,7 +460,7 @@ public class PImage implements PConstants, Cloneable {
    *
    * Loads the pixel data for the image into its <b>pixels[]</b> array. This
    * function must always be called before reading from or writing to <b>pixels[]</b>.
-   * <br/><br/> renderers may or may not seem to require <b>loadPixels()</b>
+   *  renderers may or may not seem to require <b>loadPixels()</b>
    * or <b>updatePixels()</b>. However, the rule is that any time you want to
    * manipulate the <b>pixels[]</b> array, you must first call
    * <b>loadPixels()</b>, and after changes have been made, call
@@ -472,7 +472,7 @@ public class PImage implements PConstants, Cloneable {
    *
    * <h3>Advanced</h3>
    * Call this when you want to mess with the pixels[] array.
-   * <p/>
+   * 
    * For subclasses where the pixels[] buffer isn't set by default,
    * this should copy all data into the pixels[] array
    *
@@ -499,14 +499,14 @@ public class PImage implements PConstants, Cloneable {
    * Updates the image with the data in its <b>pixels[]</b> array. Use in
    * conjunction with <b>loadPixels()</b>. If you're only reading pixels from
    * the array, there's no need to call <b>updatePixels()</b>.
-   * <br/><br/> renderers may or may not seem to require <b>loadPixels()</b>
+   *  renderers may or may not seem to require <b>loadPixels()</b>
    * or <b>updatePixels()</b>. However, the rule is that any time you want to
    * manipulate the <b>pixels[]</b> array, you must first call
    * <b>loadPixels()</b>, and after changes have been made, call
    * <b>updatePixels()</b>. Even if the renderer may not seem to use this
    * function in the current Processing release, this will always be subject
    * to change.
-   * <br/> <br/>
+   *  
    * Currently, none of the renderers use the additional parameters to
    * <b>updatePixels()</b>, however this may be implemented in the future.
    *
@@ -574,8 +574,8 @@ public class PImage implements PConstants, Cloneable {
    * Resize the image to a new width and height. To make the image scale
    * proportionally, use 0 as the value for the <b>wide</b> or <b>high</b>
    * parameter. For instance, to make the width of an image 150 pixels, and
-   * change the height using the same proportion, use resize(150, 0).<br />
-   * <br />
+   * change the height using the same proportion, use resize(150, 0).
+   * 
    * Even though a PGraphics is technically a PImage, it is not possible to
    * rescale the image data found in a PGraphics. (It's simply not possible
    * to do this consistently across renderers: technically infeasible with
@@ -674,11 +674,7 @@ public class PImage implements PConstants, Cloneable {
       prevH = h;
       outgoing = scratchImage;
     } while (w != targetWidth || h != targetHeight);
-
-    if (g2 != null) {
-      g2.dispose();
-    }
-
+    g2.dispose();
     // If we used a scratch buffer that is larger than our target size,
     // create an image of the right size and copy the results into it
     if (targetWidth != outgoing.getWidth() ||
@@ -727,14 +723,14 @@ public class PImage implements PConstants, Cloneable {
    * the display window by specifying an additional <b>width</b> and
    * <b>height</b> parameter. When getting an image, the <b>x</b> and
    * <b>y</b> parameters define the coordinates for the upper-left corner of
-   * the image, regardless of the current <b>imageMode()</b>.<br />
-   * <br />
+   * the image, regardless of the current <b>imageMode()</b>.
+   * 
    * If the pixel requested is outside of the image window, black is
    * returned. The numbers returned are scaled according to the current color
    * ranges, but only RGB values are returned by this function. For example,
    * even though you may have drawn a shape with <b>colorMode(HSB)</b>, the
-   * numbers returned will be in RGB format.<br />
-   * <br />
+   * numbers returned will be in RGB format.
+   * 
    * Getting the color of a single pixel with <b>get(x, y)</b> is easy, but
    * not as fast as grabbing the data directly from <b>pixels[]</b>. The
    * equivalent statement to <b>get(x, y)</b> using <b>pixels[]</b> is
@@ -881,15 +877,15 @@ public class PImage implements PConstants, Cloneable {
    * ( begin auto-generated from PImage_set.xml )
    *
    * Changes the color of any pixel or writes an image directly into the
-   * display window.<br />
-   * <br />
+   * display window.
+   * 
    * The <b>x</b> and <b>y</b> parameters specify the pixel to change and the
    * <b>color</b> parameter specifies the color value. The color parameter is
    * affected by the current color mode (the default is RGB values from 0 to
    * 255). When setting an image, the <b>x</b> and <b>y</b> parameters define
    * the coordinates for the upper-left corner of the image, regardless of
    * the current <b>imageMode()</b>.
-   * <br /><br />
+   * 
    * Setting the color of a single pixel with <b>set(x, y)</b> is easy, but
    * not as fast as putting the data directly into <b>pixels[]</b>. The
    * equivalent statement to <b>set(x, y, #000000)</b> using <b>pixels[]</b>
@@ -1005,8 +1001,8 @@ public class PImage implements PConstants, Cloneable {
    * Masks part of an image from displaying by loading another image and
    * using it as an alpha channel. This mask image should only contain
    * grayscale data, but only the blue color channel is used. The mask image
-   * needs to be the same size as the image to which it is applied.<br />
-   * <br />
+   * needs to be the same size as the image to which it is applied.
+   * 
    * In addition to using a mask image, an integer array containing the alpha
    * channel data can be specified directly. This method is useful for
    * creating dynamically generated alpha masks. This array must be of the
@@ -1120,28 +1116,28 @@ public class PImage implements PConstants, Cloneable {
   /**
    * ( begin auto-generated from PImage_filter.xml )
    *
-   * Filters an image as defined by one of the following modes:<br /><br
-   * />THRESHOLD - converts the image to black and white pixels depending if
+   * Filters an image as defined by one of the following modes:
+   * THRESHOLD - converts the image to black and white pixels depending if
    * they are above or below the threshold defined by the level parameter.
    * The level must be between 0.0 (black) and 1.0(white). If no level is
-   * specified, 0.5 is used.<br />
-   * <br />
-   * GRAY - converts any colors in the image to grayscale equivalents<br />
-   * <br />
-   * INVERT - sets each pixel to its inverse value<br />
-   * <br />
+   * specified, 0.5 is used.
+   * 
+   * GRAY - converts any colors in the image to grayscale equivalents
+   * 
+   * INVERT - sets each pixel to its inverse value
+   * 
    * POSTERIZE - limits each channel of the image to the number of colors
-   * specified as the level parameter<br />
-   * <br />
+   * specified as the level parameter
+   * 
    * BLUR - executes a Guassian blur with the level parameter specifying the
    * extent of the blurring. If no level parameter is used, the blur is
-   * equivalent to Guassian blur of radius 1<br />
-   * <br />
-   * OPAQUE - sets the alpha channel to entirely opaque<br />
-   * <br />
+   * equivalent to Guassian blur of radius 1
+   * 
+   * OPAQUE - sets the alpha channel to entirely opaque
+   * 
    * ERODE - reduces the light areas with the amount defined by the level
-   * parameter<br />
-   * <br />
+   * parameter
+   * 
    * DILATE - increases the light areas with the amount defined by the level parameter
    *
    * ( end auto-generated )
@@ -1160,7 +1156,7 @@ public class PImage implements PConstants, Cloneable {
    * </UL>
    * Luminance conversion code contributed by
    * <A HREF="http://www.toxi.co.uk">toxi</A>
-   * <P/>
+   * 
    * Gaussian blur code contributed by
    * <A HREF="http://incubator.quasimondo.com">Mario Klingemann</A>
    *
@@ -1175,13 +1171,19 @@ public class PImage implements PConstants, Cloneable {
 
     switch (kind) {
       case BLUR:
-        if (format == ALPHA)
+      switch (format) {
+        case ALPHA:
           blurAlpha(param);
-        else if (format == ARGB)
+          break;
+        case ARGB:
           blurARGB(param);
-        else
+          break;
+        default:
           blurRGB(param);
+          break;
+      }
         break;
+
 
       case GRAY:
         throw new RuntimeException("Use filter(GRAY) instead of " +
@@ -1677,7 +1679,7 @@ public class PImage implements PConstants, Cloneable {
    * source pixels to fit the specified target region. No alpha information
    * is used in the process, however if the source image has an alpha channel
    * set, it will be copied as well.
-   * <br /><br />
+   * 
    * As of release 0149, this function ignores <b>imageMode()</b>.
    *
    * ( end auto-generated )
@@ -1776,18 +1778,18 @@ public class PImage implements PConstants, Cloneable {
    * </UL>
    * <P>A useful reference for blending modes and their algorithms can be
    * found in the <A HREF="http://www.w3.org/TR/SVG12/rendering.html">SVG</A>
-   * specification.</P>
+   * specification.
    * <P>It is important to note that Processing uses "fast" code, not
    * necessarily "correct" code. No biggie, most software does. A nitpicker
    * can find numerous "off by 1 division" problems in the blend code where
    * <TT>&gt;&gt;8</TT> or <TT>&gt;&gt;7</TT> is used when strictly speaking
-   * <TT>/255.0</T> or <TT>/127.0</TT> should have been used.</P>
+   * <TT>/255.0</TT> or <TT>/127.0</TT> should have been used.
    * <P>For instance, exclusion (not intended for real-time use) reads
    * <TT>r1 + r2 - ((2 * r1 * r2) / 255)</TT> because <TT>255 == 1.0</TT>
    * not <TT>256 == 1.0</TT>. In other words, <TT>(255*255)>>8</TT> is not
    * the same as <TT>(255*255)/255</TT>. But for real-time use the shifts
    * are preferrable, and the difference is insignificant for applications
-   * built with Processing.</P>
+   * built with Processing.
    *
    * @webref color:creating_reading
    * @usage web_application
@@ -1837,47 +1839,47 @@ public class PImage implements PConstants, Cloneable {
    * Blends a region of pixels into the image specified by the <b>img</b>
    * parameter. These copies utilize full alpha channel support and a choice
    * of the following modes to blend the colors of source pixels (A) with the
-   * ones of pixels in the destination image (B):<br />
-   * <br />
-   * BLEND - linear interpolation of colours: C = A*factor + B<br />
-   * <br />
-   * ADD - additive blending with white clip: C = min(A*factor + B, 255)<br />
-   * <br />
+   * ones of pixels in the destination image (B):
+   * 
+   * BLEND - linear interpolation of colours: C = A*factor + B
+   * 
+   * ADD - additive blending with white clip: C = min(A*factor + B, 255)
+   * 
    * SUBTRACT - subtractive blending with black clip: C = max(B - A*factor,
-   * 0)<br />
-   * <br />
-   * DARKEST - only the darkest colour succeeds: C = min(A*factor, B)<br />
-   * <br />
-   * LIGHTEST - only the lightest colour succeeds: C = max(A*factor, B)<br />
-   * <br />
-   * DIFFERENCE - subtract colors from underlying image.<br />
-   * <br />
-   * EXCLUSION - similar to DIFFERENCE, but less extreme.<br />
-   * <br />
-   * MULTIPLY - Multiply the colors, result will always be darker.<br />
-   * <br />
-   * SCREEN - Opposite multiply, uses inverse values of the colors.<br />
-   * <br />
+   * 0)
+   * 
+   * DARKEST - only the darkest colour succeeds: C = min(A*factor, B)
+   * 
+   * LIGHTEST - only the lightest colour succeeds: C = max(A*factor, B)
+   * 
+   * DIFFERENCE - subtract colors from underlying image.
+   * 
+   * EXCLUSION - similar to DIFFERENCE, but less extreme.
+   * 
+   * MULTIPLY - Multiply the colors, result will always be darker.
+   * 
+   * SCREEN - Opposite multiply, uses inverse values of the colors.
+   * 
    * OVERLAY - A mix of MULTIPLY and SCREEN. Multiplies dark values,
-   * and screens light values.<br />
-   * <br />
-   * HARD_LIGHT - SCREEN when greater than 50% gray, MULTIPLY when lower.<br />
-   * <br />
+   * and screens light values.
+   * 
+   * HARD_LIGHT - SCREEN when greater than 50% gray, MULTIPLY when lower.
+   * 
    * SOFT_LIGHT - Mix of DARKEST and LIGHTEST.
-   * Works like OVERLAY, but not as harsh.<br />
-   * <br />
+   * Works like OVERLAY, but not as harsh.
+   * 
    * DODGE - Lightens light tones and increases contrast, ignores darks.
-   * Called "Color Dodge" in Illustrator and Photoshop.<br />
-   * <br />
+   * Called "Color Dodge" in Illustrator and Photoshop.
+   * 
    * BURN - Darker areas are applied, increasing contrast, ignores lights.
-   * Called "Color Burn" in Illustrator and Photoshop.<br />
-   * <br />
+   * Called "Color Burn" in Illustrator and Photoshop.
+   * 
    * All modes use the alpha information (highest byte) of source image
    * pixels as the blending factor. If the source and destination regions are
    * different sizes, the image will be automatically resized to match the
    * destination size. If the <b>srcImg</b> parameter is not used, the
-   * display window is used as the source image.<br />
-   * <br />
+   * display window is used as the source image.
+   * 
    * As of release 0149, this function ignores <b>imageMode()</b>.
    *
    * ( end auto-generated )
@@ -3080,7 +3082,6 @@ int testFunction(int dst, int src) {
       return true;
 
     } catch (IOException e) {
-      e.printStackTrace();
     }
     return false;
   }
@@ -3089,10 +3090,10 @@ int testFunction(int dst, int src) {
   /**
    * Creates a Targa32 formatted byte sequence of specified
    * pixel buffer using RLE compression.
-   * </p>
+   * 
    * Also figured out how to avoid parsing the image upside-down
    * (there's a header flag to set the image origin to top-left)
-   * </p>
+   * 
    * Starting with revision 0092, the format setting is taken into account:
    * <UL>
    * <LI><TT>ALPHA</TT> images written as 8bit grayscale (uses lowest byte)
@@ -3100,7 +3101,7 @@ int testFunction(int dst, int src) {
    * <LI><TT>ARGB</TT> &rarr; 32 bits
    * </UL>
    * All versions are RLE compressed.
-   * </p>
+   * 
    * Contributed by toxi 8-10 May 2005, based on this RLE
    * <A HREF="http://www.wotsit.org/download.asp?f=tga">specification</A>
    */
@@ -3234,7 +3235,6 @@ int testFunction(int dst, int src) {
        return true;
 
      } catch (IOException e) {
-       e.printStackTrace();
        return false;
      }
   }
@@ -3306,8 +3306,7 @@ int testFunction(int dst, int src) {
       // If iter.hasNext() somehow fails up top, it falls through to here
       return javax.imageio.ImageIO.write(bimage, extension, file);
 
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (IOException e) {
       throw new IOException("image save failed.");
     }
   }
@@ -3352,7 +3351,6 @@ int testFunction(int dst, int src) {
 
       } catch (IIOInvalidTreeException e) {
         System.err.println("Could not set the DPI of the output image");
-        e.printStackTrace();
       }
     }
     return null;
@@ -3370,7 +3368,7 @@ int testFunction(int dst, int src) {
    * in the filename, the image will save in TIFF format and .tif will be
    * added to the name.  These files are saved to the sketch's folder, which
    * may be opened by selecting "Show sketch folder" from the "Sketch" menu.
-   * <br /><br />To save an image created within the code, rather
+   * To save an image created within the code, rather
    * than through loading, it's necessary to make the image with the
    * <b>createImage()</b> function so it is aware of the location of the
    * program and can therefore save the file to the right place. See the
@@ -3437,8 +3435,8 @@ int testFunction(int dst, int src) {
          saveImageFormats = javax.imageio.ImageIO.getWriterFormatNames();
        }
        if (saveImageFormats != null) {
-         for (int i = 0; i < saveImageFormats.length; i++) {
-           if (filename.endsWith("." + saveImageFormats[i])) {
+         for (String saveImageFormat : saveImageFormats) {
+           if (filename.endsWith("." + saveImageFormat)) {
              if (!saveImageIO(filename)) {
                System.err.println("Error while saving image.");
                return false;
@@ -3466,7 +3464,6 @@ int testFunction(int dst, int src) {
 
      } catch (IOException e) {
        System.err.println("Error while saving image.");
-       e.printStackTrace();
        success = false;
      }
      return success;

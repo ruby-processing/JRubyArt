@@ -47,13 +47,13 @@ import processing.core.PConstants;
 
 /**
  * <p>Generic class for handling tabular data, typically from a CSV, TSV, or
- * other sort of spreadsheet file.</p>
+ * other sort of spreadsheet file.
  * <p>CSV files are
  * <a href="http://en.wikipedia.org/wiki/Comma-separated_values">comma separated values</a>,
  * often with the data in quotes. TSV files use tabs as separators, and usually
- * don't bother with the quotes.</p>
- * <p>File names should end with .csv if they're comma separated.</p>
- * <p>A rough "spec" for CSV can be found <a href="http://tools.ietf.org/html/rfc4180">here</a>.</p>
+ * don't bother with the quotes.
+ * <p>File names should end with .csv if they're comma separated.
+ * <p>A rough "spec" for CSV can be found <a href="http://tools.ietf.org/html/rfc4180">here</a>.
  *
  * @webref data:composite
  * @see PApplet#loadTable(String)

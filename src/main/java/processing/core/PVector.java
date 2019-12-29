@@ -45,8 +45,8 @@ import processing.core.PConstants;
  * represent groupings of values, we cannot simply use traditional
  * addition/multiplication/etc. Instead, we'll need to do some "vector"
  * math, which is made easy by the methods inside the <b>PVector</b>
- * class.<br />
- * <br />
+ * class.
+ * 
  * The methods for this class are extensive. For a complete list, visit the
  * <a
  * href="http://processing.googlecode.com/svn/trunk/processing/build/javadoc/core/">developer's reference.</a>

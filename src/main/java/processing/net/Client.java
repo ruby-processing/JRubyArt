@@ -643,7 +643,7 @@ public class Client implements Runnable {
    * 
    * ( end auto-generated )
    * <h3>Advanced</h3>
-   * <p/>
+   * 
    * If you want to move Unicode data, you can first convert the
    * String to a byte stream in the representation of your choice
    * (i.e. UTF8 or two-byte Unicode data), and send it as a byte array.

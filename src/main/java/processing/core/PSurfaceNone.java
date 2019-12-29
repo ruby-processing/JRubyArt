@@ -33,13 +33,14 @@ public class PSurfaceNone implements PSurface {
 
   protected Thread thread;
   protected boolean paused;
-  protected Object pauseObject = new Object();
+  protected final Object pauseObject;
 
   protected float frameRateTarget = 60;
   protected long frameRatePeriod = 1000000000L / 60L;
 
 
   public PSurfaceNone(PGraphics graphics) {
+    this.pauseObject = new Object();
     this.graphics = graphics;
   }
 

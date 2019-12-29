@@ -424,6 +424,7 @@ public class PMatrix2D implements PMatrix {
   /**
    * Unavailable in 2D. Does nothing.
    */
+  @Override
   public void transpose() {
   }
 
@@ -431,6 +432,7 @@ public class PMatrix2D implements PMatrix {
   /*
    * Implementation stolen from OpenJDK.
    */
+  @Override
   public boolean invert() {
     float determinant = determinant();
     if (Math.abs(determinant) <= Float.MIN_VALUE) {
@@ -512,23 +514,23 @@ public class PMatrix2D implements PMatrix {
   //////////////////////////////////////////////////////////////
 
 
-  static private final float max(float a, float b) {
+  private static float max(float a, float b) {
     return (a > b) ? a : b;
   }
 
-  static private final float abs(float a) {
+  private static float abs(float a) {
     return (a < 0) ? -a : a;
   }
 
-  static private final float sin(float angle) {
+  private static float sin(float angle) {
     return (float)Math.sin(angle);
   }
 
-  static private final float cos(float angle) {
+  private static float cos(float angle) {
     return (float)Math.cos(angle);
   }
 
-  static private final float tan(float angle) {
+  private static float tan(float angle) {
     return (float)Math.tan(angle);
   }
 }

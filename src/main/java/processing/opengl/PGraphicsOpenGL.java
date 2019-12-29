@@ -3620,7 +3620,7 @@ public class PGraphicsOpenGL extends PGraphics {
    * Ported from the implementation of textCharShapeImpl() in 1.5.1
    *
    * <EM>No attempt has been made to optimize this code</EM>
-   * <p/>
+   * 
    * TODO: Implement a FontShape class where each glyph is tessellated and
    * stored inside a larger PShapeOpenGL object (which needs to be expanded as
    * new glyphs are added and exceed the initial capacity in a similar way as
@@ -3628,18 +3628,18 @@ public class PGraphicsOpenGL extends PGraphics {
    * in shape mode, then the correct sequences of vertex indices are computed
    * (akin to the texcoords in the texture case) and used to draw only those
    * parts of the PShape object that are required for the text.
-   * <p/>
+   * 
    *
    * Some issues of the original implementation probably remain, so they are
    * reproduced below:
-   * <p/>
+   * 
    * Also a problem where some fonts seem to be a bit slight, as if the
    * control points aren't being mapped quite correctly. Probably doing
    * something dumb that the control points don't map to P5's control
    * points. Perhaps it's returning b-spline data from the TrueType font?
    * Though it seems like that would make a lot of garbage rather than
    * just a little flattening.
-   * <p/>
+   * 
    * There also seems to be a bug that is causing a line (but not a filled
    * triangle) back to the origin on some letters (i.e. a capital L when
    * tested with Akzidenz Grotesk Light). But this won't be visible

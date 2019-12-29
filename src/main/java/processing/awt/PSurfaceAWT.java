@@ -42,6 +42,7 @@ import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.*;
 import java.lang.management.ManagementFactory;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
@@ -599,8 +600,9 @@ public class PSurfaceAWT extends PSurfaceNone {
         Method method =
           thinkDifferent.getMethod("setIconImage", new Class[] { java.awt.Image.class });
         method.invoke(null, new Object[] { awtImage });
-      } catch (Exception e) {
-        e.printStackTrace();  // That's unfortunate
+      } catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException e) {
+        // That's unfortunate
+        
       }
     }
   }
@@ -628,7 +630,7 @@ public class PSurfaceAWT extends PSurfaceNone {
       //frame.setIconImage(image);
       try {
         if (iconImages == null) {
-          iconImages = new ArrayList<Image>();
+          iconImages = new ArrayList<>();
           final int[] sizes = { 16, 32, 48, 64, 128, 256, 512 };
 
           for (int sz : sizes) {
@@ -657,8 +659,9 @@ public class PSurfaceAWT extends PSurfaceNone {
           Method method =
             thinkDifferent.getMethod("setIconImage", new Class[] { java.awt.Image.class });
           method.invoke(null, new Object[] { Toolkit.getDefaultToolkit().getImage(url) });
-        } catch (Exception e) {
-          e.printStackTrace();  // That's unfortunate
+        } catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException e) {
+          // That's unfortunate
+          
         }
       }
     }
@@ -673,12 +676,8 @@ public class PSurfaceAWT extends PSurfaceNone {
     //      the app has an icns file specified already. Help?
     List<String> jvmArgs =
       ManagementFactory.getRuntimeMXBean().getInputArguments();
-    for (String arg : jvmArgs) {
-      if (arg.startsWith("-Xdock:icon")) {
-        return true;  // dock image already set
-      }
-    }
-    return false;
+    // dock image already set
+    return jvmArgs.stream().anyMatch((arg) -> (arg.startsWith("-Xdock:icon")));
   }
 
 
@@ -1089,7 +1088,7 @@ public class PSurfaceAWT extends PSurfaceNone {
 
   /**
    * Set this sketch to communicate its state back to the PDE.
-   * <p/>
+   * 
    * This uses the stderr stream to write positions of the window
    * (so that it will be saved by the PDE for the next run) and
    * notify on quit. See more notes in the Worker class.
@@ -1111,27 +1110,21 @@ public class PSurfaceAWT extends PSurfaceNone {
    * in cases where frame.setResizable(true) is called.
    */
   private void setupFrameResizeListener() {
-    frame.addWindowStateListener(new WindowStateListener() {
-      @Override
-      // Detecting when the frame is resized in order to handle the frame
-      // maximization bug in OSX:
-      // http://bugs.java.com/bugdatabase/view_bug.do?bug_id=8036935
-      public void windowStateChanged(WindowEvent e) {
-        // This seems to be firing when dragging the window on OS X
+    frame.addWindowStateListener((WindowEvent e) -> {
+      // This seems to be firing when dragging the window on OS X
+      // https://github.com/processing/processing/issues/3092
+      if (Frame.MAXIMIZED_BOTH == e.getNewState()) {
+        // Supposedly, sending the frame to back and then front is a
+        // workaround for this bug:
+        // http://stackoverflow.com/a/23897602
+        // but is not working for me...
+        //frame.toBack();
+        //frame.toFront();
+        // Packing the frame works, but that causes the window to collapse
+        // on OS X when the window is dragged. Changing to addNotify() for
         // https://github.com/processing/processing/issues/3092
-        if (Frame.MAXIMIZED_BOTH == e.getNewState()) {
-          // Supposedly, sending the frame to back and then front is a
-          // workaround for this bug:
-          // http://stackoverflow.com/a/23897602
-          // but is not working for me...
-          //frame.toBack();
-          //frame.toFront();
-          // Packing the frame works, but that causes the window to collapse
-          // on OS X when the window is dragged. Changing to addNotify() for
-          // https://github.com/processing/processing/issues/3092
-          //frame.pack();
-          frame.addNotify();
-        }
+        //frame.pack();
+        frame.addNotify();
       }
     });
 
