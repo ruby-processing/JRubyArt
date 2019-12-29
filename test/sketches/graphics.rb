@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def setup
   puts Java::ProcessingOpengl::PGraphicsOpenGL.OPENGL_VERSION
 end
@@ -9,4 +11,3 @@ end
 def settings
   size(100, 100, P3D)
 end
-

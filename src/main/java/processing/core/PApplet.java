@@ -944,21 +944,22 @@ public class PApplet implements PConstants {
    * @param args parameters passed to the function so we can show the user
    * @return true if safely inside the settings() method
    */
-  boolean insideSettings(String method, Object... args) {
-    if (insideSettings) {
-      return true;
-    }
-    final String url = "https://processing.org/reference/" + method + "_.html";
-    if (!external) {  // post a warning for users of Eclipse and other IDEs
-      StringList argList = new StringList(args);
-      System.err.println("In JRubyArt, " + method + " can only be used inside settings.");
-      System.err.println("Remove the " + method + "() method from setup(), and add the following:");
-      System.err.println("def settings");
-      System.err.println("  " + method + "(" + argList.join(", ") + ")");
-      System.err.println("end");
-    }
-    throw new IllegalStateException(method + " cannot be used here, see " + url);
-  }
+
+   boolean insideSettings(String method, Object... args) {
+     if (insideSettings) {
+       return true;
+     }
+     if (!external) {  // post a warning for users of Eclipse and other IDEs
+       StringList argList = new StringList(args);
+       System.err.println("" + method + " can only be used inside settings.");
+       System.err.println("Move " + method + " from setup, to settings:");
+       System.err.println("def settings");
+       System.err.println("  " + method + "(" + argList.join(", ") + ")");
+       System.err.println("end");
+     }
+     throw new IllegalStateException(method + " cannot be used here");
+   }
+
 
   void handleSettings() {
     insideSettings = true;
@@ -1236,10 +1237,11 @@ public class PApplet implements PConstants {
 
   private void smoothWarning(String method) {
     // When running from the PDE, say setup(), otherwise say settings()
-    final String where = "settings";
-    PGraphics.showWarning("%s() can only be used inside %s", method, where);
+
+    final String where = external ? "setup" : "settings";
+    PGraphics.showWarning("%s can only be used inside %s", method, where);
     if (external) {
-      PGraphics.showWarning("In vanilla processing, %s() is automatically moved from setup() to settings()", method);
+      PGraphics.showWarning("In vanilla processing, %s is automatically moved from setup to settings", method);
     }
   }
 
@@ -5102,6 +5104,7 @@ public class PApplet implements PConstants {
    * applications to produce procedural textures, natural motion, shapes,
    * terrains etc. The main difference to the
    * <b>random()</b> function is that Perlin noise is defined in an infinite
+<<<<<<< HEAD
    * n-dimensional space where each pair of coordinates corresponds to a fixed
    * semi-random value (fixed only for the lifespan of the program). The
    * resulting value will always be between 0.0 and 1.0. Processing can compute
@@ -5119,6 +5122,26 @@ public class PApplet implements PConstants {
    * As a general rule the smaller the difference between coordinates, the
    * smoother the resulting noise sequence will be. Steps of 0.005-0.03 work
    * best for most applications, but this will differ depending on use.
+=======
+   * n-dimensional space where each pair of coordinates corresponds to a
+   * fixed semi-random value (fixed only for the lifespan of the program).
+   * The resulting value will always be between 0.0 and 1.0. Processing can
+   * compute 1D, 2D and 3D noise, depending on the number of coordinates
+   * given. The noise value can be animated by moving through the noise space
+   * as demonstrated in the example above. The 2nd and 3rd dimension can also
+   * be interpreted as time.<br /><br />The actual noise is structured
+   * similar to an audio signal, in respect to the function's use of
+   * frequencies. Similar to the concept of harmonics in physics, perlin
+   * noise is computed over several octaves which are added together for the
+   * final result. <br /><br />Another way to adjust the character of the
+   * resulting sequence is the scale of the input coordinates. As the
+   * function works within an infinite space the value of the coordinates
+   * doesn't matter as such, only the distance between successive coordinates
+   * does (eg. when using <b>noise()</b> within a loop). As a general rule
+   * the smaller the difference between coordinates, the smoother the
+   * resulting noise sequence will be. Steps of 0.005-0.03 work best for most
+   * applications, but this will differ depending on use.
+>>>>>>> 053328537baf814c2f3324db4f4da257d7ce700b
    *
    * ( end auto-generated )
    *
@@ -11921,11 +11944,19 @@ public class PApplet implements PConstants {
   /**
    * ( begin auto-generated from square.xml )
    *
+<<<<<<< HEAD
    * Draws a square to the screen. A square is a four-sided shape with every
    * angle at ninety degrees and each side is the same length. By default, the
    * first two parameters set the location of the upper-left corner, the third
    * sets the width and height. The way these parameters are interpreted,
    * however, may be changed with the
+=======
+   * Draws a square to the screen. A square is a four-sided shape with
+   * every angle at ninety degrees and each side is the same length.
+   * By default, the first two parameters set the location of the
+   * upper-left corner, the third sets the width and height. The way
+   * these parameters are interpreted, however, may be changed with the
+>>>>>>> 053328537baf814c2f3324db4f4da257d7ce700b
    * <b>rectMode()</b> function.
    *
    * ( end auto-generated )
@@ -12043,9 +12074,15 @@ public class PApplet implements PConstants {
   /**
    * ( begin auto-generated from circle.xml )
    *
+<<<<<<< HEAD
    * Draws a circle to the screen. By default, the first two parameters set the
    * location of the center, and the third sets the shape's width and height.
    * The origin may be changed with the <b>ellipseMode()</b>
+=======
+   * Draws a circle to the screen. By default, the first two parameters
+   * set the location of the center, and the third sets the shape's width
+   * and height. The origin may be changed with the <b>ellipseMode()</b>
+>>>>>>> 053328537baf814c2f3324db4f4da257d7ce700b
    * function.
    *
    * ( end auto-generated )
@@ -13129,6 +13166,7 @@ public class PApplet implements PConstants {
   /**
    * ( begin auto-generated from push.xml )
    *
+<<<<<<< HEAD
    * The <b>push()</b> function saves the current drawing style settings and
    * transformations, while <b>pop()</b> restores these settings. Note that
    * these functions are always used together. They allow you to change the
@@ -13139,10 +13177,24 @@ public class PApplet implements PConstants {
    * <b>push()</b> stores information related to the current transformation
    * state and style settings controlled by the following functions:
    * <b>rotate()</b>, <b>translate()</b>,
+=======
+   * The <b>push()</b> function saves the current drawing style
+   * settings and transformations, while <b>pop()</b> restores these
+   * settings. Note that these functions are always used together.
+   * They allow you to change the style and transformation settings
+   * and later return to what you had. When a new state is started
+   * with push(), it builds on the current style and transform
+   * information.<br />
+   * <br />
+   * <b>push()</b> stores information related to the current
+   * transformation state and style settings controlled by the
+   * following functions: <b>rotate()</b>, <b>translate()</b>,
+>>>>>>> 053328537baf814c2f3324db4f4da257d7ce700b
    * <b>scale()</b>, <b>fill()</b>, <b>stroke()</b>, <b>tint()</b>,
    * <b>strokeWeight()</b>, <b>strokeCap()</b>, <b>strokeJoin()</b>,
    * <b>imageMode()</b>, <b>rectMode()</b>, <b>ellipseMode()</b>,
    * <b>colorMode()</b>, <b>textAlign()</b>, <b>textFont()</b>,
+<<<<<<< HEAD
    * <b>textMode()</b>, <b>textSize()</b>, <b>textLeading()</b>.
    *
    * The <b>push()</b> and <b>pop()</b> functions were added with Processing
@@ -13150,6 +13202,16 @@ public class PApplet implements PConstants {
    * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>. The
    * difference is that push() and pop() control both the transformations
    * (rotate, scale, translate) and the drawing styles at the same time.
+=======
+   * <b>textMode()</b>, <b>textSize()</b>, <b>textLeading()</b>.<br />
+   * <br />
+   * The <b>push()</b> and <b>pop()</b> functions were added with
+   * Processing 3.5. They can be used in place of <b>pushMatrix()</b>,
+   * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>.
+   * The difference is that push() and pop() control both the
+   * transformations (rotate, scale, translate) and the drawing styles
+   * at the same time.
+>>>>>>> 053328537baf814c2f3324db4f4da257d7ce700b
    *
    * ( end auto-generated )
    *
@@ -13166,6 +13228,7 @@ public class PApplet implements PConstants {
   /**
    * ( begin auto-generated from pop.xml )
    *
+<<<<<<< HEAD
    * The <b>pop()</b> function restores the previous drawing style settings and
    * transformations after <b>push()</b> has changed them. Note that these
    * functions are always used together. They allow you to change the style and
@@ -13177,10 +13240,24 @@ public class PApplet implements PConstants {
    * <b>push()</b> stores information related to the current transformation
    * state and style settings controlled by the following functions:
    * <b>rotate()</b>, <b>translate()</b>,
+=======
+   * The <b>pop()</b> function restores the previous drawing style
+   * settings and transformations after <b>push()</b> has changed them.
+   * Note that these functions are always used together. They allow
+   * you to change the style and transformation settings and later
+   * return to what you had. When a new state is started with push(),
+   * it builds on the current style and transform information.<br />
+   * <br />
+   * <br />
+   * <b>push()</b> stores information related to the current
+   * transformation state and style settings controlled by the
+   * following functions: <b>rotate()</b>, <b>translate()</b>,
+>>>>>>> 053328537baf814c2f3324db4f4da257d7ce700b
    * <b>scale()</b>, <b>fill()</b>, <b>stroke()</b>, <b>tint()</b>,
    * <b>strokeWeight()</b>, <b>strokeCap()</b>, <b>strokeJoin()</b>,
    * <b>imageMode()</b>, <b>rectMode()</b>, <b>ellipseMode()</b>,
    * <b>colorMode()</b>, <b>textAlign()</b>, <b>textFont()</b>,
+<<<<<<< HEAD
    * <b>textMode()</b>, <b>textSize()</b>, <b>textLeading()</b>.
    *
    * The <b>push()</b> and <b>pop()</b> functions were added with Processing
@@ -13188,6 +13265,16 @@ public class PApplet implements PConstants {
    * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>. The
    * difference is that push() and pop() control both the transformations
    * (rotate, scale, translate) and the drawing styles at the same time.
+=======
+   * <b>textMode()</b>, <b>textSize()</b>, <b>textLeading()</b>.<br />
+   * <br />
+   * The <b>push()</b> and <b>pop()</b> functions were added with
+   * Processing 3.5. They can be used in place of <b>pushMatrix()</b>,
+   * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>.
+   * The difference is that push() and pop() control both the
+   * transformations (rotate, scale, translate) and the drawing styles
+   * at the same time.
+>>>>>>> 053328537baf814c2f3324db4f4da257d7ce700b
    *
    * ( end auto-generated )
    *

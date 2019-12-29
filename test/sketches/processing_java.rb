@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 load_library :pdf
 
 def settings

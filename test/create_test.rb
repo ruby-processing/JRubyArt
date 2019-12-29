@@ -1,35 +1,53 @@
+# frozen_string_literal: true
+
 require_relative 'test_helper'
 require_relative '../lib/jruby_art/creators/sketch_writer'
 
 EMACS = <<~CODE
-# frozen_string_literal: false
-require 'jruby_art'
-require 'jruby_art/app'
+  # frozen_string_literal: false
+  require 'jruby_art'
+  require 'jruby_art/app'
 
-Processing::App::SKETCH_PATH = __FILE__.freeze
+  Processing::App::SKETCH_PATH = __FILE__.freeze
 
-class FredSketch < Processing::App
-  def settings
-    size 200, 200, P2D
+  class FredSketch < Processing::App
+    def settings
+      size 200, 200, P2D
+    end
+
+    def setup
+      sketch_title 'Fred Sketch'
+    end
+
+    def draw
+
+    end
   end
 
-  def setup
-    sketch_title 'Fred Sketch'
-  end
-
-  def draw
-
-  end
-end
-
-FredSketch.new if Processing.app.nil?
+  FredSketch.new if Processing.app.nil?
 
 CODE
 
 CLASS_SKETCH = <<~CODE
-# frozen_string_literal: false
+  # frozen_string_literal: false
 
-class FredSketch < Processing::App
+  class FredSketch < Processing::App
+    def settings
+      size 200, 200, P2D
+    end
+
+    def setup
+      sketch_title 'Fred Sketch'
+    end
+
+    def draw
+
+    end
+  end
+
+CODE
+
+BARE = <<~CODE
   def settings
     size 200, 200, P2D
   end
@@ -41,22 +59,6 @@ class FredSketch < Processing::App
   def draw
 
   end
-end
-
-CODE
-
-BARE = <<~CODE
-def settings
-  size 200, 200, P2D
-end
-
-def setup
-  sketch_title 'Fred Sketch'
-end
-
-def draw
-
-end
 
 
 
@@ -75,7 +77,7 @@ class SketchWriterTest < Minitest::Test
   end
 
   def test_parameter_new
-    param = SketchParameters.new(name: 'fred_sketch', args: %w(200 200 p2d))
+    param = SketchParameters.new(name: 'fred_sketch', args: %w[200 200 p2d])
     assert_equal "sketch_title 'Fred Sketch'", param.sketch_title
     assert_equal 'size 200, 200, P2D', param.sketch_size
     assert_equal 'FredSketch', param.class_name
