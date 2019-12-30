@@ -2,7 +2,7 @@
 
 def setup
   unknown_method
-rescue NoMethodError => e
+rescue StandardError => e
   puts e
   exit
 end

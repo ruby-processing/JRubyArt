@@ -101,6 +101,6 @@ class Rp5Test < Minitest::Test
         end
       end
     end
-    assert out.index('undefined method `unknown_method'), 'Failed to raise exception?'
+    assert out.index('undefined local variable or method `unknown_method'), 'Failed to raise exception?'
   end
 end
