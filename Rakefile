@@ -13,7 +13,7 @@ task :install_jogl do
   # for MacOS Widows? and Archlinux etc
   # processing_root = File.dirname(`readlink -f $(which processing)`)
   # alternative for debian linux etc
-  processing_root = File.join(ENV['HOME'], 'processing-3.5.3')
+  processing_root = File.join(ENV['HOME'], 'processing-3.5.4')
   jar_dir = File.join(processing_root, 'core', 'library')
   opengl = Dir.entries(jar_dir).grep(/amd64|macosx-universal/)
   opengl.concat %w[jogl-all.jar gluegen-rt.jar]

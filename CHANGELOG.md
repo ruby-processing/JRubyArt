@@ -1,4 +1,4 @@
-**v2.2.2** Fix for Native library bug on Windows by Jay Scott. Added minim examples.
+**v2.2.2** Fix for Native library bug on Windows by Jay Scott. Added minim examples. Bump processing-version in build.
 
 **v2.2.1** Added --force option for use with --install option to remove old configuration. Added support for installing video and sound libraries, without vanilla processing. Added dxf export library, re-branded app with a red wavy triangle icon.
 
