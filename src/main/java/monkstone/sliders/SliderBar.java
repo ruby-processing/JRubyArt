@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2016-19 Martin Prout
+ * Copyright (c) 2015-20 Martin Prout
  * 
  * This library is free softlengthare; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
