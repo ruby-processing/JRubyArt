@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # default configuration
 class Default
   def self.config

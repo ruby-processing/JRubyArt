@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'java'
 require_relative '../jruby_art'
 Dir["#{K9_ROOT}/lib/*.jar"].each do |jar|
@@ -10,7 +12,6 @@ require_relative '../jruby_art/config'
 
 # A wrapper module for the processing App
 module Processing
-
   # Include some core processing classes that we'd like to use:
   include_package 'processing.core'
   # Load vecmath, fastmath and mathtool modules
@@ -113,7 +114,7 @@ module Processing
         puts(exception.backtrace.map { |trace| "\t#{trace}" })
         close
       end
-      @surface = self.get_surface
+      @surface = get_surface
       # NB: this is the processing runSketch() method as used by processing.py
       run_sketch
     end
@@ -214,7 +215,7 @@ module Processing
 
     def method_missing(name, *args)
       app = Processing.app
-      return app.send(name, *args) if app && app.respond_to?(name)
+      return app.send(name, *args) if app&.respond_to?(name)
 
       super
     end

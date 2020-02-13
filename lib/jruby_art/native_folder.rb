@@ -27,12 +27,9 @@ class NativeFolder
   def name
     return 'macosx' if /darwin|mac/.match?(os)
 
-    if /linux/.match?(os)
-      return format(LINUX_FORMAT, bit)
-    end
-    if WIN_PATTERNS.any? { |pat| pat =~ os }
-      return format(WIN_FORMAT, bit)
-    end
+    return format(LINUX_FORMAT, bit) if /linux/.match?(os)
+    return format(WIN_FORMAT, bit) if WIN_PATTERNS.any? { |pat| pat =~ os }
+
     raise 'Unsupported Architecture'
   end
 

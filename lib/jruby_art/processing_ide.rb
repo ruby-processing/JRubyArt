@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # detects processing preferences.txt, extracts sketchbook_path
 class ProcessingIde
   attr_reader :preferences

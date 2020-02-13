@@ -1,4 +1,5 @@
 # frozen_string_literal: false
+
 # class to parse java_args.txt or java_args in config.yml
 class JavaOpts
   attr_reader :opts
@@ -8,6 +9,7 @@ class JavaOpts
     @opts = []
     @opts += File.read(arg_file).split(/\s+/) if FileTest.exist?(arg_file)
     return unless opts.empty? && Processing::RP_CONFIG.fetch('java_args', false)
+
     @opts += Processing::RP_CONFIG['java_args'].split(/\s+/)
   end
 end

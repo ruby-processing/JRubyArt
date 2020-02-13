@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'config'
 require_relative 'processing_ide'
 
@@ -8,13 +10,14 @@ class Installer
   end
 
   def install
-    if processing_ide.installed?
-      config = Config.new(
-        'processing_ide' => true,
-        'library_path' => processing_ide.sketchbook_path)
-    else
-      config = Config.new('processing_ide' => false)
-    end
+    config = if processing_ide.installed?
+               Config.new(
+                 'processing_ide' => true,
+                 'library_path' => processing_ide.sketchbook_path
+               )
+             else
+               Config.new('processing_ide' => false)
+             end
     config.write_to_file
   end
 end

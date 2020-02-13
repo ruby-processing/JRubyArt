@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Axis aligned bounding box class (AABB would clash with Toxicgem)
 class AaBb
   attr_reader :center, :extent
@@ -14,6 +15,7 @@ class AaBb
 
   def position(vec)
     return @center = vec unless block_given?
+
     @center = vec if yield
   end
 
@@ -24,6 +26,7 @@ class AaBb
   def contains?(vec)
     rad = extent * 0.5
     return false unless (center.x - rad.x..center.x + rad.x).cover? vec.x
+
     (center.y - rad.y..center.y + rad.y).cover? vec.y
   end
 end

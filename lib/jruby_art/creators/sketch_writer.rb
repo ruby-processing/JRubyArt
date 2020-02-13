@@ -1,4 +1,5 @@
 # frozen_string_literal: false
+
 # The SketchParameters class knows how to format, size, title & class name
 class SketchParameters
   attr_reader :name, :args
@@ -19,6 +20,7 @@ class SketchParameters
   def sketch_size
     mode = args.length == 3 ? format(', %s', args[2].upcase) : ''
     return 'size 200, 200' if args.empty?
+
     format('size %d, %d%s', args[0].to_i, args[1].to_i, mode)
   end
 end
@@ -71,6 +73,7 @@ class Sketch
     two = content.empty? ? BLANK : format('  %s%s', indent, content)
     three = format('%send', indent)
     return [one, two, three] if /draw/ =~ name
+
     [one, two, three, BLANK]
   end
 end

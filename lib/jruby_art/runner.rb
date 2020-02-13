@@ -23,11 +23,11 @@ module Processing
       /ming/i,
       /mswin/i,
       /wince/i
-    ]
+    ].freeze
 
-    INSTALL = <<~MSG
-    <Config|JRuby-Complete|Samples>
-    or <Sound|Video> library
+    INSTALL = <<~MSG.freeze
+      <Config|JRuby-Complete|Samples>
+      or <Sound|Video> library
     MSG
 
     attr_reader :options, :argc, :filename, :os
@@ -160,7 +160,6 @@ module Processing
       end
     end
 
-
     def check
       require_relative '../jruby_art/config'
       Config.new.check
@@ -213,7 +212,7 @@ module Processing
     end
 
     def remove_old_config
-      old_config = File.join("#{ENV['HOME']}", '.jruby_art', 'config.yml')
+      old_config = File.join((ENV['HOME']).to_s, '.jruby_art', 'config.yml')
       puts "Removing #{old_config}"
       system "rm #{old_config}"
     end

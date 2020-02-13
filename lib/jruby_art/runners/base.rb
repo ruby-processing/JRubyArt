@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 SKETCH_PATH ||= ARGV.shift
 SKETCH_ROOT ||= File.absolute_path(File.dirname(SKETCH_PATH))
 
