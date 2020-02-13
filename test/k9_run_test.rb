@@ -6,6 +6,7 @@ require 'minitest/pride'
 
 Dir.chdir(File.dirname(__FILE__))
 
+# Sketch tests
 class Rp5Test < Minitest::Test
   def test_normal
     out, _err_ = capture_io do

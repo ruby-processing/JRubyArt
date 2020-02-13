@@ -3,7 +3,7 @@
 require_relative 'test_helper'
 
 Java::Monkstone::JRLibrary.load(JRuby.runtime)
-
+# Vecmath Test
 class VecmathTest < Minitest::Test
   # duck for Vec2D constructor
   Point = Struct.new(:x, :y)

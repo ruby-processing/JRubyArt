@@ -5,7 +5,8 @@ require_relative '../lib/jruby_art/helpers/aabb'
 
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
 
-class MathToolTest < Minitest::Test
+# AaBb test
+class AaBbTest < Minitest::Test
   def test_aabb_new
     x = 1.0000001
     y = 1.01

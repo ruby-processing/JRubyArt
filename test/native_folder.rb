@@ -11,6 +11,7 @@ class WindowsNativeFolder < NativeFolder
   end
 end
 
+# Mock Mac
 class MacNativeFolder < NativeFolder
   def initialize
     @os = 'mac'

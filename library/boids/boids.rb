@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Boids -- after Tom de Smedt.
 # See his Python version: http://nodebox.net/code/index.php/Boids
 # This is an example of how a pure-Ruby library can work. Original for
@@ -8,7 +9,8 @@ class Boid
   attr_reader :boids
   attr_accessor :vel, :pos, :is_perching, :perch_time
   def initialize(boids, pos)
-    @boids, @flock = boids, boids
+    @boids = boids
+    @flock = boids
     @pos = pos
     @vel = Vec3D.new
     @is_perching = false
@@ -54,6 +56,7 @@ class Boid
     # Tweet, Tweet! The boid police will bust you for breaking the speed limit.
     most = [vel.x.abs, vel.y.abs, vel.z.abs].max
     return if most < max
+
     scale = max / most.to_f
     @vel *= scale
   end
@@ -89,11 +92,15 @@ class Boids
 
   def setup(n, x, y, w, h)
     n.times do
-      dx, dy = rand(w), rand(h)
+      dx = rand(w)
+      dy = rand(h)
       z = rand(200.0)
       self << Boid.new(self, Vec3D.new(x + dx, y + dy, z))
     end
-    @x, @y, @w, @h = x, y, w, h
+    @x = x
+    @y = y
+    @w = w
+    @h = h
     @scattered = false
     @scatter = 0.005
     @scatter_time = 50.0
@@ -146,7 +153,8 @@ class Boids
 
   def constrain
     # Put them boids in a cage.
-    dx, dy = @w * 0.1, @h * 0.1
+    dx = @w * 0.1
+    dy = @h * 0.1
     each do |b|
       b.vel.x += rand(dx) if b.pos.x < @x - dx
       b.vel.y += rand(dy) if b.pos.y < @y - dy
@@ -155,6 +163,7 @@ class Boids
       b.vel.z += 10.0 if b.pos.z < 0.0
       b.vel.z -= 10.0 if b.pos.z > 100.0
       next unless b.pos.y > perch_y && rand < perch
+
       b.pos.y = perch_y
       b.vel.y = b.vel.y.abs * -0.2
       b.is_perching = true

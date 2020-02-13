@@ -3,7 +3,7 @@
 require_relative 'test_helper'
 
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
-
+# Degree lookup table
 class DeglutTest < Minitest::Test
   attr_reader :to_radian
 

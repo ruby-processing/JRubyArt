@@ -1,5 +1,6 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'jruby_art/version'
 require 'rake'
@@ -9,14 +10,14 @@ Gem::Specification.new do |spec|
   spec.version = JRubyArt::VERSION
   spec.author  = 'Martin Prout'
   spec.email = 'mamba2928@yahoo.co.uk'
-  spec.description = <<-EOS
+  spec.description = <<-DESCRIPTION
   JRubyArt-2.0+ is a ruby implementation of the processing art framework, with enhanced
   functionality. Processing libraries and ruby gems can be used in your sketches.
   Features create/run/watch/live modes.
-  EOS
-  spec.summary = %q[Code as Art, Art as Code. Processing and Ruby are meant for each other.]
-  spec.homepage = "https://ruby-processing.github.io/JRubyArt/"
-  spec.post_install_message = %q[Use 'k9 --install' to install jruby-complete, and 'k9 --check' to check config.]
+  DESCRIPTION
+  spec.summary = 'Code as Art, Art as Code. Processing and Ruby are meant for each other.'
+  spec.homepage = 'https://ruby-processing.github.io/JRubyArt/'
+  spec.post_install_message = "Use 'k9 --install' to install jruby-complete, and 'k9 --check' to check config."
   spec.licenses = %w[GPL-3.0 LGPL-2.0]
 
   spec.files = FileList['bin/**/*', 'lib/**/*', 'library/**/*', 'samples/**/*', 'vendors/Rakefile'].exclude(/jar/).to_a
@@ -33,8 +34,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 2.3'
-  spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'minitest', '~> 5.10'
+  spec.add_development_dependency 'rake', '~> 12.3'
   spec.requirements << 'A decent graphics card'
   spec.requirements << 'java runtime >= 11.0.3+'
 end

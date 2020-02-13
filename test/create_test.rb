@@ -4,7 +4,8 @@ require_relative 'test_helper'
 require_relative '../lib/jruby_art/creators/sketch_writer'
 
 EMACS = <<~CODE
-  # frozen_string_literal: false
+  # frozen_string_literal: true
+
   require 'jruby_art'
   require 'jruby_art/app'
 
@@ -29,7 +30,7 @@ EMACS = <<~CODE
 CODE
 
 CLASS_SKETCH = <<~CODE
-  # frozen_string_literal: false
+  # frozen_string_literal: true
 
   class FredSketch < Processing::App
     def settings

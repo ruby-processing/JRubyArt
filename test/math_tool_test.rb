@@ -4,9 +4,10 @@ require_relative 'test_helper'
 
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
 
-# include Processing::HelperMethods
-class MathToolTest < Minitest::Test
+# Processing Map test
+class MapTest < Minitest::Test
   include MathTool
+  include Processing::HelperMethods
   def test_map1d
     x = [0, 5, 7.5, 10]
     range1 = (0..10)

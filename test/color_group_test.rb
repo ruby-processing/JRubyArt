@@ -8,7 +8,7 @@ java_import Java::Monkstone::ColorUtil
 
 PALETTE = %w[#FFFFFF #FF0000 #0000FF].freeze
 COLORS = [16_777_215, 16_711_680, 255].to_java(:int)
-
+# ColorGroup Tests
 class ColorGroupTest < Minitest::Test
   def test_new
     group = ColorGroup.new(COLORS)

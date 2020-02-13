@@ -25,7 +25,7 @@ CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
 
 desc 'dependency check'
 task :wget_check do
-  WGET ||= `which wget`
+  WGET ||= `which wget`.freeze
   warn WARNING unless WGET
 end
 

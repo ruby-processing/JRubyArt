@@ -5,10 +5,10 @@ require_relative '../lib/jruby_art/helper_methods'
 
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
 
-include Processing::HelperMethods
-include MathTool
-
+# Helper Methods Test
 class HelperMethodsTest < Minitest::Test
+  include Processing::HelperMethods
+  include MathTool
   ARRAY = %w[albatross dog horse].freeze
   def test_hex_color
     col_double = 0.5

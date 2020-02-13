@@ -4,11 +4,10 @@ require_relative 'test_helper'
 require_relative '../lib/jruby_art/helper_methods'
 
 Java::Monkstone::JRLibrary.new.load(JRuby.runtime, false)
-
-include Processing::HelperMethods
-include Processing::MathTool
-
+# method tests
 class Rp5Test < Minitest::Test
+  include Processing::HelperMethods
+  include Processing::MathTool
   def setup; end
 
   def test_map1d

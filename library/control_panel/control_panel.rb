@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Here's a little library for quickly hooking up controls to sketches.
 # For messing with the parameters and such.
 # These controls will set instance variables on the sketches.
@@ -25,7 +27,7 @@ module ControlPanel
       add_change_listener do
         update_label(label, name, value)
         ControlPanel.app_value(name, value)
-        proc.call(value) if proc
+        proc&.call(value)
       end
       ControlPanel.app_value(name, val)
     end
@@ -49,7 +51,7 @@ module ControlPanel
       control_panel.add_element(self, name)
       add_action_listener do
         ControlPanel.app_value(name, value) unless value.nil?
-        proc.call(value) if proc
+        proc&.call(value)
       end
       set_selected_index(initial_value ? elements.index(initial_value) : 0)
     end
@@ -69,7 +71,7 @@ module ControlPanel
       control_panel.add_element(self, name, false)
       add_action_listener do
         ControlPanel.app_value(name, value)
-        proc.call(value) if proc
+        proc&.call(value)
       end
     end
 
@@ -87,7 +89,7 @@ module ControlPanel
       control_panel.add_element(self, name, false, true)
       add_action_listener do
         Processing.app.send(name)
-        proc.call(value) if proc
+        proc&.call(value)
       end
     end
   end
@@ -171,6 +173,7 @@ module ControlPanel
     def control_panel
       @control_panel ||= ControlPanel::Panel.new
       return @control_panel unless block_given?
+
       yield(@control_panel)
       @control_panel.display
       @control_panel.set_visible true
