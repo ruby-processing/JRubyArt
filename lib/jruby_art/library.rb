@@ -86,4 +86,4 @@ class Library
     native_loader = NativeLoader.new
     native_loader.add_native_path(ppath)
   end
-    end
+end
