@@ -20,7 +20,7 @@ class Rp5Test < Minitest::Test
     assert_in_epsilon(map1d(x[1], range1, range2), 50.5, 'map to reversed intermediate')
     assert_in_epsilon(map1d(x[2], range3, range4), 80.0, 'map to intermediate')
     assert_in_epsilon(map1d(x[3], range1, range2), 1, 'map to last')
-   end
+  end
 
   def test_p5map # as map1d except not using range input
     x = [0, 5, 7.5, 10]

@@ -182,7 +182,7 @@ module Processing
       @declared_fields['keyPressed'].value(java_self)
     end
 
-  private
+    private
 
     # parse single argument color int/double/String
     def hex_color(arg)
@@ -191,6 +191,7 @@ module Processing
         Java::Monkstone::ColorUtil.colorLong(arg)
       when String
         raise StandardError, 'Dodgy Hexstring' unless /#\h{6}$/.match?(arg)
+
         Java::Monkstone::ColorUtil.colorString(arg)
       when Float
         Java::Monkstone::ColorUtil.colorDouble(arg)

@@ -18,7 +18,7 @@ VIDEO = 'video-2.0-beta4.zip'
 VIDEO_VERSION = 'r6-v2.0-beta4'
 EXAMPLES = '3.5'
 HOME_DIR = ENV['HOME']
-MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
+MAC_OR_LINUX = /linux|mac|darwin/.match?(RbConfig::CONFIG['host_os'])
 
 CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar"
 CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar.sha256"

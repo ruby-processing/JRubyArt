@@ -24,40 +24,40 @@ class HelperMethodsTest < Minitest::Test
     assert_raises(StandardError, 'Dodgy Color Conversion') do
       hex_color([])
     end
-   end
+  end
 
   def test_dist
     ax = 0
     ay = 0
     bx = 1.0
     by = 1.0
-    assert_in_epsilon(dist(ax, ay, bx, by), Math.sqrt(2), epsilon = 0.0001, msg = '2D distance')
+    assert_in_epsilon(dist(ax, ay, bx, by), Math.sqrt(2), 0.0001, '2D distance')
     by = 0.0
-    assert_in_epsilon(dist(ax, ay, bx, by), 1.0, epsilon = 0.0001, msg = 'when y dimension is zero')
+    assert_in_epsilon(dist(ax, ay, bx, by), 1.0, 0.0001, 'when y dimension is zero')
     ax = 0
     ay = 0
     bx = 0.0
     by = 0.0
-    assert_in_epsilon(dist(ax, ay, bx, by), 0.0, epsilon = 0.0001, msg = 'when x and y dimension are zero')
+    assert_in_epsilon(dist(ax, ay, bx, by), 0.0, 0.0001, 'when x and y dimension are zero')
     ax = 1
     ay = 1
     bx = -2.0
     by = -3.0
-    assert_in_epsilon(dist(ax, ay, bx, by), 5.0, epsilon = 0.0001, msg = 'classic triangle dimensions')
+    assert_in_epsilon(dist(ax, ay, bx, by), 5.0, 0.0001, 'classic triangle dimensions')
     ax = -1
     ay = -1
     bx = 100
     by = 2.0
     cx = 3.0
     cy = 100
-    assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), 5.0, epsilon = 0.0001, msg = 'classic triangle dimensions')
+    assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), 5.0, 0.0001, 'classic triangle dimensions')
     ax = 0
     ay = 0
     bx = -1.0
     by = -1.0
     cx = 0
     cy = 0
-    assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), Math.sqrt(2), epsilon = 0.0001, msg = '2D distance')
+    assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), Math.sqrt(2), 0.0001, '2D distance')
     ax = 0
     ay = 0
     bx = 0.0
@@ -71,7 +71,7 @@ class HelperMethodsTest < Minitest::Test
     by = 0.0
     cx = 0
     cy = 0
-    assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), 1.0, epsilon = 0.0001, msg = 'when x and z dimension are zero')
+    assert_in_epsilon(dist(ax, ay, bx, by, cx, cy), 1.0, 0.0001, 'when x and z dimension are zero')
   end
 
   def test_min

@@ -58,7 +58,7 @@ class Rp5Test < Minitest::Test
     path = File.expand_path('~/.jruby_art/config.yml')
     config = FileTest.exist?(path) ? Psych.load_file(path) : {}
     library = config.empty? ? '' : config['library_path']
-    assert library =~ /librar/, 'You need to set your library_path in .jruby_art/config.yml'
+    assert /librar/.match?(library), 'You need to set your library_path in .jruby_art/config.yml'
   end
 
   def test_fx2d

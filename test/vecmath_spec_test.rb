@@ -112,8 +112,9 @@ class VecmathTest < Minitest::Test
   end
 
   def test_from_angle
+    sqrt5 = Math.sqrt(0.5)
     a = Vec2D.from_angle(Math::PI * 0.75)
-    assert_equal(a, Vec2D.new(-1 * Math.sqrt(0.5), Math.sqrt(0.5)), 'Failed to create vector from angle')
+    assert_equal(a, Vec2D.new(-1 * sqrt5, sqrt5), 'Failed to create vector from angle')
   end
 
   def test_random
@@ -167,7 +168,7 @@ class VecmathTest < Minitest::Test
     b = Vec2D.new(3, 3)
     a.lerp!(b, 0.5)
     assert_equal(a, Vec2D.new(2, 2), 'Failed to return lerp! between two vectors')
-end
+  end
 
   def test_lerp_unclamped!
     a = Vec2D.new(1, 1)

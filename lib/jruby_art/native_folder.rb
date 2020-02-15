@@ -29,11 +29,11 @@ class NativeFolder
 
     return format(LINUX_FORMAT, bit: bit) if /linux/.match?(os)
 
-    if WIN_PATTERNS.any? { |pat| pat.match?(os) }
-      return format(WIN_FORMAT, bit: bit)
-    else
-      raise 'Unsupported Architecture'
+    unless WIN_PATTERNS.any? { |pat| pat.match?(os) }
+      raise StandardError, 'Unsupported Architecture'
     end
+
+    format(WIN_FORMAT, bit: bit)
   end
 
   def extension

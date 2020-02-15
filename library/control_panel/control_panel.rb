@@ -162,7 +162,7 @@ module ControlPanel
     def feel(lf = 'metal')
       lafinfo = javax.swing.UIManager.getInstalledLookAndFeels
       laf = lafinfo.to_ary.find do |info|
-        info.name =~ Regexp.new(Regexp.escape(lf), Regexp::IGNORECASE)
+        info.name.match?(Regexp.new(Regexp.escape(lf), Regexp::IGNORECASE))
       end
       javax.swing.UIManager.setLookAndFeel(laf.class_name)
     end
