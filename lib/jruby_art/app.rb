@@ -124,7 +124,7 @@ module Processing
       @width ||= width
       @height ||= height
       @render_mode ||= mode
-      import_opengl if /opengl/ =~ mode
+      import_opengl if /opengl/.match?(mode)
       super(*args)
     end
 
@@ -184,7 +184,7 @@ module Processing
       klass = Processing::App.sketch_class
       klass.constants.each do |name|
         const = klass.const_get name
-        next if const.class != Class || const.to_s.match(/^Java::/)
+        next if const.class != Class || /^Java::/.match?(const.to_s)
 
         const.class_eval 'include Processing::Proxy', __FILE__, __LINE__
       end

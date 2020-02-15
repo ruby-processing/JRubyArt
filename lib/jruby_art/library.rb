@@ -25,7 +25,7 @@ class Library
     )).exist?
 
     locate_java
-      end
+  end
 
   def locate_java
     @dir = Pathname.new(
@@ -37,20 +37,18 @@ class Library
   end
 
   def locate_installed_java
-    unless dir.directory?
-      if Processing::RP_CONFIG.fetch('processing_ide', false)
-        prefix = library_path
-        @dir = Pathname.new(
-          File.join(prefix, 'libraries', name, 'library')
-        )
-        @path = dir.join(Pathname.new("#{name}.jar"))
-      else
-        @dir = Pathname.new(
-          File.join(ENV['HOME'], '.jruby_art', 'libraries', name, 'library')
-        )
-      end
+    return if dir.directory?
+
+    if Processing::RP_CONFIG.fetch('processing_ide', false)
+      prefix = library_path
+      @dir = Pathname.new(File.join(prefix, 'libraries', name, 'library'))
       @path = dir.join(Pathname.new("#{name}.jar"))
+    else
+      @dir = Pathname.new(
+        File.join(ENV['HOME'], '.jruby_art', 'libraries', name, 'library')
+      )
     end
+    @path = dir.join(Pathname.new("#{name}.jar"))
   end
 
   def library_path

@@ -84,7 +84,7 @@ class Sketch
     one = format('%<indent>sdef %<name>s', indent: indent, name: name)
     two = content(content, indent)
     three = format('%<indent>send', indent: indent)
-    return [one, two, three] if /draw/ =~ name
+    return [one, two, three] if /draw/.match?(name)
 
     [one, two, three, BLANK]
   end

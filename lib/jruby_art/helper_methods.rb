@@ -74,11 +74,8 @@ module Processing
     # Overrides Processing convenience function thread, which takes a String
     # arg (for a function) to more rubylike version, takes a block...
     def thread(&block)
-      if block_given?
-        Thread.new(&block)
-      else
-        raise ArgumentError, 'thread must be called with a block', caller
-      end
+      warn 'A Block is Needed' if block_given?
+      Java::JavaLang::Thread.new(&block).new
     end
 
     # explicitly provide 'processing.org' min instance method
@@ -119,7 +116,7 @@ module Processing
     # Here's a convenient way to look for them.
     def find_method(method_name)
       reg = Regexp.new(method_name.to_s, true)
-      methods.sort.select { |meth| reg.match(meth) }
+      methods.sort.select { |meth| reg.match?(meth) }
     end
 
     # Proxy over a list of Java declared fields that have the same name as
@@ -185,22 +182,18 @@ module Processing
       @declared_fields['keyPressed'].value(java_self)
     end
 
-    private
+  private
 
-    FIXNUM_COL = ->(x) { x.is_a?(Integer) }
-    STRING_COL = ->(x) { x.is_a?(String) }
-    FLOAT_COL = ->(x) { x.is_a?(Float) }
     # parse single argument color int/double/String
-    def hex_color(a)
-      case a
-      when FIXNUM_COL
-        Java::Monkstone::ColorUtil.colorLong(a)
-      when STRING_COL
-        return Java::Monkstone::ColorUtil.colorString(a) if a =~ /#\h+/
-
-        raise StandardError, 'Dodgy Hexstring'
-      when FLOAT_COL
-        Java::Monkstone::ColorUtil.colorDouble(a)
+    def hex_color(arg)
+      case arg
+      when Integer
+        Java::Monkstone::ColorUtil.colorLong(arg)
+      when String
+        raise StandardError, 'Dodgy Hexstring' unless /#\h{6}$/.match?(arg)
+        Java::Monkstone::ColorUtil.colorString(arg)
+      when Float
+        Java::Monkstone::ColorUtil.colorDouble(arg)
       else
         raise StandardError, 'Dodgy Color Conversion'
       end
