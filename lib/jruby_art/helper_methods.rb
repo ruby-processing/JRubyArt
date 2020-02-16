@@ -74,8 +74,8 @@ module Processing
     # Overrides Processing convenience function thread, which takes a String
     # arg (for a function) to more rubylike version, takes a block...
     def thread(&block)
-      warn 'A Block is Needed' if block_given?
-      Java::JavaLang::Thread.new(&block).new
+      warn 'A Block is Needed' unless block_given?
+      Java::JavaLang::Thread.new(&block).start
     end
 
     # explicitly provide 'processing.org' min instance method
