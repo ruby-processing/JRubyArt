@@ -49,7 +49,7 @@ module VectorUtil
 
   def self.cartesian_to_polar(vec:)
     res = Vec3D.new(vec.mag, 0, 0)
-    return Vec3D.new unless res.x > 0
+    return Vec3D.new unless res.x.positive?
 
     res.y = -Math.atan2(vec.z, vec.x)
     res.z = Math.asin(vec.y / res.x)

@@ -200,9 +200,9 @@ module Processing
 
     # NB: We really do mean to use 'and' not '&&' for flow control purposes
     def ensure_exists(filename)
-      unless FileTest.exist?(filename)
-        puts("Couldn't find: #{filename}") and exit
-      end
+      return if FileTest.exist?(filename)
+
+      puts("Couldn't find: #{filename}") and exit
     end
 
     def jruby_complete
