@@ -2,7 +2,7 @@
 
 require 'java'
 require_relative '../jruby_art'
-Dir["#{K9_ROOT}/lib/*.jar"].each do |jar|
+Dir["#{K9_ROOT}/lib/*.jar"].sort.each do |jar|
   require jar
 end
 require_relative '../jruby_art/helper_methods'

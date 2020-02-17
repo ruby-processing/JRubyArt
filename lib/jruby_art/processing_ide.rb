@@ -14,7 +14,9 @@ class ProcessingIde
   def sketchbook_path
     File.open(preferences, 'r') do |file|
       file.each_line do |line|
-        return line.tap { |sli| sli.slice!('sketchbook.path.three=') }.chomp if /sketchbook/.match?(line)
+        if /sketchbook/.match?(line)
+          return line.tap { |sli| sli.slice!('sketchbook.path.three=') }.chomp
+        end
       end
     end
   end

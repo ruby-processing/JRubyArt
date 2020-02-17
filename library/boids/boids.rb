@@ -79,7 +79,7 @@ class Boids
   extend Forwardable
   def_delegators(:@boids, :reject, :<<, :each, :shuffle!, :length, :next)
 
-  attr_reader :has_goal, :perch, :perch_tm, :perch_y
+  attr_reader :has_goal, :perch_val, :perch_tm, :perch_y
 
   def initialize
     @boids = []
@@ -105,7 +105,7 @@ class Boids
     @scatter = 0.005
     @scatter_time = 50.0
     @scatter_i = 0.0
-    @perch = 1.0 # Lower this number to divebomb.
+    @perch_val = 1.0 # Lower this number to divebomb.
     @perch_y = h
     @perch_tm = -> { 25.0 + rand(50.0) }
     @has_goal = false
@@ -126,11 +126,11 @@ class Boids
   def perch(ground = nil, chance = 1.0, frames = nil)
     @perch_tm = frames.nil? ? -> { 25.0 + rand(50.0) } : frames
     @perch_y = ground.nil? ? @h : ground
-    @perch = chance
+    @perch_val = chance
   end
 
   def no_perch
-    @perch = 0.0
+    @perch_val = 0.0
   end
 
   def reset_goal(target)
@@ -162,7 +162,7 @@ class Boids
       b.vel.y -= rand(dy) if b.pos.y > @y + @h + dy
       b.vel.z += 10.0 if b.pos.z < 0.0
       b.vel.z -= 10.0 if b.pos.z > 100.0
-      next unless b.pos.y > perch_y && rand < perch
+      next unless b.pos.y > perch_y && rand < perch_val
 
       b.pos.y = perch_y
       b.vel.y = b.vel.y.abs * -0.2

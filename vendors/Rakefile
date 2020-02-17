@@ -105,7 +105,9 @@ end
 desc 'copy sound library'
 task copy_sound: SOUND do
   system "unzip #{SOUND}"
-  FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/sound" if File.exist? "#{HOME_DIR}/.jruby_art/libraries/sound"
+  if File.exist? "#{HOME_DIR}/.jruby_art/libraries/sound"
+    FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/sound"
+  end
   FileUtils.cp_r 'sound', "#{HOME_DIR}/.jruby_art/libraries"
   FileUtils.rm_r 'sound'
 end
@@ -113,7 +115,9 @@ end
 desc 'copy video library'
 task copy_video: VIDEO do
   system "unzip #{VIDEO}"
-  FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/video" if File.exist? "#{HOME_DIR}/.jruby_art/libraries/video"
+  if File.exist? "#{HOME_DIR}/.jruby_art/libraries/video"
+    FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/video"
+  end
   FileUtils.cp_r 'video', "#{HOME_DIR}/.jruby_art/libraries/video"
   FileUtils.rm_r 'video'
 end
@@ -139,7 +143,9 @@ task copy_examples: file_name do
   else
     system  "tar xzvf #{EXAMPLES}.tar.gz"
   end
-  FileUtils.rm_r("#{HOME_DIR}/k9_samples") if File.exist? "#{HOME_DIR}/k9_samples"
+  if File.exist? "#{HOME_DIR}/k9_samples"
+    FileUtils.rm_r("#{HOME_DIR}/k9_samples")
+  end
   FileUtils.cp_r("JRubyArt-examples-#{EXAMPLES}", "#{HOME_DIR}/k9_samples")
   FileUtils.rm_r("JRubyArt-examples-#{EXAMPLES}")
 end

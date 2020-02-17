@@ -24,25 +24,25 @@ class NativeFolderTest < Minitest::Test
   def test_windows_native_folder
     obj = WindowsNativeFolder.new
     assert_kind_of NativeFolder, obj, 'Constructor Failed'
-    assert /windows/.match?(obj.name)
-    assert /\*.dll/.match?(obj.extension)
+    assert(/windows/.match?(obj.name))
+    assert(/\*.dll/.match?(obj.extension))
   end
 
   class NativeFolderTest < Minitest::Test
     def test_windows_native_folder
       obj = MacNativeFolder.new
       assert_kind_of NativeFolder, obj, 'Constructor Failed'
-      assert /macos/.match?(obj.name)
-      assert /\*.dylib/.match?(obj.extension)
+      assert(/macos/.match?(obj.name))
+      assert(/\*.dylib/.match?(obj.extension))
     end
   end
 
-  if /linux/.match?(RbConfig::CONFIG['host_os'].downcase) 
+  if /linux/.match?(RbConfig::CONFIG['host_os'].downcase)
     def test_native_folder
       obj = NativeFolder.new
       assert_instance_of NativeFolder, obj, 'Constructor Failed'
-      assert /linux/.match?(obj.name)
-      assert /\*.so/.match?(obj.extension)
+      assert(/linux/.match?(obj.name))
+      assert(/\*.so/.match?(obj.extension))
     end
   end
 end

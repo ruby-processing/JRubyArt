@@ -64,7 +64,7 @@ class Library
   end
 
   def load_jars
-    Dir.glob("#{dir}/*.jar").each do |jar|
+    Dir.glob("#{dir}/*.jar").sort.each do |jar|
       require jar
     end
     return unless native_binaries?

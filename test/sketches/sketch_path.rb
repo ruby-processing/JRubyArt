@@ -10,7 +10,7 @@ end
 
 def draw
   background_int 0
-  exit if frame_count == 3
+  exit if frame_count == 5
 end
 
 def settings

@@ -8,10 +8,10 @@ end
 
 def draw
   background_float_float_float 39, 232, 51
-  if frame_count == 3
-    puts 'ok'
-    exit
-  end
+  return unless frame_count == 5
+
+  puts 'ok'
+  exit
 end
 
 def settings
