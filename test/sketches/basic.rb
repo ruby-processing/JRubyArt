@@ -6,10 +6,10 @@ end
 
 def draw
   background 0
-  if frame_count == 3
-    puts 'ok'
-    exit
-  end
+  return unless frame_count == 5
+  
+  puts 'ok'
+  exit
 end
 
 def settings
