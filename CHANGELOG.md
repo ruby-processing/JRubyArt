@@ -1,8 +1,10 @@
+**v2.3.0** Update to use jruby-complete-9.2.10.0 recommended java version AdoptOpenJDK-13+
+
 **v2.2.2** Fix for Native library bug on Windows by Jay Scott. Added minim examples. Bump processing-version in build.
 
 **v2.2.1** Added --force option for use with --install option to remove old configuration. Added support for installing video and sound libraries, without vanilla processing. Added dxf export library, re-branded app with a red wavy triangle icon.
 
-**v2.2.0** A standalone ruby version of processing which runs with jdk12 and essentially uses a develpment version of processing core (by Sam Pottinger). Use version 1.7.0 if you are using jdk8.
+**v2.2.0** A standalone ruby version of processing which runs with jdk12 and essentially uses a development version of processing core (by Sam Pottinger). Use version 1.7.0 if you are using jdk8.
 
 **v2.1.0** JRubyArt is no longer dependent on an installed version of vanilla processing, but needs at least jdk11 to run. Anyone wanting to use jdk8 should install JRubyArt-1.7.0 and probably use bundler to freeze version.
 **v2.0.0** Update to jdk11, removing many bashisms on the way. We compile our own processing code, and include with jogl gems in gem. Requires a new `config.yml` file to use libraries. Revert to processing-3.3.7 versions of PShapeOpenGL and PGraphicsOpenGL to fix diwi examples and possibly others.
