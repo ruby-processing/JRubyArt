@@ -3,7 +3,7 @@ layout: post
 title:  'Using Executable Gems'
 keywords: gem, jruby_art
 ---
-To use any executable it needs to be on your path (unless you give the full path, and that is hardly convenient). For this purpose it is imporatant to know where gems get installed on your system. You should prefer to install gems locally (ie in your home directory) eg `/home/tux/.gem/ruby/2.5.0` in which case the path to binaries will be `/home/tux/.gem/ruby/2.5.0/bin` so then in your configuration file you want to add this to your `PATH` environmental variable.
+To use any executable it needs to be on your path (unless you give the full path, and that is hardly convenient). For this purpose it is important to know where gems get installed on your system. You should prefer to install gems locally (ie in your home directory) eg `/home/tux/.gem/ruby/2.5.0` in which case the path to binaries will be `/home/tux/.gem/ruby/2.5.0/bin` so then in your configuration file you want to add this to your `PATH` environmental variable.
 
 ### ~/.bashrc archlinux (and some other linux)
 
