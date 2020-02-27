@@ -33,7 +33,7 @@ java_args:
 
 ## Suppressing Reflective Access warnings
 
-Since JRuby-9.2.10.0 it is possible to suppress reflective access warnings by including a `jruby.java_opts` file with following contents:-
+Since JRuby-9.2.10.0 it is possible to suppress reflective access warnings by including a `~/.jruby.java_opts` file with following contents:-
 
 ```bash
 --add-opens java.base/java.lang=ALL-UNNAMED
