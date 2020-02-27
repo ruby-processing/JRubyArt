@@ -31,6 +31,18 @@ java_args:
   # Global java_args can be used to suppress reflective access warn
 ```
 
+## Suppressing Reflective Access warnings
+
+Since JRuby-9.2.10.0 it is possible to suppress reflective access warnings by including a `jruby.java_opts` file with following contents:-
+
+```bash
+--add-opens java.base/java.lang=ALL-UNNAMED
+--add-opens java.desktop/java.awt=ALL-UNNAMED
+--add-opens java.desktop/sun.awt=ALL-UNNAMED
+--add-opens java.desktop/sun.java2d.opengl=ALL-UNNAMED
+```
+Mainly needed for opengl sketches.
+
 ## Install Steps (assumes you have requirements above)
 
 ```bash
