@@ -16,7 +16,7 @@ SOUND = 'sound.zip'
 SOUND_VERSION = 'v2.2.2'
 VIDEO = 'video-2.0-beta4.zip'
 VIDEO_VERSION = 'r6-v2.0-beta4'
-EXAMPLES = '3.5'
+EXAMPLES = '3.6'
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/.match?(RbConfig::CONFIG['host_os'])
 
