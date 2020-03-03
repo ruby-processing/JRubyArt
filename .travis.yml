@@ -2,7 +2,7 @@ language: java
 dist: bionic
 
 rvm:
-  - jruby-9.2.10.0
+  - jruby-9.2.11.0
 jdk:
   - openjdk11
 os:
