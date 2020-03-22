@@ -37,7 +37,7 @@ Possibly the simplest way to get MRI ruby on windows is via [rubyinstaller][ruby
 
 ### JRubyArt
 
-Installing JRubyArt assumes you have installed a recent version of ruby (which can be either MRI ruby or JRuby)
+Installing JRubyArt assumes you have installed a recent version of ruby (which can be either MRI ruby (preferably 2.5.\* and not 2.7.\* or safer JRuby-2.9.11.0)
 
 ```bash
 gem install jruby_art

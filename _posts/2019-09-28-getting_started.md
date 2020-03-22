@@ -88,7 +88,7 @@ sudo update-alternatives --config jar # to configure if required
 ```
 #### MRI Ruby
 
-Install MRI ruby (should be at least ruby-2.4), if you are not using `rvm` or `rbenv`, then you should create a home in a local folder to store your gems eg `~/.gem/ruby/2.5.0` to store your gems:-
+Install MRI ruby (should be at least ruby-2.5, but probably not 2.7), if you are not using `rvm` or `rbenv`, then you should create a home in a local folder to store your gems eg `~/.gem/ruby/2.5.0` to store your gems:-
 
 ```bash
 mkdir -p ~/.gem/ruby/2.5.0
