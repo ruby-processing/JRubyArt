@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'java'
+require 'jruby'
 require_relative '../jruby_art'
 Dir["#{K9_ROOT}/lib/*.jar"].sort.each do |jar|
   require jar

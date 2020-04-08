@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'test_helper'
-require 'java'
 require_relative '../lib/jruby_art/native_folder'
 # Mock class
 class WindowsNativeFolder < NativeFolder
