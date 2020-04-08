@@ -10,15 +10,12 @@ task default: %i[compile install_jogl gem test]
 # depends on installed processing, with processing on path
 desc 'Copy Jars'
 task :install_jogl do
-  # for MacOS Widows? and Archlinux etc
-  # processing_root = File.dirname(`readlink -f $(which processing)`)
-  # alternative for debian linux etc
-  processing_root = File.join(ENV['HOME'], 'processing-3.5.4')
-  jar_dir = File.join(processing_root, 'core', 'library')
-  opengl = Dir.entries(jar_dir).grep(/amd64|macosx-universal/)
+  # Temporarily load jogl-2.4.0-rc from a local directory
+  jogl24 = File.join(ENV['HOME'], 'jogl24')
+  opengl = Dir.entries(jogl24).grep(/amd64|macosx-universal/)
   opengl.concat %w[jogl-all.jar gluegen-rt.jar]
   opengl.each do |gl|
-    FileUtils.cp(File.join(jar_dir, gl), File.join('.', 'lib'))
+    FileUtils.cp(File.join(jogl24, gl), File.join('.', 'lib'))
   end
 end
 

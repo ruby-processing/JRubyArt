@@ -1,3 +1,5 @@
+**v2.4.0** Update to use jruby-complete-9.2.11.1 recommended java version AdoptOpenJDK-13+ or Openj9-14+
+
 **v2.3.0** Update to use jruby-complete-9.2.11.0 recommended java version AdoptOpenJDK-13+
 
 **v2.2.2** Fix for Native library bug on Windows by Jay Scott. Added minim examples. Bump processing-version in build.
