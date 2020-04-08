@@ -26,21 +26,21 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
              'jogl.version' => '2.3.2',
              'jruby.api' => 'http://jruby.org/apidocs/')
 
-  pom 'org.jruby:jruby:9.2.11.0'
+  pom 'org.jruby:jruby:9.2.11.1'
   jar 'org.jogamp.jogl:jogl-all:${jogl.version}'
   jar 'org.jogamp.gluegen:gluegen-rt-main:${jogl.version}'
   jar 'org.processing:video:3.0.2'
 
   overrides do
     plugin :resources, '3.1.0'
-    plugin :dependency, '3.1.1'
+    plugin :dependency, '3.1.2'
     plugin(:compiler, '3.8.1',
            'release' => '11')
     plugin(:javadoc, '2.10.4',
            'detectOfflineLinks' => 'false',
            'links' => ['${processing.api}',
                        '${jruby.api}'])
-    plugin(:jar, '3.1.1',
+    plugin(:jar, '3.2.0',
            'archive' => {
              'manifestEntries' => {
                'Class-Path' => 'gluegen-rt.jar jog-all.jar'
