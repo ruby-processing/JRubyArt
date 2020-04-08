@@ -24,7 +24,7 @@ Although there are some drawbacks to using the Ruby version Processing (slower s
 
 Setting JRubyArt since JRubyArt-2.0 does not require a vanilla processing install, but still requires some configuration to point to your libraries folder.
 
-Install [wget][wget] which is also available as [cygwin][cygwin] package, openjdk (11.0.3+), and some version of ruby-2.2+ preferably jruby-9.2+. If you encounter linkage problems it might be worth looking at [AdoptOpenJDK][adopt] distribution.
+Install [wget][wget] which is also available as [cygwin][cygwin] package, openjdk (11.0.3+), and some version of ruby-2.4+ preferably jruby-9.2+. If you encounter linkage problems it might be worth looking at [AdoptOpenJDK][adopt] distribution or OpenJ9.
 
 ### JRuby
 
@@ -37,7 +37,7 @@ Possibly the simplest way to get MRI ruby on windows is via [rubyinstaller][ruby
 
 ### JRubyArt
 
-Installing JRubyArt assumes you have installed a recent version of ruby (which can be either MRI ruby (preferably 2.5.\* and not 2.7.\* or safer JRuby-2.9.11.0)
+Installing JRubyArt assumes you have installed a recent version of ruby (which can be either MRI ruby (preferably 2.5.\* and not 2.7.\* or safer JRuby-2.9.11.1)
 
 ```bash
 gem install jruby_art

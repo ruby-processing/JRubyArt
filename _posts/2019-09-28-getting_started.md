@@ -77,7 +77,7 @@ sudo apt-get install -y software-properties-common
 
 sudo apt-get update
 
-sudo apt-get install openjdk-12-hotspot
+sudo apt-get install openjdk-12-hotspot # or adoptopenjdk if you have linker issues.
 ```
 
 Use debian `update-alternatives` tool to manage configuration for java:-
@@ -88,7 +88,7 @@ sudo update-alternatives --config jar # to configure if required
 ```
 #### MRI Ruby
 
-Install MRI ruby (should be at least ruby-2.5, but probably not 2.7), if you are not using `rvm` or `rbenv`, then you should create a home in a local folder to store your gems eg `~/.gem/ruby/2.5.0` to store your gems:-
+Install MRI ruby (should be at least ruby-2.5, but definitely not 2.7), if you are not using `rvm` or `rbenv`, then you should create a home in a local folder to store your gems eg `~/.gem/ruby/2.5.0` to store your gems:-
 
 ```bash
 mkdir -p ~/.gem/ruby/2.5.0
@@ -109,7 +109,7 @@ Download and install latest jruby (in the `/opt` folder makes sense)
 
 Use `update-alternatives` to install and maintain configuration eg for jruby:-
 ```bash
-sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.11.0/bin/jruby 100
+sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.11.1/bin/jruby 100
 sudo update-alternatives --config jruby # to configure if required
 ```
 
