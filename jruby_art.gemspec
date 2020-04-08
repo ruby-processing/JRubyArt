@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.author  = 'Martin Prout'
   spec.email = 'mamba2928@yahoo.co.uk'
   spec.description = <<-DESCRIPTION
-  JRubyArt-2.0+ is a ruby implementation of the processing art framework, with enhanced
+  JRubyArt-2.4.0+ is a ruby implementation of the processing art framework, with enhanced
   functionality. Processing libraries and ruby gems can be used in your sketches.
   Features create/run/watch/live modes.
   DESCRIPTION
