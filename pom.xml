@@ -11,7 +11,7 @@ DO NOT MODIFIY - GENERATED CODE
   <modelVersion>4.0.0</modelVersion>
   <groupId>ruby-processing</groupId>
   <artifactId>jruby_art</artifactId>
-  <version>2.4.0</version>
+  <version>2.4.1</version>
   <name>jruby_art</name>
   <description>Jar for JRubyArt</description>
   <url>https://github.com/ruby-processing/JRubyArt</url>
@@ -19,7 +19,27 @@ DO NOT MODIFIY - GENERATED CODE
     <developer>
       <id>monkstone</id>
       <name>Martin Prout</name>
-      <email>mamba2928@yahoo.co.uk</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>benfry</id>
+      <name>Ben Fry</name>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>REAS</id>
+      <name>Casey Reas</name>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>codeanticode</id>
+      <name>Andres Colubri</name>
       <roles>
         <role>developer</role>
       </roles>
@@ -46,7 +66,7 @@ DO NOT MODIFIY - GENERATED CODE
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.2.11.1</version>
+      <version>9.2.12.0</version>
       <type>pom</type>
     </dependency>
     <dependency>

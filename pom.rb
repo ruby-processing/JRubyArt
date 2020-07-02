@@ -2,15 +2,19 @@
 
 project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
   model_version '4.0.0'
-  id 'ruby-processing:jruby_art:2.4.0'
+  id 'ruby-processing:jruby_art:2.4.1'
   packaging 'jar'
 
   description 'Jar for JRubyArt'
 
-  developer 'monkstone' do
-    name 'Martin Prout'
-    email 'mamba2928@yahoo.co.uk'
-    roles 'developer'
+  {
+    'monkstone' => 'Martin Prout', 'benfry' => 'Ben Fry',
+    'REAS' => 'Casey Reas', 'codeanticode' => 'Andres Colubri'
+  }.each do |key, value|
+    developer key do
+      name value
+      roles 'developer'
+    end
   end
 
   issue_management 'https://github.com/ruby-processing/JRubyArt/issues', 'Github'
@@ -26,7 +30,7 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
              'jogl.version' => '2.3.2',
              'jruby.api' => 'http://jruby.org/apidocs/')
 
-  pom 'org.jruby:jruby:9.2.11.1'
+  pom 'org.jruby:jruby:9.2.12.0'
   jar 'org.jogamp.jogl:jogl-all:${jogl.version}'
   jar 'org.jogamp.gluegen:gluegen-rt-main:${jogl.version}'
   jar 'org.processing:video:3.0.2'

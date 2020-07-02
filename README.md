@@ -6,7 +6,7 @@ A new version for jdk11 use, does not require an installed `vanilla processing`,
 
 ## Requirements
 
-A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.11.1](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
+A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.12.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
 
 ## Requirements
 
@@ -35,9 +35,9 @@ java_args:
 
 ```bash
  gem install jruby_art
- k9 --install # installs jruby-complete-9.2.11.1 and downloads and installs samples to ~/k9_samples
+ k9 --install # installs jruby-complete-9.2.12.0 and downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --run jwishy.rb # if you have jruby-9.2.11.1 installed or config `JRUBY: false`
+ k9 --run jwishy.rb # if you have jruby-9.2.12.0 installed or config `JRUBY: false`
  # to use jruby-complete set `JRUBY: false` in config
 ```
 
