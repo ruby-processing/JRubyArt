@@ -109,7 +109,7 @@ Download and install latest jruby (in the `/opt` folder makes sense)
 
 Use `update-alternatives` to install and maintain configuration eg for jruby:-
 ```bash
-sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.11.1/bin/jruby 100
+sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.12.0/bin/jruby 100
 sudo update-alternatives --config jruby # to configure if required
 ```
 
