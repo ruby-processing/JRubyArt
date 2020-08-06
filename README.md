@@ -6,11 +6,11 @@ A new version for jdk11 use, does not require an installed `vanilla processing`,
 
 ## Requirements
 
-A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.12.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
+A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.13.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
 
 ## Requirements
 
-A suitable version of ruby (MRI `ruby 2.4+` or `jruby-9.2.11.0`) to download gem. NB: avoid ruby 2.7, it is guaranteed to give you problems (you've been warned)
+A suitable version of ruby (MRI `ruby 2.4+` or `jruby-9.2.13.0`) to download gem. NB: avoid ruby 2.7, it is guaranteed to give you problems (you've been warned)
 Tested and working AdoptOpenJDK 11-13, OpenJ9 14, if you have any issues with opengl sketches with distro installed JDK use a JDK from AdoptOpenJDK.
 
 
@@ -35,9 +35,9 @@ java_args:
 
 ```bash
  gem install jruby_art
- k9 --install # installs jruby-complete-9.2.12.0 and downloads and installs samples to ~/k9_samples
+ k9 --install # installs jruby-complete-9.2.13.0 and downloads and installs samples to ~/k9_samples
  cd ~/k9_samples/contributed
- k9 --run jwishy.rb # if you have jruby-9.2.12.0 installed or config `JRUBY: false`
+ k9 --run jwishy.rb # if you have jruby-9.2.13.0 installed or config `JRUBY: false`
  # to use jruby-complete set `JRUBY: false` in config
 ```
 
