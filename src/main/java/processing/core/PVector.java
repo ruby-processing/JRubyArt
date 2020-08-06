@@ -26,8 +26,6 @@ package processing.core;
 
 import java.io.Serializable;
 
-import processing.core.PApplet;
-import processing.core.PConstants;
 
 /**
  * ( begin auto-generated from PVector.xml )
@@ -951,6 +949,8 @@ public class PVector implements Serializable {
    * Linear interpolate between two vectors (returns a new PVector object)
    * @param v1 the vector to start from
    * @param v2 the vector to lerp to
+   * @param amt
+   * @return 
    */
   public static PVector lerp(PVector v1, PVector v2, float amt) {
     PVector v = v1.copy();
@@ -964,6 +964,8 @@ public class PVector implements Serializable {
    * @param x the x component to lerp to
    * @param y the y component to lerp to
    * @param z the z component to lerp to
+   * @param amt
+   * @return 
    */
   public PVector lerp(float x, float y, float z, float amt) {
     this.x = PApplet.lerp(this.x, x, amt);
@@ -976,10 +978,10 @@ public class PVector implements Serializable {
   /**
    * ( begin auto-generated from PVector_angleBetween.xml )
    *
-   * Calculates and returns the angle (in radians) between two vectors.
+   * Calculates and returns the angle (in radians) between two vectors.( end auto-generated )
    *
-   * ( end auto-generated )
    *
+   * @return 
    * @webref pvector:method
    * @usage web_application
    * @param v1 the x, y, and z components of a PVector
@@ -1021,12 +1023,13 @@ public class PVector implements Serializable {
   /**
    * ( begin auto-generated from PVector_array.xml )
    *
-   * Return a representation of this vector as a float array. This is only
-   * for temporary use. If used in any other fashion, the contents should be
-   * copied by using the <b>PVector.get()</b> method to copy into your own array.
+   * Return a representation of this vector as a float array.This is only
+ for temporary use. If used in any other fashion, the contents should be
+ copied by using the <b>PVector.get()</b> method to copy into your own array.
    *
    * ( end auto-generated )
    *
+   * @return 
    * @webref pvector:method
    * @usage: web_application
    * @brief Return a representation of the vector as a float array

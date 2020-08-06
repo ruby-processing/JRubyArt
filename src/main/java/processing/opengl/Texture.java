@@ -24,6 +24,7 @@
 
 package processing.opengl;
 
+import java.lang.reflect.InvocationTargetException;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
@@ -142,8 +143,9 @@ public class Texture implements PConstants {
 
 
   /**
-   * Creates an instance of PTexture with size width x height. The texture is
-   * initialized (empty) to that size.
+   * Creates an instance of PTexture with size width x height.The texture is
+ initialized (empty) to that size.
+   * @param pg
    * @param width  int
    * @param height  int
    */
@@ -154,7 +156,8 @@ public class Texture implements PConstants {
 
   /**
    * Creates an instance of PTexture with size width x height and with the
-   * specified parameters. The texture is initialized (empty) to that size.
+   * specified parameters.The texture is initialized (empty) to that size.
+   * @param pg
    * @param width int
    * @param height int
    * @param params Parameters
@@ -435,7 +438,8 @@ public class Texture implements PConstants {
 
 
   /**
-   * Copy texture to pixels. Involves video memory to main memory transfer (slow).
+   * Copy texture to pixels.Involves video memory to main memory transfer (slow).
+   * @param pixels
    */
   public void get(int[] pixels) {
     if (pixels == null) {
@@ -513,41 +517,51 @@ public class Texture implements PConstants {
     int glMagFilter0 = glMagFilter;
     int glMinFilter0 = glMinFilter;
     if (mipmaps) {
-      if (sampling == POINT) {
-        glMagFilter = PGL.NEAREST;
-        glMinFilter = PGL.NEAREST;
-        usingMipmaps = false;
-      } else if (sampling == LINEAR)  {
-        glMagFilter = PGL.NEAREST;
-        glMinFilter =
-          PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
-        usingMipmaps = true;
-      } else if (sampling == BILINEAR)  {
-        glMagFilter = PGL.LINEAR;
-        glMinFilter =
-          PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
-        usingMipmaps = true;
-      } else if (sampling == TRILINEAR)  {
-        glMagFilter = PGL.LINEAR;
-        glMinFilter =
-          PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_LINEAR : PGL.LINEAR;
-        usingMipmaps = true;
-      } else {
-        throw new RuntimeException("Unknown texture filtering mode");
+      switch (sampling) {
+        case POINT:
+          glMagFilter = PGL.NEAREST;
+          glMinFilter = PGL.NEAREST;
+          usingMipmaps = false;
+          break;
+        case LINEAR:
+          glMagFilter = PGL.NEAREST;
+          glMinFilter =
+            PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
+          usingMipmaps = true;
+          break;
+        case BILINEAR:
+          glMagFilter = PGL.LINEAR;
+          glMinFilter =
+            PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
+          usingMipmaps = true;
+          break;
+        case TRILINEAR:
+          glMagFilter = PGL.LINEAR;
+          glMinFilter =
+            PGL.MIPMAPS_ENABLED ? PGL.LINEAR_MIPMAP_LINEAR : PGL.LINEAR;
+          usingMipmaps = true;
+          break;
+        default:
+          throw new RuntimeException("Unknown texture filtering mode");
       }
     } else {
       usingMipmaps = false;
-      if (sampling == POINT) {
-        glMagFilter = PGL.NEAREST;
-        glMinFilter = PGL.NEAREST;
-      } else if (sampling == LINEAR)  {
-        glMagFilter = PGL.NEAREST;
-        glMinFilter = PGL.LINEAR;
-      } else if (sampling == BILINEAR || sampling == TRILINEAR)  {
-        glMagFilter = PGL.LINEAR;
-        glMinFilter = PGL.LINEAR;
-      } else {
-        throw new RuntimeException("Unknown texture filtering mode");
+      switch (sampling) {
+        case POINT:
+          glMagFilter = PGL.NEAREST;
+          glMinFilter = PGL.NEAREST;
+          break;
+        case LINEAR:
+          glMagFilter = PGL.NEAREST;
+          glMinFilter = PGL.LINEAR;
+          break;
+        case BILINEAR:
+        case TRILINEAR:
+          glMagFilter = PGL.LINEAR;
+          glMinFilter = PGL.LINEAR;
+          break;
+        default:
+          throw new RuntimeException("Unknown texture filtering mode");
       }
     }
 
@@ -815,7 +829,7 @@ public class Texture implements PConstants {
   public void copyBufferFromSource(Object natRef, ByteBuffer byteBuf,
                                    int w, int h) {
     if (bufferCache == null) {
-      bufferCache = new LinkedList<BufferData>();
+      bufferCache = new LinkedList<>();
     }
 
     if (bufferCache.size() + 1 <= MAX_BUFFER_CACHE_SIZE) {
@@ -826,7 +840,6 @@ public class Texture implements PConstants {
       try {
         usedBuffers.add(new BufferData(natRef, byteBuf.asIntBuffer(), w, h));
       } catch (Exception e) {
-        e.printStackTrace();
       }
     }
   }
@@ -872,7 +885,7 @@ public class Texture implements PConstants {
       // renderer draws the texture, and hence put the pixels put of sync, we
       // simply empty the cache.
       if (usedBuffers == null) {
-        usedBuffers = new LinkedList<BufferData>();
+        usedBuffers = new LinkedList<>();
       }
       while (0 < bufferCache.size()) {
         data = bufferCache.remove(0);
@@ -911,7 +924,7 @@ public class Texture implements PConstants {
       // Putting the buffer in the used buffers list to dispose at the end of
       // draw.
       if (usedBuffers == null) {
-        usedBuffers = new LinkedList<BufferData>();
+        usedBuffers = new LinkedList<>();
       }
       usedBuffers.add(data);
 
@@ -925,8 +938,8 @@ public class Texture implements PConstants {
   protected void getSourceMethods() {
     try {
       disposeBufferMethod = bufferSource.getClass().
-        getMethod("disposeBuffer", new Class[] { Object.class });
-    } catch (Exception e) {
+        getMethod("disposeBuffer", Object.class);
+    } catch (NoSuchMethodException | SecurityException e) {
       throw new RuntimeException("Provided source object doesn't have a " +
                                  "disposeBuffer method.");
     }
@@ -1404,7 +1417,6 @@ public class Texture implements PConstants {
   /**
    * Sets texture target and internal format according to the target and
    * type specified.
-   * @param target int
    * @param params GLTextureParameters
    */
   protected void setParameters(Parameters params) {
@@ -1414,14 +1426,18 @@ public class Texture implements PConstants {
       throw new RuntimeException("Unknown texture target");
     }
 
-    if (params.format == RGB)  {
-      glFormat = PGL.RGB;
-    } else  if (params.format == ARGB) {
-      glFormat = PGL.RGBA;
-    } else  if (params.format == ALPHA) {
-      glFormat = PGL.ALPHA;
-    } else {
-      throw new RuntimeException("Unknown texture format");
+    switch (params.format) {
+      case RGB:
+        glFormat = PGL.RGB;
+        break;
+      case ARGB:
+        glFormat = PGL.RGBA;
+        break;
+      case ALPHA:
+        glFormat = PGL.ALPHA;
+        break;
+      default:
+        throw new RuntimeException("Unknown texture format");
     }
 
     boolean mipmaps = params.mipmaps && PGL.MIPMAPS_ENABLED;
@@ -1433,36 +1449,47 @@ public class Texture implements PConstants {
       mipmaps = false;
     }
 
-    if (params.sampling == POINT) {
-      glMagFilter = PGL.NEAREST;
-      glMinFilter = PGL.NEAREST;
-    } else if (params.sampling == LINEAR)  {
-      glMagFilter = PGL.NEAREST;
-      glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
-    } else if (params.sampling == BILINEAR)  {
-      glMagFilter = PGL.LINEAR;
-      glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
-    } else if (params.sampling == TRILINEAR)  {
-      glMagFilter = PGL.LINEAR;
-      glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_LINEAR : PGL.LINEAR;
-    } else {
-      throw new RuntimeException("Unknown texture filtering mode");
+    switch (params.sampling) {
+      case POINT:
+        glMagFilter = PGL.NEAREST;
+        glMinFilter = PGL.NEAREST;
+        break;
+      case LINEAR:
+        glMagFilter = PGL.NEAREST;
+        glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
+        break;
+      case BILINEAR:
+        glMagFilter = PGL.LINEAR;
+        glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_NEAREST : PGL.LINEAR;
+        break;
+      case TRILINEAR:
+        glMagFilter = PGL.LINEAR;
+        glMinFilter = mipmaps ? PGL.LINEAR_MIPMAP_LINEAR : PGL.LINEAR;
+        break;
+      default:
+        throw new RuntimeException("Unknown texture filtering mode");
     }
 
-    if (params.wrapU == CLAMP) {
-      glWrapS = PGL.CLAMP_TO_EDGE;
-    } else if (params.wrapU == REPEAT)  {
-      glWrapS = PGL.REPEAT;
-    } else {
-      throw new RuntimeException("Unknown wrapping mode");
+    switch (params.wrapU) {
+      case CLAMP:
+        glWrapS = PGL.CLAMP_TO_EDGE;
+        break;
+      case REPEAT:
+        glWrapS = PGL.REPEAT;
+        break;
+      default:
+        throw new RuntimeException("Unknown wrapping mode");
     }
 
-    if (params.wrapV == CLAMP) {
-      glWrapT = PGL.CLAMP_TO_EDGE;
-    } else if (params.wrapV == REPEAT)  {
-      glWrapT = PGL.REPEAT;
-    } else {
-      throw new RuntimeException("Unknown wrapping mode");
+    switch (params.wrapV) {
+      case CLAMP:
+        glWrapT = PGL.CLAMP_TO_EDGE;
+        break;
+      case REPEAT:
+        glWrapT = PGL.REPEAT;
+        break;
+      default:
+        throw new RuntimeException("Unknown wrapping mode");
     }
 
     usingMipmaps = glMinFilter == PGL.LINEAR_MIPMAP_NEAREST ||
@@ -1659,11 +1686,10 @@ public class Texture implements PConstants {
     void dispose() {
       try {
         // Disposing the native buffer.
-        disposeBufferMethod.invoke(bufferSource, new Object[] { natBuf });
+        disposeBufferMethod.invoke(bufferSource, natBuf);
         natBuf = null;
         rgbBuf = null;
-      } catch (Exception e) {
-        e.printStackTrace();
+      } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
       }
     }
   }

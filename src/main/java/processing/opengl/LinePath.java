@@ -219,6 +219,7 @@ public class LinePath {
    *          the specified X coordinate
    * @param y
    *          the specified Y coordinate
+   * @param c
    * @see LinePath#moveTo
    */
   public final void moveTo(float x, float y, int c) {
@@ -247,6 +248,7 @@ public class LinePath {
    *          the specified X coordinate
    * @param y
    *          the specified Y coordinate
+   * @param c
    * @see LinePath#lineTo
    */
   public final void lineTo(float x, float y, int c) {
@@ -263,6 +265,7 @@ public class LinePath {
    * the {@code LinePath} class does not guarantee that modifications to the
    * geometry of this {@code LinePath} object do not affect any iterations of that
    * geometry that are already in process.
+   * @return 
    */
   public PathIterator getPathIterator() {
     return new PathIterator(this);
@@ -324,7 +327,7 @@ public class LinePath {
 
 
   static public class PathIterator {
-    float floatCoords[];
+    float[] floatCoords;
 
     int typeIdx;
 
@@ -334,7 +337,7 @@ public class LinePath {
 
     LinePath path;
 
-    static final int curvecoords[] = { 2, 2, 0 };
+    static final int[] curvecoords = { 2, 2, 0 };
 
     PathIterator(LinePath p2df) {
       this.path = p2df;
@@ -352,7 +355,7 @@ public class LinePath {
         coords[numCoords + 0] = (color >> 24) & 0xFF;
         coords[numCoords + 1] = (color >> 16) & 0xFF;
         coords[numCoords + 2] = (color >>  8) & 0xFF;
-        coords[numCoords + 3] = (color >>  0) & 0xFF;
+        coords[numCoords + 3] = (color) & 0xFF;
       }
       return type;
     }
@@ -368,7 +371,7 @@ public class LinePath {
         coords[numCoords + 0] = (color >> 24) & 0xFF;
         coords[numCoords + 1] = (color >> 16) & 0xFF;
         coords[numCoords + 2] = (color >>  8) & 0xFF;
-        coords[numCoords + 3] = (color >>  0) & 0xFF;
+        coords[numCoords + 3] = (color) & 0xFF;
       }
       return type;
     }
@@ -421,6 +424,7 @@ public class LinePath {
    *          the decoration applied where path segments meet
    * @param miterlimit
    * @param transform
+   * @return 
    *
    */
   static public LinePath createStrokedPath(LinePath src, float weight,
@@ -470,7 +474,7 @@ public class LinePath {
 
 
   private static void pathTo(PathIterator pi, LineStroker lsink) {
-    float coords[] = new float[6];
+    float[] coords = new float[6];
     while (!pi.isDone()) {
       int color;
       switch (pi.currentSegment(coords)) {

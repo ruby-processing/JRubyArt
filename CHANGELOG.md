@@ -1,3 +1,7 @@
+**v2.4.2** Update to use jruby-complete-9.2.13
+
+**v2.4.2** Update to use jruby-complete-9.2.12.0  
+
 **v2.4.0** Update to use jruby-complete-9.2.11.1 recommended java version AdoptOpenJDK-13+ or Openj9-14+
 
 **v2.3.0** Update to use jruby-complete-9.2.11.0 recommended java version AdoptOpenJDK-13+

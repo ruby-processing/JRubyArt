@@ -2,6 +2,7 @@ package processing.core;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +23,8 @@ public class PShapeOBJ extends PShape {
 
   /**
    * Initializes a new OBJ Object with the given filename.
+   * @param parent
+   * @param filename
    */
   public PShapeOBJ(PApplet parent, String filename) {
     this(parent, parent.createReader(filename), getBasePath(parent, filename));
@@ -32,11 +35,11 @@ public class PShapeOBJ extends PShape {
   }
 
   public PShapeOBJ(PApplet parent, BufferedReader reader, String basePath) {
-    ArrayList<OBJFace> faces = new ArrayList<OBJFace>();
-    ArrayList<OBJMaterial> materials = new ArrayList<OBJMaterial>();
-    ArrayList<PVector> coords = new ArrayList<PVector>();
-    ArrayList<PVector> normals = new ArrayList<PVector>();
-    ArrayList<PVector> texcoords = new ArrayList<PVector>();
+    ArrayList<OBJFace> faces = new ArrayList<>();
+    ArrayList<OBJMaterial> materials = new ArrayList<>();
+    ArrayList<PVector> coords = new ArrayList<>();
+    ArrayList<PVector> normals = new ArrayList<>();
+    ArrayList<PVector> texcoords = new ArrayList<>();
     parseOBJ(parent, basePath, reader,
              faces, materials, coords, normals, texcoords);
 
@@ -52,12 +55,16 @@ public class PShapeOBJ extends PShape {
                       ArrayList<PVector> normals,
                       ArrayList<PVector> texcoords) {
     family = GEOMETRY;
-    if (face.vertIdx.size() == 3) {
-      kind = TRIANGLES;
-    } else if (face.vertIdx.size() == 4) {
-      kind = QUADS;
-    } else {
-      kind = POLYGON;
+    switch (face.vertIdx.size()) {
+      case 3:
+        kind = TRIANGLES;
+        break;
+      case 4:
+        kind = QUADS;
+        break;
+      default:
+        kind = POLYGON;
+        break;
     }
 
     stroke = false;
@@ -82,18 +89,18 @@ public class PShapeOBJ extends PShape {
 
       vert = norms = tex = null;
 
-      vertIdx = face.vertIdx.get(j).intValue() - 1;
+      vertIdx = face.vertIdx.get(j) - 1;
       vert = coords.get(vertIdx);
 
       if (j < face.normIdx.size()) {
-        normIdx = face.normIdx.get(j).intValue() - 1;
+        normIdx = face.normIdx.get(j) - 1;
         if (-1 < normIdx) {
           norms = normals.get(normIdx);
         }
       }
 
       if (j < face.texIdx.size()) {
-        texIdx = face.texIdx.get(j).intValue() - 1;
+        texIdx = face.texIdx.get(j) - 1;
         if (-1 < texIdx) {
           tex = texcoords.get(texIdx);
         }
@@ -157,7 +164,7 @@ public class PShapeOBJ extends PShape {
                                  ArrayList<PVector> coords,
                                  ArrayList<PVector> normals,
                                  ArrayList<PVector> texcoords) {
-    Map<String, Integer> mtlTable  = new HashMap<String, Integer>();
+    Map<String, Integer> mtlTable  = new HashMap<>();
     int mtlIdxCur = -1;
     boolean readv, readvn, readvt;
     try {
@@ -195,124 +202,132 @@ public class PShapeOBJ extends PShape {
         String[] parts = line.split("\\s+");
         // if not a blank line, process the line.
         if (parts.length > 0) {
-          if (parts[0].equals("v")) {
-            // vertex
-            PVector tempv = new PVector(Float.valueOf(parts[1]).floatValue(),
-                                        Float.valueOf(parts[2]).floatValue(),
-                                        Float.valueOf(parts[3]).floatValue());
-            coords.add(tempv);
-            readv = true;
-          } else if (parts[0].equals("vn")) {
-            // normal
-            PVector tempn = new PVector(Float.valueOf(parts[1]).floatValue(),
-                                        Float.valueOf(parts[2]).floatValue(),
-                                        Float.valueOf(parts[3]).floatValue());
-            normals.add(tempn);
-            readvn = true;
-          } else if (parts[0].equals("vt")) {
-            // uv, inverting v to take into account Processing's inverted Y axis
-            // with respect to OpenGL.
-            PVector tempv = new PVector(Float.valueOf(parts[1]).floatValue(),
-                                        1 - Float.valueOf(parts[2]).
-                                        floatValue());
-            texcoords.add(tempv);
-            readvt = true;
-          } else if (parts[0].equals("o")) {
-            // Object name is ignored, for now.
-          } else if (parts[0].equals("mtllib")) {
-            if (parts[1] != null) {
-              String fn = parts[1];
-              if (fn.indexOf(File.separator) == -1 && !path.equals("")) {
-                // Relative file name, adding the base path.
-                fn = path + File.separator + fn;
+          switch (parts[0]) {
+            case "v":
+              {
+                // vertex
+                PVector tempv = new PVector(Float.parseFloat(parts[1]),
+                  Float.parseFloat(parts[2]),
+                  Float.parseFloat(parts[3]));
+                coords.add(tempv);
+                readv = true;
+                break;
               }
-              BufferedReader mreader = parent.createReader(fn);
-              if (mreader != null) {
-                parseMTL(parent, fn, path, mreader, materials, mtlTable);
-                mreader.close();
+            case "vn":
+              // normal
+              PVector tempn = new PVector(Float.parseFloat(parts[1]),
+                Float.parseFloat(parts[2]),
+                Float.parseFloat(parts[3]));
+              normals.add(tempn);
+              readvn = true;
+              break;
+            case "vt":
+              {
+                // uv, inverting v to take into account Processing's inverted Y axis
+                // with respect to OpenGL.
+                PVector tempv = new PVector(Float.parseFloat(parts[1]),
+                  1 - Float.parseFloat(parts[2]));
+                texcoords.add(tempv);
+                readvt = true;
+                break;
               }
-            }
-          } else if (parts[0].equals("g")) {
-            gname = 1 < parts.length ? parts[1] : "";
-          } else if (parts[0].equals("usemtl")) {
-            // Getting index of current active material (will be applied on
-            // all subsequent faces).
-            if (parts[1] != null) {
-              String mtlname = parts[1];
-              if (mtlTable.containsKey(mtlname)) {
-                Integer tempInt = mtlTable.get(mtlname);
-                mtlIdxCur = tempInt.intValue();
-              } else {
-                mtlIdxCur = -1;
-              }
-            }
-          } else if (parts[0].equals("f")) {
-            // Face setting
-            OBJFace face = new OBJFace();
-            face.matIdx = mtlIdxCur;
-            face.name = gname;
-
-            for (int i = 1; i < parts.length; i++) {
-              String seg = parts[i];
-
-              if (seg.indexOf("/") > 0) {
-                String[] forder = seg.split("/");
-
-                if (forder.length > 2) {
-                  // Getting vertex and texture and normal indexes.
-                  if (forder[0].length() > 0 && readv) {
-                    face.vertIdx.add(Integer.valueOf(forder[0]));
-                  }
-
-                  if (forder[1].length() > 0 && readvt) {
-                    face.texIdx.add(Integer.valueOf(forder[1]));
-                  }
-
-                  if (forder[2].length() > 0 && readvn) {
-                    face.normIdx.add(Integer.valueOf(forder[2]));
-                  }
-                } else if (forder.length > 1) {
-                  // Getting vertex and texture/normal indexes.
-                  if (forder[0].length() > 0 && readv) {
-                    face.vertIdx.add(Integer.valueOf(forder[0]));
-                  }
-
-                  if (forder[1].length() > 0) {
-                    if (readvt) {
+          // Object name is ignored, for now.
+            case "o":
+              break;
+            case "mtllib":
+              if (parts[1] != null) {
+                String fn = parts[1];
+                if (!fn.contains(File.separator) && !path.equals("")) {
+                  // Relative file name, adding the base path.
+                  fn = path + File.separator + fn;
+                }
+                BufferedReader mreader = parent.createReader(fn);
+                if (mreader != null) {
+                  parseMTL(parent, fn, path, mreader, materials, mtlTable);
+                  mreader.close();
+                }
+              } break;
+            case "g":
+              gname = 1 < parts.length ? parts[1] : "";
+              break;
+            case "usemtl":
+              // Getting index of current active material (will be applied on
+              // all subsequent faces).
+              if (parts[1] != null) {
+                String mtlname = parts[1];
+                if (mtlTable.containsKey(mtlname)) {
+                  Integer tempInt = mtlTable.get(mtlname);
+                  mtlIdxCur = tempInt;
+                } else {
+                  mtlIdxCur = -1;
+                }
+              } break;
+            case "f":
+              // Face setting
+              OBJFace face = new OBJFace();
+              face.matIdx = mtlIdxCur;
+              face.name = gname;
+              for (int i = 1; i < parts.length; i++) {
+                String seg = parts[i];
+                
+                if (seg.indexOf("/") > 0) {
+                  String[] forder = seg.split("/");
+                  
+                  if (forder.length > 2) {
+                    // Getting vertex and texture and normal indexes.
+                    if (forder[0].length() > 0 && readv) {
+                      face.vertIdx.add(Integer.valueOf(forder[0]));
+                    }
+                    
+                    if (forder[1].length() > 0 && readvt) {
                       face.texIdx.add(Integer.valueOf(forder[1]));
-                    } else  if (readvn) {
-                      face.normIdx.add(Integer.valueOf(forder[1]));
                     }
 
+                    if (forder[2].length() > 0 && readvn) {
+                      face.normIdx.add(Integer.valueOf(forder[2]));
+                    }
+                  } else if (forder.length > 1) {
+                    // Getting vertex and texture/normal indexes.
+                    if (forder[0].length() > 0 && readv) {
+                      face.vertIdx.add(Integer.valueOf(forder[0]));
+                    }
+                    
+                    if (forder[1].length() > 0) {
+                      if (readvt) {
+                        face.texIdx.add(Integer.valueOf(forder[1]));
+                      } else  if (readvn) {
+                        face.normIdx.add(Integer.valueOf(forder[1]));
+                      }
+                      
+                    }
+                    
+                  } else if (forder.length > 0) {
+                    // Getting vertex index only.
+                    if (forder[0].length() > 0 && readv) {
+                      face.vertIdx.add(Integer.valueOf(forder[0]));
+                    }
                   }
-
-                } else if (forder.length > 0) {
+                } else {
                   // Getting vertex index only.
-                  if (forder[0].length() > 0 && readv) {
-                    face.vertIdx.add(Integer.valueOf(forder[0]));
+                  if (seg.length() > 0 && readv) {
+                    face.vertIdx.add(Integer.valueOf(seg));
                   }
                 }
-              } else {
-                // Getting vertex index only.
-                if (seg.length() > 0 && readv) {
-                  face.vertIdx.add(Integer.valueOf(seg));
-                }
-              }
-            }
-
-            faces.add(face);
+              } faces.add(face);
+              break;
+            default:
+              break;
           }
         }
       }
 
-      if (materials.size() == 0) {
+      if (materials.isEmpty()) {
         // No materials definition so far. Adding one default material.
         OBJMaterial defMtl = new OBJMaterial();
         materials.add(defMtl);
       }
 
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (IOException | NumberFormatException e) {
     }
   }
 
@@ -327,7 +342,7 @@ public class PShapeOBJ extends PShape {
       while ((line = reader.readLine()) != null) {
         // Parse the line
         line = line.trim();
-        String parts[] = line.split("\\s+");
+        String[] parts = line.split("\\s+");
         if (parts.length > 0) {
           // Extract the material data.
           if (parts[0].equals("newmtl")) {
@@ -342,7 +357,7 @@ public class PShapeOBJ extends PShape {
             if (parts[0].equals("map_Kd") && parts.length > 1) {
               // Loading texture map.
               String texname = parts[1];
-              if (texname.indexOf(File.separator) == -1 && !path.equals("")) {
+              if (!texname.contains(File.separator) && !path.equals("")) {
                 // Relative file name, adding the base path.
                 texname = path + File.separator + texname;
               }
@@ -359,32 +374,31 @@ public class PShapeOBJ extends PShape {
               }
             } else if (parts[0].equals("Ka") && parts.length > 3) {
               // The ambient color of the material
-              currentMtl.ka.x = Float.valueOf(parts[1]).floatValue();
-              currentMtl.ka.y = Float.valueOf(parts[2]).floatValue();
-              currentMtl.ka.z = Float.valueOf(parts[3]).floatValue();
+              currentMtl.ka.x = Float.parseFloat(parts[1]);
+              currentMtl.ka.y = Float.parseFloat(parts[2]);
+              currentMtl.ka.z = Float.parseFloat(parts[3]);
             } else if (parts[0].equals("Kd") && parts.length > 3) {
               // The diffuse color of the material
-              currentMtl.kd.x = Float.valueOf(parts[1]).floatValue();
-              currentMtl.kd.y = Float.valueOf(parts[2]).floatValue();
-              currentMtl.kd.z = Float.valueOf(parts[3]).floatValue();
+              currentMtl.kd.x = Float.parseFloat(parts[1]);
+              currentMtl.kd.y = Float.parseFloat(parts[2]);
+              currentMtl.kd.z = Float.parseFloat(parts[3]);
             } else if (parts[0].equals("Ks") && parts.length > 3) {
               // The specular color weighted by the specular coefficient
-              currentMtl.ks.x = Float.valueOf(parts[1]).floatValue();
-              currentMtl.ks.y = Float.valueOf(parts[2]).floatValue();
-              currentMtl.ks.z = Float.valueOf(parts[3]).floatValue();
+              currentMtl.ks.x = Float.parseFloat(parts[1]);
+              currentMtl.ks.y = Float.parseFloat(parts[2]);
+              currentMtl.ks.z = Float.parseFloat(parts[3]);
             } else if ((parts[0].equals("d") ||
                         parts[0].equals("Tr")) && parts.length > 1) {
               // Reading the alpha transparency.
-              currentMtl.d = Float.valueOf(parts[1]).floatValue();
+              currentMtl.d = Float.parseFloat(parts[1]);
             } else if (parts[0].equals("Ns") && parts.length > 1) {
               // The specular component of the Phong shading model
-              currentMtl.ns = Float.valueOf(parts[1]).floatValue();
+              currentMtl.ns = Float.parseFloat(parts[1]);
             }
           }
         }
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (IOException | NumberFormatException e) {
     }
   }
 
@@ -392,7 +406,7 @@ public class PShapeOBJ extends PShape {
                                            ArrayList<OBJMaterial> materials,
                                            Map<String, Integer> materialsHash) {
     OBJMaterial currentMtl = new OBJMaterial(mtlname);
-    materialsHash.put(mtlname, Integer.valueOf(materials.size()));
+    materialsHash.put(mtlname, materials.size());
     materials.add(currentMtl);
     return currentMtl;
   }
@@ -421,9 +435,9 @@ public class PShapeOBJ extends PShape {
     String name;
 
     OBJFace() {
-      vertIdx = new ArrayList<Integer>();
-      texIdx = new ArrayList<Integer>();
-      normIdx = new ArrayList<Integer>();
+      vertIdx = new ArrayList<>();
+      texIdx = new ArrayList<>();
+      normIdx = new ArrayList<>();
       matIdx = -1;
       name = "";
     }

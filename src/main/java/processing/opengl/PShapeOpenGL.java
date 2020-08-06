@@ -464,9 +464,9 @@ public class PShapeOpenGL extends PShape {
 
         if (c3d.family == GROUP) {
           if (c3d.textures != null) {
-            for (PImage tex: c3d.textures) {
+            c3d.textures.forEach((tex) -> {
               addTexture(tex);
-            }
+            });
           } else {
             untexChild(true);
           }
@@ -521,22 +521,29 @@ public class PShapeOpenGL extends PShape {
 
   public static PShapeOpenGL createShape(PGraphicsOpenGL pg, PShape src) {
     PShapeOpenGL dest = null;
-    if (src.getFamily() == GROUP) {
-      //dest = PGraphics3D.createShapeImpl(pg, GROUP);
-      dest = (PShapeOpenGL) pg.createShapeFamily(GROUP);
-      copyGroup(pg, src, dest);
-    } else if (src.getFamily() == PRIMITIVE) {
-      //dest = PGraphics3D.createShapeImpl(pg, src.getKind(), src.getParams());
-      dest = (PShapeOpenGL) pg.createShapePrimitive(src.getKind(), src.getParams());
-      PShape.copyPrimitive(src, dest);
-    } else if (src.getFamily() == GEOMETRY) {
-      //dest = PGraphics3D.createShapeImpl(pg, PShape.GEOMETRY);
-      dest = (PShapeOpenGL) pg.createShapeFamily(PShape.GEOMETRY);
-      PShape.copyGeometry(src, dest);
-    } else if (src.getFamily() == PATH) {
-      dest = (PShapeOpenGL) pg.createShapeFamily(PShape.PATH);
-      //dest = PGraphics3D.createShapeImpl(pg, PATH);
-      PShape.copyPath(src, dest);
+    switch (src.getFamily()) {
+      case GROUP:
+        //dest = PGraphics3D.createShapeImpl(pg, GROUP);
+        dest = (PShapeOpenGL) pg.createShapeFamily(GROUP);
+        copyGroup(pg, src, dest);
+        break;
+      case PRIMITIVE:
+        //dest = PGraphics3D.createShapeImpl(pg, src.getKind(), src.getParams());
+        dest = (PShapeOpenGL) pg.createShapePrimitive(src.getKind(), src.getParams());
+        PShape.copyPrimitive(src, dest);
+        break;
+      case GEOMETRY:
+        //dest = PGraphics3D.createShapeImpl(pg, PShape.GEOMETRY);
+        dest = (PShapeOpenGL) pg.createShapeFamily(PShape.GEOMETRY);
+        PShape.copyGeometry(src, dest);
+        break;
+      case PATH:
+        dest = (PShapeOpenGL) pg.createShapeFamily(PShape.PATH);
+        //dest = PGraphics3D.createShapeImpl(pg, PATH);
+        PShape.copyPath(src, dest);
+        break;
+      default:
+        break;
     }
     dest.setName(src.getName());
     dest.width = src.width;
@@ -873,7 +880,7 @@ public class PShapeOpenGL extends PShape {
     if (!childHasTex) {
       // ...if not, it is safe to remove from this shape.
       textures.remove(tex);
-      if (textures.size() == 0) {
+      if (textures.isEmpty()) {
         textures = null;
       }
     }
@@ -1429,11 +1436,9 @@ public class PShapeOpenGL extends PShape {
                                         firstPolyVertex, lastPolyVertex);
       root.setModifiedPolyVertices(firstPolyVertex, lastPolyVertex);
       root.setModifiedPolyNormals(firstPolyVertex, lastPolyVertex);
-      for (VertexAttribute attrib: polyAttribs.values()) {
-        if (attrib.isPosition() || attrib.isNormal()) {
-          root.setModifiedPolyAttrib(attrib, firstPolyVertex, lastPolyVertex);
-        }
-      }
+      polyAttribs.values().stream().filter((attrib) -> (attrib.isPosition() || attrib.isNormal())).forEachOrdered((attrib) -> {
+        root.setModifiedPolyAttrib(attrib, firstPolyVertex, lastPolyVertex);
+      });
     }
 
     if (is3D()) {
@@ -1764,9 +1769,7 @@ public class PShapeOpenGL extends PShape {
     VertexAttribute attrib = attribImpl(name, VertexAttribute.OTHER, PGL.FLOAT,
                                         values.length);
     float[] array = inGeo.fattribs.get(name);
-    for (int i = 0; i < values.length; i++) {
-      array[attrib.size * index + i] = values[i];
-    }
+    System.arraycopy(values, 0, array, attrib.size * index, values.length);
     markForTessellation();
   }
 
@@ -2545,8 +2548,6 @@ public class PShapeOpenGL extends PShape {
 
   /**
    * One of VERTEX, BEZIER_VERTEX, CURVE_VERTEX, or BREAK.
-   * @param index
-   * @return 
    */
   @Override
   public int getVertexCode(int index) {
@@ -2978,24 +2979,36 @@ public class PShapeOpenGL extends PShape {
           // new primitive to what is already stored.
           inGeo.clear();
 
-          if (kind == POINT) {
-            tessellatePoint();
-          } else if (kind == LINE) {
-            tessellateLine();
-          } else if (kind == TRIANGLE) {
-            tessellateTriangle();
-          } else if (kind == QUAD) {
-            tessellateQuad();
-          } else if (kind == RECT) {
-            tessellateRect();
-          } else if (kind == ELLIPSE) {
-            tessellateEllipse();
-          } else if (kind == ARC) {
-            tessellateArc();
-          } else if (kind == BOX) {
-            tessellateBox();
-          } else if (kind == SPHERE) {
-            tessellateSphere();
+          switch (kind) {
+            case POINT:
+              tessellatePoint();
+              break;
+            case LINE:
+              tessellateLine();
+              break;
+            case TRIANGLE:
+              tessellateTriangle();
+              break;
+            case QUAD:
+              tessellateQuad();
+              break;
+            case RECT:
+              tessellateRect();
+              break;
+            case ELLIPSE:
+              tessellateEllipse();
+              break;
+            case ARC:
+              tessellateArc();
+              break;
+            case BOX:
+              tessellateBox();
+              break;
+            case SPHERE:
+              tessellateSphere();
+              break;
+            default:
+              break;
           }
         } else if (family == PATH) {
           inGeo.clear();
@@ -3222,19 +3235,23 @@ public class PShapeOpenGL extends PShape {
     float w = c;
     float h = d;
 
-    if (mode == CORNERS) {
-      w = c - a;
-      h = d - b;
-
-    } else if (mode == RADIUS) {
-      x = a - c;
-      y = b - d;
-      w = c * 2;
-      h = d * 2;
-
-    } else if (mode == DIAMETER) {
-      x = a - c/2f;
-      y = b - d/2f;
+    switch (mode) {
+      case CORNERS:
+        w = c - a;
+        h = d - b;
+        break;
+      case RADIUS:
+        x = a - c;
+        y = b - d;
+        w = c * 2;
+        h = d * 2;
+        break;
+      case DIAMETER:
+        x = a - c/2f;
+        y = b - d/2f;
+        break;
+      default:
+        break;
     }
 
     if (w < 0) {  // undo negative width
@@ -3981,14 +3998,14 @@ public class PShapeOpenGL extends PShape {
     pgl.bufferData(PGL.ARRAY_BUFFER, sizef,
                    tessGeo.polyShininessBuffer, glUsage);
 
-    polyAttribs.keySet().forEach((name) -> {
+    for (String name: polyAttribs.keySet()) {
       VertexAttribute attrib = polyAttribs.get(name);
       tessGeo.updateAttribBuffer(attrib.name);
       if (!attrib.bufferCreated()) attrib.createBuffer(pgl);
       pgl.bindBuffer(PGL.ARRAY_BUFFER, attrib.buf.glId);
       pgl.bufferData(PGL.ARRAY_BUFFER, attrib.sizeInBytes(size),
-        tessGeo.polyAttribBuffers.get(name), glUsage);
-    });
+                     tessGeo.polyAttribBuffers.get(name), glUsage);
+    }
 
     pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
 
@@ -4095,9 +4112,9 @@ public class PShapeOpenGL extends PShape {
       bufPolySpecular.dispose();
       bufPolyEmissive.dispose();
       bufPolyShininess.dispose();
-      for (VertexAttribute attrib: polyAttribs.values()) {
+      polyAttribs.values().forEach((attrib) -> {
         attrib.buf.dispose();
-      }
+      });
       bufPolyIndex.dispose();
 
       bufLineVertex.dispose();
@@ -4683,7 +4700,7 @@ public class PShapeOpenGL extends PShape {
         if (family == GROUP) {
           if (fragmentedGroup(gl)) {
             for (int i = 0; i < childCount; i++) {
-              ((PShapeOpenGL) children[i]).draw(gl);
+              children[i].draw(gl);
             }
           } else {
             PImage tex = null;

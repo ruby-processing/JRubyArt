@@ -21,7 +21,7 @@ end
 
 desc 'Build gem'
 task :gem do
-  system 'gem build jruby_art.gemspec'
+  system 'jgem build jruby_art.gemspec'
 end
 
 desc 'Compile'

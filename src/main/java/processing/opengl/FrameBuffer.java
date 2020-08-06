@@ -258,9 +258,7 @@ public class FrameBuffer implements PConstants {
                                  "buffers.");
     }
 
-    for (int i = 0; i < numColorBuffers; i++) {
-      colorBufferTex[i] = textures[i];
-    }
+    System.arraycopy(textures, 0, colorBufferTex, 0, numColorBuffers);
 
     pg.pushFramebuffer();
     pg.setFramebuffer(this);
@@ -327,7 +325,7 @@ public class FrameBuffer implements PConstants {
   // Allocate/release framebuffer.
 
 
-  protected void allocate() {
+  protected final void allocate() {
     dispose(); // Just in the case this object is being re-allocated.
 
     context = pgl.getCurrentContext();
@@ -440,12 +438,18 @@ public class FrameBuffer implements PConstants {
     pgl.bindRenderbuffer(PGL.RENDERBUFFER, glDepth);
 
     int glConst = PGL.DEPTH_COMPONENT16;
-    if (depthBits == 16) {
-      glConst = PGL.DEPTH_COMPONENT16;
-    } else if (depthBits == 24) {
-      glConst = PGL.DEPTH_COMPONENT24;
-    } else if (depthBits == 32) {
-      glConst = PGL.DEPTH_COMPONENT32;
+    switch (depthBits) {
+      case 16:
+        glConst = PGL.DEPTH_COMPONENT16;
+        break;
+      case 24:
+        glConst = PGL.DEPTH_COMPONENT24;
+        break;
+      case 32:
+        glConst = PGL.DEPTH_COMPONENT32;
+        break;
+      default:
+        break;
     }
 
     if (multisample) {
@@ -475,12 +479,18 @@ public class FrameBuffer implements PConstants {
     pgl.bindRenderbuffer(PGL.RENDERBUFFER, glStencil);
 
     int glConst = PGL.STENCIL_INDEX1;
-    if (stencilBits == 1) {
-      glConst = PGL.STENCIL_INDEX1;
-    } else if (stencilBits == 4) {
-      glConst = PGL.STENCIL_INDEX4;
-    } else if (stencilBits == 8) {
-      glConst = PGL.STENCIL_INDEX8;
+    switch (stencilBits) {
+      case 1:
+        glConst = PGL.STENCIL_INDEX1;
+        break;
+      case 4:
+        glConst = PGL.STENCIL_INDEX4;
+        break;
+      case 8:
+        glConst = PGL.STENCIL_INDEX8;
+        break;
+      default:
+        break;
     }
     if (multisample) {
       pgl.renderbufferStorageMultisample(PGL.RENDERBUFFER, nsamples, glConst,

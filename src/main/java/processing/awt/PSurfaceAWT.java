@@ -41,6 +41,7 @@ import java.awt.Toolkit;
 import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.*;
+import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -357,6 +358,41 @@ public class PSurfaceAWT extends PSurfaceNone {
   */
 
 
+  /*
+  @Override
+  public int displayDensity() {
+    return shim.displayDensity();
+  }
+
+
+  @Override
+  public int displayDensity(int display) {
+    return shim.displayDensity(display);
+  }
+  */
+
+
+  @Override
+  public void selectInput(String prompt, String callback,
+                          File file, Object callbackObject) {
+    ShimAWT.selectInput(prompt, callback, file, callbackObject);
+  }
+
+
+  @Override
+  public void selectOutput(String prompt, String callback,
+                           File file, Object callbackObject) {
+    ShimAWT.selectOutput(prompt, callback, file, callbackObject);
+  }
+
+
+  @Override
+  public void selectFolder(String prompt, String callback,
+                           File file, Object callbackObject) {
+    ShimAWT.selectFolder(prompt, callback, file, callbackObject);
+  }
+
+
   // what needs to happen here?
   @Override
   public void initOffscreen(PApplet sketch) {
@@ -426,7 +462,7 @@ public class PSurfaceAWT extends PSurfaceNone {
     sketch.displayWidth = screenRect.width;
     sketch.displayHeight = screenRect.height;
 
-    windowScaleFactor = PApplet.platform == PConstants.MACOSX ?
+    windowScaleFactor = PApplet.platform == PConstants.MACOS ?
         1 : sketch.pixelDensity;
 
     sketchWidth = sketch.sketchWidth() * windowScaleFactor;
@@ -559,14 +595,15 @@ public class PSurfaceAWT extends PSurfaceNone {
 //  }
 
 
-  /** Set the window (and dock, or whatever necessary) title. */
+  /** Set the window (and dock, or whatever necessary) title.
+   * @param title */
   @Override
   public void setTitle(String title) {
     frame.setTitle(title);
     // Workaround for apparent Java bug on OS X?
     // https://github.com/processing/processing/issues/3472
     if (cursorVisible &&
-        (PApplet.platform == PConstants.MACOSX) &&
+        (PApplet.platform == PConstants.MACOS) &&
         (cursorType != PConstants.ARROW)) {
       hideCursor();
       showCursor();
@@ -574,7 +611,8 @@ public class PSurfaceAWT extends PSurfaceNone {
   }
 
 
-  /** Set true if we want to resize things (default is not resizable) */
+  /** Set true if we want to resize things (default is not resizable)
+   * @param resizable */
   @Override
   public void setResizable(boolean resizable) {
     //this.resizable = resizable;  // really only used for canvas
@@ -589,7 +627,7 @@ public class PSurfaceAWT extends PSurfaceNone {
   public void setIcon(PImage image) {
     Image awtImage = (Image) image.getNative();
 
-    if (PApplet.platform != PConstants.MACOSX) {
+    if (PApplet.platform != PConstants.MACOS) {
       frame.setIconImage(awtImage);
 
     } else {
@@ -598,8 +636,8 @@ public class PSurfaceAWT extends PSurfaceNone {
         Class<?> thinkDifferent =
           Thread.currentThread().getContextClassLoader().loadClass(td);
         Method method =
-          thinkDifferent.getMethod("setIconImage", new Class[] { java.awt.Image.class });
-        method.invoke(null, new Object[] { awtImage });
+          thinkDifferent.getMethod("setIconImage", Image.class);
+        method.invoke(null, awtImage);
       } catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException e) {
         // That's unfortunate
         
@@ -625,7 +663,7 @@ public class PSurfaceAWT extends PSurfaceNone {
   protected void setProcessingIcon(Frame frame) {
     // On OS X, this only affects what shows up in the dock when minimized.
     // So replacing it is actually a step backwards. Brilliant.
-    if (PApplet.platform != PConstants.MACOSX) {
+    if (PApplet.platform != PConstants.MACOS) {
       //Image image = Toolkit.getDefaultToolkit().createImage(ICON_IMAGE);
       //frame.setIconImage(image);
       try {
@@ -657,8 +695,8 @@ public class PSurfaceAWT extends PSurfaceNone {
           Class<?> thinkDifferent =
             Thread.currentThread().getContextClassLoader().loadClass(td);
           Method method =
-            thinkDifferent.getMethod("setIconImage", new Class[] { java.awt.Image.class });
-          method.invoke(null, new Object[] { Toolkit.getDefaultToolkit().getImage(url) });
+            thinkDifferent.getMethod("setIconImage", Image.class);
+          method.invoke(null, Toolkit.getDefaultToolkit().getImage(url));
         } catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException e) {
           // That's unfortunate
           
@@ -1225,9 +1263,9 @@ public class PSurfaceAWT extends PSurfaceNone {
 
 
   /**
-   * Figure out how to process a mouse event. When loop() has been
-   * called, the events will be queued up until drawing is complete.
-   * If noLoop() has been called, then events will happen immediately.
+   * Figure out how to process a mouse event.When loop() has been
+ called, the events will be queued up until drawing is complete. If noLoop() has been called, then events will happen immediately.
+   * @param nativeEvent
    */
   protected void nativeMouseEvent(java.awt.event.MouseEvent nativeEvent) {
     // the 'amount' is the number of button clicks for a click event,
@@ -1273,44 +1311,24 @@ public class PSurfaceAWT extends PSurfaceNone {
       break;
     }
 
-    //System.out.println(nativeEvent);
-    //int modifiers = nativeEvent.getModifiersEx();
-    // If using getModifiersEx(), the regular modifiers don't set properly.
-    int modifiers = nativeEvent.getModifiers();
-
-    int peModifiers = modifiers &
-      (InputEvent.SHIFT_MASK |
-       InputEvent.CTRL_MASK |
-       InputEvent.META_MASK |
-       InputEvent.ALT_MASK);
-
-    // Windows and OS X seem to disagree on how to handle this. Windows only
-    // sets BUTTON1_DOWN_MASK, while OS X seems to set BUTTON1_MASK.
-    // This is an issue in particular with mouse release events:
+    // Switching to getModifiersEx() for 4.0a2 because of Java 9 deprecation.
+    // Had trouble with this in the past and rolled it back because it was
+    // optional at the time. This time around, just need to iron out the issue.
     // http://code.google.com/p/processing/issues/detail?id=1294
-    // The fix for which led to a regression (fixed here by checking both):
     // http://code.google.com/p/processing/issues/detail?id=1332
+    int modifiers = nativeEvent.getModifiersEx();
+
     int peButton = 0;
-//    if ((modifiers & InputEvent.BUTTON1_MASK) != 0 ||
-//        (modifiers & InputEvent.BUTTON1_DOWN_MASK) != 0) {
-//      peButton = LEFT;
-//    } else if ((modifiers & InputEvent.BUTTON2_MASK) != 0 ||
-//               (modifiers & InputEvent.BUTTON2_DOWN_MASK) != 0) {
-//      peButton = CENTER;
-//    } else if ((modifiers & InputEvent.BUTTON3_MASK) != 0 ||
-//               (modifiers & InputEvent.BUTTON3_DOWN_MASK) != 0) {
-//      peButton = RIGHT;
-//    }
-    if ((modifiers & InputEvent.BUTTON1_MASK) != 0) {
+    if ((modifiers & InputEvent.BUTTON1_DOWN_MASK) != 0) {
       peButton = PConstants.LEFT;
-    } else if ((modifiers & InputEvent.BUTTON2_MASK) != 0) {
+    } else if ((modifiers & InputEvent.BUTTON2_DOWN_MASK) != 0) {
       peButton = PConstants.CENTER;
-    } else if ((modifiers & InputEvent.BUTTON3_MASK) != 0) {
+    } else if ((modifiers & InputEvent.BUTTON3_DOWN_MASK) != 0) {
       peButton = PConstants.RIGHT;
     }
 
     sketch.postEvent(new MouseEvent(nativeEvent, nativeEvent.getWhen(),
-                                    peAction, peModifiers,
+                                    peAction, modifiers,
                                     nativeEvent.getX() / windowScaleFactor,
                                     nativeEvent.getY() / windowScaleFactor,
                                     peButton,
@@ -1332,6 +1350,9 @@ public class PSurfaceAWT extends PSurfaceNone {
       break;
     }
 
+    int modifiers = event.getModifiersEx();
+
+    /*
 //    int peModifiers = event.getModifiersEx() &
 //      (InputEvent.SHIFT_DOWN_MASK |
 //       InputEvent.CTRL_DOWN_MASK |
@@ -1342,9 +1363,10 @@ public class PSurfaceAWT extends PSurfaceNone {
        InputEvent.CTRL_MASK |
        InputEvent.META_MASK |
        InputEvent.ALT_MASK);
+     */
 
     sketch.postEvent(new KeyEvent(event, event.getWhen(),
-                                  peAction, peModifiers,
+                                  peAction, modifiers,
                                   event.getKeyChar(), event.getKeyCode()));
   }
 
@@ -1354,22 +1376,27 @@ public class PSurfaceAWT extends PSurfaceNone {
 
     canvas.addMouseListener(new MouseListener() {
 
+      @Override
       public void mousePressed(java.awt.event.MouseEvent e) {
         nativeMouseEvent(e);
       }
 
+      @Override
       public void mouseReleased(java.awt.event.MouseEvent e) {
         nativeMouseEvent(e);
       }
 
+      @Override
       public void mouseClicked(java.awt.event.MouseEvent e) {
         nativeMouseEvent(e);
       }
 
+      @Override
       public void mouseEntered(java.awt.event.MouseEvent e) {
         nativeMouseEvent(e);
       }
 
+      @Override
       public void mouseExited(java.awt.event.MouseEvent e) {
         nativeMouseEvent(e);
       }
@@ -1377,34 +1404,36 @@ public class PSurfaceAWT extends PSurfaceNone {
 
     canvas.addMouseMotionListener(new MouseMotionListener() {
 
+      @Override
       public void mouseDragged(java.awt.event.MouseEvent e) {
         nativeMouseEvent(e);
       }
 
+      @Override
       public void mouseMoved(java.awt.event.MouseEvent e) {
         nativeMouseEvent(e);
       }
     });
 
-    canvas.addMouseWheelListener(new MouseWheelListener() {
-
-      public void mouseWheelMoved(MouseWheelEvent e) {
-        nativeMouseEvent(e);
-      }
+    canvas.addMouseWheelListener((MouseWheelEvent e) -> {
+      nativeMouseEvent(e);
     });
 
     canvas.addKeyListener(new KeyListener() {
 
+      @Override
       public void keyPressed(java.awt.event.KeyEvent e) {
         nativeKeyEvent(e);
       }
 
 
+      @Override
       public void keyReleased(java.awt.event.KeyEvent e) {
         nativeKeyEvent(e);
       }
 
 
+      @Override
       public void keyTyped(java.awt.event.KeyEvent e) {
         nativeKeyEvent(e);
       }
@@ -1412,11 +1441,13 @@ public class PSurfaceAWT extends PSurfaceNone {
 
     canvas.addFocusListener(new FocusListener() {
 
+      @Override
       public void focusGained(FocusEvent e) {
         sketch.focused = true;
         sketch.focusGained();
       }
 
+      @Override
       public void focusLost(FocusEvent e) {
         sketch.focused = false;
         sketch.focusLost();
@@ -1468,7 +1499,7 @@ public class PSurfaceAWT extends PSurfaceNone {
   public void setCursor(int kind) {
     // Swap the HAND cursor because MOVE doesn't seem to be available on OS X
     // https://github.com/processing/processing/issues/2358
-    if (PApplet.platform == PConstants.MACOSX && kind == PConstants.MOVE) {
+    if (PApplet.platform == PConstants.MACOS && kind == PConstants.MOVE) {
       kind = PConstants.HAND;
     }
     canvas.setCursor(Cursor.getPredefinedCursor(kind));

@@ -22,6 +22,7 @@
 
 package processing.core;
 
+import java.io.File;
 
 public interface PSurface {
   /**
@@ -31,31 +32,54 @@ public interface PSurface {
    * set of limitations. And for all I know, Linux probably allows window
    * sizes to be negative numbers.
    */
-  int MIN_WINDOW_WIDTH = 128;
-  int MIN_WINDOW_HEIGHT = 128;
+  static public final int MIN_WINDOW_WIDTH = 128;
+  static public final int MIN_WINDOW_HEIGHT = 128;
+
+  //public int displayDensity();
+
+  //public int displayDensity(int display);
+
+  //
 
   // renderer that doesn't draw to the screen
-  void initOffscreen(PApplet sketch);
+  public void initOffscreen(PApplet sketch);
 
   // considering removal in favor of separate Component classes for appropriate renderers
   // (i.e. for Java2D or a generic Image surface, but not PDF, debatable for GL or FX)
-  //Component initComponent(PApplet sketch);
+  //public Component initComponent(PApplet sketch);
 
-  //Frame initFrame(PApplet sketch, Color backgroundColor,
-//  void initFrame(PApplet sketch, int backgroundColor,
+  //public Frame initFrame(PApplet sketch, Color backgroundColor,
+//  public void initFrame(PApplet sketch, int backgroundColor,
 //                        int deviceIndex, boolean fullScreen, boolean spanDisplays);
-  void initFrame(PApplet sketch);
+  public void initFrame(PApplet sketch);
+
+  //
+
+  public PImage loadImage(String path, Object... args);
+
+  //
+
+  public void selectInput(String prompt, String callback,
+                          File file, Object callbackObject);
+
+  public void selectOutput(String prompt, String callback,
+                           File file, Object callbackObject);
+
+  public void selectFolder(String prompt, String callback,
+                           File file, Object callbackObject);
+
+  //
 
   /**
-   * Get the native window object associated with this drawing surface.
-   * For Java2D, this will be an AWT Frame object. For OpenGL, the window.
-   * The data returned here is subject to the whims of the renderer,
-   * and using this method means you're willing to deal with underlying
-   * implementation changes and that you won't throw a fit like a toddler
-   * if your code breaks sometime in the future.
+   * Get the native window object associated with this drawing surface.For Java2D, this will be an AWT Frame object.
+   * For OpenGL, the window.
+ The data returned here is subject to the whims of the renderer,
+ and using this method means you're willing to deal with underlying
+ implementation changes and that you won't throw a fit like a toddler
+ if your code breaks sometime in the future.
+   * @return 
    */
-
-  Object getNative();
+  public Object getNative();
 
   //
 
@@ -63,40 +87,44 @@ public interface PSurface {
   // Silly, but prevents a lot of rewrite and extra methods for little benefit.
   // However, maybe prevents us from having to document the 'frame' variable?
 
-  /** Set the window (and dock, or whatever necessary) title. */
-  void setTitle(String title);
+  /** Set the window (and dock, or whatever necessary) title.
+   * @param title */
+  public void setTitle(String title);
 
-  /** Show or hide the window. */
-  void setVisible(boolean visible);
+  /** Show or hide the window.
+   * @param visible */
+  public void setVisible(boolean visible);
 
-  /** Set true if we want to resize things (default is not resizable) */
-  void setResizable(boolean resizable);
+  /** Set true if we want to resize things (default is not resizable)
+   * @param resizable */
+  public void setResizable(boolean resizable);
 
-  /** Dumb name, but inherited from Frame and no better ideas. */
-  void setAlwaysOnTop(boolean always);
+  /** Dumb name, but inherited from Frame and no better ideas.
+   * @param always */
+  public void setAlwaysOnTop(boolean always);
 
-  void setIcon(PImage icon);
+  public void setIcon(PImage icon);
 
   //
 
-//  void placeWindow(int[] location);
+//  public void placeWindow(int[] location);
 
-  void placeWindow(int[] location, int[] editorLocation);
+  public void placeWindow(int[] location, int[] editorLocation);
 
-  //void placeFullScreen(boolean hideStop);
-  void placePresent(int stopColor);
+  //public void placeFullScreen(boolean hideStop);
+  public void placePresent(int stopColor);
 
   // Sketch is running from the PDE, set up messaging back to the PDE
-  void setupExternalMessages();
+  public void setupExternalMessages();
 
   //
 
   // sets displayWidth/Height inside PApplet
-  //void checkDisplaySize();
+  //public void checkDisplaySize();
 
-  void setLocation(int x, int y);
+  public void setLocation(int x, int y);
 
-  void setSize(int width, int height);
+  public void setSize(int width, int height);
 
 //  /**
 //   * Called by {@link PApplet#createGraphics} to initialize the
@@ -107,56 +135,64 @@ public interface PSurface {
 //   * @param high
 //   */
   // create pixel buffer (pulled out for offscreen graphics)
-  //void initImage(PGraphics gr, int wide, int high);
+  //public void initImage(PGraphics gr, int wide, int high);
   // create pixel buffer, called from allocate() to produce a compatible image for rendering efficiently
-//  void initImage(PGraphics gr);
+//  public void initImage(PGraphics gr);
 
-  //Component getComponent();
+  //public Component getComponent();
 
 //  /**
 //   * Sometimes smoothing must be set at the drawing surface level
 //   * not just inside the renderer itself.
 //   */
-//  void setSmooth(int level);
+//  public void setSmooth(int level);
 
-  void setFrameRate(float fps);
+  public void setFrameRate(float fps);
 
 //  // called on the first frame so that the now-visible drawing surface can
 //  // receive key and mouse events
-//  void requestFocus();
+//  public void requestFocus();
 
 //  // finish rendering to the screen (called by PApplet)
-//  void blit();
+//  public void blit();
 
   //
 
-  void setCursor(int kind);
+  public void setCursor(int kind);
 
-  void setCursor(PImage image, int hotspotX, int hotspotY);
+  public void setCursor(PImage image, int hotspotX, int hotspotY);
 
-  void showCursor();
+  public void showCursor();
 
-  void hideCursor();
+  public void hideCursor();
+
+  //
+
+  /**
+   * @param url the link to open
+   * @return false if unable to find a viable way to open
+   */
+  public boolean openLink(String url);
 
   //
 
   /** Start the animation thread */
-  void startThread();
+  public void startThread();
 
   /**
    * On the next trip through the animation thread, things should go sleepy-bye.
    * Does not pause the thread immediately because that needs to happen on the
    * animation thread itself, so fires on the next trip through draw().
    */
-  void pauseThread();
+  public void pauseThread();
 
-  void resumeThread();
+  public void resumeThread();
 
   /**
    * Stop the animation thread (set it null)
    * @return false if already stopped
    */
-  boolean stopThread();
+  public boolean stopThread();
 
-  boolean isStopped();
+  public boolean isStopped();
 }

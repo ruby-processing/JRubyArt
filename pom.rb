@@ -2,7 +2,7 @@
 
 project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
   model_version '4.0.0'
-  id 'ruby-processing:jruby_art:2.4.1'
+  id 'ruby-processing:jruby_art:2.4.2'
   packaging 'jar'
 
   description 'Jar for JRubyArt'
@@ -30,7 +30,7 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
              'jogl.version' => '2.3.2',
              'jruby.api' => 'http://jruby.org/apidocs/')
 
-  pom 'org.jruby:jruby:9.2.12.0'
+  pom 'org.jruby:jruby:9.2.13.0'
   jar 'org.jogamp.jogl:jogl-all:${jogl.version}'
   jar 'org.jogamp.gluegen:gluegen-rt-main:${jogl.version}'
   jar 'org.processing:video:3.0.2'

@@ -54,9 +54,12 @@ import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUtessellator;
 import com.jogamp.opengl.glu.GLUtessellatorCallbackAdapter;
+import com.jogamp.opengl.util.awt.AWTGLReadBufferUtil;
 
+import processing.awt.PImageAWT;
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import processing.core.PImage;
 import processing.core.PMatrix3D;
 import processing.core.PSurface;
 
@@ -148,6 +151,11 @@ public class PJOGL extends PGL {
     glu = new GLU();
   }
 
+  public PJOGL(PGraphicsOpenGL pg, PGL.RenderCallback callback) {
+    super(pg, callback);
+    glu = new GLU();
+  }
+
 
   @Override
   public Object getNative() {
@@ -169,6 +177,13 @@ public class PJOGL extends PGL {
 
   @Override
   protected void registerListeners() {}
+
+
+  @Override
+  protected PImage screenshot() {
+    AWTGLReadBufferUtil util = new AWTGLReadBufferUtil(capabilities.getGLProfile(), false);
+    return new PImageAWT(util.readPixelsToBufferedImage​(gl, true));
+  }
 
 
   static public void setIcon(String... icons) {
@@ -722,21 +737,24 @@ public class PJOGL extends PGL {
     PathIterator iter;
 
     public FontOutline(char ch, Font font) {
-      char textArray[] = new char[] { ch };
+      char[] textArray = new char[] { ch };
       FontRenderContext frc = getFontRenderContext(font);
       GlyphVector gv = font.createGlyphVector(frc, textArray);
       Shape shp = gv.getOutline();
       iter = shp.getPathIterator(null);
     }
 
+    @Override
     public boolean isDone() {
       return iter.isDone();
     }
 
-    public int currentSegment(float coords[]) {
+    @Override
+    public int currentSegment(float[] coords) {
       return iter.currentSegment(coords);
     }
 
+    @Override
     public void next() {
       iter.next();
     }
@@ -1120,6 +1138,9 @@ public class PJOGL extends PGL {
 
   @Override
   public String getString(int name) {
+    if (gl == null) {
+      throw new PGL.GraphicsNotInitializedException("Context not initalized.");
+    }
     return gl.glGetString(name);
   }
 
@@ -1469,7 +1490,7 @@ public class PJOGL extends PGL {
 
   @Override
   public void shaderSource(int shader, String source) {
-    gl2.glShaderSource(shader, 1, new String[] { source }, (int[]) null, 0);
+    gl2.glShaderSource(shader, 1, new String[] { source }, null, 0);
   }
 
   @Override
@@ -1813,8 +1834,6 @@ public class PJOGL extends PGL {
   public void blendColor(float red, float green, float blue, float alpha) {
     gl2.glBlendColor(red, green, blue, alpha);
   }
-
-  ///////////////////////////////////////////////////////////
 
   // Whole Framebuffer Operations
 

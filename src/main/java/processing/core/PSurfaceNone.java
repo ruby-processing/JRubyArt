@@ -22,6 +22,9 @@
 
 package processing.core;
 
+import java.io.File;
+
+import processing.awt.ShimAWT;
 
 /**
  * Surface that's not really visible. Used for PDF and friends, or as a base
@@ -33,15 +36,48 @@ public class PSurfaceNone implements PSurface {
 
   protected Thread thread;
   protected boolean paused;
-  protected final Object pauseObject;
+  protected Object pauseObject = new Object();
 
   protected float frameRateTarget = 60;
   protected long frameRatePeriod = 1000000000L / 60L;
 
 
   public PSurfaceNone(PGraphics graphics) {
-    this.pauseObject = new Object();
     this.graphics = graphics;
+  }
+
+
+  public int displayDensity() {
+    return 1;
+  }
+
+
+  public int displayDensity(int display) {
+    return 1;
+  }
+
+
+  @Override
+  public PImage loadImage(String path, Object... args) {
+    return ShimAWT.loadImage(sketch, path, args);
+  }
+
+
+  @Override
+  public void selectInput(String prompt, String callback, File file,
+                          Object callbackObject) {
+  }
+
+
+  @Override
+  public void selectOutput(String prompt, String callback, File file,
+                           Object callbackObject) {
+  }
+
+
+  @Override
+  public void selectFolder(String prompt, String callback, File file,
+                           Object callbackObject) {
   }
 
 
@@ -71,7 +107,8 @@ public class PSurfaceNone implements PSurface {
   }
 
 
-  /** Set the window (and dock, or whatever necessary) title. */
+  /** Set the window (and dock, or whatever necessary) title.
+   * @param title */
   @Override
   public void setTitle(String title) {
     // You're in a utopian PSurface implementation where titles don't exist.
@@ -84,14 +121,16 @@ public class PSurfaceNone implements PSurface {
   }
 
 
-  /** Show or hide the window. */
+  /** Show or hide the window.
+   * @param visible */
   @Override
   public void setVisible(boolean visible) {
     // I'm always invisible. You can't catch me.
   }
 
 
-  /** Set true if we want to resize things (default is not resizable) */
+  /** Set true if we want to resize things (default is not resizable)
+   * @param resizable */
   @Override
   public void setResizable(boolean resizable) {
     // I don't need size to know my worth.
@@ -179,6 +218,15 @@ public class PSurfaceNone implements PSurface {
 
   @Override
   public void hideCursor() { }
+
+
+  //
+
+
+  @Override
+  public boolean openLink(String url) {
+    return false;
+  }
 
 
   //

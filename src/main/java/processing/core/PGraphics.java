@@ -30,11 +30,9 @@ import java.awt.Color;
 
 // Used for the 'image' object that's been here forever
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Image;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.HashMap;
@@ -572,7 +570,7 @@ public class PGraphics extends PImage implements PConstants {
 
   // vertices
   public static final int DEFAULT_VERTICES = 512;
-  protected float vertices[][] =
+  protected float[][] vertices =
     new float[DEFAULT_VERTICES][VERTEX_FIELD_COUNT];
   protected int vertexCount; // total number of vertices
 
@@ -607,7 +605,7 @@ public class PGraphics extends PImage implements PConstants {
 
   // spline vertices
 
-  protected float curveVertices[][];
+  protected float[][] curveVertices;
   protected int curveVertexCount;
 
   // ........................................................
@@ -620,16 +618,16 @@ public class PGraphics extends PImage implements PConstants {
   // [toxi 031031]
   // changed table's precision to 0.5 degree steps
   // introduced new vars for more flexible code
-  static final protected float SIN_LUT[];
-  static final protected float COS_LUT[];
+  static final protected float[] sinLUT;
+  static final protected float[] cosLUT;
   static final protected float SINCOS_PRECISION = 0.5f;
   static final protected int SINCOS_LENGTH = (int) (360f / SINCOS_PRECISION);
   static {
-    SIN_LUT = new float[SINCOS_LENGTH];
-    COS_LUT = new float[SINCOS_LENGTH];
+    sinLUT = new float[SINCOS_LENGTH];
+    cosLUT = new float[SINCOS_LENGTH];
     for (int i = 0; i < SINCOS_LENGTH; i++) {
-      SIN_LUT[i] = (float) Math.sin(i * DEG_TO_RAD * SINCOS_PRECISION);
-      COS_LUT[i] = (float) Math.cos(i * DEG_TO_RAD * SINCOS_PRECISION);
+      sinLUT[i] = (float) Math.sin(i * DEG_TO_RAD * SINCOS_PRECISION);
+      cosLUT[i] = (float) Math.cos(i * DEG_TO_RAD * SINCOS_PRECISION);
     }
   }
 
@@ -704,7 +702,9 @@ public class PGraphics extends PImage implements PConstants {
 
   // [toxi031031] new & faster sphere code w/ support flexible resolutions
   // will be set by sphereDetail() or 1st call to sphere()
-  protected float sphereX[], sphereY[], sphereZ[];
+  protected float[] sphereX;
+  protected float[] sphereY;
+  protected float[] sphereZ;
 
   /// Number of U steps (aka "theta") around longitudinally spanning 2*pi
   public int sphereDetailU = 0;
@@ -767,15 +767,14 @@ public class PGraphics extends PImage implements PConstants {
 
 
   /**
-   * The final step in setting up a renderer, set its size of this renderer.
-   * This was formerly handled by the constructor, but instead it's been broken
-   * out so that setParent/setPrimary/setPath can be handled differently.
-   *
-   * Important: this is ignored by the Methods task because otherwise it will
-   * override setSize() in PApplet/Applet/Component, which will 1) not call
-   * super.setSize(), and 2) will cause the renderer to be resized from the
-   * event thread (EDT), causing a nasty crash as it collides with the
-   * animation thread.
+   * The final step in setting up a renderer, set its size of this renderer.This was formerly handled by the constructor, but instead it's been broken
+ out so that setParent/setPrimary/setPath can be handled differently.Important: this is ignored by the Methods task because otherwise it will
+ override setSize() in PApplet/Applet/Component, which will 1) not call
+ super.setSize(), and 2) will cause the renderer to be resized from the
+ event thread (EDT), causing a nasty crash as it collides with the
+ animation thread.
+   * @param w
+   * @param h
    */
   public void setSize(int w, int h) {  // ignore
     width = w;
@@ -844,10 +843,11 @@ public class PGraphics extends PImage implements PConstants {
 
 
   /**
-   * Get cache storage data for the specified renderer. Because each renderer
-   * will cache data in different formats, it's necessary to store cache data
-   * keyed by the renderer object. Otherwise, attempting to draw the same
-   * image to both a PGraphicsJava2D and a PGraphicsOpenGL will cause errors.
+   * Get cache storage data for the specified renderer.Because each renderer
+ will cache data in different formats, it's necessary to store cache data
+ keyed by the renderer object. Otherwise, attempting to draw the same
+ image to both a PGraphicsJava2D and a PGraphicsOpenGL will cause errors.
+   * @param image
    * @return metadata stored for the specified renderer
    */
   public Object getCache(PImage image) {  // ignore
@@ -1090,7 +1090,7 @@ public class PGraphics extends PImage implements PConstants {
    * obscure rendering features that cannot be implemented in a consistent
    * manner across renderers. Many options will often graduate to standard
    * features instead of hints over time.
-   *  
+   * 
    * hint(ENABLE_OPENGL_4X_SMOOTH) - Enable 4x anti-aliasing for P3D. This
    * can help force anti-aliasing if it has not been enabled by the user. On
    * some graphics cards, this can also be set by the graphics driver's
@@ -1098,13 +1098,13 @@ public class PGraphics extends PImage implements PConstants {
    * be called immediately after the size() command because it resets the
    * renderer, obliterating any settings and anything drawn (and like size(),
    * re-running the code that came before it again).
-   *  
+   * 
    * hint(DISABLE_OPENGL_2X_SMOOTH) - In Processing 1.0, Processing always
    * enables 2x smoothing when the P3D renderer is used. This hint disables
    * the default 2x smoothing and returns the smoothing behavior found in
    * earlier releases, where smooth() and noSmooth() could be used to enable
    * and disable smoothing, though the quality was inferior.
-   *  
+   * 
    * hint(ENABLE_NATIVE_FONTS) - Use the native version fonts when they are
    * installed, rather than the bitmapped version from a .vlw file. This is
    * useful with the default (or JAVA2D) renderer setting, as it will improve
@@ -1113,7 +1113,7 @@ public class PGraphics extends PImage implements PConstants {
    * machine (because you have the font installed) but lousy on others'
    * machines if the identical font is unavailable. This option can only be
    * set per-sketch, and must be called before any use of textFont().
-   *  
+   * 
    * hint(DISABLE_DEPTH_TEST) - Disable the zbuffer, allowing you to draw on
    * top of everything at will. When depth testing is disabled, items will be
    * drawn to the screen sequentially, like a painting. This hint is most
@@ -1123,14 +1123,14 @@ public class PGraphics extends PImage implements PConstants {
    * hint(ENABLE_DEPTH_TEST), but note that with the depth buffer cleared,
    * any 3D drawing that happens later in draw() will ignore existing shapes
    * on the screen.
-   *  
+   * 
    * hint(ENABLE_DEPTH_SORT) - Enable primitive z-sorting of triangles and
    * lines in P3D and OPENGL. This can slow performance considerably, and the
    * algorithm is not yet perfect. Restore the default with hint(DISABLE_DEPTH_SORT).
-   *  
+   * 
    * hint(DISABLE_OPENGL_ERROR_REPORT) - Speeds up the P3D renderer setting
    * by not checking for errors while running. Undo with hint(ENABLE_OPENGL_ERROR_REPORT).
-   *  
+   * 
    * hint(ENABLE_BUFFER_READING) - Depth and stencil buffers in P2D/P3D will be
    * downsampled to make PGL#readPixels work with multisampling. Enabling this
    * introduces some overhead, so if you experience bad performance, disable
@@ -1139,17 +1139,17 @@ public class PGraphics extends PImage implements PConstants {
    * creating your PGraphics2D/3D. You can restore the default with
    * hint(DISABLE_BUFFER_READING) if you don't plan to read depth from
    * this PGraphics anymore.
-   *  
+   * 
    * hint(ENABLE_KEY_REPEAT) - Auto-repeating key events are discarded
    * by default (works only in P2D/P3D); use this hint to get all the key events
    * (including auto-repeated). Call hint(DISABLE_KEY_REPEAT) to get events
    * only when the key goes physically up or down.
-   *  
+   * 
    * hint(DISABLE_ASYNC_SAVEFRAME) - P2D/P3D only - save() and saveFrame()
    * will not use separate threads for saving and will block until the image
    * is written to the drive. This was the default behavior in 3.0b7 and before.
    * To enable, call hint(ENABLE_ASYNC_SAVEFRAME).
-   *  
+   * 
    * As of release 0149, unhint() has been removed in favor of adding
    * additional ENABLE/DISABLE constants to reset the default behavior. This
    * prevents the double negatives, and also reinforces which hints can be
@@ -1211,12 +1211,12 @@ public class PGraphics extends PImage implements PConstants {
    * specifies a position in 2D and the <b>vertex()</b> function with three
    * parameters specifies a position in 3D. Each shape will be outlined with
    * the current stroke color and filled with the fill color.
-   *  
+   * 
    * Transformations such as <b>translate()</b>, <b>rotate()</b>, and
    * <b>scale()</b> do not work within <b>beginShape()</b>. It is also not
    * possible to use other shapes, such as <b>ellipse()</b> or <b>rect()</b>
    * within <b>beginShape()</b>.
-   *  
+   * 
    * The P3D renderer settings allow <b>stroke()</b> and <b>fill()</b>
    * settings to be altered per-vertex, however the default P2D renderer does
    * not. Settings such as <b>strokeWeight()</b>, <b>strokeCap()</b>, and
@@ -1238,8 +1238,8 @@ public class PGraphics extends PImage implements PConstants {
 
 
   /**
-   * Sets whether the upcoming vertex is part of an edge.
-   * Equivalent to glEdgeFlag(), for people familiar with OpenGL.
+   * Sets whether the upcoming vertex is part of an edge.Equivalent to glEdgeFlag(), for people familiar with OpenGL.
+   * @param edge
    */
   public void edge(boolean edge) {
    this.edge = edge;
@@ -1361,7 +1361,7 @@ public class PGraphics extends PImage implements PConstants {
    * Sets a texture to be applied to vertex points. The <b>texture()</b>
    * function must be called between <b>beginShape()</b> and
    * <b>endShape()</b> and before any calls to <b>vertex()</b>.
-   *  
+   * 
    * When textures are in use, the fill color is ignored. Instead, use tint()
    * to specify the color of the texture as it is applied to the shape.
    *
@@ -1391,7 +1391,7 @@ public class PGraphics extends PImage implements PConstants {
 
   protected void vertexCheck() {
     if (vertexCount == vertices.length) {
-      float temp[][] = new float[vertexCount << 1][VERTEX_FIELD_COUNT];
+      float[][] temp = new float[vertexCount << 1][VERTEX_FIELD_COUNT];
       System.arraycopy(vertices, 0, temp, 0, vertexCount);
       vertices = temp;
     }
@@ -1483,7 +1483,7 @@ public class PGraphics extends PImage implements PConstants {
     // http://dev.processing.org/bugs/show_bug.cgi?id=444
     if (shape == POLYGON) {
       if (vertexCount > 0) {
-        float pvertex[] = vertices[vertexCount-1];
+        float[] pvertex = vertices[vertexCount-1];
         if ((Math.abs(pvertex[X] - x) < EPSILON) &&
             (Math.abs(pvertex[Y] - y) < EPSILON) &&
             (Math.abs(pvertex[Z] - z) < EPSILON)) {
@@ -1650,18 +1650,18 @@ public class PGraphics extends PImage implements PConstants {
 
 
   /**
-   * Set (U, V) coords for the next vertex in the current shape.
-   * This is ugly as its own function, and will (almost?) always be
-   * coincident with a call to vertex. As of beta, this was moved to
-   * the protected method you see here, and called from an optional
-   * param of and overloaded vertex().
-   * 
+   * Set (U, V) coords for the next vertex in the current shape.This is ugly as its own function, and will (almost?) always be
+ coincident with a call to vertex.As of beta, this was moved to
+ the protected method you see here, and called from an optional
+ param of and overloaded vertex().
    * The parameters depend on the current textureMode. When using
-   * textureMode(IMAGE), the coordinates will be relative to the size
-   * of the image texture, when used with textureMode(NORMAL),
-   * they'll be in the range 0..1.
-   * 
-   * Used by both PGraphics2D (for images) and PGraphics3D.
+ textureMode(IMAGE), the coordinates will be relative to the size
+ of the image texture, when used with textureMode(NORMAL),
+ they'll be in the range 0..1.
+ 
+ Used by both PGraphics2D (for images) and PGraphics3D.
+   * @param u
+   * @param v
    */
   protected void vertexTexture(float u, float v) {
     if (textureImage == null) {
@@ -1727,7 +1727,6 @@ public class PGraphics extends PImage implements PConstants {
    * @see PShape
    * @see PGraphics#beginShape(int)
    */
-  
   public void endShape(int mode) {
   }
 
@@ -1739,6 +1738,7 @@ public class PGraphics extends PImage implements PConstants {
 
 
   /**
+   * @return 
    * @webref shape
    * @param filename name of file to load, can be .svg or .obj
    * @see PShape
@@ -1984,31 +1984,34 @@ public class PGraphics extends PImage implements PConstants {
    * @param d height of the rectangle, by default
    */
   public void clip(float a, float b, float c, float d) {
-    switch (imageMode) {
-      case CORNER:
-        if (c < 0) {  // reset a negative width
-          a += c; c = -c;
-        } if (d < 0) {  // reset a negative height
-          b += d; d = -d;
-        } clipImpl(a, b, a + c, b + d);
-        break;
-      case CORNERS:
-        if (c < a) {  // reverse because x2 < x1
-          float temp = a; a = c; c = temp;
-        } if (d < b) {  // reverse because y2 < y1
-          float temp = b; b = d; d = temp;
-        } clipImpl(a, b, c, d);
-        break;
-      case CENTER:
-        // c and d are width/height
-        if (c < 0) c = -c;
-        if (d < 0) d = -d;
-        float x1 = a - c/2;
-        float y1 = b - d/2;
-        clipImpl(x1, y1, x1 + c, y1 + d);
-        break;
-      default:
-        break;
+    if (imageMode == CORNER) {
+      if (c < 0) {  // reset a negative width
+        a += c; c = -c;
+      }
+      if (d < 0) {  // reset a negative height
+        b += d; d = -d;
+      }
+
+      clipImpl(a, b, a + c, b + d);
+
+    } else if (imageMode == CORNERS) {
+      if (c < a) {  // reverse because x2 < x1
+        float temp = a; a = c; c = temp;
+      }
+      if (d < b) {  // reverse because y2 < y1
+        float temp = b; b = d; d = temp;
+      }
+
+      clipImpl(a, b, c, d);
+
+    } else if (imageMode == CENTER) {
+      // c and d are width/height
+      if (c < 0) c = -c;
+      if (d < 0) d = -d;
+      float x1 = a - c/2;
+      float y1 = b - d/2;
+
+      clipImpl(x1, y1, x1 + c, y1 + d);
     }
   }
 
@@ -2733,11 +2736,11 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * ( begin auto-generated from square.xml )
    *
-   * Draws a square to the screen. A square is a four-sided shape with 
-   * every angle at ninety degrees and each side is the same length. 
-   * By default, the first two parameters set the location of the 
-   * upper-left corner, the third sets the width and height. The way 
-   * these parameters are interpreted, however, may be changed with the 
+   * Draws a square to the screen. A square is a four-sided shape with
+   * every angle at ninety degrees and each side is the same length.
+   * By default, the first two parameters set the location of the
+   * upper-left corner, the third sets the width and height. The way
+   * these parameters are interpreted, however, may be changed with the
    * <b>rectMode()</b> function.
    *
    * ( end auto-generated )
@@ -2808,23 +2811,19 @@ public class PGraphics extends PImage implements PConstants {
     float w = c;
     float h = d;
 
-    switch (ellipseMode) {
-      case CORNERS:
-        w = c - a;
-        h = d - b;
-        break;
-      case RADIUS:
-        x = a - c;
-        y = b - d;
-        w = c * 2;
-        h = d * 2;
-        break;
-      case DIAMETER:
-        x = a - c/2f;
-        y = b - d/2f;
-        break;
-      default:
-        break;
+    if (ellipseMode == CORNERS) {
+      w = c - a;
+      h = d - b;
+
+    } else if (ellipseMode == RADIUS) {
+      x = a - c;
+      y = b - d;
+      w = c * 2;
+      h = d * 2;
+
+    } else if (ellipseMode == DIAMETER) {
+      x = a - c/2f;
+      y = b - d/2f;
     }
 
     if (w < 0) {  // undo negative width
@@ -2882,23 +2881,19 @@ public class PGraphics extends PImage implements PConstants {
     float w = c;
     float h = d;
 
-    switch (ellipseMode) {
-      case CORNERS:
-        w = c - a;
-        h = d - b;
-        break;
-      case RADIUS:
-        x = a - c;
-        y = b - d;
-        w = c * 2;
-        h = d * 2;
-        break;
-      case CENTER:
-        x = a - c/2f;
-        y = b - d/2f;
-        break;
-      default:
-        break;
+    if (ellipseMode == CORNERS) {
+      w = c - a;
+      h = d - b;
+
+    } else if (ellipseMode == RADIUS) {
+      x = a - c;
+      y = b - d;
+      w = c * 2;
+      h = d * 2;
+
+    } else if (ellipseMode == CENTER) {
+      x = a - c/2f;
+      y = b - d/2f;
     }
 
     // make sure the loop will exit before starting while
@@ -2940,9 +2935,9 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * ( begin auto-generated from circle.xml )
    *
-   * Draws a circle to the screen. By default, the first two parameters 
-   * set the location of the center, and the third sets the shape's width 
-   * and height. The origin may be changed with the <b>ellipseMode()</b> 
+   * Draws a circle to the screen. By default, the first two parameters
+   * set the location of the center, and the third sets the shape's width
+   * and height. The origin may be changed with the <b>ellipseMode()</b>
    * function.
    *
    * ( end auto-generated )
@@ -3090,8 +3085,8 @@ public class PGraphics extends PImage implements PConstants {
     float[] cz = new float[ures];
     // calc unit circle in XZ plane
     for (int i = 0; i < ures; i++) {
-      cx[i] = COS_LUT[(int) (i*delta) % SINCOS_LENGTH];
-      cz[i] = SIN_LUT[(int) (i*delta) % SINCOS_LENGTH];
+      cx[i] = cosLUT[(int) (i*delta) % SINCOS_LENGTH];
+      cz[i] = sinLUT[(int) (i*delta) % SINCOS_LENGTH];
     }
     // computing vertexlist
     // vertexlist starts at south pole
@@ -3108,8 +3103,8 @@ public class PGraphics extends PImage implements PConstants {
 
     // step along Y axis
     for (int i = 1; i < vres; i++) {
-      float curradius = SIN_LUT[(int) angle % SINCOS_LENGTH];
-      float currY = COS_LUT[(int) angle % SINCOS_LENGTH];
+      float curradius = sinLUT[(int) angle % SINCOS_LENGTH];
+      float currY = cosLUT[(int) angle % SINCOS_LENGTH];
       for (int j = 0; j < ures; j++) {
         sphereX[currVert] = cx[j] * curradius;
         sphereY[currVert] = currY;
@@ -3433,17 +3428,17 @@ public class PGraphics extends PImage implements PConstants {
    * ( begin auto-generated from curvePoint.xml )
    *
    * Evalutes the curve at point t for points a, b, c, d. The parameter t
-   * varies between 0 and 1, a and d are points on the curve, and b and c are
-   * the control points. This can be done once with the x coordinates and a
+   * varies between 0 and 1, a and d are the control points, and b and c are
+   * the points on the curve. This can be done once with the x coordinates and a
    * second time with the y coordinates to get the location of a curve at t.
    *
    * ( end auto-generated )
    *
    * @webref shape:curves
-   * @param a coordinate of first point on the curve
-   * @param b coordinate of second point on the curve
-   * @param c coordinate of third point on the curve
-   * @param d coordinate of fourth point on the curve
+   * @param a coordinate of first control point
+   * @param b coordinate of first point on the curve
+   * @param c coordinate of second point on the curve
+   * @param d coordinate of second control point
    * @param t value between 0 and 1
    * @see PGraphics#curve(float, float, float, float, float, float, float, float, float, float, float, float)
    * @see PGraphics#curveVertex(float, float)
@@ -3469,7 +3464,7 @@ public class PGraphics extends PImage implements PConstants {
    *
    * Calculates the tangent of a point on a curve. There's a good definition
    * of <em><a href="http://en.wikipedia.org/wiki/Tangent"
-   * target="new"></a>tangent</em> on Wikipedia.
+   * target="new">tangent on Wikipedia</a></em>.
    *
    * ( end auto-generated )
    *
@@ -3859,37 +3854,40 @@ public class PGraphics extends PImage implements PConstants {
     // loadImageAsync() sets width and height to -1 when loading fails.
     if (img.width == -1 || img.height == -1) return;
 
-    switch (imageMode) {
-      case CORNER:
-        if (c < 0) {  // reset a negative width
-          a += c; c = -c;
-        } if (d < 0) {  // reset a negative height
-          b += d; d = -d;
-        } imageImpl(img,
-          a, b, a + c, b + d,
-          u1, v1, u2, v2);
-        break;
-      case CORNERS:
-        if (c < a) {  // reverse because x2 < x1
-          float temp = a; a = c; c = temp;
-        } if (d < b) {  // reverse because y2 < y1
-          float temp = b; b = d; d = temp;
-        } imageImpl(img,
-          a, b, c, d,
-          u1, v1, u2, v2);
-        break;
-      case CENTER:
-        // c and d are width/height
-        if (c < 0) c = -c;
-        if (d < 0) d = -d;
-        float x1 = a - c/2;
-        float y1 = b - d/2;
-        imageImpl(img,
-          x1, y1, x1 + c, y1 + d,
-          u1, v1, u2, v2);
-        break;
-      default:
-        break;
+    if (imageMode == CORNER) {
+      if (c < 0) {  // reset a negative width
+        a += c; c = -c;
+      }
+      if (d < 0) {  // reset a negative height
+        b += d; d = -d;
+      }
+
+      imageImpl(img,
+                a, b, a + c, b + d,
+                u1, v1, u2, v2);
+
+    } else if (imageMode == CORNERS) {
+      if (c < a) {  // reverse because x2 < x1
+        float temp = a; a = c; c = temp;
+      }
+      if (d < b) {  // reverse because y2 < y1
+        float temp = b; b = d; d = temp;
+      }
+
+      imageImpl(img,
+                a, b, c, d,
+                u1, v1, u2, v2);
+
+    } else if (imageMode == CENTER) {
+      // c and d are width/height
+      if (c < 0) c = -c;
+      if (d < 0) d = -d;
+      float x1 = a - c/2;
+      float y1 = b - d/2;
+
+      imageImpl(img,
+                x1, y1, x1 + c, y1 + d,
+                u1, v1, u2, v2);
     }
   }
 
@@ -4075,26 +4073,22 @@ public class PGraphics extends PImage implements PConstants {
 
       pushMatrix();
 
-      switch (shapeMode) {
-        case CENTER:
-          // x and y are center, c and d refer to a diameter
-          translate(a - c/2f, b - d/2f);
-          scale(c / shape.getWidth(), d / shape.getHeight());
-          break;
-        case CORNER:
-          translate(a, b);
-          scale(c / shape.getWidth(), d / shape.getHeight());
-          break;
-        case CORNERS:
-          // c and d are x2/y2, make them into width/height
-          c -= a;
-          d -= b;
-          // then same as above
-          translate(a, b);
-          scale(c / shape.getWidth(), d / shape.getHeight());
-          break;
-        default:
-          break;
+      if (shapeMode == CENTER) {
+        // x and y are center, c and d refer to a diameter
+        translate(a - c/2f, b - d/2f);
+        scale(c / shape.getWidth(), d / shape.getHeight());
+
+      } else if (shapeMode == CORNER) {
+        translate(a, b);
+        scale(c / shape.getWidth(), d / shape.getHeight());
+
+      } else if (shapeMode == CORNERS) {
+        // c and d are x2/y2, make them into width/height
+        c -= a;
+        d -= b;
+        // then same as above
+        translate(a, b);
+        scale(c / shape.getWidth(), d / shape.getHeight());
       }
       shape.draw(this);
 
@@ -4147,8 +4141,9 @@ public class PGraphics extends PImage implements PConstants {
       }
       return createFont(baseFont, size, smooth, charset, stream != null);
 
-    } catch (FontFormatException | IOException e) {
+    } catch (Exception e) {
       System.err.println("Problem with createFont(\"" + name + "\")");
+      e.printStackTrace();
       return null;
     }
   }
@@ -4174,7 +4169,7 @@ public class PGraphics extends PImage implements PConstants {
    * CENTER, and RIGHT set the display characteristics of the letters in
    * relation to the values for the <b>x</b> and <b>y</b> parameters of the
    * <b>text()</b> function.
-   *  
+   * 
    * In Processing 0125 and later, an optional second parameter can be used
    * to vertically align the text. BASELINE is the default, and the vertical
    * alignment will be reset to BASELINE if the second parameter is not used.
@@ -4182,12 +4177,12 @@ public class PGraphics extends PImage implements PConstants {
    * offsets the line based on the current <b>textDescent()</b>. For multiple
    * lines, the final line will be aligned to the bottom, with the previous
    * lines appearing above it.
-   *  
+   * 
    * When using <b>text()</b> with width and height parameters, BASELINE is
    * ignored, and treated as TOP. (Otherwise, text would by default draw
    * outside the box, since BASELINE is the default setting. BASELINE is not
    * a useful drawing mode for text drawn in a rectangle.)
-   *  
+   * 
    * The vertical alignment is based on the value of <b>textAscent()</b>,
    * which many fonts do not specify correctly. It may be necessary to use a
    * hack and offset by a few pixels by hand so that the offset looks
@@ -4263,11 +4258,11 @@ public class PGraphics extends PImage implements PConstants {
    * used. This font will be used in all subsequent calls to the
    * <b>text()</b> function. If no <b>size</b> parameter is input, the font
    * will appear at its original size (the size it was created at with the
-   * "Create Font..." tool) until it is changed with <b>textSize()</b>. 
-   * Because fonts are usually bitmaped, you should create fonts at
+   * "Create Font..." tool) until it is changed with <b>textSize()</b>. <br
+   * />  Because fonts are usually bitmaped, you should create fonts at
    * the sizes that will be used most commonly. Using <b>textFont()</b>
-   * without the size parameter will result in the cleanest-looking text. 
-   * With the default (JAVA2D) and PDF renderers, it's also possible
+   * without the size parameter will result in the cleanest-looking text. <br
+   * /> With the default (JAVA2D) and PDF renderers, it's also possible
    * to enable the use of native fonts via the command
    * <b>hint(ENABLE_NATIVE_FONTS)</b>. This will produce vector text in
    * JAVA2D sketches and PDF output in cases where the vector data is
@@ -4560,7 +4555,7 @@ public class PGraphics extends PImage implements PConstants {
    * Unlike the previous version that was inside PFont, this will
    * return the size not of a 1 pixel font, but the actual current size.
    */
-  protected float textWidthImpl(char buffer[], int start, int stop) {
+  protected float textWidthImpl(char[] buffer, int start, int stop) {
     float wide = 0;
     for (int i = start; i < stop; i++) {
       // could add kerning here, but it just ain't implemented
@@ -4613,20 +4608,14 @@ public class PGraphics extends PImage implements PConstants {
       defaultFontOrDeath("text");
     }
 
-    switch (textAlignY) {
-      case CENTER:
-        y += textAscent() / 2;
-        break;
-      case TOP:
-        y += textAscent();
-        break;
-      case BOTTOM:
-        y -= textDescent();
-        //} else if (textAlignY == BASELINE) {
-        // do nothing
-        break;
-      default:
-        break;
+    if (textAlignY == CENTER) {
+      y += textAscent() / 2;
+    } else if (textAlignY == TOP) {
+      y += textAscent();
+    } else if (textAlignY == BOTTOM) {
+      y -= textDescent();
+    //} else if (textAlignY == BASELINE) {
+      // do nothing
     }
 
     textBuffer[0] = c;
@@ -4698,27 +4687,21 @@ public class PGraphics extends PImage implements PConstants {
         high += textLeading;
       }
     }
-    switch (textAlignY) {
-      case CENTER:
-        // for a single line, this adds half the textAscent to y
-        // for multiple lines, subtract half the additional height
-        //y += (textAscent() - textDescent() - high)/2;
-        y += (textAscent() - high)/2;
-        break;
-      case TOP:
-        // for a single line, need to add textAscent to y
-        // for multiple lines, no different
-        y += textAscent();
-        break;
-      case BOTTOM:
-        // for a single line, this is just offset by the descent
-        // for multiple lines, subtract leading for each line
-        y -= textDescent() + high;
-        //} else if (textAlignY == BASELINE) {
-        // do nothing
-        break;
-      default:
-        break;
+    if (textAlignY == CENTER) {
+      // for a single line, this adds half the textAscent to y
+      // for multiple lines, subtract half the additional height
+      //y += (textAscent() - textDescent() - high)/2;
+      y += (textAscent() - high)/2;
+    } else if (textAlignY == TOP) {
+      // for a single line, need to add textAscent to y
+      // for multiple lines, no different
+      y += textAscent();
+    } else if (textAlignY == BOTTOM) {
+      // for a single line, this is just offset by the descent
+      // for multiple lines, subtract leading for each line
+      y -= textDescent() + high;
+    //} else if (textAlignY == BASELINE) {
+      // do nothing
     }
 
 //    int start = 0;
@@ -4869,33 +4852,27 @@ public class PGraphics extends PImage implements PConstants {
     int lineFitCount = 1 + PApplet.floor((boxHeight - topAndBottom) / textLeading);
     int lineCount = Math.min(textBreakCount, lineFitCount);
 
-    switch (textAlignY) {
-      case CENTER:
-        {
-          float lineHigh = textAscent() + textLeading * (lineCount - 1);
-          float y = y1 + textAscent() + (boxHeight - lineHigh) / 2;
-          for (int i = 0; i < lineCount; i++) {
-            textLineAlignImpl(textBuffer, textBreakStart[i], textBreakStop[i], lineX, y);
-            y += textLeading;
-          }   break;
-        }
-      case BOTTOM:
-        {
-          float y = y2 - textDescent() - textLeading * (lineCount - 1);
-          for (int i = 0; i < lineCount; i++) {
-            textLineAlignImpl(textBuffer, textBreakStart[i], textBreakStop[i], lineX, y);
-            y += textLeading;
-          }   break;
-        }
-      default:
-        {
-          // TOP or BASELINE just go to the default
-          float y = y1 + textAscent();
-          for (int i = 0; i < lineCount; i++) {
-            textLineAlignImpl(textBuffer, textBreakStart[i], textBreakStop[i], lineX, y);
-            y += textLeading;
-          }   break;
-        }
+    if (textAlignY == CENTER) {
+      float lineHigh = textAscent() + textLeading * (lineCount - 1);
+      float y = y1 + textAscent() + (boxHeight - lineHigh) / 2;
+      for (int i = 0; i < lineCount; i++) {
+        textLineAlignImpl(textBuffer, textBreakStart[i], textBreakStop[i], lineX, y);
+        y += textLeading;
+      }
+
+    } else if (textAlignY == BOTTOM) {
+      float y = y2 - textDescent() - textLeading * (lineCount - 1);
+      for (int i = 0; i < lineCount; i++) {
+        textLineAlignImpl(textBuffer, textBreakStart[i], textBreakStop[i], lineX, y);
+        y += textLeading;
+      }
+
+    } else {  // TOP or BASELINE just go to the default
+      float y = y1 + textAscent();
+      for (int i = 0; i < lineCount; i++) {
+        textLineAlignImpl(textBuffer, textBreakStart[i], textBreakStop[i], lineX, y);
+        y += textLeading;
+      }
     }
   }
 
@@ -5046,7 +5023,7 @@ public class PGraphics extends PImage implements PConstants {
    * Handles placement of a text line, then calls textLineImpl
    * to actually render at the specific point.
    */
-  protected void textLineAlignImpl(char buffer[], int start, int stop,
+  protected void textLineAlignImpl(char[] buffer, int start, int stop,
                                    float x, float y) {
     if (textAlign == CENTER) {
       x -= textWidthImpl(buffer, start, stop) / 2f;
@@ -5062,7 +5039,7 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * Implementation of actual drawing for a line of text.
    */
-  protected void textLineImpl(char buffer[], int start, int stop,
+  protected void textLineImpl(char[] buffer, int start, int stop,
                               float x, float y) {
     for (int index = start; index < stop; index++) {
       textCharImpl(buffer[index], x, y);
@@ -5194,28 +5171,28 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * ( begin auto-generated from push.xml )
    *
-   * The <b>push()</b> function saves the current drawing style 
-   * settings and transformations, while <b>pop()</b> restores these 
-   * settings. Note that these functions are always used together. 
-   * They allow you to change the style and transformation settings 
-   * and later return to what you had. When a new state is started 
-   * with push(), it builds on the current style and transform 
+   * The <b>push()</b> function saves the current drawing style
+   * settings and transformations, while <b>pop()</b> restores these
+   * settings. Note that these functions are always used together.
+   * They allow you to change the style and transformation settings
+   * and later return to what you had. When a new state is started
+   * with push(), it builds on the current style and transform
    * information.
    * 
-   * <b>push()</b> stores information related to the current 
-   * transformation state and style settings controlled by the 
-   * following functions: <b>rotate()</b>, <b>translate()</b>, 
-   * <b>scale()</b>, <b>fill()</b>, <b>stroke()</b>, <b>tint()</b>, 
-   * <b>strokeWeight()</b>, <b>strokeCap()</b>, <b>strokeJoin()</b>, 
-   * <b>imageMode()</b>, <b>rectMode()</b>, <b>ellipseMode()</b>, 
-   * <b>colorMode()</b>, <b>textAlign()</b>, <b>textFont()</b>, 
+   * <b>push()</b> stores information related to the current
+   * transformation state and style settings controlled by the
+   * following functions: <b>rotate()</b>, <b>translate()</b>,
+   * <b>scale()</b>, <b>fill()</b>, <b>stroke()</b>, <b>tint()</b>,
+   * <b>strokeWeight()</b>, <b>strokeCap()</b>, <b>strokeJoin()</b>,
+   * <b>imageMode()</b>, <b>rectMode()</b>, <b>ellipseMode()</b>,
+   * <b>colorMode()</b>, <b>textAlign()</b>, <b>textFont()</b>,
    * <b>textMode()</b>, <b>textSize()</b>, <b>textLeading()</b>.
    * 
-   * The <b>push()</b> and <b>pop()</b> functions were added with 
-   * Processing 3.5. They can be used in place of <b>pushMatrix()</b>, 
-   * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>. 
-   * The difference is that push() and pop() control both the 
-   * transformations (rotate, scale, translate) and the drawing styles 
+   * The <b>push()</b> and <b>pop()</b> functions were added with
+   * Processing 3.5. They can be used in place of <b>pushMatrix()</b>,
+   * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>.
+   * The difference is that push() and pop() control both the
+   * transformations (rotate, scale, translate) and the drawing styles
    * at the same time.
    *
    * ( end auto-generated )
@@ -5231,28 +5208,28 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * ( begin auto-generated from pop.xml )
    *
-   * The <b>pop()</b> function restores the previous drawing style 
-   * settings and transformations after <b>push()</b> has changed them. 
-   * Note that these functions are always used together. They allow 
-   * you to change the style and transformation settings and later 
-   * return to what you had. When a new state is started with push(), 
+   * The <b>pop()</b> function restores the previous drawing style
+   * settings and transformations after <b>push()</b> has changed them.
+   * Note that these functions are always used together. They allow
+   * you to change the style and transformation settings and later
+   * return to what you had. When a new state is started with push(),
    * it builds on the current style and transform information.
    * 
    * 
-   * <b>push()</b> stores information related to the current 
-   * transformation state and style settings controlled by the 
-   * following functions: <b>rotate()</b>, <b>translate()</b>, 
-   * <b>scale()</b>, <b>fill()</b>, <b>stroke()</b>, <b>tint()</b>, 
-   * <b>strokeWeight()</b>, <b>strokeCap()</b>, <b>strokeJoin()</b>, 
-   * <b>imageMode()</b>, <b>rectMode()</b>, <b>ellipseMode()</b>, 
-   * <b>colorMode()</b>, <b>textAlign()</b>, <b>textFont()</b>, 
+   * <b>push()</b> stores information related to the current
+   * transformation state and style settings controlled by the
+   * following functions: <b>rotate()</b>, <b>translate()</b>,
+   * <b>scale()</b>, <b>fill()</b>, <b>stroke()</b>, <b>tint()</b>,
+   * <b>strokeWeight()</b>, <b>strokeCap()</b>, <b>strokeJoin()</b>,
+   * <b>imageMode()</b>, <b>rectMode()</b>, <b>ellipseMode()</b>,
+   * <b>colorMode()</b>, <b>textAlign()</b>, <b>textFont()</b>,
    * <b>textMode()</b>, <b>textSize()</b>, <b>textLeading()</b>.
    * 
-   * The <b>push()</b> and <b>pop()</b> functions were added with 
-   * Processing 3.5. They can be used in place of <b>pushMatrix()</b>, 
-   * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>. 
-   * The difference is that push() and pop() control both the 
-   * transformations (rotate, scale, translate) and the drawing styles 
+   * The <b>push()</b> and <b>pop()</b> functions were added with
+   * Processing 3.5. They can be used in place of <b>pushMatrix()</b>,
+   * <b>popMatrix()</b>, <b>pushStyles()</b>, and <b>popStyles()</b>.
+   * The difference is that push() and pop() control both the
+   * transformations (rotate, scale, translate) and the drawing styles
    * at the same time.
    *
    * ( end auto-generated )
@@ -5375,7 +5352,7 @@ public class PGraphics extends PImage implements PConstants {
    * Rotates a shape the amount specified by the <b>angle</b> parameter.
    * Angles should be specified in radians (values from 0 to TWO_PI) or
    * converted to radians with the <b>radians()</b> function.
-   *  
+   * 
    * Objects are always rotated around their relative position to the origin
    * and positive numbers rotate objects in a clockwise direction.
    * Transformations apply to everything that happens after and subsequent
@@ -5383,7 +5360,7 @@ public class PGraphics extends PImage implements PConstants {
    * <b>rotate(HALF_PI)</b> and then <b>rotate(HALF_PI)</b> is the same as
    * <b>rotate(PI)</b>. All tranformations are reset when <b>draw()</b>
    * begins again.
-   *  
+   * 
    * Technically, <b>rotate()</b> multiplies the current transformation
    * matrix by a rotation matrix. This function can be further controlled by
    * the <b>pushMatrix()</b> and <b>popMatrix()</b>.
@@ -5586,7 +5563,7 @@ public class PGraphics extends PImage implements PConstants {
    * <b>shearX(PI/2)</b> and then <b>shearX(PI/2)</b> is the same as
    * <b>shearX(PI)</b>. If <b>shearX()</b> is called within the
    * <b>draw()</b>, the transformation is reset when the loop begins again.
-   *  
+   * 
    * Technically, <b>shearX()</b> multiplies the current transformation
    * matrix by a rotation matrix. This function can be further controlled by
    * the <b>pushMatrix()</b> and <b>popMatrix()</b> functions.
@@ -5620,7 +5597,7 @@ public class PGraphics extends PImage implements PConstants {
    * <b>shearY(PI/2)</b> and then <b>shearY(PI/2)</b> is the same as
    * <b>shearY(PI)</b>. If <b>shearY()</b> is called within the
    * <b>draw()</b>, the transformation is reset when the loop begins again.
-   *  
+   * 
    * Technically, <b>shearY()</b> multiplies the current transformation
    * matrix by a rotation matrix. This function can be further controlled by
    * the <b>pushMatrix()</b> and <b>popMatrix()</b> functions.
@@ -6096,6 +6073,7 @@ public class PGraphics extends PImage implements PConstants {
 
   /**
    * @param z 3D z-coordinate to be mapped
+   * @return 
    */
   public float screenX(float x, float y, float z) {
     showMissingWarning("screenX");
@@ -6117,10 +6095,10 @@ public class PGraphics extends PImage implements PConstants {
    * ( begin auto-generated from screenZ.xml )
    *
    * Takes a three-dimensional X, Y, Z position and returns the Z value for
-   * where it will appear on a (two-dimensional) screen.
+   * where it will appear on a (two-dimensional) screen.( end auto-generated )
    *
-   * ( end auto-generated )
    *
+   * @return 
    * @webref lights_camera:coordinates
    * @param x 3D x-coordinate to be mapped
    * @param y 3D y-coordinate to be mapped
@@ -6137,13 +6115,11 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * ( begin auto-generated from modelX.xml )
    *
-   * Returns the three-dimensional X, Y, Z position in model space. This
-   * returns the X value for a given coordinate based on the current set of
-   * transformations (scale, rotate, translate, etc.) The X value can be used
-   * to place an object in space relative to the location of the original
-   * point once the transformations are no longer in use.
-   *  
-   * In the example, the <b>modelX()</b>, <b>modelY()</b>, and
+   * Returns the three-dimensional X, Y, Z position in model space.This
+ returns the X value for a given coordinate based on the current set of
+ transformations (scale, rotate, translate, etc.) The X value can be used
+ to place an object in space relative to the location of the original
+ point once the transformations are no longer in use. In the example, the <b>modelX()</b>, <b>modelY()</b>, and
    * <b>modelZ()</b> functions record the location of a box in space after
    * being placed using a series of translate and rotate commands. After
    * popMatrix() is called, those transformations no longer apply, but the
@@ -6152,6 +6128,7 @@ public class PGraphics extends PImage implements PConstants {
    *
    * ( end auto-generated )
    *
+   * @return 
    * @webref lights_camera:coordinates
    * @param x 3D x-coordinate to be mapped
    * @param y 3D y-coordinate to be mapped
@@ -6168,13 +6145,11 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * ( begin auto-generated from modelY.xml )
    *
-   * Returns the three-dimensional X, Y, Z position in model space. This
-   * returns the Y value for a given coordinate based on the current set of
-   * transformations (scale, rotate, translate, etc.) The Y value can be used
-   * to place an object in space relative to the location of the original
-   * point once the transformations are no longer in use.
-   * 
-   * In the example, the <b>modelX()</b>, <b>modelY()</b>, and
+   * Returns the three-dimensional X, Y, Z position in model space.This
+ returns the Y value for a given coordinate based on the current set of
+ transformations (scale, rotate, translate, etc.) The Y value can be used
+ to place an object in space relative to the location of the original
+ point once the transformations are no longer in use. In the example, the <b>modelX()</b>, <b>modelY()</b>, and
    * <b>modelZ()</b> functions record the location of a box in space after
    * being placed using a series of translate and rotate commands. After
    * popMatrix() is called, those transformations no longer apply, but the
@@ -6183,6 +6158,7 @@ public class PGraphics extends PImage implements PConstants {
    *
    * ( end auto-generated )
    *
+   * @return 
    * @webref lights_camera:coordinates
    * @param x 3D x-coordinate to be mapped
    * @param y 3D y-coordinate to be mapped
@@ -6199,13 +6175,11 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * ( begin auto-generated from modelZ.xml )
    *
-   * Returns the three-dimensional X, Y, Z position in model space. This
-   * returns the Z value for a given coordinate based on the current set of
-   * transformations (scale, rotate, translate, etc.) The Z value can be used
-   * to place an object in space relative to the location of the original
-   * point once the transformations are no longer in use.
-   * 
-   * In the example, the <b>modelX()</b>, <b>modelY()</b>, and
+   * Returns the three-dimensional X, Y, Z position in model space.This
+ returns the Z value for a given coordinate based on the current set of
+ transformations (scale, rotate, translate, etc.) The Z value can be used
+ to place an object in space relative to the location of the original
+ point once the transformations are no longer in use. In the example, the <b>modelX()</b>, <b>modelY()</b>, and
    * <b>modelZ()</b> functions record the location of a box in space after
    * being placed using a series of translate and rotate commands. After
    * popMatrix() is called, those transformations no longer apply, but the
@@ -6214,6 +6188,7 @@ public class PGraphics extends PImage implements PConstants {
    *
    * ( end auto-generated )
    *
+   * @return 
    * @webref lights_camera:coordinates
    * @param x 3D x-coordinate to be mapped
    * @param y 3D y-coordinate to be mapped
@@ -6435,7 +6410,7 @@ public class PGraphics extends PImage implements PConstants {
    *
    * Sets the width of the stroke used for lines, points, and the border
    * around shapes. All widths are set in units of pixels.
-   *  
+   * 
    * When drawing with P3D, series of connected lines (such as the stroke
    * around a polygon, triangle, or ellipse) produce unattractive results
    * when a thick stroke weight is set (<a
@@ -6464,7 +6439,7 @@ public class PGraphics extends PImage implements PConstants {
    * are either mitered, beveled, or rounded and specified with the
    * corresponding parameters MITER, BEVEL, and ROUND. The default joint is
    * MITER.
-   *  
+   * 
    * This function is not available with the P3D renderer, (<a
    * href="http://code.google.com/p/processing/issues/detail?id=123">see
    * Issue 123</a>). More information about the renderers can be found in the
@@ -6488,7 +6463,7 @@ public class PGraphics extends PImage implements PConstants {
    * Sets the style for rendering line endings. These ends are either
    * squared, extended, or rounded and specified with the corresponding
    * parameters SQUARE, PROJECT, and ROUND. The default cap is ROUND.
-   *  
+   * 
    * This function is not available with the P3D renderer (<a
    * href="http://code.google.com/p/processing/issues/detail?id=123">see
    * Issue 123</a>). More information about the renderers can be found in the
@@ -6539,7 +6514,7 @@ public class PGraphics extends PImage implements PConstants {
    * is either specified in terms of the RGB or HSB color depending on the
    * current <b>colorMode()</b> (the default color space is RGB, with each
    * value in the range from 0 to 255).
-   *  
+   * 
    * When using hexadecimal notation to specify a color, use "#" or "0x"
    * before the values (e.g. #CCFFAA, 0xFFCCFFAA). The # syntax uses six
    * digits to specify a color (the way colors are specified in HTML and
@@ -6547,7 +6522,7 @@ public class PGraphics extends PImage implements PConstants {
    * hexadecimal value must be specified with eight characters; the first two
    * characters define the alpha component and the remainder the red, green,
    * and blue components.
-   *  
+   * 
    * The value for the parameter "gray" must be less than or equal to the
    * current maximum value as specified by <b>colorMode()</b>. The default
    * maximum value is 255.
@@ -6780,7 +6755,7 @@ public class PGraphics extends PImage implements PConstants {
    * color is either specified in terms of the RGB or HSB color depending on
    * the current <b>colorMode()</b> (the default color space is RGB, with
    * each value in the range from 0 to 255).
-   *  
+   * 
    * When using hexadecimal notation to specify a color, use "#" or "0x"
    * before the values (e.g. #CCFFAA, 0xFFCCFFAA). The # syntax uses six
    * digits to specify a color (the way colors are specified in HTML and
@@ -6788,11 +6763,11 @@ public class PGraphics extends PImage implements PConstants {
    * hexadecimal value must be specified with eight characters; the first two
    * characters define the alpha component and the remainder the red, green,
    * and blue components.
-   *  
+   * 
    * The value for the parameter "gray" must be less than or equal to the
    * current maximum value as specified by <b>colorMode()</b>. The default
    * maximum value is 255.
-   *  
+   * 
    * To change the color of an image (or a texture), use tint().
    *
    * ( end auto-generated )
@@ -6967,6 +6942,8 @@ public class PGraphics extends PImage implements PConstants {
 
 /**
  * gray number specifying value between white and black
+ *
+ * @param gray value between black and white, by default 0 to 255
  */
   public void specular(float gray) {
     colorCalc(gray);
@@ -7044,6 +7021,8 @@ public class PGraphics extends PImage implements PConstants {
 
   /**
    * gray number specifying value between white and black
+   *
+   * @param gray value between black and white, by default 0 to 255
    */
   public void emissive(float gray) {
     colorCalc(gray);
@@ -7340,13 +7319,13 @@ public class PGraphics extends PImage implements PConstants {
    * of the Processing window. The default background is light gray. In the
    * <b>draw()</b> function, the background color is used to clear the
    * display window at the beginning of each frame.
-   *  
+   * 
    * An image can also be used as the background for a sketch, however its
    * width and height must be the same size as the sketch window. To resize
    * an image 'b' to the size of the sketch window, use b.resize(width, height).
-   *  
+   * 
    * Images used as background will ignore the current <b>tint()</b> setting.
-   *  
+   * 
    * It is not possible to use transparency (alpha) in background colors with
    * the main drawing surface, however they will work properly with <b>createGraphics()</b>.
    *
@@ -7355,12 +7334,12 @@ public class PGraphics extends PImage implements PConstants {
    * <h3>Advanced</h3>
    * <p>Clear the background with a color that includes an alpha value. This can
    * only be used with objects created by createGraphics(), because the main
-   * drawing surface cannot be set transparent.
+   * drawing surface cannot be set transparent.</p>
    * <p>It might be tempting to use this function to partially clear the screen
    * on each frame, however that's not how this function works. When calling
    * background(), the pixels will be replaced with pixels that have that level
    * of transparency. To do a semi-transparent overlay, use fill() with alpha
-   * and draw a rectangle.
+   * and draw a rectangle.</p>
    *
    * @webref color:setting
    * @usage web_application
@@ -8028,9 +8007,9 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * ( begin auto-generated from hue.xml )
    *
-   * Extracts the hue value from a color.
+   * Extracts the hue value from a color.( end auto-generated )
    *
-   * ( end auto-generated )
+   * @return
    * @webref color:creating_reading
    * @usage web_application
    * @param rgb any value of the color datatype
@@ -8054,9 +8033,9 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * ( begin auto-generated from saturation.xml )
    *
-   * Extracts the saturation value from a color.
+   * Extracts the saturation value from a color.( end auto-generated )
    *
-   * ( end auto-generated )
+   * @return
    * @webref color:creating_reading
    * @usage web_application
    * @param rgb any value of the color datatype
@@ -8080,10 +8059,10 @@ public class PGraphics extends PImage implements PConstants {
   /**
    * ( begin auto-generated from brightness.xml )
    *
-   * Extracts the brightness value from a color.
+   * Extracts the brightness value from a color.( end auto-generated )
    *
-   * ( end auto-generated )
    *
+   * @return 
    * @webref color:creating_reading
    * @usage web_application
    * @param rgb any value of the color datatype
@@ -8219,6 +8198,7 @@ public class PGraphics extends PImage implements PConstants {
 
   /**
    * Record individual lines and triangles by echoing them to another renderer.
+   * @param rawGraphics
    */
   public void beginRaw(PGraphics rawGraphics) {  // ignore
     this.raw = rawGraphics;
@@ -8276,6 +8256,8 @@ public class PGraphics extends PImage implements PConstants {
 
   /**
    * Version of showWarning() that takes a parsed String.
+   * @param msg
+   * @param args
    */
   static public void showWarning(String msg, Object... args) {  // ignore
     showWarning(String.format(msg, args));
@@ -8307,6 +8289,7 @@ public class PGraphics extends PImage implements PConstants {
 
   /**
    * Display a warning that the specified method is simply unavailable.
+   * @param method
    */
   static public void showMethodWarning(String method) {
     showWarning(method + "() is not available with this renderer.");
@@ -8315,8 +8298,9 @@ public class PGraphics extends PImage implements PConstants {
 
   /**
    * Error that a particular variation of a method is unavailable (even though
-   * other variations are). For instance, if vertex(x, y, u, v) is not
-   * available, but vertex(x, y) is just fine.
+   * other variations are).For instance, if vertex(x, y, u, v) is not
+ available, but vertex(x, y) is just fine.
+   * @param str
    */
   static public void showVariationWarning(String str) {
     showWarning(str + " is not available with this renderer.");
@@ -8327,6 +8311,7 @@ public class PGraphics extends PImage implements PConstants {
    * Display a warning that the specified method is not implemented, meaning
    * that it could be either a completely missing function, although other
    * variations of it may still work properly.
+   * @param method
    */
   static public void showMissingWarning(String method) {
     showWarning(method + "(), or this particular variation of it, " +
@@ -8335,9 +8320,10 @@ public class PGraphics extends PImage implements PConstants {
 
 
   /**
-   * Show an renderer-related exception that halts the program. Currently just
-   * wraps the message as a RuntimeException and throws it, but might do
-   * something more specific might be used in the future.
+   * Show an renderer-related exception that halts the program.Currently just
+ wraps the message as a RuntimeException and throws it, but might do
+ something more specific might be used in the future.
+   * @param msg
    */
   static public void showException(String msg) {  // ignore
     throw new RuntimeException(msg);
@@ -8346,6 +8332,7 @@ public class PGraphics extends PImage implements PConstants {
 
   /**
    * Same as below, but defaults to a 12 point font, just as MacWrite intended.
+   * @param method
    */
   protected void defaultFontOrDeath(String method) {
     defaultFontOrDeath(method, 12);
@@ -8356,6 +8343,8 @@ public class PGraphics extends PImage implements PConstants {
    * First try to create a default font, but if that's not possible, throw
    * an exception that halts the program because textFont() has not been used
    * prior to the specified method.
+   * @param method
+   * @param size
    */
   protected void defaultFontOrDeath(String method, float size) {
     if (parent != null) {
@@ -8376,7 +8365,7 @@ public class PGraphics extends PImage implements PConstants {
    * Return true if this renderer should be drawn to the screen. Defaults to
    * returning true, since nearly all renderers are on-screen beasts. But can
    * be overridden for subclasses like PDF so that a window doesn't open up.
-   *  
+   * 
    * A better name? showFrame, displayable, isVisible, visible, shouldDisplay,
    * what to call this?
    */

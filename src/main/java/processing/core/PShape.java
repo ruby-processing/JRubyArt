@@ -29,6 +29,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
+
+import processing.awt.PImageAWT;
+
 import java.util.Base64;
 
 
@@ -68,11 +71,11 @@ import java.util.Base64;
  * <p>For the time being, this class and its shape() and loadShape() friends in
  * PApplet exist as placeholders for more exciting things to come. If you'd
  * like to work with this class, make a subclass (see how PShapeSVG works)
- * and you can play with its internal methods all you like.
+ * and you can play with its internal methods all you like.</p>
  *
  * <p>Library developers are encouraged to create PShape objects when loading
  * shape data, so that they can eventually hook into the bounty that will be
- * the PShape interface, and the ease of loadShape() and shape().
+ * the PShape interface, and the ease of loadShape() and shape().</p>
  *
  * @webref shape
  * @usage Web &amp; Application
@@ -394,7 +397,7 @@ public class PShape implements PConstants {
    *
    * Returns a boolean value "true" if the image is set to be visible,
    * "false" if not. This is modified with the <b>setVisible()</b> parameter.
-   *  
+   * 
    * The visibility of a shape is usually controlled by whatever program
    * created the SVG file. For instance, this parameter is controlled by
    * showing or hiding the shape in the layers palette in Adobe Illustrator.
@@ -415,7 +418,7 @@ public class PShape implements PConstants {
    *
    * Sets the shape to be visible or invisible. This is determined by the
    * value of the <b>visible</b> parameter.
-   *  
+   * 
    * The visibility of a shape is usually controlled by whatever program
    * created the SVG file. For instance, this parameter is controlled by
    * showing or hiding the shape in the layers palette in Adobe Illustrator.
@@ -1950,7 +1953,7 @@ public class PShape implements PConstants {
     boolean requiresCheckAlpha = extension.equals("gif") || extension.equals("png") ||
         extension.equals("unknown");
 
-    PImage loadedImage = new PImage(awtImage);
+    PImage loadedImage = new PImageAWT(awtImage);
 
     if (requiresCheckAlpha) {
         loadedImage.checkAlpha();
@@ -2034,6 +2037,8 @@ public class PShape implements PConstants {
   /**
    * Same as getChild(name), except that it first walks all the way up the
    * hierarchy to the eldest grandparent, so that children can be found anywhere.
+   * @param target
+   * @return 
    */
   public PShape findChild(String target) {
     if (parent == null) {
@@ -2097,6 +2102,7 @@ public class PShape implements PConstants {
 
   /**
    * Remove the child shape with index idx.
+   * @param idx
    */
   public void removeChild(int idx) {
     if (idx < childCount) {
@@ -2151,7 +2157,8 @@ public class PShape implements PConstants {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 
-  /** The shape type, one of GROUP, PRIMITIVE, PATH, or GEOMETRY. */
+  /** The shape type, one of GROUP, PRIMITIVE, PATH, or GEOMETRY.
+   * @return  */
   public int getFamily() {
     return family;
   }
@@ -2524,7 +2531,7 @@ public class PShape implements PConstants {
       vertices[index][PGraphics.A] = ((fill >> 24) & 0xFF) / 255.0f;
       vertices[index][PGraphics.R] = ((fill >> 16) & 0xFF) / 255.0f;
       vertices[index][PGraphics.G] = ((fill >>  8) & 0xFF) / 255.0f;
-      vertices[index][PGraphics.B] = ((fill >>  0) & 0xFF) / 255.0f;
+      vertices[index][PGraphics.B] = ((fill) & 0xFF) / 255.0f;
     }
   }
 
@@ -2591,7 +2598,7 @@ public class PShape implements PConstants {
       vertices[index][PGraphics.A] = ((tint >> 24) & 0xFF) / 255.0f;
       vertices[index][PGraphics.R] = ((tint >> 16) & 0xFF) / 255.0f;
       vertices[index][PGraphics.G] = ((tint >>  8) & 0xFF) / 255.0f;
-      vertices[index][PGraphics.B] = ((tint >>  0) & 0xFF) / 255.0f;
+      vertices[index][PGraphics.B] = ((tint) & 0xFF) / 255.0f;
     }
   }
 
@@ -2980,12 +2987,16 @@ public class PShape implements PConstants {
    */
   public boolean contains(float x, float y) {
     if (family == PATH) {
-      // apply the inverse transformation matrix to the point coordinates
-      PMatrix inverseCoords = matrix.get();
-      inverseCoords.invert();  // maybe cache this?
-      inverseCoords.invert();  // maybe cache this?
-      PVector p = new PVector();
-      inverseCoords.mult(new PVector(x,y),p);
+      PVector p = new PVector(x, y);
+      if (matrix != null) {
+        // apply the inverse transformation matrix to the point coordinates
+        PMatrix inverseCoords = matrix.get();
+        // TODO why is this called twice? [fry 190724]
+        // commit was https://github.com/processing/processing/commit/027fc7a4f8e8d0a435366eae754304eea282512a
+        inverseCoords.invert();  // maybe cache this?
+        inverseCoords.invert();  // maybe cache this?
+        inverseCoords.mult(new PVector(x, y), p);
+      }
 
       // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
       boolean c = false;

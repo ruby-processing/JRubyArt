@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 
 /**
@@ -55,6 +56,7 @@ public abstract class PGL {
   /** The PGraphics and PApplet objects using this interface */
   protected PGraphicsOpenGL graphics;
   protected PApplet sketch;
+  protected RenderCallback renderCallback;
 
   /** OpenGL thread */
   protected Thread glThread;
@@ -95,8 +97,8 @@ public abstract class PGL {
    * shorts as primitive type we have 2^15 = 32768 as the maximum number of
    * vertices that can be referred to within a single VBO.
    */
-  protected static int MAX_VERTEX_INDEX  = 32767;
-  protected static int MAX_VERTEX_INDEX1 = MAX_VERTEX_INDEX + 1;
+  protected static final int MAX_VERTEX_INDEX  = 32767;
+  protected static final int MAX_VERTEX_INDEX1 = MAX_VERTEX_INDEX + 1;
 
   /** Count of tessellated fill, line or point vertices that will
    * trigger a flush in the immediate mode. It doesn't necessarily
@@ -164,6 +166,17 @@ public abstract class PGL {
   /** Flags used to handle the creation of a separate front texture */
   protected boolean usingFrontTex = false;
   protected boolean needSepFrontTex = false;
+
+  /**
+   * Defines if FBO Layer is allowed in the given environment.
+   * Using FBO can cause a fatal error during runtime for
+   * Intel HD Graphics 3000 chipsets (commonly used on older MacBooks)
+   * <a href="https://github.com/processing/processing/issues/4104">#4104</a>.
+   * Changed to private because needs to be accessed via isFboAllowed().
+   * <a href="https://github.com/processing/processing4/pull/76">#76</a> and
+   * <a href="https://github.com/processing/processing4/issues/50">#50</a>
+   */
+  private Boolean fboAllowed = true;
 
   // ........................................................
 
@@ -321,7 +334,7 @@ public abstract class PGL {
   // Constants
 
   /** Size of different types in bytes */
-  protected static int SIZEOF_SHORT = Short.SIZE / 8;
+  protected static final int SIZEOF_SHORT = Short.SIZE / 8;
   protected static int SIZEOF_INT   = Integer.SIZE / 8;
   protected static int SIZEOF_FLOAT = Float.SIZE / 8;
   protected static int SIZEOF_BYTE  = Byte.SIZE / 8;
@@ -389,11 +402,26 @@ public abstract class PGL {
   // Initialization, finalization
 
 
-  public PGL() { }
+  public PGL() {
+    this.renderCallback = () -> {};
+  }
 
 
   public PGL(PGraphicsOpenGL pg) {
     this.graphics = pg;
+    this.renderCallback = () -> {};
+    initGraphics();
+  }
+
+
+  public PGL(PGraphicsOpenGL pg, RenderCallback newCallback) {
+    this.graphics = pg;
+    this.renderCallback = newCallback;
+    initGraphics();
+  }
+
+
+  private void initGraphics() {
     if (glColorTex == null) {
       glColorFbo = allocateIntBuffer(1);
       glColorTex = allocateIntBuffer(2);
@@ -425,15 +453,16 @@ public abstract class PGL {
 
 
   static public int smoothToSamples(int smooth) {
-    if (smooth == 0) {
-      // smooth(0) is noSmooth(), which is 1x sampling
-      return 1;
-    } else if (smooth == 1) {
-      // smooth(1) means "default smoothing", which is 2x for OpenGL
-      return 2;
-    } else {
-      // smooth(N) can be used for 4x, 8x, etc
-      return smooth;
+    switch (smooth) {
+      case 0:
+        // smooth(0) is noSmooth(), which is 1x sampling
+        return 1;
+      case 1:
+        // smooth(1) means "default smoothing", which is 2x for OpenGL
+        return 2;
+      default:
+        // smooth(N) can be used for 4x, 8x, etc
+        return smooth;
     }
   }
 
@@ -451,6 +480,9 @@ public abstract class PGL {
 
 
   abstract protected void registerListeners();
+
+
+  abstract protected PImage screenshot();
 
 
   protected int getReadFramebuffer()  {
@@ -475,7 +507,7 @@ public abstract class PGL {
   }
 
 
-  protected boolean isFBOBacked() {;
+  protected boolean isFBOBacked() {
     return fboLayerEnabled;
   }
 
@@ -799,13 +831,13 @@ public abstract class PGL {
             float ba = ((stopButtonColor >> 24) & 0xFF) / 255f;
             float br = ((stopButtonColor >> 16) & 0xFF) / 255f;
             float bg = ((stopButtonColor >>  8) & 0xFF) / 255f;
-            float bb = ((stopButtonColor >>  0) & 0xFF) / 255f;
+            float bb = ((stopButtonColor) & 0xFF) / 255f;
             for (int i = 0; i < color.length; i++) {
               int c = closeButtonPix[i];
               int a = (int)(ba * ((c >> 24) & 0xFF));
               int r = (int)(br * ((c >> 16) & 0xFF));
               int g = (int)(bg * ((c >>  8) & 0xFF));
-              int b = (int)(bb * ((c >>  0) & 0xFF));
+              int b = (int)(bb * ((c) & 0xFF));
               color[i] = javaToNativeARGB((a << 24) | (r << 16) | (g << 8) | b);
             }
             IntBuffer buf = allocateIntBuffer(color);
@@ -852,13 +884,17 @@ public abstract class PGL {
         saveFirstFrame();
       }
 
-      if (!clearColor && 0 < sketch.frameCount || !sketch.isLooping()) {
-        enableFBOLayer();
-        if (SINGLE_BUFFERED) {
-          createFBOLayer();
+      if (isFboAllowed()) {
+        if (!clearColor && 0 < sketch.frameCount || !sketch.isLooping()) {
+          enableFBOLayer();
+          if (SINGLE_BUFFERED) {
+            createFBOLayer();
+          }
         }
       }
     }
+
+    renderCallback.onRender();
   }
 
 
@@ -1075,12 +1111,18 @@ public abstract class PGL {
       // separate depth and stencil buffers
       if (0 < depthBits) {
         int depthComponent = DEPTH_COMPONENT16;
-        if (depthBits == 32) {
-          depthComponent = DEPTH_COMPONENT32;
-        } else if (depthBits == 24) {
-          depthComponent = DEPTH_COMPONENT24;
-        } else if (depthBits == 16) {
-          depthComponent = DEPTH_COMPONENT16;
+        switch (depthBits) {
+          case 32:
+            depthComponent = DEPTH_COMPONENT32;
+            break;
+          case 24:
+            depthComponent = DEPTH_COMPONENT24;
+            break;
+          case 16:
+            depthComponent = DEPTH_COMPONENT16;
+            break;
+          default:
+            break;
         }
 
         IntBuffer depthBuf = multisample ? glMultiDepth : glDepth;
@@ -1099,12 +1141,18 @@ public abstract class PGL {
 
       if (0 < stencilBits) {
         int stencilIndex = STENCIL_INDEX1;
-        if (stencilBits == 8) {
-          stencilIndex = STENCIL_INDEX8;
-        } else if (stencilBits == 4) {
-          stencilIndex = STENCIL_INDEX4;
-        } else if (stencilBits == 1) {
-          stencilIndex = STENCIL_INDEX1;
+        switch (stencilBits) {
+          case 8:
+            stencilIndex = STENCIL_INDEX8;
+            break;
+          case 4:
+            stencilIndex = STENCIL_INDEX4;
+            break;
+          case 1:
+            stencilIndex = STENCIL_INDEX1;
+            break;
+          default:
+            break;
         }
 
         IntBuffer stencilBuf = multisample ? glMultiStencil : glStencil;
@@ -1597,6 +1645,8 @@ public abstract class PGL {
   /**
    * Converts input native OpenGL value (RGBA on big endian, ABGR on little
    * endian) to Java ARGB.
+   * @param color
+   * @return 
    */
   protected static int nativeToJavaARGB(int color) {
     if (BIG_ENDIAN) { // RGBA to ARGB
@@ -1773,10 +1823,11 @@ public abstract class PGL {
     }
   }
 
-
   /**
    * Converts input Java ARGB value to native OpenGL format (RGBA on big endian,
    * BGRA on little endian), setting alpha component to opaque (255).
+   * @param color
+   * @return 
    */
   protected static int javaToNativeRGB(int color) {
     if (BIG_ENDIAN) { // ARGB to RGB
@@ -2009,8 +2060,7 @@ public abstract class PGL {
   }
 
   protected static boolean containsVersionDirective(String[] shSrc) {
-    for (int i = 0; i < shSrc.length; i++) {
-      String line = shSrc[i];
+    for (String line : shSrc) {
       int versionIndex = line.indexOf("#version");
       if (versionIndex >= 0) {
         int commentIndex = line.indexOf("//");
@@ -2058,14 +2108,14 @@ public abstract class PGL {
   protected boolean compiled(int shader) {
     intBuffer.rewind();
     getShaderiv(shader, COMPILE_STATUS, intBuffer);
-    return intBuffer.get(0) == 0 ? false : true;
+    return intBuffer.get(0) != 0;
   }
 
 
   protected boolean linked(int program) {
     intBuffer.rewind();
     getProgramiv(program, LINK_STATUS, intBuffer);
-    return intBuffer.get(0) == 0 ? false : true;
+    return intBuffer.get(0) != 0;
   }
 
 
@@ -2125,9 +2175,9 @@ public abstract class PGL {
 
     int[] res = {0, 0, 0};
     String[] parts = version.split(" ");
-    for (int i = 0; i < parts.length; i++) {
-      if (0 < parts[i].indexOf(".")) {
-        String nums[] = parts[i].split("\\.");
+    for (String part : parts) {
+      if (0 < part.indexOf(".")) {
+        String[] nums = part.split("\\.");
         try {
           res[0] = Integer.parseInt(nums[0]);
         } catch (NumberFormatException e) { }
@@ -2153,10 +2203,10 @@ public abstract class PGL {
     int major = getGLVersion()[0];
     if (major < 2) {
       String ext = getString(EXTENSIONS);
-      return ext.indexOf("_framebuffer_object") != -1 &&
-             ext.indexOf("_vertex_shader")      != -1 &&
-             ext.indexOf("_shader_objects")     != -1 &&
-             ext.indexOf("_shading_language")   != -1;
+      return ext.contains("_framebuffer_object") &&
+        ext.contains("_vertex_shader") &&
+        ext.contains("_shader_objects") &&
+        ext.contains("_shading_language");
     } else {
       return true;
     }
@@ -2170,10 +2220,10 @@ public abstract class PGL {
     int major = getGLVersion()[0];
     if (major < 2) {
       String ext = getString(EXTENSIONS);
-      return ext.indexOf("_fragment_shader")  != -1 &&
-             ext.indexOf("_vertex_shader")    != -1 &&
-             ext.indexOf("_shader_objects")   != -1 &&
-             ext.indexOf("_shading_language") != -1;
+      return ext.contains("_fragment_shader") &&
+        ext.contains("_vertex_shader") &&
+        ext.contains("_shader_objects") &&
+        ext.contains("_shading_language");
     } else {
       return true;
     }
@@ -2288,6 +2338,28 @@ public abstract class PGL {
     intBuffer.rewind();
     getIntegerv(MAX_TEXTURE_IMAGE_UNITS, intBuffer);
     return intBuffer.get(0);
+  }
+
+  
+  public boolean isFboAllowed() {
+    if (fboAllowed == null) {
+      if (PApplet.platform == PConstants.MACOS) {
+        try {
+          String hardware = getString(PGL.RENDERER);
+          if (hardware != null && hardware.contains("Intel HD Graphics 3000")) {
+            fboAllowed = false;
+            return false;
+          }
+        } catch (RuntimeException e) {
+          System.err.println("Could not read renderer name. FBOs disabled. Reason: " + e);
+          // disable for now, but will try again on next isFboAllowed() call
+          return false;
+        }
+      }
+      // all other scenarios allow for FBOs
+      fboAllowed = true;
+    }
+    return fboAllowed;
   }
 
 
@@ -2671,6 +2743,13 @@ public abstract class PGL {
 
   abstract protected Object getDerivedFont(Object font, float size);
 
+  ///////////////////////////////////////////////////////////
+
+  protected interface RenderCallback {
+
+    void onRender();
+
+  }
 
   ///////////////////////////////////////////////////////////
 
@@ -2681,27 +2760,27 @@ public abstract class PGL {
 
 
   protected interface Tessellator {
-    void setCallback(int flag);
-    void setWindingRule(int rule);
-    void setProperty(int property, int value);
+    public void setCallback(int flag);
+    public void setWindingRule(int rule);
+    public void setProperty(int property, int value);
 
-    void beginPolygon();
-    void beginPolygon(Object data);
-    void endPolygon();
-    void beginContour();
-    void endContour();
-    void addVertex(double[] v);
-    void addVertex(double[] v, int n, Object data);
+    public void beginPolygon();
+    public void beginPolygon(Object data);
+    public void endPolygon();
+    public void beginContour();
+    public void endContour();
+    public void addVertex(double[] v);
+    public void addVertex(double[] v, int n, Object data);
   }
 
 
   protected interface TessellatorCallback  {
-    void begin(int type);
-    void end();
-    void vertex(Object data);
-    void combine(double[] coords, Object[] data,
+    public void begin(int type);
+    public void end();
+    public void vertex(Object data);
+    public void combine(double[] coords, Object[] data,
                         float[] weight, Object[] outData);
-    void error(int errnum);
+    public void error(int errnum);
   }
 
 
@@ -2727,9 +2806,9 @@ public abstract class PGL {
 
 
   protected interface FontOutline {
-    boolean isDone();
-    int currentSegment(float coords[]);
-    void next();
+    public boolean isDone();
+    public int currentSegment(float coords[]);
+    public void next();
   }
 
 
@@ -3079,7 +3158,17 @@ public abstract class PGL {
   public abstract void getIntegerv(int value, IntBuffer data);
   public abstract void getFloatv(int value, FloatBuffer data);
   public abstract boolean isEnabled(int value);
-  public abstract String getString(int name);
+
+  /**
+   * Get a configuration or status string from the underlying renderer.
+   *
+   * @param name The name or ID of the attribute to request.
+   * @return The requested value as a string.
+   * @throws GraphicsNotInitializedException Thrown if an attribute is requested that is not
+   *    available until graphics initialization before that initialization compeltes. For example,
+   *    if requesting a GL string before GL context is available.
+   */
+  public abstract String getString(int name) throws GraphicsNotInitializedException;
 
   ///////////////////////////////////////////////////////////
 
@@ -3370,4 +3459,25 @@ public abstract class PGL {
   public abstract void renderbufferStorageMultisample(int target, int samples, int format, int width, int height);
   public abstract void readBuffer(int buf);
   public abstract void drawBuffer(int buf);
+
+  ///////////////////////////////////////////////////////////
+
+  // Exceptions
+
+  /**
+   * Exception for when attempting an operation requiring the graphics renderer, context, etc
+   * to have been initialized before that initialization.
+   */
+  public class GraphicsNotInitializedException extends RuntimeException {
+
+    /**
+     * Create a new exception indicating that an action could not be fulfilled because the rendering
+     * context or equivalent is not ready.
+     *
+     * @param msg Further details about the issue.
+     */
+    public GraphicsNotInitializedException(String msg) {
+      super(msg);
+    }
+  }
 }
