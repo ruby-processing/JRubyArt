@@ -31,6 +31,7 @@ Here is a list of ruby alternatives to some 'processing' convenience methods; wh
 |               |`map(x, b0, eo, b1, e1)`|`p5map(x, b0, e0, b1, e1)`|
 |               |`min(array)`            |`array.min`       |
 |               |`max(array)`            |`array.max`       |
+|               |`constrain(x, lo, hi)`  |`x.clamp(lo, hi)` |
 |conversion     |`degrees(theta)`        |`theta.degrees`    |
 |conversion     |`radians(theta)`        |`theta.radians`    |
 |conversion     |`hex(string)`           |`string.hex`       |
