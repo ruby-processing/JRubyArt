@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-gem 'minitest' # don't use bundled minitest
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative 'test_helper'
 
 Dir.chdir(File.dirname(__FILE__))
 
@@ -10,8 +8,8 @@ Dir.chdir(File.dirname(__FILE__))
 class Rp5Test < Minitest::Test
   def test_normal
     out, _err_ = capture_io do
-      open('|../bin/k9 -r sketches/basic.rb', 'r') do |io|
-        while l = io.gets
+      Kernel.open('|../bin/k9 -r sketches/basic.rb', 'r') do |io|
+        while (l = io.gets)
           puts(l.chop)
         end
       end
@@ -21,8 +19,8 @@ class Rp5Test < Minitest::Test
 
   def test_sketch_path
     out, _err_ = capture_io do
-      open('|../bin/k9 -r sketches/sketch_path.rb', 'r') do |io|
-        while l = io.gets
+      Kernel.open('|../bin/k9 -r sketches/sketch_path.rb', 'r') do |io|
+        while (l = io.gets)
           puts(l.chop)
         end
       end
@@ -32,8 +30,8 @@ class Rp5Test < Minitest::Test
 
   def test_on_top
     out, _err_ = capture_io do
-      open('|../bin/k9 -r sketches/on_top.rb', 'r') do |io|
-        while l = io.gets
+      Kernel.open('|../bin/k9 -r sketches/on_top.rb', 'r') do |io|
+        while (l = io.gets)
           puts(l.chop)
         end
       end
@@ -43,8 +41,8 @@ class Rp5Test < Minitest::Test
 
   def test_p2d
     out, _err_ = capture_io do
-      open('|../bin/k9 -r sketches/p2d.rb', 'r') do |io|
-        while l = io.gets
+      Kernel.open('|../bin/k9 -r sketches/p2d.rb', 'r') do |io|
+        while (l = io.gets)
           puts(l.chop)
         end
       end
@@ -64,8 +62,8 @@ class Rp5Test < Minitest::Test
   def test_fx2d
     skip 'Currently FX2D not implemented'
     out, _err = capture_io do
-      open('|../bin/k9 -r sketches/fx2d.rb', 'r') do |io|
-        while l = io.gets
+      Kernel.open('|../bin/k9 -r sketches/fx2d.rb', 'r') do |io|
+        while (l = io.gets)
           puts(l.chop)
         end
       end
@@ -74,8 +72,8 @@ class Rp5Test < Minitest::Test
 
   def test_p3d
     out, _err_ = capture_io do
-      open('|../bin/k9 -r sketches/p3d.rb', 'r') do |io|
-        while l = io.gets
+      Kernel.open('|../bin/k9 -r sketches/p3d.rb', 'r') do |io|
+        while (l = io.gets)
           puts(l.chop)
         end
       end
@@ -85,8 +83,8 @@ class Rp5Test < Minitest::Test
 
   def test_graphics
     out, _err_ = capture_io do
-      open('|../bin/k9 -r sketches/graphics.rb', 'r') do |io|
-        while l = io.gets
+      Kernel.open('|../bin/k9 -r sketches/graphics.rb', 'r') do |io|
+        while (l = io.gets)
           puts(l.chop)
         end
       end
@@ -96,8 +94,8 @@ class Rp5Test < Minitest::Test
 
   def test_setup_exception
     out, _err_ = capture_io do
-      open('|../bin/k9 -r sketches/setup_ex.rb', 'r') do |io|
-        while l = io.gets
+      Kernel.open('|../bin/k9 -r sketches/setup_ex.rb', 'r') do |io|
+        while (l = io.gets)
           puts(l.chop)
         end
       end

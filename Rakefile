@@ -43,7 +43,7 @@ task :test do
   FLF = '%<home>s/.jruby_art/config.yml'
   config = File.exist?(format(FLF, home: home))
   if config
-    ruby 'test/k9_run_test.rb'
+    system 'jruby test/k9_run_test.rb'
   else
     WNF = 'Create a config %<home>s/.jruby_art/config.yml to run sketch tests'
     warn format(WNF, home: home)
