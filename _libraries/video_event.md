@@ -7,7 +7,7 @@ keywords: library, java, video, video_event, processing. reflection
 
 <sup>2</sup><i>A built in hybrid ruby/java library</i>
 
-The purpose of the `video_event` library is to allow you to use the vanilla processing reflection methods `captureEvent` and `movieEvent` from the processing `video` library. _It is almost impossible to use vanilla processing reflection methods without this sort of wrapper_. This may not be valid with [video2](https://github.com/gohai/processing-video) the experimental successor to the video library (wraps GStreamer-1.0 instead of GStreamer-0.1.0, which is now obsoleted/deprecated on Archlinux and Ubuntu).
+The purpose of the `video_event` library is to allow you to use the vanilla processing reflection methods `captureEvent` and `movieEvent` from the processing `video` library. _It is almost impossible to use vanilla processing reflection methods without this sort of wrapper_. This may not be valid with [video2](https://github.com/gohai/processing-video) the experimental successor to the video library (wraps GStreamer-1.x instead of GStreamer-0.1.0, which is now obsoleted/deprecated on Archlinux and Ubuntu).
 
 A movie example:-
 

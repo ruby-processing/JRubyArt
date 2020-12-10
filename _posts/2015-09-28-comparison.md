@@ -23,7 +23,7 @@ th{
 |----------    |---------------    |-----------              |
 |binary        |k9                 |k9                       |
 |run opts      |-r, -w, -l         |-r, -w, -l               |
-|jruby version |9.2.13.0 (2.5.3)    |9.2.13.0+  (2.5.3+)       |
+|jruby version |9.2.14.0 (2.5.7)    |9.2.14.0+  (2.5.7+)       |
 |jdk version   |jdk8               |jdk11+                   |
 |config        |PROCESSING_ROOT    |not required             |
 
