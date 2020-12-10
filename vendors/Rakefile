@@ -19,7 +19,7 @@ VIDEO_VERSION = 'v2.0'
 EXAMPLES = '3.9'
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/.match?(RbConfig::CONFIG['host_os'])
-
+DOWNLOAD = 'releases/download/latest'
 CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar"
 CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
 
@@ -82,15 +82,15 @@ task :init_dir do
 end
 
 desc 'download and copy sound library to ~/.jruby_art'
-task download_and_copy_sound: %i[wget_check init_dir download_sound copy_sound clobber]
+task install_sound: %i[wget_check init_dir download_sound copy_sound clobber]
 
 desc 'download and copy video library to ~/.jruby_art'
-task download_and_copy_video: %i[wget_check init_dir download_video copy_video clobber]
+task install_video: %i[wget_check init_dir download_video copy_video clobber]
 
 desc 'download sound library'
 task :download_sound do
   wget_base = 'wget https://github.com/processing/processing-sound'
-  wget_string = [wget_base, 'releases/download/latest', SOUND].join('/')
+  wget_string = [wget_base, DOWNLOAD, SOUND].join('/')
   puts wget_string
   system wget_string
 end
@@ -98,12 +98,12 @@ end
 desc 'download video library'
 task :download_video do
   wget_base = 'wget https://github.com/processing/processing-video'
-  wget_string = [wget_base, 'releases/download', VIDEO].join('/')
+  wget_string = [wget_base, DOWNLOAD, VIDEO].join('/')
   system wget_string
 end
 
 desc 'copy sound library'
-task copy_sound: SOUND do
+task :copy_sound do
   system "unzip #{SOUND}"
   if File.exist? "#{HOME_DIR}/.jruby_art/libraries/sound"
     FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/sound"
@@ -113,7 +113,7 @@ task copy_sound: SOUND do
 end
 
 desc 'copy video library'
-task copy_video: VIDEO do
+task :copy_video do
   system "unzip #{VIDEO}"
   if File.exist? "#{HOME_DIR}/.jruby_art/libraries/video"
     FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/video"

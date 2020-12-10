@@ -144,7 +144,7 @@ module Processing
       choice = library.downcase
       case choice
       when /sound|video/
-        system "cd #{K9_ROOT}/vendors && rake download_and_copy_#{choice}"
+        system "cd #{K9_ROOT}/vendors && rake install_#{choice}"
       when /samples/
         system "cd #{K9_ROOT}/vendors && rake install_samples"
       when /jruby/
