@@ -141,7 +141,8 @@ module Processing
     def install(library = nil)
       require_relative 'installer'
       library ||= 'new'
-      case library.downcase
+      choice = library.downcase
+      case choice
       when /sound|video/
         system "cd #{K9_ROOT}/vendors && rake download_and_copy_#{choice}"
       when /samples/

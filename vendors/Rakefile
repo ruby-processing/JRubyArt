@@ -11,12 +11,12 @@ WARNING = <<~WARN
 
 WARN
 # https://github.com/processing/processing-video/releases/download/r6-v2.0-beta4/video-2.0-beta4.zip
-JRUBYC_VERSION = '9.2.13.0'
+JRUBYC_VERSION = '9.2.14.0'
 SOUND = 'sound.zip'
-SOUND_VERSION = 'v2.2.2'
-VIDEO = 'video-2.0-beta4.zip'
-VIDEO_VERSION = 'r6-v2.0-beta4'
-EXAMPLES = '3.8'
+SOUND_VERSION = 'v2.2.3'
+VIDEO = 'video.zip'
+VIDEO_VERSION = 'v2.0'
+EXAMPLES = '3.9'
 HOME_DIR = ENV['HOME']
 MAC_OR_LINUX = /linux|mac|darwin/.match?(RbConfig::CONFIG['host_os'])
 
@@ -98,7 +98,7 @@ end
 desc 'download video library'
 task :download_video do
   wget_base = 'wget https://github.com/processing/processing-video'
-  wget_string = [wget_base, 'releases/download', VIDEO_VERSION, VIDEO].join('/')
+  wget_string = [wget_base, 'releases/download', VIDEO].join('/')
   system wget_string
 end
 
