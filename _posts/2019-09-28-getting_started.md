@@ -66,7 +66,14 @@ k9 --check # or -? to check configuration
 
 #### Java ####
 
-Unfortunately there is currently a linker problem with stock OpenJDK on linux so we are recommending installing [adoptopenjdk][adopt] version which is available as a deb package. But you have to add the repository to your setup as follows:-
+It should be possible to current default-jdk on Debian (openjdk 11.0.9.1 on Linux Mint when I last checked) only if you encounter problems should you install [adoptopenjdk][adopt] version which is available as a deb package.
+
+```bash
+sudo apt install default-jdk # On Mint probably similar on other Debian distros
+```
+This will set up update-alternatives for you, which you can use to switch between jdk versions see below
+
+To install adoptopenjdk you can do following:-
 
 ```bash
 wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
@@ -77,7 +84,7 @@ sudo apt-get install -y software-properties-common
 
 sudo apt-get update
 
-sudo apt-get install openjdk-12-hotspot # or adoptopenjdk if you have linker issues.
+sudo apt-get install adoptopenjdk # only if you have linker issues.
 ```
 
 Use debian `update-alternatives` tool to manage configuration for java:-
