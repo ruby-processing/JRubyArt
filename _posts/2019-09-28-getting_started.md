@@ -25,11 +25,11 @@ Although there are some drawbacks to using the Ruby version Processing (slower s
 
 Install Software as required:-
 
-Currently stock OpenJDK12 has a linking problem affecting P2D and P3D sketches, so install [adopt-openjdk12][adopt] instead.
+It is probably OK to use default OpenJDK (since jdk15) put if you encounter problems install [adopt-openjdk11][adopt] instead. You can if you like use latest OpenJ9, or even [graalvm][graal]
 
 ```bash
 sudo pacman -S ruby # installs ruby-2.6
-sudo pacman -S jruby # installs jruby-9.2.13.0
+sudo pacman -S jruby # installs jruby-9.2.14.0
 ```
 
 Install gems as required
@@ -255,3 +255,4 @@ Read more about using the [processing api here][api]
 [video]:https://monkstone.github.io/_posts/create_video
 [casey]:https://github.com/processing/processing/wiki/FAQ
 [adopt]:https://adoptopenjdk.net/
+[graal]:https://www.graalvm.org/

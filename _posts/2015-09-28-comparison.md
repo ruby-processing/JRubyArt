@@ -19,7 +19,7 @@ th{
 }
 </style>
 
-|feature       |  JRubyArt-1.7     |  JRubyArt-2.0           |
+|feature       |  JRubyArt-1.7     |  JRubyArt-2.x           |
 |----------    |---------------    |-----------              |
 |binary        |k9                 |k9                       |
 |run opts      |-r, -w, -l         |-r, -w, -l               |
