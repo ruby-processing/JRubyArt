@@ -10,8 +10,8 @@ task default: %i[compile install_jogl gem test]
 # depends on installed processing, with processing on path
 desc 'Copy Jars'
 task :install_jogl do
-  # Temporarily load jogl-2.4.0-rc from a local directory
-  jogl24 = File.join(ENV['HOME'], 'jogl24')
+  # Temporarily load jogl-2.4.0-rc2021011 from a local directory
+  jogl24 = File.join(ENV['HOME'], 'jogl2.4-rc2021011')
   opengl = Dir.entries(jogl24).grep(/amd64|macosx-universal/)
   opengl.concat %w[jogl-all.jar gluegen-rt.jar]
   opengl.each do |gl|
