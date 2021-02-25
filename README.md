@@ -6,11 +6,11 @@ A new version for jdk11 use, does not require an installed `vanilla processing`,
 
 ## Requirements
 
-A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.14.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
+A clean start for `jruby_art` with custom processing core included, built for [jruby-9.2.15.0](http://jruby.org/download) see [wiki](https://github.com/ruby-processing/JRubyArt/wiki/Building-latest-gem) for building gem from this repo.
 
 ## Requirements
 
-A suitable version of ruby (MRI `ruby 2.5+` or `jruby-9.2.14.0`) to download gem. NB: avoid ruby 2.7, it is guaranteed to give you problems (you've been warned)
+A suitable version of ruby (MRI `ruby 2.5+` or `jruby-9.2.15.0`) to download gem. NB: avoid ruby 2.7, it is guaranteed to give you problems (you've been warned)
 Tested and working AdoptOpenJDK 11-13, OpenJ9 14, if you have any issues with opengl sketches with distro installed JDK use a JDK from AdoptOpenJDK.
 
 

@@ -1,4 +1,6 @@
-**v2.4.2** Update to use jruby-complete-9.2.14, regularise video/sound downloadswhen no processing ide.
+**v2.5.0** Update to use jruby-complete-9.2.15.
+
+**v2.4.2** Update to use jruby-complete-9.2.14.0, regularise video/sound downloadswhen no processing ide.
 
 **v2.4.1** Update to use jruby-complete-9.2.13.0  
 

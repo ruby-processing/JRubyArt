@@ -26,9 +26,11 @@ Gem::Specification.new do |spec|
   spec.files << 'lib/jogl-all.jar'
   spec.files << 'lib/gluegen-rt-natives-linux-amd64.jar'
   spec.files << 'lib/gluegen-rt-natives-macosx-universal.jar'
+  spec.files << 'lib/gluegen-rt-natives-ios-arm64.jar'
   spec.files << 'lib/gluegen-rt-natives-windows-amd64.jar'
   spec.files << 'lib/jogl-all-natives-linux-amd64.jar'
   spec.files << 'lib/jogl-all-natives-macosx-universal.jar'
+  spec.files << 'lib/jogl-all-natives-ios-arm64.jar'
   spec.files << 'lib/jogl-all-natives-windows-amd64.jar'
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})

@@ -537,7 +537,7 @@ public class PSurfaceJOGL implements PSurface {
 
 
   protected void initIcons() {
-    IOUtil.ClassResources res = null;
+    IOUtil.ClassResources res;
     if (PJOGL.icons == null || PJOGL.icons.length == 0) {
       // Default Processing icons
       final int[] sizes = { 16, 32, 48, 64, 128, 256, 512 };
@@ -566,7 +566,7 @@ public class PSurfaceJOGL implements PSurface {
   @SuppressWarnings("resource")
   private String resourceFilename(String filename) {
     // The code below comes from PApplet.createInputRaw() with a few adaptations
-    InputStream stream = null;
+    InputStream stream;
     try {
       // First see if it's in a data folder. This may fail by throwing
       // a SecurityException. If so, this whole block will be skipped.
@@ -1099,7 +1099,7 @@ public class PSurfaceJOGL implements PSurface {
         break;
     }
 
-    int peCount = 0;
+    int peCount;
     if (peAction == MouseEvent.WHEEL) {
       // Invert wheel rotation count so it matches JAVA2D's
       // https://github.com/processing/processing/issues/3840

@@ -5,14 +5,13 @@ require 'erb'
 
 MVN = Gem.win_platform? ? File.expand_path('mvnw.cmd') : File.expand_path('mvnw')
 
-task default: %i[compile install_jogl gem test]
+task default: %i[compile init gem test]
 
 # depends on installed processing, with processing on path
 desc 'Copy Jars'
-task :install_jogl do
-  # Temporarily load jogl-2.4.0-rc2021011 from a local directory
-  jogl24 = File.join(ENV['HOME'], 'jogl-2.4-rc2021011')
-  opengl = Dir.entries(jogl24).grep(/amd64|macosx-universal/)
+task :init do
+  jogl24 = File.join(ENV['HOME'], 'jogl24')
+  opengl = Dir.entries(jogl24).grep(/amd64|universal|arm64/).select { |jar| jar =~ /linux|windows|macosx|ios|/ }
   opengl.concat %w[jogl-all.jar gluegen-rt.jar]
   opengl.each do |gl|
     FileUtils.cp(File.join(jogl24, gl), File.join('.', 'lib'))
