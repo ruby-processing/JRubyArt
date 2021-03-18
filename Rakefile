@@ -16,6 +16,7 @@ task :init do
   opengl.each do |gl|
     FileUtils.cp(File.join(jogl24, gl), File.join('.', 'lib'))
   end
+
 end
 
 desc 'Build gem'
@@ -27,6 +28,7 @@ desc 'Compile'
 task :compile do
   system "#{MVN} package"
   FileUtils.mv "target/jruby_art-#{JRubyArt::VERSION}.jar", 'lib'
+  system "#{MVN} dependency:copy"
 end
 
 desc 'Test'

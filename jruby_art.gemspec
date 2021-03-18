@@ -19,19 +19,20 @@ Gem::Specification.new do |spec|
   spec.homepage = 'https://ruby-processing.github.io/JRubyArt/'
   spec.post_install_message = "Use 'k9 --install' to install jruby-complete, and 'k9 --check' to check config."
   spec.licenses = %w[GPL-3.0 LGPL-2.0]
-
   spec.files = FileList['bin/**/*', 'lib/**/*', 'library/**/*', 'samples/**/*', 'vendors/Rakefile'].exclude(/jar/).to_a
   spec.files << "lib/jruby_art-#{JRubyArt::VERSION}.jar"
   spec.files << 'lib/gluegen-rt.jar'
   spec.files << 'lib/jogl-all.jar'
   spec.files << 'lib/gluegen-rt-natives-linux-amd64.jar'
   spec.files << 'lib/gluegen-rt-natives-macosx-universal.jar'
-  spec.files << 'lib/gluegen-rt-natives-ios-arm64.jar'
+  # spec.files << 'lib/gluegen-rt-natives-ios-arm64.jar'
   spec.files << 'lib/gluegen-rt-natives-windows-amd64.jar'
   spec.files << 'lib/jogl-all-natives-linux-amd64.jar'
   spec.files << 'lib/jogl-all-natives-macosx-universal.jar'
-  spec.files << 'lib/jogl-all-natives-ios-arm64.jar'
+  # spec.files << 'lib/jogl-all-natives-ios-arm64.jar'
   spec.files << 'lib/jogl-all-natives-windows-amd64.jar'
+  spec.files << 'library/pdf/itextpdf-5.5.13.2.jar'
+  spec.files << 'library/svg/batik-all-1.14.jar'
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']

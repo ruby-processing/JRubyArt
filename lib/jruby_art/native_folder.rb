@@ -25,7 +25,7 @@ class NativeFolder
   end
 
   def name
-    return 'macosx' if /darwin|mac/.match?(os)
+    return macos if /darwin|mac/.match?(os)
 
     return format(LINUX_FORMAT, bit: bit) if /linux/.match?(os)
 

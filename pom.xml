@@ -2,7 +2,7 @@
 <!--
 
 
-DO NOT MODIFIY - GENERATED CODE
+DO NOT MODIFY - GENERATED CODE
 
 
 -->
@@ -55,8 +55,11 @@ DO NOT MODIFIY - GENERATED CODE
     <url>https://github.com/ruby-processing/JRubyArt/issues</url>
   </issueManagement>
   <properties>
+    <batik.version>1.14</batik.version>
+    <itextpdf.version>5.5.13.2</itextpdf.version>
     <jogl.version>2.3.2</jogl.version>
     <jruby.api>http://jruby.org/apidocs/</jruby.api>
+    <jruby_art.basedir>${project.basedir}</jruby_art.basedir>
     <polyglot.dump.pom>pom.xml</polyglot.dump.pom>
     <processing.api>http://processing.github.io/processing-javadocs/core/</processing.api>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -66,7 +69,7 @@ DO NOT MODIFIY - GENERATED CODE
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.2.15.0</version>
+      <version>9.2.16.0</version>
       <type>pom</type>
     </dependency>
     <dependency>
@@ -83,6 +86,16 @@ DO NOT MODIFIY - GENERATED CODE
       <groupId>org.processing</groupId>
       <artifactId>video</artifactId>
       <version>3.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-all</artifactId>
+      <version>${batik.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.itextpdf</groupId>
+      <artifactId>itextpdf</artifactId>
+      <version>${itextpdf.version}</version>
     </dependency>
   </dependencies>
   <build>
@@ -114,6 +127,29 @@ DO NOT MODIFIY - GENERATED CODE
         <plugin>
           <artifactId>maven-dependency-plugin</artifactId>
           <version>3.1.2</version>
+          <executions>
+            <execution>
+              <id>default-cli</id>
+              <configuration>
+                <artifactItems>
+                  <artifactItem>
+                    <groupId>com.itextpdf</groupId>
+                    <artifactId>itextpdf</artifactId>
+                    <version>${itextpdf.version}</version>
+                    <type>jar</type>
+                    <outputDirectory>${jruby_art.basedir}/library/pdf</outputDirectory>
+                  </artifactItem>
+                  <artifactItem>
+                    <groupId>org.apache.xmlgraphics</groupId>
+                    <artifactId>batik-all</artifactId>
+                    <version>${batik.version}</version>
+                    <type>jar</type>
+                    <outputDirectory>${jruby_art.basedir}/library/svg</outputDirectory>
+                  </artifactItem>
+                </artifactItems>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
