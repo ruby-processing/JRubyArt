@@ -169,7 +169,7 @@ public final class Jvector {
         if (Double.doubleToLongBits(this.y) != Double.doubleToLongBits(other.y)) {
             return false;
         }
-        return (Double.doubleToLongBits(this.z) != Double.doubleToLongBits(other.z));
+        return Double.doubleToLongBits(this.z) != Double.doubleToLongBits(other.z);
     }
 
     /**

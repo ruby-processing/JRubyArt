@@ -22,7 +22,7 @@ package monkstone.sliders;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
-import static processing.core.PConstants.*;
+
 
 /**
  *
@@ -221,7 +221,7 @@ public class SliderBar {
             } else {
                 applet.pushMatrix();
                 applet.translate(pX + pH / 2, pY + pW / 2);
-                applet.rotate(HALF_PI);
+                applet.rotate(PConstants.HALF_PI);
                 applet.text(Integer.toString((int) pValue), 0, 0 + labelSize / 2 - 2);
                 applet.popMatrix();
             }
@@ -238,13 +238,13 @@ public class SliderBar {
                 applet.pushMatrix();
                 applet.textAlign(PConstants.RIGHT);
                 applet.translate(pX - numberSize / 2, pY);
-                applet.rotate(HALF_PI);
+                applet.rotate(PConstants.HALF_PI);
                 applet.text(String.format(lFormat, (int) vMax), 0, 0);
                 applet.popMatrix();
                 applet.pushMatrix();
                 applet.textAlign(PConstants.LEFT);
                 applet.translate(pX - numberSize / 2, pY + pW);
-                applet.rotate(HALF_PI);
+                applet.rotate(PConstants.HALF_PI);
                 applet.text(String.format(lFormat, (int) vMin), 0, 0);
                 applet.popMatrix();
             }

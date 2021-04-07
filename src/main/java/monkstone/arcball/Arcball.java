@@ -124,16 +124,16 @@ public class Arcball {
         int x = e.getX();
         int y = e.getY();
         switch (e.getAction()) {
-            case (MouseEvent.PRESS):
+            case MouseEvent.PRESS:
                 v_down = mouse2sphere(x, y);
                 q_down.set(q_now);
                 q_drag.reset();
                 break;
-            case (MouseEvent.DRAG):
+            case MouseEvent.DRAG:
                 v_drag = mouse2sphere(x, y);
                 q_drag.set(v_down.dot(v_drag), v_down.cross(v_drag));
                 break;
-            case (MouseEvent.WHEEL):
+            case MouseEvent.WHEEL:
                 if (zoomWheelHandler != null) {
                     zoomWheelHandler.handleWheel(e.getCount());
                 }

@@ -21,13 +21,13 @@ package monkstone.slider;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
-import static processing.core.PConstants.HALF_PI;
+
 
 public class SimpleVerticalSlider extends SimpleSlider {
-    
+
     final int SPACING = 20;
     final int TOP_SPC = SPACING * 2;
-    final int BOTTOM_SPC = SPACING * 4;    
+    final int BOTTOM_SPC = SPACING * 4;
 
     /**
      *
@@ -38,18 +38,18 @@ public class SimpleVerticalSlider extends SimpleSlider {
      * @param count
      */
     public SimpleVerticalSlider(final PApplet outer, float beginRange, float endRange, float initial, int count) {
-        this.applet = outer;     
+        this.applet = outer;
         setActive(true);
-        pX = outer.width  - (TOP_SPC + count * SPACING);
+        pX = outer.width - (TOP_SPC + count * SPACING);
         pY = TOP_SPC;
         pW = outer.height - BOTTOM_SPC;
         pH = 10;
         ID = Integer.toString(count + 1);
         limits(beginRange, endRange);
-        
+
     }
 
-   @Override
+    @Override
     boolean mouseOver() {
         return (applet.mouseX >= pX && applet.mouseX <= pX + pH && applet.mouseY >= pY && applet.mouseY <= pY + pW);
     }
@@ -59,11 +59,11 @@ public class SimpleVerticalSlider extends SimpleSlider {
             applet.registerMethod("dispose", this);
             applet.registerMethod("draw", this);
         } else {
-            applet.unregisterMethod("draw", this);            
+            applet.unregisterMethod("draw", this);
         }
     }
 
-@Override
+    @Override
     void displayText() {
         String lFormat = "%d";
         if (displayLabel) {
@@ -72,7 +72,7 @@ public class SimpleVerticalSlider extends SimpleSlider {
             applet.textAlign(PConstants.CENTER);
             applet.pushMatrix();
             applet.translate(pX + pH / 2, pY + pW / 2);
-            applet.rotate(HALF_PI);
+            applet.rotate(PConstants.HALF_PI);
             applet.text(Integer.toString((int) pValue), 0, 0 + labelSize / 2 - 2);
             applet.popMatrix();
         }
@@ -82,18 +82,18 @@ public class SimpleVerticalSlider extends SimpleSlider {
             applet.pushMatrix();
             applet.textAlign(PConstants.RIGHT);
             applet.translate(pX - numberSize / 2, pY);
-            applet.rotate(HALF_PI);
+            applet.rotate(PConstants.HALF_PI);
             applet.text(String.format(lFormat, (int) vMax), 0, 0);
             applet.popMatrix();
             applet.pushMatrix();
             applet.textAlign(PConstants.LEFT);
             applet.translate(pX - numberSize / 2, pY + pW);
-            applet.rotate(HALF_PI);
+            applet.rotate(PConstants.HALF_PI);
             applet.text(String.format(lFormat, (int) vMin), 0, 0);
             applet.popMatrix();
         }
     }
-    
+
     @Override
     void drawGui() {
         if (backgroundVisible) {
@@ -103,8 +103,6 @@ public class SimpleVerticalSlider extends SimpleSlider {
         applet.fill(sliderFill);
         applet.ellipse(pX + pH / 2, pY + pScaled, 10, 10);
     }
-    
-    
 
     /**
      *
@@ -146,7 +144,7 @@ public class SimpleVerticalSlider extends SimpleSlider {
             pScaled = map(pValue, vMin, vMax, pW, 0);
         }
     }
-   
+
     /**
      *
      * @return

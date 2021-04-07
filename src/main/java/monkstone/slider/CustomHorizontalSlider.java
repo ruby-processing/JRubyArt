@@ -82,7 +82,7 @@ public class CustomHorizontalSlider extends SliderBar {
             applet.text(String.format(lFormat, (int) vMax), pX + pW, pY - numberSize / 2);
         }
     }
-    
+
     @Override
     void drawGui() {
         if (backgroundVisible) {
@@ -91,7 +91,7 @@ public class CustomHorizontalSlider extends SliderBar {
         }
         applet.fill(sliderFill);
         applet.rect(pX, pY, pScaled, pH);
-    }    
+    }
 
     /**
      *
@@ -151,7 +151,7 @@ public class CustomHorizontalSlider extends SliderBar {
         }
         setValue(pValue + delta);
     }
-    
+
     /**
      *
      * @return

@@ -3,19 +3,19 @@ package monkstone.vecmath;
 import processing.core.PGraphics;
 
 /**
- * Renderer
- * Copyright (c) 2019 Martin Prout
+ *
+ * @author Martin Prout
  */
 public class GfxRender implements JRender {
 
-    final PGraphics g;
+    final PGraphics graphics;
 
     /**
      *
-     * @param gfx PGraphics
+     * @param graphics PGraphics
      */
-    public GfxRender(final PGraphics gfx) {
-        this.g = gfx;
+    public GfxRender(final PGraphics graphics) {
+        this.graphics = graphics;
     }
 
     /**
@@ -25,7 +25,7 @@ public class GfxRender implements JRender {
      */
     @Override
     public void vertex(double x, double y) {
-        g.vertex((float) x, (float) y);
+        graphics.vertex((float) x, (float) y);
     }
 
     /**
@@ -35,7 +35,7 @@ public class GfxRender implements JRender {
      */
     @Override
     public void curveVertex(double x, double y) {
-        g.curveVertex((float) x, (float) y);
+        graphics.curveVertex((float) x, (float) y);
     }
 
     /**
@@ -46,7 +46,7 @@ public class GfxRender implements JRender {
      */
     @Override
     public void vertex(double x, double y, double z) {
-        g.vertex((float) x, (float) y, (float) z);
+        graphics.vertex((float) x, (float) y, (float) z);
     }
 
     /**
@@ -57,7 +57,7 @@ public class GfxRender implements JRender {
      */
     @Override
     public void normal(double x, double y, double z) {
-        g.normal((float) x, (float) y, (float) z);
+        graphics.normal((float) x, (float) y, (float) z);
     }
 
     /**
@@ -70,7 +70,7 @@ public class GfxRender implements JRender {
      */
     @Override
     public void vertex(double x, double y, double z, double u, double v) {
-        g.vertex((float) x, (float) y, (float) z, (float) u, (float) v);
+        graphics.vertex((float) x, (float) y, (float) z, (float) u, (float) v);
     }
 
     /**
@@ -81,6 +81,6 @@ public class GfxRender implements JRender {
      */
     @Override
     public void curveVertex(double x, double y, double z) {
-        g.curveVertex((float) x, (float) y, (float) z);
+        graphics.curveVertex((float) x, (float) y, (float) z);
     }
 }

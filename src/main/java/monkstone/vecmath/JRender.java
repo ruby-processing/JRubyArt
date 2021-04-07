@@ -11,14 +11,14 @@ public interface JRender {
      * @param x double
      * @param y double
      */
-    public void vertex(double x, double y);
+    void vertex(double x, double y);
 
     /**
      *
      * @param x double
      * @param y double
      */
-    public void curveVertex(double x, double y);
+    void curveVertex(double x, double y);
 
     /**
      *
@@ -26,7 +26,7 @@ public interface JRender {
      * @param y double
      * @param z double
      */
-    public void vertex(double x, double y, double z);
+    void vertex(double x, double y, double z);
 
     /**
      *
@@ -36,7 +36,7 @@ public interface JRender {
      * @param u double
      * @param v double
      */
-    public void vertex(double x, double y, double z, double u, double v);
+    void vertex(double x, double y, double z, double u, double v);
 
     /**
      *
@@ -44,7 +44,7 @@ public interface JRender {
      * @param y double
      * @param z double
      */
-    public void curveVertex(double x, double y, double z);
+    void curveVertex(double x, double y, double z);
 
     /**
      *
@@ -52,5 +52,5 @@ public interface JRender {
      * @param y double
      * @param z double
      */
-    public void normal(double x, double y, double z);
+    void normal(double x, double y, double z);
 }
