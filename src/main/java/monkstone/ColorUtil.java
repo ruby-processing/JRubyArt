@@ -30,7 +30,7 @@ public class ColorUtil {
      */
     static final int hexLong(long hexlong) {
         long SPLIT = Integer.MAX_VALUE + 1;
-        return (hexlong < SPLIT) ? (int) hexlong : (int) (hexlong - SPLIT * 2L);
+        return hexlong < SPLIT ? (int) hexlong : (int) (hexlong - SPLIT * 2L);
     }
 
     /**
@@ -62,14 +62,14 @@ public class ColorUtil {
      * @return String for use in ruby
      */
     static public String rubyString(int[] hex) {
-        StringBuilder result = new StringBuilder("%w(");
+        StringBuilder result = new StringBuilder("%w[");
         for (int i = 0; i < hex.length; i++) {
             result.append(String.format("#%06X", 0xFFFFFF & hex[i]));
             if (i < hex.length - 1) {
                 result.append(' ');
             }
         }
-        result.append(")\n");
+        result.append("]\n");
         return result.toString();
     }
 

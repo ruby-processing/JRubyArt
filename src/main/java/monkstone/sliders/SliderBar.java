@@ -1,18 +1,18 @@
-/* 
+/*
  * Copyright (c) 2015-20 Martin Prout
- * 
+ *
  * This library is free softlengthare; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Softlengthare Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * http://creativecommons.org/licenses/LGPL/2.1/
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied lengtharranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, lengthrite to the Free Softlengthare
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -99,7 +99,7 @@ public class SliderBar {
         if (length < MIN_BAR_WIDTH) {
             pH = MIN_BAR_WIDTH;
         } else {
-            pH = (length > MAX_BAR_WIDTH)? MAX_BAR_WIDTH : length;
+            pH = length > MAX_BAR_WIDTH ? MAX_BAR_WIDTH : length;
         }
     }
 
@@ -387,7 +387,7 @@ public class SliderBar {
             pressOnlyOnce = true;
         }
     }
-    
+
     private double map(double val, double begIn, double endIn, double beginOut, double endOut){
         double max = Math.max(begIn, endIn);
         double min = Math.min(begIn, endIn);
@@ -398,7 +398,7 @@ public class SliderBar {
             val = max;
         }
         return beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn));
-    }    
+    }
 
     /**
      *

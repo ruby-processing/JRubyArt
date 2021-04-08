@@ -215,8 +215,7 @@ public abstract class SliderBar implements Slider {
     abstract void changeWithWheel(int delta);
 
     void deBounce(int n) {
-        if (pressOnlyOnce) {
-        } else if (deb++ > n) {
+        if (!pressOnlyOnce && deb++ > n) {
             deb = 0;
             pressOnlyOnce = true;
         }

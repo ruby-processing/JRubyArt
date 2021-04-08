@@ -147,11 +147,7 @@ public final class Vec3 extends RubyObject {
      */
     @JRubyMethod(name = "x=")
     public IRubyObject setX(ThreadContext context, IRubyObject other) {
-        if (other instanceof RubyFloat) {
-            jx = ((RubyFloat) other).getValue();
-        } else {
-            jx = ((RubyFixnum) other).getDoubleValue();
-        }
+        jx = other instanceof RubyFloat ? ((RubyFloat) other).getValue() : ((RubyFixnum) other).getDoubleValue();   
         return other;
     }
 
@@ -163,11 +159,7 @@ public final class Vec3 extends RubyObject {
      */
     @JRubyMethod(name = "y=")
     public IRubyObject setY(ThreadContext context, IRubyObject other) {
-        if (other instanceof RubyFloat) {
-            jy = ((RubyFloat) other).getValue();
-        } else {
-            jy = ((RubyFixnum) other).getDoubleValue();
-        }
+        jy = other instanceof RubyFloat ? ((RubyFloat) other).getValue() : ((RubyFixnum) other).getDoubleValue(); 
         return other;
     }
 
@@ -179,11 +171,7 @@ public final class Vec3 extends RubyObject {
      */
     @JRubyMethod(name = "z=")
     public IRubyObject setZ(ThreadContext context, IRubyObject other) {
-        if (other instanceof RubyFloat) {
-            jz = ((RubyFloat) other).getValue();
-        } else {
-            jz = ((RubyFixnum) other).getDoubleValue();
-        }
+        jz = other instanceof RubyFloat ? ((RubyFloat) other).getValue() : ((RubyFixnum) other).getDoubleValue(); 
         return other;
     }
 
@@ -222,13 +210,13 @@ public final class Vec3 extends RubyObject {
         Ruby runtime = context.runtime;
         if (key instanceof RubySymbol) {
             if (key == RubySymbol.newSymbol(runtime, "x")) {
-                jx = (value instanceof RubyFloat)
+                jx = value instanceof RubyFloat
                         ? ((RubyFloat) value).getValue() : ((RubyFixnum) value).getDoubleValue();
             } else if (key == RubySymbol.newSymbol(runtime, "y")) {
-                jy = (value instanceof RubyFloat)
+                jy = value instanceof RubyFloat
                         ? ((RubyFloat) value).getValue() : ((RubyFixnum) value).getDoubleValue();
             } else if (key == RubySymbol.newSymbol(runtime, "z")) {
-                jz = (value instanceof RubyFloat)
+                jz = value instanceof RubyFloat
                         ? ((RubyFloat) value).getValue() : ((RubyFixnum) value).getDoubleValue();
             } else {
                 throw runtime.newIndexError("invalid key");
@@ -368,7 +356,7 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "*", required = 1)
     public IRubyObject op_mul(ThreadContext context, IRubyObject scalar) {
         Ruby runtime = context.runtime;
-        double multi = (scalar instanceof RubyFloat)
+        double multi = scalar instanceof RubyFloat
                 ? ((RubyFloat) scalar).getValue() : ((RubyFixnum) scalar).getDoubleValue();
         return Vec3.rbNew(context, this.getMetaClass(), new IRubyObject[]{
             runtime.newFloat(jx * multi),
@@ -385,7 +373,7 @@ public final class Vec3 extends RubyObject {
     @JRubyMethod(name = "/", required = 1)
     public IRubyObject op_div(ThreadContext context, IRubyObject scalar) {
         Ruby runtime = context.runtime;
-        double divisor = (scalar instanceof RubyFloat)
+        double divisor = scalar instanceof RubyFloat
                 ? ((RubyFloat) scalar).getValue() : ((RubyFixnum) scalar).getDoubleValue();
         if (Math.abs(divisor) < Vec3.EPSILON) {
             return this;
@@ -427,12 +415,10 @@ public final class Vec3 extends RubyObject {
      */
     @JRubyMethod(name = "set_mag")
     public IRubyObject set_mag(ThreadContext context, IRubyObject scalar, Block block) {
-        if (block.isGiven()) {
-            if (!(boolean) block.yield(context, scalar).toJava(Boolean.class)) {
-                return this;
-            }
+        if (block.isGiven() && !block.yield(context, scalar).toJava(Boolean.class)) {
+            return this;        
         }
-        double new_mag = (scalar instanceof RubyFloat)
+        double new_mag = scalar instanceof RubyFloat
                 ? ((RubyFloat) scalar).getValue() : ((RubyFixnum) scalar).getDoubleValue();
         double current = Math.sqrt(jx * jx + jy * jy + jz * jz);
         if (current > EPSILON) {

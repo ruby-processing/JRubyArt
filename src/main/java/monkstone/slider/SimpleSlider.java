@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
  */
 package monkstone.slider;
 
@@ -110,7 +110,7 @@ public abstract class SimpleSlider implements Slider {//implements Slider {
     abstract boolean mouseOver();
 
     protected float map(float val, float begIn, float endIn, float beginOut, float endOut) {
-        return (beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn)));
+        return beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn));
     }
 
     final void limits(float iv, float fv) {
@@ -125,12 +125,11 @@ public abstract class SimpleSlider implements Slider {//implements Slider {
      */
     @Override
     public void labelSize(int s) {
-        labelSize = (s < 4) ? 4 : s;
+        labelSize = s < 4 ? 4 : s;
     }
 
     void deBounce(int n) {
-        if (pressOnlyOnce) {
-        } else if (deb++ > n) {
+        if (!pressOnlyOnce && deb++ > n) {
             deb = 0;
             pressOnlyOnce = true;
         }

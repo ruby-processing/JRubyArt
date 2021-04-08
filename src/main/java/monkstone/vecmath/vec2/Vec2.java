@@ -400,10 +400,8 @@ public final class Vec2 extends RubyObject {
 
     public IRubyObject set_mag(ThreadContext context, IRubyObject scalar, Block block) {
         double new_mag = scalar.toJava(Double.class);
-        if (block.isGiven()) {
-            if (!(boolean) block.yield(context, scalar).toJava(Boolean.class)) {
-                return this;
-            }
+        if (block.isGiven() && !block.yield(context, scalar).toJava(Boolean.class)) {
+            return this;        
         }
         double current = 0;
         if (Math.abs(jx) > EPSILON && Math.abs(jy) > EPSILON) {
@@ -559,9 +557,9 @@ public final class Vec2 extends RubyObject {
             throw runtime.newSyntaxError("Check syntax");
         }
         Vec2 vec = (Vec2) args[0].toJava(Vec2.class);
-        double scalar = (args[1] instanceof RubyFloat)
+        double scalar = args[1] instanceof RubyFloat
                 ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
-        assert (scalar >= 0 && scalar < 1.0) :
+        assert scalar >= 0 && scalar < 1.0 :
                 "Lerp value " + scalar + " out of range 0..1.0";
         return Vec2.rbNew(context, this.getMetaClass(), new IRubyObject[]{
             runtime.newFloat(jx + (vec.jx - jx) * scalar),
@@ -583,7 +581,7 @@ public final class Vec2 extends RubyObject {
         Vec2 vec = (Vec2) args[0].toJava(Vec2.class);
         double scalar = args[1] instanceof RubyFloat
                 ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
-        assert (scalar >= 0 && scalar < 1.0) :
+        assert scalar >= 0 && scalar < 1.0 :
                 "Lerp value " + scalar + " out of range 0..1.0";
         jx += (vec.jx - jx) * scalar;
         jy += (vec.jy - jy) * scalar;
@@ -793,8 +791,7 @@ public final class Vec2 extends RubyObject {
             double diff = jx - v.jx;
             if ((diff < 0 ? -diff : diff) > Vec2.EPSILON) {
                 return runtime.newBoolean(false);
-            } else {
-            }
+            } 
             diff = jy - v.jy;
             return runtime.newBoolean((diff < 0 ? -diff : diff) < Vec2.EPSILON);
         }

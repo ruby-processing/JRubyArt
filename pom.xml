@@ -24,6 +24,13 @@ DO NOT MODIFY - GENERATED CODE
       </roles>
     </developer>
     <developer>
+      <id>sampottinger</id>
+      <name>Sam Pottinger</name>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+    <developer>
       <id>benfry</id>
       <name>Ben Fry</name>
       <roles>
