@@ -43,6 +43,7 @@ module Processing
     include Math
     include MathTool
     include Render
+    include FastNoise
     # Alias some methods for familiarity for Shoes coders.
     # surface replaces :frame
     alias oval ellipse

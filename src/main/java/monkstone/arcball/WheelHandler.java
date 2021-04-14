@@ -32,6 +32,6 @@ public interface WheelHandler {
      * @param amount int
      */   
 
-    public void handleWheel(final int amount);
+    void handleWheel(final int amount);
 }
 

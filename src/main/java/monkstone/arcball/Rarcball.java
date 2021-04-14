@@ -74,19 +74,19 @@ public class Rarcball extends RubyObject {
         int count = Arity.checkArgumentCount(context.runtime, args, 1, 4);
         if (count == 4) {
             PApplet parent = (PApplet) args[0].toJava(PApplet.class);
-            double cx = (args[1] instanceof RubyFloat)
+            double cx = args[1] instanceof RubyFloat
                     ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
-            double cy = (args[2] instanceof RubyFloat)
+            double cy = args[2] instanceof RubyFloat
                     ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
-            double radius = (args[3] instanceof RubyFloat)
+            double radius = args[3] instanceof RubyFloat
                     ? ((RubyFloat) args[3]).getValue() : ((RubyFixnum) args[3]).getDoubleValue();
             new Arcball(parent, cx, cy, radius).setActive(true);
         }
         if (count == 3) {
             PApplet parent = (PApplet) args[0].toJava(PApplet.class);
-            double cx = (args[1] instanceof RubyFloat)
+            double cx = args[1] instanceof RubyFloat
                     ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
-            double cy = (args[2] instanceof RubyFloat)
+            double cy = args[2] instanceof RubyFloat
                     ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
             new Arcball(parent, cx, cy, parent.width * 0.8f).setActive(true);
         }

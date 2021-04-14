@@ -39,9 +39,9 @@ import java.awt.event.KeyEvent;
  */
 public interface PConstants {
 
-  static public final int X = 0;
-  static public final int Y = 1;
-  static public final int Z = 2;
+  static final int X = 0;
+  static final int Y = 1;
+  static final int Z = 2;
 
 
   // renderers known to processing.core
@@ -121,9 +121,12 @@ public interface PConstants {
   static public final int QUADRATIC_VERTEX = 2;
   static public final int CURVE_VERTEX = 3;
   static public final int BREAK = 4;
-
+  /**
+   * 
+   * @deprecated should not have been exposed
+   */
   @Deprecated
-  static public final int QUAD_BEZIER_VERTEX = 2;  // should not have been exposed
+  static public final int QUAD_BEZIER_VERTEX = 2; 
 
   // useful goodness
 

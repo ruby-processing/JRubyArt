@@ -47,17 +47,17 @@ public class MathToolModule {
   */
   @JRubyMethod(name = "map1d", rest = true, module = true)
   public static IRubyObject mapOneD(ThreadContext context, IRubyObject recv, IRubyObject[] args) {
-    double value = (args[0] instanceof RubyFloat)
+    double value = args[0] instanceof RubyFloat
     ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
     RubyRange r1 = (RubyRange) args[1];
     RubyRange r2 = (RubyRange) args[2];
-    double first1 = (r1.first(context) instanceof RubyFloat)
+    double first1 = r1.first(context) instanceof RubyFloat
     ? ((RubyFloat) r1.first(context)).getValue() : ((RubyFixnum) r1.first(context)).getDoubleValue();
-    double first2 = (r2.first(context) instanceof RubyFloat)
+    double first2 = r2.first(context) instanceof RubyFloat
     ? ((RubyFloat) r2.first(context)).getValue() : ((RubyFixnum) r2.first(context)).getDoubleValue();
-    double last1 = (r1.last(context) instanceof RubyFloat)
+    double last1 = r1.last(context) instanceof RubyFloat
     ? ((RubyFloat) r1.last(context)).getValue() : ((RubyFixnum) r1.last(context)).getDoubleValue();
-    double last2 = (r2.last(context) instanceof RubyFloat)
+    double last2 = r2.last(context) instanceof RubyFloat
     ? ((RubyFloat) r2.last(context)).getValue() : ((RubyFixnum) r2.last(context)).getDoubleValue();
     return mapMt(context, value, first1, last1, first2, last2);
   }
@@ -71,16 +71,16 @@ public class MathToolModule {
   */
   @JRubyMethod(name = "constrained_map", rest = true, module = true)
   public static IRubyObject constrainedMap(ThreadContext context, IRubyObject recv, IRubyObject[] args) {
-    double value = (args[0] instanceof RubyFloat) ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
+    double value = args[0] instanceof RubyFloat ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
     RubyRange r1 = (RubyRange) args[1];
     RubyRange r2 = (RubyRange) args[2];
-    double first1 = (r1.first(context) instanceof RubyFloat)
+    double first1 = r1.first(context) instanceof RubyFloat
     ? ((RubyFloat) r1.first(context)).getValue() : ((RubyFixnum) r1.first(context)).getDoubleValue();
-    double first2 = (r2.first(context) instanceof RubyFloat)
+    double first2 = r2.first(context) instanceof RubyFloat
     ? ((RubyFloat) r2.first(context)).getValue() : ((RubyFixnum) r2.first(context)).getDoubleValue();
-    double last1 = (r1.last(context) instanceof RubyFloat)
+    double last1 = r1.last(context) instanceof RubyFloat
     ? ((RubyFloat) r1.last(context)).getValue() : ((RubyFixnum) r1.last(context)).getDoubleValue();
-    double last2 = (r2.last(context) instanceof RubyFloat)
+    double last2 = r2.last(context) instanceof RubyFloat
     ? ((RubyFloat) r2.last(context)).getValue() : ((RubyFixnum) r2.last(context)).getDoubleValue();
     double max = Math.max(first1, last1);
     double min = Math.min(first1, last1);
@@ -102,11 +102,11 @@ public class MathToolModule {
   */
   @JRubyMethod(name = "p5map", rest = true, module = true)
   public static IRubyObject mapProcessing(ThreadContext context, IRubyObject recv, IRubyObject[] args) {
-    double value = (args[0] instanceof RubyFloat) ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
-    double first1 = (args[1] instanceof RubyFloat) ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
-    double first2 = (args[3] instanceof RubyFloat) ? ((RubyFloat) args[3]).getValue() : ((RubyFixnum) args[3]).getDoubleValue();
-    double last1 = (args[2] instanceof RubyFloat) ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
-    double last2 = (args[4] instanceof RubyFloat) ? ((RubyFloat) args[4]).getValue() : ((RubyFixnum) args[4]).getDoubleValue();
+    double value = args[0] instanceof RubyFloat ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
+    double first1 = args[1] instanceof RubyFloat ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
+    double first2 = args[3] instanceof RubyFloat ? ((RubyFloat) args[3]).getValue() : ((RubyFixnum) args[3]).getDoubleValue();
+    double last1 = args[2] instanceof RubyFloat ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
+    double last2 = args[4] instanceof RubyFloat ? ((RubyFloat) args[4]).getValue() : ((RubyFixnum) args[4]).getDoubleValue();
     return mapMt(context, value, first1, last1, first2, last2);
   }
 
@@ -121,16 +121,16 @@ public class MathToolModule {
   */
   @JRubyMethod(name = "lerp", rest = true, module = true)
   public static IRubyObject lerpP(ThreadContext context, IRubyObject recv, IRubyObject[] args) {
-    double start = (args[0] instanceof RubyFloat) ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
-    double stop = (args[1] instanceof RubyFloat) ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
-    double amount = (args[2] instanceof RubyFloat) ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
+    double start = args[0] instanceof RubyFloat ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
+    double stop = args[1] instanceof RubyFloat ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
+    double amount = args[2] instanceof RubyFloat ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
     if (amount <= 0) {
       return args[0];
     }
     if (amount >= 1.0) {
       return args[1];
     }
-    return context.runtime.newFloat((1 - amount) * start + (stop * amount));
+    return context.runtime.newFloat((1 - amount) * start + stop * amount);
   }
 
   /**
@@ -145,9 +145,9 @@ public class MathToolModule {
   */
   @JRubyMethod(name = "norm", rest = true, module = true)
   public static IRubyObject normP(ThreadContext context, IRubyObject recv, IRubyObject[] args) {
-    double value = (args[0] instanceof RubyFloat) ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
-    double start = (args[1] instanceof RubyFloat) ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
-    double stop = (args[2] instanceof RubyFloat) ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
+    double value = args[0] instanceof RubyFloat ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
+    double start = args[1] instanceof RubyFloat ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
+    double stop = args[2] instanceof RubyFloat ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
     return mapMt(context, value, start, stop, 0, 1.0);
   }
 
@@ -163,9 +163,9 @@ public class MathToolModule {
   @JRubyMethod(name = "norm_strict", rest = true, module = true)
   public static IRubyObject norm_strict(ThreadContext context, IRubyObject recv, IRubyObject[] args) {
 
-    double value = (args[0] instanceof RubyFloat) ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
-    double start = (args[1] instanceof RubyFloat) ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
-    double stop = (args[2] instanceof RubyFloat) ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
+    double value = args[0] instanceof RubyFloat ? ((RubyFloat) args[0]).getValue() : ((RubyFixnum) args[0]).getDoubleValue();
+    double start = args[1] instanceof RubyFloat ? ((RubyFloat) args[1]).getValue() : ((RubyFixnum) args[1]).getDoubleValue();
+    double stop = args[2] instanceof RubyFloat ? ((RubyFloat) args[2]).getValue() : ((RubyFixnum) args[2]).getDoubleValue();
     double max = Math.max(start, stop);
     double min = Math.min(start, stop);
     if (value < min) {
@@ -266,14 +266,14 @@ public class MathToolModule {
     int xDim = (int) args[0].toJava(Integer.class);
     int yDim =  (int) args[1].toJava(Integer.class);
     int zDim =  (int) args[2].toJava(Integer.class);
-    int xStep = (args.length > 3) ? (int) args[3].toJava(Integer.class) : 1;
-    int yStep = (args.length > 4) ? (int) args[4].toJava(Integer.class) : 1;
-    int zStep = (args.length == 6) ? (int) args[5].toJava(Integer.class) : 1;
-    int dimX = xDim / xStep;
+    int xStep = args.length > 3 ? (int) args[3].toJava(Integer.class) : 1;
+    int yStep = args.length > 4 ? (int) args[4].toJava(Integer.class) : 1;
+    int zStep = args.length == 6 ? (int) args[5].toJava(Integer.class) : 1;
+   // int dimX = xDim / xStep;
     int dimY = yDim / yStep;
     int dimZ = zDim / zStep;
     if (block.isGiven()) {
-      int count = dimX * dimY * dimZ;
+    //  int count = dimX * dimY * dimZ;
       for (int x = 0; x < xDim; x += xStep){
         for (int j = 0; j < (dimZ * dimY); j++){
           int z = j % dimZ;

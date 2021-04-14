@@ -74,7 +74,11 @@ public class PShapeJava2D extends PShapeSVG {
   }
 
 
-  /** Factory method for subclasses. */
+  /** Factory method for subclasses.
+     * @param parent
+     * @param properties
+     * @param parseKids
+     * @return  */
   @Override
   protected PShapeSVG createShape(PShapeSVG parent, XML properties, boolean parseKids) {
     return new PShapeJava2D(parent, properties, parseKids);
@@ -202,8 +206,8 @@ public class PShapeJava2D extends PShapeSVG {
             for (int i = 0; i < w; i++) {
               //float distance = 0; //PApplet.dist(cx, cy, x + i, y + j);
               //int which = PApplet.min((int) (distance * ACCURACY), interp.length-1);
-              float px = (x + i) - tx1;
-              float py = (y + j) - ty1;
+              float px = x + i - tx1;
+              float py = y + j - ty1;
               // distance up the line is the dot product of the normalized
               // vector of the gradient start/stop by the point being tested
               int which = (int) ((px*nx + py*ny) * ACCURACY);

@@ -28,5 +28,5 @@ import processing.video.Movie;
  */
 @FunctionalInterface
 public interface MovieEvent {
-    public void movieEvent(Movie movie);
+    void movieEvent(Movie movie);
 }

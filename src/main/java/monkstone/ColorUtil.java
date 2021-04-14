@@ -1,8 +1,8 @@
 /**
  * This utility allows JRubyArt users to use the processing.org color method
- * in their sketches. Includes a method to efficiently convert an cols of web
- * strings to an cols of color int, and another to convert an cols of p5 color
- * (int) to a string that can be used in ruby code (to generate web color cols).
+ * in their sketches. Includes a method to efficiently convert an array of web
+ * strings to an array of color int, and another to convert an array of color
+ * int to a string that can be used in ruby code (to generate web color array).
  * Copyright (c) 2015-20 Martin Prout.
  * This utility is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -13,8 +13,6 @@
  */
 package monkstone;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -22,8 +20,6 @@ import java.util.Random;
  * @author Martin Prout
  */
 public class ColorUtil {
-
-    static final String TOO_BIG = "produces a line too long a line for code";
 
     /**
      * Returns hex long as a positive int unless greater than Integer.MAX_VALUE
@@ -34,11 +30,7 @@ public class ColorUtil {
      */
     static final int hexLong(long hexlong) {
         long SPLIT = Integer.MAX_VALUE + 1;
-        if (hexlong < SPLIT) {
-            return (int) hexlong;
-        } else {
-            return (int) (hexlong - SPLIT * 2L);
-        }
+        return hexlong < SPLIT ? (int) hexlong : (int) (hexlong - SPLIT * 2L);
     }
 
     /**
@@ -52,7 +44,7 @@ public class ColorUtil {
     /**
      *
      * @param web Array of web (hex) String
-     * @return cols of p5 color (int)
+     * @return array of color int according to java
      */
     static public int[] webArray(String[] web) {
         int[] result = new int[web.length];
@@ -63,41 +55,22 @@ public class ColorUtil {
     }
 
     /**
-     * Return a ruby string of the form "%w[a b c]" where a, b, c are raw web
+     * Return a ruby string of the form "%w(a b c)" where a, b, c are raw web
      * strings. This string can be used in ruby code.
      *
-     * @param p5colors cols of p5 colors (int)
+     * @param hex int array
      * @return String for use in ruby
      */
-    static public String rubyString(int[] p5colors) {
-        if (p5colors.length > 8){ return TOO_BIG;}
-        StringBuilder sb = new StringBuilder("%w[");
-        for (int p5color : p5colors) {
-            sb.append(String.format("#%06X", (0xFFFFFF & p5color)));
-            sb.append(' ');
+    static public String rubyString(int[] hex) {
+        StringBuilder result = new StringBuilder("%w[");
+        for (int i = 0; i < hex.length; i++) {
+            result.append(String.format("#%06X", 0xFFFFFF & hex[i]));
+            if (i < hex.length - 1) {
+                result.append(' ');
+            }
         }
-        sb.deleteCharAt(sb.length() - 1);
-        sb.append("]\n");
-        return sb.toString();
-    }
-
-    static public String[] p5ToWeb(int[] p5colors) {
-        List<String> list = new ArrayList<>();
-        for (int p5color : p5colors) {
-            list.add(String.format("#%06X", (0xFFFFFF & p5color)));
-        }
-        return list.toArray(new String[0]);
-    }
-
-    static public int[] shuffle(int[] cols) {
-        Random rgen = new Random();  // Random number generator
-        for (int i = 0; i < cols.length; i++) {
-            int randomPosition = rgen.nextInt(cols.length);
-            int temp = cols[i];
-            cols[i] = cols[randomPosition];
-            cols[randomPosition] = temp;
-        }
-        return cols;
+        result.append("]\n");
+        return result.toString();
     }
 
     /**
@@ -125,6 +98,17 @@ public class ColorUtil {
      */
     static public float colorDouble(double hex) {
         return (float) hex;
+    }
+
+    static public int[] shuffle(int[] cols) {
+        Random rgen = new Random();  // Random number generator
+        for (int i = 0; i < cols.length; i++) {
+            int randomPosition = rgen.nextInt(cols.length);
+            int temp = cols[i];
+            cols[i] = cols[randomPosition];
+            cols[randomPosition] = temp;
+        }
+        return cols;
     }
 
     /**

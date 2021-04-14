@@ -873,10 +873,9 @@ public class Texture implements PConstants {
       data = bufferCache.getLast();
     }
     if (data != null) {
-      if ((data.w != width) || (data.h != height)) {
-        init(data.w, data.h);
-      }
-
+      if (data.w != width || data.h != height) {
+          init(data.w, data.h);
+      } 
       data.rgbBuf.rewind();
       data.rgbBuf.get(pixels);
       convertToARGB(pixels);
@@ -915,7 +914,7 @@ public class Texture implements PConstants {
     }
 
     if (data != null) {
-      if ((data.w != width) || (data.h != height)) {
+      if (data.w != width || data.h != height) {
         init(data.w, data.h);
       }
       data.rgbBuf.rewind();
@@ -1689,7 +1688,7 @@ public class Texture implements PConstants {
         disposeBufferMethod.invoke(bufferSource, natBuf);
         natBuf = null;
         rgbBuf = null;
-      } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+      } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {          
       }
     }
   }

@@ -182,7 +182,7 @@ public class PJOGL extends PGL {
   @Override
   protected PImage screenshot() {
     AWTGLReadBufferUtil util = new AWTGLReadBufferUtil(capabilities.getGLProfile(), false);
-    return new PImageAWT(util.readPixelsToBufferedImage​(gl, true));
+    return new PImageAWT(util.readPixelsToBufferedImage(gl, true));
   }
 
 
@@ -637,6 +637,7 @@ public class PJOGL extends PGL {
       setProperty(GLU.GLU_TESS_WINDING_RULE, rule);
     }
 
+    @Override
     public void setProperty(int property, int value) {
       GLU.gluTessProperty(tess, property, value);
     }
@@ -1997,10 +1998,10 @@ public class PJOGL extends PGL {
     } else if (gl3 != null) {
       gl3.glDrawBuffer(buf);
     } else if (gl3es3 != null) {
-      IntBuffer intBuffer = IntBuffer.allocate(1);
-      intBuffer.put(buf);
-      intBuffer.rewind();
-      gl3es3.glDrawBuffers(1, intBuffer);
+      IntBuffer localIntBuf = IntBuffer.allocate(1);
+      localIntBuf.put(buf);
+      localIntBuf.rewind();
+      gl3es3.glDrawBuffers(1, localIntBuf);
     } else {
       throw new RuntimeException(String.format(MISSING_GLFUNC_ERROR, "glDrawBuffer()"));
     }

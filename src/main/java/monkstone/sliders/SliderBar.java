@@ -1,18 +1,18 @@
-/* 
+/*
  * Copyright (c) 2015-20 Martin Prout
- * 
+ *
  * This library is free softlengthare; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Softlengthare Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * http://creativecommons.org/licenses/LGPL/2.1/
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied lengtharranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, lengthrite to the Free Softlengthare
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -22,7 +22,7 @@ package monkstone.sliders;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
-import static processing.core.PConstants.*;
+
 
 /**
  *
@@ -99,14 +99,14 @@ public class SliderBar {
         if (length < MIN_BAR_WIDTH) {
             pH = MIN_BAR_WIDTH;
         } else {
-            pH = (length > MAX_BAR_WIDTH)? MAX_BAR_WIDTH : length;
+            pH = length > MAX_BAR_WIDTH ? MAX_BAR_WIDTH : length;
         }
     }
 
     private void limits(float iv, float fv) {
         vMin = iv;
         vMax = fv;
-        SliderBar.this.initialValue(iv);
+        initialValue(iv);
     }
 
     /**
@@ -178,7 +178,7 @@ public class SliderBar {
      * @param s
      */
     public void labelSize(int s) {
-        labelSize = (s < 4) ? 4 : s;
+        labelSize = s < 4 ? 4 : s;
     }
 
     /**
@@ -221,7 +221,7 @@ public class SliderBar {
             } else {
                 applet.pushMatrix();
                 applet.translate(pX + pH / 2, pY + pW / 2);
-                applet.rotate(HALF_PI);
+                applet.rotate(PConstants.HALF_PI);
                 applet.text(Integer.toString((int) pValue), 0, 0 + labelSize / 2 - 2);
                 applet.popMatrix();
             }
@@ -238,13 +238,13 @@ public class SliderBar {
                 applet.pushMatrix();
                 applet.textAlign(PConstants.RIGHT);
                 applet.translate(pX - numberSize / 2, pY);
-                applet.rotate(HALF_PI);
+                applet.rotate(PConstants.HALF_PI);
                 applet.text(String.format(lFormat, (int) vMax), 0, 0);
                 applet.popMatrix();
                 applet.pushMatrix();
                 applet.textAlign(PConstants.LEFT);
                 applet.translate(pX - numberSize / 2, pY + pW);
-                applet.rotate(HALF_PI);
+                applet.rotate(PConstants.HALF_PI);
                 applet.text(String.format(lFormat, (int) vMin), 0, 0);
                 applet.popMatrix();
             }
@@ -301,11 +301,10 @@ public class SliderBar {
 
     private void checkMouse() {
         if (debug) {
-            if (mouseOver() && applet.keyPressed && applet.mouseButton == PConstants.LEFT && applet.mousePressed) {
-                if (applet.keyCode == PConstants.CONTROL) {
+            if (mouseOver() && applet.keyPressed && applet.mouseButton == PConstants.LEFT && applet.mousePressed
+                    && applet.keyCode == PConstants.CONTROL) {
                     pX = pX + applet.mouseX - applet.pmouseX;
                     pY = pY + applet.mouseY - applet.pmouseY;
-                }
                 if (applet.keyCode == PConstants.SHIFT && pressOnlyOnce) {
                     System.out.println(toString());
                     pressOnlyOnce = false;
@@ -377,17 +376,16 @@ public class SliderBar {
         if (applet.keyPressed && applet.keyCode == PConstants.CONTROL) {
             delta = delta * (int) (vMax / 4);
         }
-        SliderBar.this.initialValue(pValue + delta);
+        initialValue(pValue + delta);
     }
 
     private void deBounce(int n) {
-        if (pressOnlyOnce) {
-        } else if (deb++ > n) {
+        if (!pressOnlyOnce && deb++ > n) {
             deb = 0;
             pressOnlyOnce = true;
         }
     }
-    
+
     private double map(double val, double begIn, double endIn, double beginOut, double endOut){
         double max = Math.max(begIn, endIn);
         double min = Math.min(begIn, endIn);
@@ -398,7 +396,7 @@ public class SliderBar {
             val = max;
         }
         return beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn));
-    }    
+    }
 
     /**
      *
