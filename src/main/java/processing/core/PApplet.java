@@ -1780,10 +1780,8 @@ public class PApplet implements PConstants {
      * Create a full-screen sketch using the default renderer.
      */
     public void fullScreen() {
-        if (!fullScreen) {
-            if (insideSettings("fullScreen")) {
-                this.fullScreen = true;
-            }
+        if (!fullScreen && insideSettings("fullScreen")) {
+            this.fullScreen = true;            
         }
     }
 
@@ -2290,7 +2288,7 @@ public class PApplet implements PConstants {
      * height (but no format) will produce a strange error.
      *
      * Advanced users please note that createImage() should be used instead of
-     * the syntax <tt>new PImage()</tt>.
+     * the syntax <b>new PImage()</b>.
      *
      * ( end auto-generated )
      * <h3>Advanced</h3>
@@ -3811,8 +3809,8 @@ public class PApplet implements PConstants {
                 final String td = "processing.core.ThinkDifferent";
                 final Class<?> thinkDifferent = getClass().getClassLoader().loadClass(td);
                 thinkDifferent.getMethod("cleanup").invoke(null);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException e) {
+                 
             }
         }
 
@@ -6857,7 +6855,6 @@ public class PApplet implements PConstants {
 
         } catch (IOException e) {
             System.err.println("Could not createInput() for " + file);
-            e.printStackTrace();
             return null;
         }
     }

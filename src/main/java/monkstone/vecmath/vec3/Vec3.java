@@ -672,9 +672,9 @@ public final class Vec3 extends RubyObject {
         }
         if (other instanceof Vec3) {
             Vec3 v = (Vec3) other.toJava(Vec3.class);
-            if ((Double.compare(jx, (Double) v.jx) == 0)
-                    && (Double.compare(jy, (Double) v.jy) == 0)
-                    && (Double.compare(jz, (Double) v.jz) == 0)) {
+            if (Double.compare(jx, (Double) v.jx) == 0
+                    && Double.compare(jy, (Double) v.jy) == 0
+                    && Double.compare(jz, (Double) v.jz) == 0) {
                 return runtime.newBoolean(true);
             }
 

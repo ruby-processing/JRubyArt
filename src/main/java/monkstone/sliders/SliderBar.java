@@ -106,7 +106,7 @@ public class SliderBar {
     private void limits(float iv, float fv) {
         vMin = iv;
         vMax = fv;
-        SliderBar.this.initialValue(iv);
+        initialValue(iv);
     }
 
     /**
@@ -178,7 +178,7 @@ public class SliderBar {
      * @param s
      */
     public void labelSize(int s) {
-        labelSize = (s < 4) ? 4 : s;
+        labelSize = s < 4 ? 4 : s;
     }
 
     /**
@@ -301,11 +301,10 @@ public class SliderBar {
 
     private void checkMouse() {
         if (debug) {
-            if (mouseOver() && applet.keyPressed && applet.mouseButton == PConstants.LEFT && applet.mousePressed) {
-                if (applet.keyCode == PConstants.CONTROL) {
+            if (mouseOver() && applet.keyPressed && applet.mouseButton == PConstants.LEFT && applet.mousePressed
+                    && applet.keyCode == PConstants.CONTROL) {
                     pX = pX + applet.mouseX - applet.pmouseX;
                     pY = pY + applet.mouseY - applet.pmouseY;
-                }
                 if (applet.keyCode == PConstants.SHIFT && pressOnlyOnce) {
                     System.out.println(toString());
                     pressOnlyOnce = false;
@@ -377,12 +376,11 @@ public class SliderBar {
         if (applet.keyPressed && applet.keyCode == PConstants.CONTROL) {
             delta = delta * (int) (vMax / 4);
         }
-        SliderBar.this.initialValue(pValue + delta);
+        initialValue(pValue + delta);
     }
 
     private void deBounce(int n) {
-        if (pressOnlyOnce) {
-        } else if (deb++ > n) {
+        if (!pressOnlyOnce && deb++ > n) {
             deb = 0;
             pressOnlyOnce = true;
         }

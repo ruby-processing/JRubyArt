@@ -1688,7 +1688,7 @@ public class Texture implements PConstants {
         disposeBufferMethod.invoke(bufferSource, natBuf);
         natBuf = null;
         rgbBuf = null;
-      } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+      } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {          
       }
     }
   }

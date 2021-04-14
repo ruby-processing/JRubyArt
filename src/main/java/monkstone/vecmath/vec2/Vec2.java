@@ -742,10 +742,8 @@ public final class Vec2 extends RubyObject {
         }
         if (obj instanceof Vec2) {
             final Vec2 other = (Vec2) obj;
-            if ((Double.compare(jx, (Double) other.jx) == 0)
-                    && (Double.compare(jy, (Double) other.jy) == 0)) {
-                return true;
-            }
+            return Double.compare(jx, (Double) other.jx) == 0
+                    && Double.compare(jy, (Double) other.jy) == 0;
         }
         return false;
     }
