@@ -7,7 +7,7 @@ keywords: library, java, video, video_event, processing. reflection
 
 <sup>2</sup><i>A built in hybrid ruby/java library</i>
 
-The purpose of the `video_event` library is to allow you to use the vanilla processing reflection methods `captureEvent` and `movieEvent` from the processing `video` library. _It is almost impossible to use vanilla processing reflection methods without this sort of wrapper_. This may not be valid with [video2](https://github.com/gohai/processing-video) the experimental successor to the video library (wraps GStreamer-1.x instead of GStreamer-0.1.0, which is now obsoleted/deprecated on Archlinux and Ubuntu).
+The purpose of the `video_event` library is to allow you to use the vanilla processing reflection methods `captureEvent` and `movieEvent` from the processing `video` library.
 
 A movie example:-
 
@@ -50,7 +50,7 @@ A capture example-
 
 ```ruby
 
-load_libraries :video, :video_event
+load_library :video, :video_event
 
 include_package 'processing.video'
 
@@ -59,13 +59,8 @@ attr_reader :cam
 def setup
   sketch_title 'Test Capture'
   cameras = Capture.list
-  fail 'There are no cameras available for capture.' if cameras.length.zero?
-  p 'Matching cameras available:'
-  size_pattern = Regexp.new(format('%dx%d', width, height))
-  select = cameras.grep size_pattern # filter available cameras
-  select.uniq.map { |cam| p cam.strip }
-  fail 'There are no matching cameras.' if select.length.zero?
-  start_capture(select[0])
+  fail 'There are no matching cameras.' if cameras.length.zero?
+  start_capture(cameras[0])
 end
 
 def start_capture(cam_string)
@@ -88,6 +83,6 @@ def captureEvent(c)
 end
 
 def settings
-  size 1280, 720, P2D
+  size 960, 720, P2D
 end
 ```

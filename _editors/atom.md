@@ -80,4 +80,4 @@ Fans of Sandi Metz will may want to experiment with the linter-ruby-reek and rub
 [language]:https://atom.io/packages/language-jruby-art
 [atom-k9]:https://atom.io/packages/atom-k9
 [atom]:https://atom.io/
-[releases]:https://github.com/atom/atom/releases/tag/v1.42.0
+[releases]:https://github.com/atom/atom/releases/tag/v1.56.0
