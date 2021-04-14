@@ -1,32 +1,18 @@
-/* 
- * Copyright (c) 2015-20 Martin Prout
- * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * 
- * http://creativecommons.org/licenses/LGPL/2.1/
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
  */
-
 package monkstone.slider;
 
 import processing.core.PApplet;
 
 /**
  *
- * @author Martin Prout
+ * @author tux
  */
-public abstract class SimpleSlider implements Slider {
+public abstract class SimpleSlider implements Slider {//implements Slider {
+
     int MIN_BAR_WIDTH = 10;
     int MAX_BAR_WIDTH = 30;
     int sliderBack = 0xff909090;
@@ -58,7 +44,6 @@ public abstract class SimpleSlider implements Slider {
 
     abstract void drawGui();
 
-    
     @Override
     public void draw() {
         applet.pushStyle();
@@ -72,7 +57,6 @@ public abstract class SimpleSlider implements Slider {
     /**
      *
      */
-    
     @Override
     public void showLabel() {
         displayLabel = true;
@@ -81,7 +65,6 @@ public abstract class SimpleSlider implements Slider {
     /**
      *
      */
-    
     @Override
     public void hideLabel() {
         displayLabel = false;
@@ -90,7 +73,6 @@ public abstract class SimpleSlider implements Slider {
     /**
      *
      */
-    
     @Override
     public void showNumbers() {
         displayValue = true;
@@ -111,7 +93,6 @@ public abstract class SimpleSlider implements Slider {
     /**
      *
      */
-    
     @Override
     public void hideBackground() {
         backgroundVisible = false;
@@ -121,7 +102,6 @@ public abstract class SimpleSlider implements Slider {
      *
      * @return
      */
-    
     @Override
     public float readValue() {
         return pValue;
@@ -130,7 +110,7 @@ public abstract class SimpleSlider implements Slider {
     abstract boolean mouseOver();
 
     protected float map(float val, float begIn, float endIn, float beginOut, float endOut) {
-        return (beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn)));
+        return beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn));
     }
 
     final void limits(float iv, float fv) {
@@ -143,22 +123,19 @@ public abstract class SimpleSlider implements Slider {
      *
      * @param s
      */
-    
     @Override
     public void labelSize(int s) {
-        labelSize = (s < 4) ? 4 : s;
+        labelSize = s < 4 ? 4 : s;
     }
 
     void deBounce(int n) {
-        if (pressOnlyOnce) {
-        } else if (deb++ > n) {
+        if (!pressOnlyOnce && deb++ > n) {
             deb = 0;
             pressOnlyOnce = true;
         }
     }
 
     abstract void checkKeyboard();
-
 
     protected int constrainMap(double val, double begIn, double endIn, double beginOut, double endOut) {
         double max = Math.max(begIn, endIn);
@@ -181,7 +158,6 @@ public abstract class SimpleSlider implements Slider {
         }
     }
 
-    
     @Override
     public void dispose() {
         setActive(false);

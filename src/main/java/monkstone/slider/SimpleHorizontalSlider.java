@@ -1,18 +1,18 @@
-/* 
+/*
  * Copyright (c) 2015-20 Martin Prout
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * http://creativecommons.org/licenses/LGPL/2.1/
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -23,10 +23,10 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 
 public class SimpleHorizontalSlider extends SimpleSlider {
-    
+
     final int SPACING = 20;
     final int LEFT_SPC = SPACING * 2;
-    final int RIGHT_SPC = SPACING * 4;    
+    final int RIGHT_SPC = SPACING * 4;
 
     /**
      *
@@ -50,7 +50,7 @@ public class SimpleHorizontalSlider extends SimpleSlider {
 
     @Override
     boolean mouseOver() {
-        return (applet.mouseX >= pX && applet.mouseX <= pX + pW && applet.mouseY >= pY && applet.mouseY <= pY + pH);
+        return applet.mouseX >= pX && applet.mouseX <= pX + pW && applet.mouseY >= pY && applet.mouseY <= pY + pH;
     }
 
     private void setActive(boolean active) {
@@ -58,7 +58,7 @@ public class SimpleHorizontalSlider extends SimpleSlider {
             applet.registerMethod("dispose", this);
             applet.registerMethod("draw", this);
         } else {
-            applet.unregisterMethod("draw", this);            
+            applet.unregisterMethod("draw", this);
         }
     }
 
@@ -75,12 +75,12 @@ public class SimpleHorizontalSlider extends SimpleSlider {
             applet.textSize(numberSize);
             applet.fill(numbersColor);
             applet.textAlign(PConstants.LEFT);
-            applet.text(String.format(lFormat, (int) vMin), pX, pY );
+            applet.text(String.format(lFormat, (int) vMin), pX, pY);
             applet.textAlign(PConstants.RIGHT);
-            applet.text(String.format(lFormat, (int) vMax), pX + pW, pY );
+            applet.text(String.format(lFormat, (int) vMax), pX + pW, pY);
         }
     }
-    
+
     @Override
     void drawGui() {
         if (backgroundVisible) {
@@ -90,7 +90,7 @@ public class SimpleHorizontalSlider extends SimpleSlider {
         applet.noStroke();
         applet.fill(255);
         applet.ellipse(pX + pScaled, pY + pH / 2, 10, 10);
-    }    
+    }
 
     /**
      *
@@ -124,7 +124,7 @@ public class SimpleHorizontalSlider extends SimpleSlider {
                 if (pValue > vMax) {
                     pValue = vMax;
                 } else {
-                    pValue = (pValue < vMin) ? vMin : pValue;
+                    pValue = pValue < vMin ? vMin : pValue;
                 }
                 pressOnlyOnce = false;
             }
@@ -132,7 +132,7 @@ public class SimpleHorizontalSlider extends SimpleSlider {
             pScaled = map(pValue, vMin, vMax, 0, pW);
         }
     }
-   
+
     /**
      *
      * @return

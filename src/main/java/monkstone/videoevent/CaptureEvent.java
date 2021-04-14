@@ -23,5 +23,5 @@ import processing.video.Capture;
 
 @FunctionalInterface
 public interface CaptureEvent{
-    public void captureEvent(Capture capture);
+    void captureEvent(Capture capture);
 }

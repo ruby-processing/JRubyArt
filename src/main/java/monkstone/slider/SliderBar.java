@@ -68,14 +68,14 @@ public abstract class SliderBar implements Slider {
         if (w < MIN_BAR_WIDTH) {
             pH = MIN_BAR_WIDTH;
         } else {
-            pH = (w > MAX_BAR_WIDTH) ? MAX_BAR_WIDTH : w;
+            pH = w > MAX_BAR_WIDTH ? MAX_BAR_WIDTH : w;
         }
     }
 
     final void limits(float iv, float fv) {
         vMin = iv;
         vMax = fv;
-        SliderBar.this.setValue(iv);
+        setValue(iv);
     }
 
     /**
@@ -139,7 +139,7 @@ public abstract class SliderBar implements Slider {
      */
     @Override
     public void labelSize(int s) {
-        labelSize = (s < 4) ? 4 : s;
+        labelSize = s < 4 ? 4 : s;
     }
 
     /**
@@ -179,10 +179,9 @@ public abstract class SliderBar implements Slider {
     }
 
     public void mouseEvent(MouseEvent evt) {
-        if (evt.getAction() == MouseEvent.WHEEL) {
-            if (scrollWheelHandler != null) {
-                scrollWheelHandler.handleWheel((short) evt.getCount());
-            }
+        if (evt.getAction() == MouseEvent.WHEEL && scrollWheelHandler != null) {
+            scrollWheelHandler.handleWheel((short) evt.getCount());
+
         }
     }
 
@@ -215,15 +214,14 @@ public abstract class SliderBar implements Slider {
     abstract void changeWithWheel(int delta);
 
     void deBounce(int n) {
-        if (pressOnlyOnce) {
-        } else if (deb++ > n) {
+        if (!pressOnlyOnce && deb++ > n) {
             deb = 0;
             pressOnlyOnce = true;
         }
     }
 
     protected float map(float val, float begIn, float endIn, float beginOut, float endOut) {
-        return (beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn)));
+        return beginOut + (endOut - beginOut) * (val - begIn) / (endIn - begIn);
     }
 
     protected int constrainMap(double val, double begIn, double endIn, double beginOut, double endOut) {

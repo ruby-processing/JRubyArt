@@ -12,7 +12,7 @@ package monkstone.noise;
  * Multiple versions of each function are provided. See the documentation above
  * each, for more info.
  */
-public class OpenSimplex2S implements Noise {
+public class OpenSimplex2S {
 
     private static final int PSIZE = 2048;
     private static final int PMASK = 2047;
@@ -22,6 +22,10 @@ public class OpenSimplex2S implements Noise {
     private final Grad3[] permGrad3;
     private final Grad4[] permGrad4;
 
+    /**
+     *
+     * @param seed
+     */
     public OpenSimplex2S(long seed) {
         perm = new short[PSIZE];
         permGrad2 = new Grad2[PSIZE];
@@ -35,7 +39,7 @@ public class OpenSimplex2S implements Noise {
             seed = seed * 6364136223846793005L + 1442695040888963407L;
             int r = (int) ((seed + 31) % (i + 1));
             if (r < 0) {
-                r += (i + 1);
+                r += i + 1;
             }
             perm[i] = source[r];
             permGrad2[i] = GRADIENTS_2D[perm[i]];
@@ -148,6 +152,34 @@ public class OpenSimplex2S implements Noise {
 
     /**
      * 3D Re-oriented 8-point BCC noise, with better visual isotropy in (X,
+     * Y).Recommended for 3D terrain and time-varied animations.The Z coordinate
+     * should always be the "different" coordinate in your use case.If Y is
+     * vertical in world coordinates, call noise3_XYBeforeZ(x, z, Y) or use
+     * noise3_XZBeforeY.If Z is vertical in world coordinates, call
+     * noise3_XYBeforeZ(x, y, Z). For a time varied animation, call
+     * noise3_XYBeforeZ(x, y, T).
+     *
+     * @param x
+     * @param z
+     * @param y
+     * @return
+     */
+    public double noise3_XYBeforeZ(double x, double y, double z) {
+
+        // Re-orient the cubic lattices without skewing, to make X and Y triangular like 2D.
+        // Orthonormal rotation. Not a skew transform.
+        double xy = x + y;
+        double s2 = xy * -0.211324865405187;
+        double zz = z * 0.577350269189626;
+        double xr = x + s2 - zz, yr = y + s2 - zz;
+        double zr = xy * 0.577350269189626 + zz;
+
+        // Evaluate both lattices to form a BCC lattice.
+        return noise3_BCC(xr, yr, zr);
+    }
+
+    /**
+     * 3D Re-oriented 8-point BCC noise, with better visual isotropy in (X,
      * Z).Recommended for 3D terrain and time-varied animations.The Y coordinate
      * should always be the "different" coordinate in your use case.If Y is
      * vertical in world coordinates, call noise3_XZBeforeY(x, Y, z).If Z is
@@ -247,6 +279,26 @@ public class OpenSimplex2S implements Noise {
         double s2 = (x + y) * -0.28522513987434876941 + (z + w) * 0.83897065470611435718;
         double t2 = (z + w) * 0.21939749883706435719 + (x + y) * -0.48214856493302476942;
         double xs = x + s2, ys = y + s2, zs = z + t2, ws = w + t2;
+
+        return noise4_Base(xs, ys, zs, ws);
+    }
+
+    /**
+     * 4D SuperSimplex noise, with XZ and YW forming orthogonal triangular-based
+     * planes.Recommended for 3D terrain, where X and Z (or Y and W) are
+     * horizontal.
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     * @return
+     */
+    public double noise4_XZBeforeYW(double x, double y, double z, double w) {
+
+        double s2 = (x + z) * -0.28522513987434876941 + (y + w) * 0.83897065470611435718;
+        double t2 = (y + w) * 0.21939749883706435719 + (x + z) * -0.48214856493302476942;
+        double xs = x + s2, ys = y + t2, zs = z + s2, ws = w + t2;
 
         return noise4_Base(xs, ys, zs, ws);
     }
@@ -719,26 +771,6 @@ public class OpenSimplex2S implements Noise {
                 LOOKUP_4D[i][j] = latticePoints[lookup4DPregen[i][j]];
             }
         }
-    }
-
-    @Override
-    public float noise(float x, float y, float z) {
-        return (float) noise3_Classic(x, y, z);
-    }
-
-    @Override
-    public float noise(float x, float y, float z, float w) {
-        return (float) noise4_Classic(x, y, z, w);
-    }
-
-    @Override
-    public void noiseMode(NoiseMode mode) {
-
-    }
-
-    @Override
-    public void noiseSeed(long seed) {
-
     }
 
     private static class LatticePoint2D {

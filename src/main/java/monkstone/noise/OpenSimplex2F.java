@@ -11,7 +11,7 @@ package monkstone.noise;
  * Multiple versions of each function are provided. See the documentation above
  * each, for more info.
  */
-public class OpenSimplex2F implements Noise {
+public class OpenSimplex2F {
 
     private static final int PSIZE = 2048;
     private static final int PMASK = 2047;
@@ -21,6 +21,10 @@ public class OpenSimplex2F implements Noise {
     private final Grad3[] permGrad3;
     private final Grad4[] permGrad4;
 
+    /**
+     *
+     * @param seed
+     */
     public OpenSimplex2F(long seed) {
         perm = new short[PSIZE];
         permGrad2 = new Grad2[PSIZE];
@@ -34,7 +38,7 @@ public class OpenSimplex2F implements Noise {
             seed = seed * 6364136223846793005L + 1442695040888963407L;
             int r = (int) ((seed + 31) % (i + 1));
             if (r < 0) {
-                r += (i + 1);
+                r += i + 1;
             }
             perm[i] = source[r];
             permGrad2[i] = GRADIENTS_2D[perm[i]];
@@ -143,6 +147,34 @@ public class OpenSimplex2F implements Noise {
 
     /**
      * 3D Re-oriented 4-point BCC noise, with better visual isotropy in (X,
+     * Y).Recommended for 3D terrain and time-varied animations.The Z coordinate
+     * should always be the "different" coordinate in your use case.If Y is
+     * vertical in world coordinates, call noise3_XYBeforeZ(x, z, Y) or use
+     * noise3_XZBeforeY.If Z is vertical in world coordinates, call
+     * noise3_XYBeforeZ(x, y, Z). For a time varied animation, call
+     * noise3_XYBeforeZ(x, y, T).
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
+    public double noise3_XYBeforeZ(double x, double y, double z) {
+
+        // Re-orient the cubic lattices without skewing, to make X and Y triangular like 2D.
+        // Orthonormal rotation. Not a skew transform.
+        double xy = x + y;
+        double s2 = xy * -0.211324865405187;
+        double zz = z * 0.577350269189626;
+        double xr = x + s2 - zz, yr = y + s2 - zz;
+        double zr = xy * 0.577350269189626 + zz;
+
+        // Evaluate both lattices to form a BCC lattice.
+        return noise3_BCC(xr, yr, zr);
+    }
+
+    /**
+     * 3D Re-oriented 4-point BCC noise, with better visual isotropy in (X,
      * Z).Recommended for 3D terrain and time-varied animations.The Y coordinate
      * should always be the "different" coordinate in your use case.If Y is
      * vertical in world coordinates, call noise3_XZBeforeY(x, Y, z).If Z is
@@ -213,8 +245,8 @@ public class OpenSimplex2F implements Noise {
      *
      * @param x
      * @param y
-     * @param z
      * @param w
+     * @param z
      * @return
      */
     public double noise4_Classic(double x, double y, double z, double w) {
@@ -233,8 +265,8 @@ public class OpenSimplex2F implements Noise {
      * trick.
      *
      * @param x
-     * @param y
      * @param z
+     * @param y
      * @param w
      * @return
      */
@@ -248,14 +280,34 @@ public class OpenSimplex2F implements Noise {
     }
 
     /**
+     * 4D OpenSimplex2F noise, with XZ and YW forming orthogonal
+     * triangular-based planes.Recommended for 3D terrain, where X and Z (or Y
+     * and W) are horizontal.
+     *
+     * @param x
+     * @param z
+     * @param y
+     * @param w
+     * @return
+     */
+    public double noise4_XZBeforeYW(double x, double y, double z, double w) {
+
+        double s2 = (x + z) * -0.178275657951399372 + (y + w) * 0.215623393288842828;
+        double t2 = (y + w) * -0.403949762580207112 + (x + z) * -0.375199083010075342;
+        double xs = x + s2, ys = y + t2, zs = z + s2, ws = w + t2;
+
+        return noise4_Base(xs, ys, zs, ws);
+    }
+
+    /**
      * 4D OpenSimplex2F noise, with XYZ oriented like noise3_Classic, and W for
      * an extra degree of freedom.W repeats eventually.Recommended for
      * time-varied animations which texture a 3D object (W=time)
      *
      * @param x
+     * @param w
      * @param y
      * @param z
-     * @param w
      * @return
      */
     public double noise4_XYZBeforeW(double x, double y, double z, double w) {
@@ -283,7 +335,7 @@ public class OpenSimplex2F implements Noise {
         // If we're in the lower half, flip so we can repeat the code for the upper half. We'll flip back later.
         double siSum = xsi + ysi + zsi + wsi;
         double ssi = siSum * 0.309016994374947; // Prep for vertex contributions.
-        boolean inLowerHalf = (siSum < 2);
+        boolean inLowerHalf = siSum < 2;
         if (inLowerHalf) {
             xsi = 1 - xsi;
             ysi = 1 - ysi;
@@ -491,25 +543,6 @@ public class OpenSimplex2F implements Noise {
         }
     }
 
-    @Override
-    public float noise(float x, float y, float z) {
-        return (float)noise3_Classic(x, y, z);
-    }
-
-    @Override
-    public float noise(float x, float y, float z, float w) {
-        return (float)noise4_Classic(x, y, z, w);
-    }
-
-    @Override
-    public void noiseMode(NoiseMode mode) {
-
-    }
-
-    @Override
-    public void noiseSeed(long seed) {
-    }
-
     private static class LatticePoint2D {
 
         int xsv, ysv;
@@ -557,10 +590,10 @@ public class OpenSimplex2F implements Noise {
             this.dy = -ysv - ssv;
             this.dz = -zsv - ssv;
             this.dw = -wsv - ssv;
-            this.xsi = xsi = 0.2 - xsv;
-            this.ysi = ysi = 0.2 - ysv;
-            this.zsi = zsi = 0.2 - zsv;
-            this.wsi = wsi = 0.2 - wsv;
+            this.xsi = 0.2 - xsv;
+            this.ysi = 0.2 - ysv;
+            this.zsi = 0.2 - zsv;
+            this.wsi = 0.2 - wsv;
             this.ssiDelta = (0.8 - xsv - ysv - zsv - wsv) * 0.309016994374947;
         }
     }
