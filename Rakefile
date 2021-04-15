@@ -44,6 +44,8 @@ task :test do
   system 'jruby --dev test/aabb_spec_test.rb'
   system 'jruby --dev test/create_test.rb'
   system 'jruby --dev test/color_group_test.rb'
+  system 'jruby --dev test/fast_noise_test.rb'
+  system 'jruby --dev test/smooth_noise_test.rb'
   home = File.expand_path('~')
   FLF = '%<home>s/.jruby_art/config.yml'
   config = File.exist?(format(FLF, home: home))
