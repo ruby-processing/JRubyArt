@@ -76,7 +76,7 @@ DO NOT MODIFY - GENERATED CODE
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.2.17.0</version>
+      <version>9.2.18.0</version>
       <type>pom</type>
     </dependency>
     <dependency>
