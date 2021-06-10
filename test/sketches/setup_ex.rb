@@ -1,14 +1,13 @@
+# frozen_string_literal: true
+
 def setup
-  begin
-    unknown_method()
-  rescue NoMethodError => e
-    puts e
-    exit
-  end
+  unknown_method
+rescue StandardError => e
+  puts e
+  exit
 end
 
-def draw
-end
+def draw; end
 
 def settings
   size(300, 300)

@@ -1,10 +1,10 @@
-language: ruby
-dist: trusty
+language: java
+dist: bionic
 
 rvm:
-  - jruby-9.2.6.0
+  - jruby-9.2.11.0
 jdk:
-  - oraclejdk8
+  - openjdk11
 os:
   - linux
 

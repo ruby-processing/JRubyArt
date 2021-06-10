@@ -1,13 +1,10 @@
+# frozen_string_literal: true
+
 require_relative 'test_helper'
-require_relative '../lib/rpextras'
 
 Java::Monkstone::JRLibrary.load(JRuby.runtime)
-
-
-Dir.chdir(File.dirname(__FILE__))
-
+# Vecmath Test
 class VecmathTest < Minitest::Test
-
   # duck for Vec2D constructor
   Point = Struct.new(:x, :y)
   # duck for Vec3D constructor
@@ -16,12 +13,11 @@ class VecmathTest < Minitest::Test
   Pointless = Struct.new(:a, :b)
   # non-duck to test fail
   Pointless3 = Struct.new(:a, :b, :c)
-  def setup
-
-  end
+  def setup; end
 
   def test_equals
-    x, y = 1.0000001, 1.01
+    x = 1.0000001
+    y = 1.01
     a = Vec2D.new(x, y)
     assert_equal(a.to_a, [x, y], 'Failed to return Vec2D as an Array')
   end
@@ -33,7 +29,8 @@ class VecmathTest < Minitest::Test
   end
 
   def test_copy_equals
-    x, y = 1.0000001, 1.01
+    x = 1.0000001
+    y = 1.01
     a = Vec2D.new(x, y)
     b = a.copy
     assert_equal(a.to_a, b.to_a, 'Failed deep copy')
@@ -59,7 +56,8 @@ class VecmathTest < Minitest::Test
   end
 
   def test_copy_not_equals
-    x, y = 1.0000001, 1.01
+    x = 1.0000001
+    y = 1.01
     a = Vec2D.new(x, y)
     b = a.copy
     b *= 0
@@ -114,13 +112,14 @@ class VecmathTest < Minitest::Test
   end
 
   def test_from_angle
+    sqrt5 = Math.sqrt(0.5)
     a = Vec2D.from_angle(Math::PI * 0.75)
-    assert_equal(a, Vec2D.new(-1 * Math.sqrt(0.5), Math.sqrt(0.5)), 'Failed to create vector from angle')
+    assert_equal(a, Vec2D.new(-1 * sqrt5, sqrt5), 'Failed to create vector from angle')
   end
 
   def test_random
     a = Vec2D.random
-    assert a.kind_of? Vec2D
+    assert a.is_a? Vec2D
     assert_in_epsilon(a.mag, 1.0)
   end
 
@@ -132,7 +131,7 @@ class VecmathTest < Minitest::Test
 
   def test_mag
     a = Vec2D.new(-3, -4)
-    assert_in_epsilon(a.mag, 5, 0.001,'Failed to return magnitude of vector')
+    assert_in_epsilon(a.mag, 5, 0.001, 'Failed to return magnitude of vector')
   end
 
   def test_mag_variant
@@ -164,7 +163,7 @@ class VecmathTest < Minitest::Test
     assert_equal(a.lerp(b, 5), Vec2D.new(11, 11), 'Failed to return lerp between two vectors')
   end
 
-    def test_lerp!
+  def test_lerp!
     a = Vec2D.new(1, 1)
     b = Vec2D.new(3, 3)
     a.lerp!(b, 0.5)
@@ -218,14 +217,16 @@ class VecmathTest < Minitest::Test
   end
 
   def test_rotate
-    x, y = 20, 10
+    x = 20
+    y = 10
     b = Vec2D.new(x, y)
     a = b.rotate(Math::PI / 2)
     assert_equal(a, Vec2D.new(-10, 20), 'Failed to rotate vector by scalar radians')
   end
 
   def test_hash_index
-    x, y = 10, 20
+    x = 10
+    y = 20
     b = Vec2D.new(x, y)
     assert_equal(b[:x], x, 'Failed to hash index')
   end
@@ -260,7 +261,7 @@ class VecmathTest < Minitest::Test
     a = Vec2D.new(200, 0)
     b = Vec2D.new(0, 200)
     # Expected result is an area, twice that of the triangle created by the vectors
-    assert_equal((a).cross(b).abs, 40_000.0, 'Failed area test using 2D vector cross product')
+    assert_equal(a.cross(b).abs, 40_000.0, 'Failed area test using 2D vector cross product')
   end
 
   def test_cross_non_zero # Could be used to calculate area of triangle
@@ -279,7 +280,9 @@ class VecmathTest < Minitest::Test
   end
 
   def test_equals3
-    x, y, z = 1.0000001, 1.01, 0.0
+    x = 1.0000001
+    y = 1.01
+    z = 0.0
     a = Vec3D.new(x, y)
     assert_equal(a.to_a, [x, y, z], 'Failed to return Vec3D as an Array')
   end
@@ -310,14 +313,18 @@ class VecmathTest < Minitest::Test
   end
 
   def test_copy_equals3
-    x, y, z = 1.0000001, 1.01, 1
+    x = 1.0000001
+    y = 1.01
+    z = 1
     a = Vec3D.new(x, y, z)
     b = a.copy
     assert_equal(a.to_a, b.to_a, 'Failed deep copy')
   end
 
   def test_copy_not_equals3
-    x, y, z = 1.0000001, 1.01, 6.0
+    x = 1.0000001
+    y = 1.01
+    z = 6.0
     a = Vec3D.new(x, y, z)
     b = a.copy
     b *= 0
@@ -362,13 +369,13 @@ class VecmathTest < Minitest::Test
 
   def test_random3
     a = Vec3D.random
-    assert a.kind_of? Vec3D
+    assert a.is_a? Vec3D
     assert_in_epsilon(a.mag, 1.0)
   end
 
   def test_assign_value3
     a = Vec3D.new(3, 5)
-    a.x=23
+    a.x = 23
     assert_equal(a.x, 23, 'Failed to assign x value')
   end
 
@@ -497,7 +504,9 @@ class VecmathTest < Minitest::Test
   end
 
   def test_hash_key3
-    x, y, z = 10, 20, 50
+    x = 10
+    y = 20
+    z = 50
     b = Vec3D.new(x, y, z)
     assert_equal(b[:x], x, 'Failed hash key access')
     assert_equal(b[:y], y, 'Failed hash key access')

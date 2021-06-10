@@ -1,49 +1,70 @@
+# frozen_string_literal: true
+
 require_relative 'lib/jruby_art/version'
-# @TODO change download source for jruby-complete
-def create_manifest
-  title =  'Implementation-Title: rpextras (java extension for JRubyArt)    '
-  version =  format('Implementation-Version: %s', JRubyArt::VERSION)
-end
+require 'erb'
 
-task default: [:init, :compile, :gem, :test]
+MVN = Gem.win_platform? ? File.expand_path('mvnw.cmd') : File.expand_path('mvnw')
 
-desc 'Create Manifest'
+task default: %i[compile init gem test]
+
+# depends on installed processing, with processing on path
+desc 'Copy Jars'
 task :init do
-  create_manifest
+  jogl24 = File.join(ENV['HOME'], 'jogl24')
+  opengl = Dir.entries(jogl24).grep(/amd64|universal|arm64/).select { |jar| jar =~ /linux|windows|macosx|ios|/ }
+  opengl.concat %w[jogl-all.jar gluegen-rt.jar]
+  opengl.each do |gl|
+    FileUtils.cp(File.join(jogl24, gl), File.join('.', 'lib'))
+  end
 end
 
 desc 'Build gem'
 task :gem do
-  sh 'gem build jruby_art.gemspec'
+  system 'jgem build jruby_art.gemspec'
 end
 
 desc 'Compile'
 task :compile do
-  sh 'mvn package'
-  sh 'mv target/rpextras.jar lib'
+  system "#{MVN} package"
+  FileUtils.mv "target/jruby_art-#{JRubyArt::VERSION}.jar", 'lib'
+  system "#{MVN} dependency:copy"
+end
+
+desc 'pmd'
+task :pmd do
+  sh './mvnw pmd:pmd'
 end
 
 desc 'Test'
 task :test do
-  sh 'jruby test/deglut_spec_test.rb'
-  sh 'jruby test/vecmath_spec_test.rb'
-  sh 'jruby test/math_tool_test.rb'
-  sh 'jruby test/helper_methods_test.rb'
-  sh 'jruby test/aabb_spec_test.rb'
-  sh 'jruby test/create_test.rb'
-  sh 'jruby test/color_group_test.rb'
+  system 'jruby --dev test/deglut_spec_test.rb'
+  system 'jruby --dev test/vecmath_spec_test.rb'
+  system 'jruby --dev test/math_tool_test.rb'
+  system 'jruby --dev test/helper_methods_test.rb'
+  system 'jruby --dev test/aabb_spec_test.rb'
+  system 'jruby --dev test/create_test.rb'
+  system 'jruby --dev test/color_group_test.rb'
+  system 'jruby --dev test/fast_noise_test.rb'
+  system 'jruby --dev test/smooth_noise_test.rb'
   home = File.expand_path('~')
-  config = File.exist?(format('%s/.jruby_art/config.yml', home))
+  FLF = '%<home>s/.jruby_art/config.yml'
+  config = File.exist?(format(FLF, home: home))
   if config
-    ruby 'test/k9_run_test.rb'
+    system 'jruby test/k9_run_test.rb'
   else
-    warn format('You should create %s/.jruby_art/config.yml to run sketch tests', home)
+    WNF = 'Create a config %<home>s/.jruby_art/config.yml to run sketch tests'
+    warn format(WNF, home: home)
   end
+end
+
+desc 'JDeps Tool'
+task :jdeps do
+  system "#{MVN} jdeps:jdkinternals"
 end
 
 desc 'clean'
 task :clean do
-  Dir["./**/*.{jar,gem}"].each do |path|
+  Dir['./**/*.{jar,gem}'].each do |path|
     puts "Deleting #{path} ..."
     File.delete(path)
   end

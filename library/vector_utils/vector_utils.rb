@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 PHI ||= (1 + Math.sqrt(5)) / 2 # golden ratio
 GA = PHI * 2 * Math::PI # golden angle
 
@@ -47,7 +49,8 @@ module VectorUtil
 
   def self.cartesian_to_polar(vec:)
     res = Vec3D.new(vec.mag, 0, 0)
-    return Vec3D.new unless res.x > 0
+    return Vec3D.new unless res.x.positive?
+
     res.y = -Math.atan2(vec.z, vec.x)
     res.z = Math.asin(vec.y / res.x)
     res
@@ -64,6 +67,7 @@ module VectorUtil
 
   def self.polar_to_cartesian(vec:)
     return Vec3D.new if vec.mag <= 0
+
     Vec3D.new(Math.asin(vec.y / vec.mag), vec.mag, -Math.atan2(vec.z, vec.x))
   end
 end

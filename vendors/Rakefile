@@ -1,54 +1,64 @@
+# frozen_string_literal: true
+
+require 'fileutils'
 require 'rake/clean'
 
-WARNING = <<-WARN.freeze
-   WARNING: you may not have wget installed, you could just download
-   the correct version of jruby-complete to the vendors folder, and
-   re-run k9 setup install instead of installing wget. Some systems
-   may also require 'sudo' access to install, NB: this is untested....
+WARNING = <<~WARN
+  WARNING: you may not have wget installed, you could just download
+  the correct version of jruby-complete to the vendors folder, and
+  re-run k9 setup install instead of installing wget. Some systems
+  may also require 'sudo' access to install, NB: this is untested....
 
 WARN
-
-JRUBYC_VERSION     = '9.2.7.0'.freeze
-
-EXAMPLES           = '3.4'.freeze
+# https://github.com/processing/processing-video/releases/download/r6-v2.0-beta4/video-2.0-beta4.zip
+JRUBYC_VERSION = '9.2.18.0'
+SOUND = 'sound.zip'
+SOUND_VERSION = 'v2.2.3'
+VIDEO = 'video.zip'
+VIDEO_VERSION = 'v2.0'
+EXAMPLES = '4.0'
 HOME_DIR = ENV['HOME']
-MAC_OR_LINUX = /linux|mac|darwin/ =~ RbConfig::CONFIG['host_os']
-
+MAC_OR_LINUX = /linux|mac|darwin/.match?(RbConfig::CONFIG['host_os'])
+DOWNLOAD = 'releases/download/latest'
 CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar"
 CLOBBER << "jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
 
-file "jruby-complete-#{JRUBYC_VERSION}.jar.sha256" do
-  begin
-    sh "wget https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
-  rescue
-    warn(WARNING)
-  end
+desc 'dependency check'
+task :wget_check do
+  WGET ||= `which wget`.freeze
+  warn WARNING unless WGET
 end
 
-desc 'get sha256'
-task get_sha256: ["jruby-complete-#{JRUBYC_VERSION}.jar.sha256"]
-
-desc 'download, and copy to jruby_art'
-task default: %i[get_sha256 download copy_ruby]
-
-desc 'download JRuby upstream sources'
-task download: ["jruby-complete-#{JRUBYC_VERSION}.jar"]
+file "jruby-complete-#{JRUBYC_VERSION}.jar.sha256" do
+  system "wget https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar.sha256"
+end
 
 file "jruby-complete-#{JRUBYC_VERSION}.jar" do
   begin
-    sh "wget https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar"
-  rescue
+    system "wget https://repo1.maven.org/maven2/org/jruby/jruby-complete/#{JRUBYC_VERSION}/jruby-complete-#{JRUBYC_VERSION}.jar"
+  rescue NameError
     warn(WARNING)
   end
   value = File.read("jruby-complete-#{JRUBYC_VERSION}.jar.sha256")
   check_sha256("jruby-complete-#{JRUBYC_VERSION}.jar", value)
 end
 
+desc 'get sha256'
+task get_sha256: ['wget_check', "jruby-complete-#{JRUBYC_VERSION}.jar.sha256"]
+
+desc 'download, and copy to jruby_art'
+task default: %i[wget_check download copy_ruby install_samples]
+
+desc 'download JRuby upstream sources'
+task download: ['get_sha256', "jruby-complete-#{JRUBYC_VERSION}.jar"]
+
 directory '../lib/ruby'
 
 desc 'copy jruby-complete'
 task copy_ruby: ['../lib/ruby'] do
-  sh "cp -v jruby-complete-#{JRUBYC_VERSION}.jar ../lib/ruby/jruby-complete.jar"
+  FileUtils.cp(
+    "jruby-complete-#{JRUBYC_VERSION}.jar", '../lib/ruby/jruby-complete.jar'
+  )
 end
 
 def check_sha256(filename, expected_hash)
@@ -64,32 +74,78 @@ def check_sha256(filename, expected_hash)
   raise "bad sha256 checksum for #{filename} (expected #{expected_hash} got #{sha256.hexdigest})"
 end
 
+desc 'initialize ~/.jruby_art directories'
+task :init_dir do
+  unless File.exist? "#{HOME_DIR}/.jruby_art/libraries"
+    FileUtils.mkdir_p "#{HOME_DIR}/.jruby_art/libraries"
+  end
+end
+
+desc 'download and copy sound library to ~/.jruby_art'
+task install_sound: %i[wget_check init_dir download_sound copy_sound clobber]
+
+desc 'download and copy video library to ~/.jruby_art'
+task install_video: %i[wget_check init_dir download_video copy_video clobber]
+
+desc 'download sound library'
+task :download_sound do
+  wget_base = 'wget https://github.com/processing/processing-sound'
+  wget_string = [wget_base, DOWNLOAD, SOUND].join('/')
+  puts wget_string
+  system wget_string
+end
+
+desc 'download video library'
+task :download_video do
+  wget_base = 'wget https://github.com/processing/processing-video'
+  wget_string = [wget_base, DOWNLOAD, VIDEO].join('/')
+  system wget_string
+end
+
+desc 'copy sound library'
+task :copy_sound do
+  system "unzip #{SOUND}"
+  if File.exist? "#{HOME_DIR}/.jruby_art/libraries/sound"
+    FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/sound"
+  end
+  FileUtils.cp_r 'sound', "#{HOME_DIR}/.jruby_art/libraries"
+  FileUtils.rm_r 'sound'
+end
+
+desc 'copy video library'
+task :copy_video do
+  system "unzip #{VIDEO}"
+  if File.exist? "#{HOME_DIR}/.jruby_art/libraries/video"
+    FileUtils.rm_r "#{HOME_DIR}/.picrate/libraries/video"
+  end
+  FileUtils.cp_r 'video', "#{HOME_DIR}/.jruby_art/libraries/video"
+  FileUtils.rm_r 'video'
+end
+
 desc 'download, and copy to jruby_art'
-task unpack_samples: %i[download_examples copy_examples]
+task install_samples: %i[download_examples copy_examples]
 
 desc 'download and copy examples to user home'
 task :download_examples
 file_name = MAC_OR_LINUX.nil? ? "#{EXAMPLES}.zip" : "#{EXAMPLES}.tar.gz"
 file file_name do
-  begin
-    if MAC_OR_LINUX.nil?
-      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"
-    else
-      sh "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
-    end
-  rescue
-    warn(WARNING)
+  if MAC_OR_LINUX.nil?
+    system "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.zip"
+  else
+    system "wget https://github.com/ruby-processing/JRubyArt-examples/archive/#{EXAMPLES}.tar.gz"
   end
 end
 
 desc 'copy examples'
 task copy_examples: file_name do
   if MAC_OR_LINUX.nil?
-    sh "unzip #{EXAMPLES}.zip"
+    system  "unzip #{EXAMPLES}.zip"
   else
-    sh "tar xzvf #{EXAMPLES}.tar.gz"
+    system  "tar xzvf #{EXAMPLES}.tar.gz"
   end
-  sh "rm -r #{HOME_DIR}/k9_samples" if File.exist? "#{HOME_DIR}/k9_samples"
-  sh "cp -r JRubyArt-examples-#{EXAMPLES} #{HOME_DIR}/k9_samples"
-  sh "rm -r JRubyArt-examples-#{EXAMPLES}"
+  if File.exist? "#{HOME_DIR}/k9_samples"
+    FileUtils.rm_r("#{HOME_DIR}/k9_samples")
+  end
+  FileUtils.cp_r("JRubyArt-examples-#{EXAMPLES}", "#{HOME_DIR}/k9_samples")
+  FileUtils.rm_r("JRubyArt-examples-#{EXAMPLES}")
 end

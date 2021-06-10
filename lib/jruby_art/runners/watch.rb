@@ -1,4 +1,5 @@
 # frozen_string_literal: false
+
 require_relative 'base'
 require_relative '../config'
 
@@ -21,9 +22,10 @@ module Processing
     EOS
     SLEEP_TIME = 0.2
     def initialize
-      count = Dir["**.*rb"].length
+      count = Dir['**.*rb'].length
       max_watch = RP_CONFIG.fetch('MAX_WATCH', 20)
-      return warn format(WATCH_MESSAGE, max_watch, count) if count > max_watch.to_i
+      abort format(WATCH_MESSAGE, max_watch, count) if count > max_watch.to_i
+
       reload_files_to_watch
       @time = Time.now
       start_watching
@@ -36,7 +38,7 @@ module Processing
       Kernel.loop do
         if @files.find { |file| FileTest.exist?(file) && File.stat(file).mtime > @time }
           puts 'reloading sketch...'
-          Processing.app && Processing.app.close
+          Processing.app&.close
           java.lang.System.gc
           @time = Time.now
           start_runner
@@ -66,7 +68,7 @@ module Processing
     end
 
     def start_runner
-      @runner.kill if @runner && @runner.alive?
+      @runner.kill if @runner&.alive?
       @runner.join
       @runner = nil
       start_original

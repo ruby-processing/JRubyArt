@@ -1,7 +1,10 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
-require 'java'
-require_relative '../rpextras'
+require 'jruby'
+require_relative '../jruby_art'
+Dir["#{K9_ROOT}/lib/*.jar"].sort.each do |jar|
+  require jar
+end
 require_relative '../jruby_art/helper_methods'
 require_relative '../jruby_art/helpers/aabb'
 require_relative '../jruby_art/library_loader'
@@ -9,14 +12,11 @@ require_relative '../jruby_art/config'
 
 # A wrapper module for the processing App
 module Processing
-  Dir[format("%s/core/library/\*.jar", RP_CONFIG['PROCESSING_ROOT'])].each do |jar|
-    require jar unless jar =~ /native/
-  end
   # Include some core processing classes that we'd like to use:
   include_package 'processing.core'
-  java_import 'processing.core.PFont'
   # Load vecmath, fastmath and mathtool modules
   Java::Monkstone::JRLibrary.load(JRuby.runtime)
+
   # import custom Vecmath renderers
   module Render
     java_import 'monkstone.vecmath.GfxRender'
@@ -35,7 +35,7 @@ module Processing
     key_typed: :keyTyped
   }.freeze
   class << self
-    attr_accessor :app
+    attr_accessor :app, :surface
   end
   # All sketches extend this class
   class App < PApplet
@@ -43,13 +43,13 @@ module Processing
     include Math
     include MathTool
     include Render
+    include FastNoise
     # Alias some methods for familiarity for Shoes coders.
-    # surface replaces :frame, but needs field_reader for access
+    # surface replaces :frame
     alias oval ellipse
     alias stroke_width stroke_weight
     alias rgb color
     alias gray color
-    field_reader :surface
 
     def sketch_class
       self.class.sketch_class
@@ -115,6 +115,7 @@ module Processing
         puts(exception.backtrace.map { |trace| "\t#{trace}" })
         close
       end
+      @surface = get_surface
       # NB: this is the processing runSketch() method as used by processing.py
       run_sketch
     end
@@ -124,7 +125,7 @@ module Processing
       @width ||= width
       @height ||= height
       @render_mode ||= mode
-      import_opengl if /opengl/ =~ mode
+      import_opengl if /opengl/.match?(mode)
       super(*args)
     end
 
@@ -184,7 +185,7 @@ module Processing
       klass = Processing::App.sketch_class
       klass.constants.each do |name|
         const = klass.const_get name
-        next if const.class != Class || const.to_s.match(/^Java::/)
+        next if const.class != Class || /^Java::/.match?(const.to_s)
 
         const.class_eval 'include Processing::Proxy', __FILE__, __LINE__
       end
@@ -215,7 +216,7 @@ module Processing
 
     def method_missing(name, *args)
       app = Processing.app
-      return app.send(name, *args) if app && app.respond_to?(name)
+      return app.send(name, *args) if app&.respond_to?(name)
 
       super
     end

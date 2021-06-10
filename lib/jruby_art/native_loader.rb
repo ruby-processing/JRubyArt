@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class knows how to dynamically set the 'java' native library path
 # It might not work with java 9?
 class NativeLoader
@@ -20,6 +22,7 @@ class NativeLoader
     field = JC::Class.for_name('java.lang.ClassLoader')
                      .get_declared_field('sys_paths')
     return unless field
+
     field.accessible = true # some jruby magic
     field.set(JC::Class.for_name('java.lang.System').get_class_loader, nil)
   end

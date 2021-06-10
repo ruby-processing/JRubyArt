@@ -1,4 +1,5 @@
 # frozen_string_literal: false
+
 # The SketchParameters class knows how to format, size, title & class name
 class SketchParameters
   attr_reader :name, :args
@@ -13,13 +14,19 @@ class SketchParameters
 
   def sketch_title
     human = name.split('_').collect(&:capitalize).join(' ')
-    format("sketch_title '%s'", human)
+    format("sketch_title '%<title>s'", title: human)
   end
 
   def sketch_size
-    mode = args.length == 3 ? format(', %s', args[2].upcase) : ''
+    mode = args.length == 3 ? format(', %<mode>s', mode: args[2].upcase) : ''
     return 'size 200, 200' if args.empty?
-    format('size %d, %d%s', args[0].to_i, args[1].to_i, mode)
+
+    format(
+      'size %<width>d, %<height>d%<mode>s',
+      width: args[0].to_i,
+      height: args[1].to_i,
+      mode: mode
+    )
   end
 end
 
@@ -29,7 +36,9 @@ class SketchWriter
 
   def initialize(path, args)
     @param = SketchParameters.new(name: path, args: args)
-    @file = format('%s/%s.rb', File.dirname(path), path)
+    @file = format(
+      '%<dir>s/%<file>s.rb', dir: File.dirname(path), file: path
+    )
   end
 
   def write
@@ -45,7 +54,6 @@ class Sketch
 
   def initialize(param)
     @param = param
-    self
   end
 
   BLANK ||= ''.freeze
@@ -59,18 +67,25 @@ class Sketch
   end
 
   def class_methods
-    lines = [format('class %s < Processing::App', param.class_name)]
+    lines = [format('class %<name>s < Processing::App', name: param.class_name)]
     lines.concat methods(INDENT)
     lines << 'end'
   end
 
   private
 
+  def content(content, indent)
+    return BLANK if content.empty?
+
+    format('  %<indent>s%<content>s', indent: indent, content: content)
+  end
+
   def method_lines(name, content, indent)
-    one = format('%sdef %s', indent, name)
-    two = content.empty? ? BLANK : format('  %s%s', indent, content)
-    three = format('%send', indent)
-    return [one, two, three] if /draw/ =~ name
+    one = format('%<indent>sdef %<name>s', indent: indent, name: name)
+    two = content(content, indent)
+    three = format('%<indent>send', indent: indent)
+    return [one, two, three] if /draw/.match?(name)
+
     [one, two, three, BLANK]
   end
 end
@@ -99,7 +114,7 @@ end
 # A simple class wrapped sketch
 class ClassSketch < Sketch
   def code
-    lines = ['# frozen_string_literal: false', BLANK]
+    lines = ['# frozen_string_literal: true', BLANK]
     lines.concat class_methods
   end
 end
@@ -108,7 +123,8 @@ end
 class EmacsSketch < Sketch
   def code
     lines = [
-      '# frozen_string_literal: false',
+      '# frozen_string_literal: true',
+      BLANK,
       "require 'jruby_art'",
       "require 'jruby_art/app'",
       BLANK,
@@ -117,6 +133,8 @@ class EmacsSketch < Sketch
     ]
     lines.concat class_methods
     lines << BLANK
-    lines << format('%s.new if Processing.app.nil?', param.class_name)
+    lines << format(
+      '%<name>s.new if Processing.app.nil?', name: param.class_name
+    )
   end
 end

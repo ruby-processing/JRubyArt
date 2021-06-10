@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative '../jruby_art/jruby_complete'
 require_relative '../jruby_art/java_opts'
 module Processing
@@ -32,10 +33,12 @@ end
 
 # Wrap creation of java command string as a class
 class JavaCommand
-  MAIN = 'org.jruby.Main'.freeze
+  MAIN = 'org.jruby.Main'
   attr_reader :runner, :args, :filename, :opts, :complete
   def initialize(runner, args, filename)
-    @runner, @args, @filename = runner, args, filename
+    @runner = runner
+    @args = args
+    @filename = filename
     @complete = JRubyComplete.complete
     @opts = JavaOpts.new.opts
   end
@@ -49,7 +52,9 @@ end
 class JRubyCommand
   attr_reader :runner, :args, :filename, :opts
   def initialize(runner, args, filename)
-    @runner, @args, @filename = runner, args, filename
+    @runner = runner
+    @args = args
+    @filename = filename
     @opts = JRubyOpts.new.opts
   end
 

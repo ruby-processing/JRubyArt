@@ -1,4 +1,5 @@
 # frozen_string_literal: false
+
 # The processing wrapper module
 module Processing
   require_relative 'library'
@@ -19,7 +20,7 @@ module Processing
     # Load a list of Ruby or Java libraries (in that order)
     # Usage: load_libraries :video, :video_event
     #
-    # If a library is put into a 'library' folder next to the sketch it will be used 
+    # If a library is put into a 'library' folder next to the sketch it will be used
     # instead of the library that ships with vanilla processing (or ide installed), or JRubyArt.
     def load_libraries(*args)
       message = 'no such file to load -- %s'
@@ -32,10 +33,12 @@ module Processing
 
     def loader(name)
       return true if @loaded_libraries.include?(name)
+
       fname = name.to_s
       library = Library.new(fname)
       library.locate
       return require_library(library, name) if library.ruby?
+
       warn("Not found library: #{fname}") unless library.exist?
       load_jars(library, name)
     end
