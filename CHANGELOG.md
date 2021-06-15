@@ -1,11 +1,13 @@
+**v2.5.1** Recommend JRuby-9.2.19.0 use.
+
 **v2.5.0** Refactor noise to delegate pattern and make OpenSimplex2 noise default noise, implement pdf and svg export libraries.
 Recommend JRuby-9.2.16.0 use
 
 **v2.4.2** Update to use jruby-complete-9.2.14.0, regularise video/sound downloadswhen no processing ide.
 
-**v2.4.1** Update to use jruby-complete-9.2.13.0  
+**v2.4.1** Update to use jruby-complete-9.2.13.0
 
-**v2.4.1** Update to use jruby-complete-9.2.12.0  
+**v2.4.1** Update to use jruby-complete-9.2.12.0
 
 **v2.4.0** Update to use jruby-complete-9.2.11.1 recommended java version AdoptOpenJDK-13+ or Openj9-14+
 
