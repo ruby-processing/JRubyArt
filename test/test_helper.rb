@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'jruby'
 gem 'minitest' # don't use bundled minitest
 require 'minitest/autorun'
 require 'minitest/pride'
