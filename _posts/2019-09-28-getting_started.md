@@ -25,7 +25,7 @@ Although there are some drawbacks to using the Ruby version Processing (slower s
 
 Install Software as required:-
 
-It is probably OK to use default OpenJDK (since jdk15) put if you encounter problems install [adopt-openjdk11][adopt] instead. You can if you like use latest OpenJ9, or even [graalvm][graal]
+It is probably OK to use default OpenJDK (since jdk15) put if you encounter problems install [Eclipse Temurin][adopt] instead. You can if you like use latest OpenJ9, or even [graalvm][graal]
 
 ```bash
 sudo pacman -S ruby # installs ruby-2.6
@@ -66,7 +66,7 @@ k9 --check # or -? to check configuration
 
 #### Java ####
 
-It should be possible to current default-jdk on Debian (openjdk 11.0.9.1 on Linux Mint when I last checked) only if you encounter problems should you install [adoptopenjdk][adopt] version which is available as a deb package.
+It should be possible to current default-jdk on Debian (openjdk 11.0.9.1 on Linux Mint when I last checked) only if you encounter problems should you install [Eclipse Temurin][adopt] version which is available as a deb package.
 
 ```bash
 sudo apt install default-jdk # On Mint probably similar on other Debian distros
@@ -261,5 +261,5 @@ Read more about using the [processing api here][api]
 [sound]:https://monkstone.github.io/_posts/minim
 [video]:https://monkstone.github.io/_posts/create_video
 [casey]:https://github.com/processing/processing/wiki/FAQ
-[adopt]:https://adoptopenjdk.net/
+[adopt]:https://adoptium.net/
 [graal]:https://www.graalvm.org/
