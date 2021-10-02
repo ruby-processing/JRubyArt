@@ -27,21 +27,21 @@ permalink: about
 
 
 
-[1]: ANTLR (ANother Tool for Language Recognition) is a powerful parser
+[^1]: ANTLR (ANother Tool for Language Recognition) is a powerful parser
 generator for reading, processing, executing, or translating structured
 text or binary files.
 
-[2]: JRuby is an implementation of the Ruby programming language atop the
+[^2]: JRuby is an implementation of the Ruby programming language atop the
 Java Virtual Machine
 
-[3]: A hackable text editor for the 21st Century
+[^3]: A hackable text editor for the 21st Century
 
-[4]: Vim is a highly configurable text editor for efficiently creating
+[^4]: Vim is a highly configurable text editor for efficiently creating
 and changing any kind of text
 
-[5]: The features of GNU Emacs include. Content-aware editing modes,
+[^5]: The features of GNU Emacs include. Content-aware editing modes,
 including syntax coloring, for many file types. Complete built-in
 documentation
 
-[6]: Pry is a powerful alternative to the standard IRB shell for Ruby.
+[^6]: Pry is a powerful alternative to the standard IRB shell for Ruby.
 It is written from scratch to provide a number of advanced features
