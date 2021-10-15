@@ -19,11 +19,11 @@ th{
 }
 </style>
 
-|feature       |  JRubyArt-1.7     |  JRubyArt-2.x           |
+|feature       |  JRubyArt-1.0     |  JRubyArt-2.3           |
 |----------    |---------------    |-----------              |
 |binary        |k9                 |k9                       |
 |run opts      |-r, -w, -l         |-r, -w, -l               |
-|jruby version |9.2.14.0 (2.5.7)    |9.2.14.0+  (2.5.7+)       |
+|jruby version |9.2.14.0 (2.5.7)   |9.3.0.0+  (2.6.7+)       |
 |jdk version   |jdk8               |jdk11+                   |
 |config        |PROCESSING_ROOT    |not required             |
 

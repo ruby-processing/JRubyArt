@@ -95,17 +95,17 @@ sudo update-alternatives --config jar # to configure if required
 ```
 #### MRI Ruby
 
-Install MRI ruby (should be at least ruby-2.5, but definitely not 2.7), if you are not using `rvm` or `rbenv`, then you should create a home in a local folder to store your gems eg `~/.gem/ruby/2.5.0` to store your gems:-
+Install MRI ruby (should be at least ruby-2.6, but definitely not 2.7), if you are not using `rvm` or `rbenv`, then you should create a home in a local folder to store your gems eg `~/.gem/ruby/2.5.0` to store your gems:-
 
 ```bash
-mkdir -p ~/.gem/ruby/2.5.0
+mkdir -p ~/.gem/ruby/265.0
 ```
 
 To get `gem` command to use this location set `GEM_HOME` and `GEM_PATH` in `~/.profile` and add the `GEM_PATH/bin` to `PATH` as below:-
 
 ```bash
-export GEM_HOME="$HOME/.gem/ruby/2.5.0"
-export GEM_PATH="$HOME/.gem/ruby/2.5.0"
+export GEM_HOME="$HOME/.gem/ruby/2.6.0"
+export GEM_PATH="$HOME/.gem/ruby/2.6.0"
 # set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$GEM_PATH/bin:$PATH"
 ```
@@ -116,7 +116,7 @@ Download and install latest jruby (in the `/opt` folder makes sense)
 
 Use `update-alternatives` to install and maintain configuration eg for jruby:-
 ```bash
-sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.2.13.0/bin/jruby 100
+sudo update-alternatives --install /usr/bin/jruby jruby /opt/jruby-9.3.1.0/bin/jruby 100
 sudo update-alternatives --config jruby # to configure if required
 ```
 
