@@ -123,14 +123,14 @@ module Processing
     # some methods. Add to this list as needed.
     def proxy_java_fields
       fields = %w[key frameRate mousePressed keyPressed]
-      methods = fields.map { |field| java_class.declared_field(field) }
-      @declared_fields = Hash[fields.zip(methods)]
+      methods = fields.map { |field| java_class.field(field) }
+      @jfields = Hash[fields.zip(methods)]
     end
 
     # Fix java conversion problems getting the last key
     # If it's ASCII, return the character, otherwise the integer
     def key
-      int = @declared_fields['key'].value(java_self)
+      int = @jfields['key'].value(java_self)
       int < 256 ? int.chr : int
     end
 
@@ -167,19 +167,19 @@ module Processing
 
     # frame_rate needs to support reading and writing
     def frame_rate(fps = nil)
-      return @declared_fields['frameRate'].value(java_self) unless fps
+      return @jfields['frameRate'].value(java_self) unless fps
 
       super(fps)
     end
 
     # Is the mouse pressed for this frame?
     def mouse_pressed?
-      @declared_fields['mousePressed'].value(java_self)
+      @jfields['mousePressed'].value(java_self)
     end
 
     # Is a key pressed for this frame?
     def key_pressed?
-      @declared_fields['keyPressed'].value(java_self)
+      @jfields['keyPressed'].value(java_self)
     end
 
     private
