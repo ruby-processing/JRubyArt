@@ -1,7 +1,7 @@
 project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
 
   model_version '4.0.0'
-  id 'ruby-processing:jruby_art:2.5.1'
+  id 'ruby-processing:jruby_art:2.6.0'
   packaging 'jar'
 
   description 'Jar for JRubyArt'
@@ -28,11 +28,12 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
               'polyglot.dump.pom' => 'pom.xml',
               'project.build.sourceEncoding' => 'UTF-8',
               'jogl.version' => '2.3.2',
+              'jruby.version' => '9.3.1.0',
               'itextpdf.version' => '5.5.13.2',
               'batik.version' => '1.14',
               'jruby.api' => 'http://jruby.org/apidocs/' )
 
-  pom 'org.jruby:jruby:9.2.19.0'
+  jar 'org.jruby:jruby-base:${jruby.version}'
   jar 'org.jogamp.jogl:jogl-all:${jogl.version}'
   jar 'org.jogamp.gluegen:gluegen-rt-main:${jogl.version}'
   jar 'org.processing:video:3.0.2'
@@ -76,12 +77,11 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
   build do
     resource do
       directory '${source.directory}/main/java'
-      includes '**/**/*.glsl', '**/*.jnilib'
       excludes '**/**/*.java'
     end
     resource do
       directory '${source.directory}/main/resources'
-      includes '**/*.png', '*.txt'
+      includes '**/*.png', '**/*.txt', '**/*.glsl'
     end
   end
 

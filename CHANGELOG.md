@@ -1,3 +1,5 @@
+**v2.6.0** Recommend JRuby-9.3.1.0 use, move non-java files to resources (simplifies path). Use `field` not `declared_field` to access java_class fields.
+
 **v2.5.1** Recommend JRuby-9.2.19.0 use.
 
 **v2.5.0** Refactor noise to delegate pattern and make OpenSimplex2 noise default noise, implement pdf and svg export libraries.
