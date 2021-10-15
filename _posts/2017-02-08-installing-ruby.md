@@ -8,7 +8,7 @@ permalink: /installing_ruby/
 
 ## Installing ruby
 
-There may be problems using the latest MRI ruby releases (should work OK with ruby-2.5 and possibly ruby-2.6), default setup is to use most recent JRuby, rather than a combination of MRI ruby and JRuby-Complete.
+There may be problems using the latest MRI ruby releases (should work OK with ruby-2.6), default setup is to use most recent JRuby, rather than a combination of MRI ruby and JRuby-Complete.
 
 ### Managers
 
@@ -32,7 +32,7 @@ Get the latest version from [http://jruby.org/download][download]
 
 ```bash
 cd /opt
-tar xzvf /pathToDownload/jruby-bin-9.2.x.x.tar.gz
+tar xzvf /pathToDownload/jruby-bin-9.3.x.x.tar.gz
 ```
 
 You could the use the excellent update-alternatives to provide symbolic links to ruby, jruby, jirb jgem etc.
