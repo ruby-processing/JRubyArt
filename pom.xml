@@ -11,7 +11,7 @@ DO NOT MODIFY - GENERATED CODE
   <modelVersion>4.0.0</modelVersion>
   <groupId>ruby-processing</groupId>
   <artifactId>jruby_art</artifactId>
-  <version>2.6.0</version>
+  <version>2.6.1</version>
   <name>jruby_art</name>
   <description>Jar for JRubyArt</description>
   <url>https://github.com/ruby-processing/JRubyArt</url>
@@ -66,7 +66,7 @@ DO NOT MODIFY - GENERATED CODE
     <itextpdf.version>5.5.13.2</itextpdf.version>
     <jogl.version>2.3.2</jogl.version>
     <jruby.api>http://jruby.org/apidocs/</jruby.api>
-    <jruby.version>9.3.1.0</jruby.version>
+    <jruby.version>9.3.2.0</jruby.version>
     <jruby_art.basedir>${project.basedir}</jruby_art.basedir>
     <polyglot.dump.pom>pom.xml</polyglot.dump.pom>
     <processing.api>http://processing.github.io/processing-javadocs/core/</processing.api>
