@@ -19,8 +19,8 @@ module Processing
 
   # import custom Vecmath renderers
   module Render
-    java_import 'monkstone.vecmath.GfxRender'
-    java_import 'monkstone.vecmath.ShapeRender'
+    import 'monkstone.vecmath.GfxRender'
+    import 'monkstone.vecmath.ShapeRender'
   end
   # Watch the definition of these methods, to make sure
   # that Processing is able to call them during events.
