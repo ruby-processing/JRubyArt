@@ -28,7 +28,7 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
               'polyglot.dump.pom' => 'pom.xml',
               'project.build.sourceEncoding' => 'UTF-8',
               'jogl.version' => '2.3.2',
-              'jruby.version' => '9.3.2.0',
+              'jruby.version' => '9.3.3.0',
               'itextpdf.version' => '5.5.13.2',
               'batik.version' => '1.14',
               'jruby.api' => 'http://jruby.org/apidocs/' )
