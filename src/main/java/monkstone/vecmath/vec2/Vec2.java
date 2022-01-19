@@ -21,6 +21,7 @@ package monkstone.vecmath.vec2;
 *
 * fastAtan2 algorithm from https://github.com/libgdx/libgdx (Apache 2.0 license)
  */
+import java.util.logging.Logger; 
 import org.jruby.Ruby;
 import org.jruby.RubyArray;
 import org.jruby.RubyClass;
@@ -228,19 +229,27 @@ public final class Vec2 extends RubyObject {
         return runtime.newFloat(result);
     }
 
+    @Deprecated
+    @JRubyMethod(name = "cross", required = 1)
+    public IRubyObject cross(ThreadContext context, IRubyObject other) {
+        Logger log = Logger.getGlobal();
+        log.warning("prefer ^ operator");
+        return op_wedge(context, other);
+    }
+
     /**
      *
      * @param context ThreadContext
      * @param other IRubyObject
-     * @return cross product IRubyObject
+     * @return wedge product IRubyObject
      */
-    @JRubyMethod(name = "cross", required = 1)
+    @JRubyMethod(name = "^", required = 1)
 
-    public IRubyObject cross(ThreadContext context, IRubyObject other) {
+    public IRubyObject op_wedge(ThreadContext context, IRubyObject other) {
         Vec2 b = null;
         Ruby runtime = context.runtime;
         if (other instanceof Vec2) {
-            b = (Vec2) other.toJava(Vec2.class);
+            b = other.toJava(Vec2.class);
         } else {
             throw runtime.newTypeError("argument should be Vec2D");
         }
@@ -401,7 +410,7 @@ public final class Vec2 extends RubyObject {
     public IRubyObject set_mag(ThreadContext context, IRubyObject scalar, Block block) {
         double new_mag = scalar.toJava(Double.class);
         if (block.isGiven() && !block.yield(context, scalar).toJava(Boolean.class)) {
-            return this;        
+            return this;
         }
         double current = 0;
         if (Math.abs(jx) > EPSILON && Math.abs(jy) > EPSILON) {
@@ -789,7 +798,7 @@ public final class Vec2 extends RubyObject {
             double diff = jx - v.jx;
             if ((diff < 0 ? -diff : diff) > Vec2.EPSILON) {
                 return runtime.newBoolean(false);
-            } 
+            }
             diff = jy - v.jy;
             return runtime.newBoolean((diff < 0 ? -diff : diff) < Vec2.EPSILON);
         }

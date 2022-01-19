@@ -261,14 +261,14 @@ class VecmathTest < Minitest::Test
     a = Vec2D.new(200, 0)
     b = Vec2D.new(0, 200)
     # Expected result is an area, twice that of the triangle created by the vectors
-    assert_equal(a.cross(b).abs, 40_000.0, 'Failed area test using 2D vector cross product')
+    assert_equal((a ^ b).abs, 40_000.0, 'Failed area test using 2D vector cross product')
   end
 
   def test_cross_non_zero # Could be used to calculate area of triangle
     a = Vec2D.new(40, 40)
     b = Vec2D.new(40, 140)
     c = Vec2D.new(140, 40)
-    assert_equal((a - b).cross(b - c).abs / 2, 5_000.0, 'Failed area calculation using 2D vector cross product')
+    assert_equal(((a - b) ^ (b - c)).abs / 2, 5_000.0, 'Failed area calculation using 2D vector cross product')
   end
 
   def test_cross_zero # where a, b, c are collinear area == 0
@@ -276,7 +276,7 @@ class VecmathTest < Minitest::Test
     b = Vec2D.new(100, 100)
     c = Vec2D.new(200, 200)
     # see http://mathworld.wolfram.com/Collinear.html for details
-    assert((a - b).cross(b - c).zero?, 'Failed collinearity test using 2D vector cross product')
+    assert(((a - b) ^ (b - c)).zero?, 'Failed collinearity test using 2D vector cross product')
   end
 
   def test_equals3
