@@ -1,4 +1,4 @@
-**v2.6.1** Recommend JRuby-9.3.2.0 use, make rake runtime dependency.
+**v2.6.1** Recommend JRuby-9.3.2.0 use, make rake runtime dependency. Update to jdk17, deprecate Vec2D cross product in favor of wedge product, update SimplexNoise.
 
 **v2.6.0** Recommend JRuby-9.3.1.0 use, move non-java files to resources (simplifies path). Use `field` not `declared_field` to access java_class fields.
 

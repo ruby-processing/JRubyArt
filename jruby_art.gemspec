@@ -40,5 +40,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest', '~> 5.10'
   spec.add_runtime_dependency 'rake', '~> 12.3'
   spec.requirements << 'A decent graphics card'
-  spec.requirements << 'java runtime >= 11.0.3+'
+  spec.requirements << 'java runtime >= 17.0.1+'
 end
