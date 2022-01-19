@@ -57,7 +57,7 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
     end
 
     plugin( :compiler, '3.8.1',
-            'release' =>  '11' )
+            'release' =>  '17' )
     plugin( :javadoc, '2.10.4',
             'detectOfflineLinks' =>  'false',
             'links' => [ '${processing.api}',
