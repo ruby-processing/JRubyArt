@@ -12,10 +12,10 @@ a * b # where a is instance of Vec2D and b is a scalar
 a + b # where both a and b are both instances of Vec2D
 a - b # where both a and b are both instances of Vec2D
 a / b # where a is instance of Vec2D and b is a scalar
+a ^ b # 2D vector wedge product (replaces deprecated cross product)
 a == b # where both a and b are both instances of Vec2D
 a.angle_between(b) # where both a and b are both instances of Vec2D
 a.copy # where a is instance of Vec2D returns a deep copy
-a.cross(b) # where both a and b are both instances of Vec2D returns float
 a.dist(b) # where both a and b are both instances of Vec2D
 a.dot(b) # where both a and b are both instances of Vec2D
 a.heading # where a is instance of Vec2D
@@ -65,7 +65,7 @@ average = array.reduce(Vec2D.new) { |c, d| c + d } # expressively
 
 Example Usages: [Examples][Vec2D]
 
-Note: Vec2D cross product [returns float][float] cf PVector which always returns a vector _because it is really a 3D vector_.
+Note: Vec2D wedge product [returns float][float] cf PVector cross product which always returns a vector _because it is really a 3D vector_.
 Also normalize on zero vector returns a zero vector for simplicities sake (like PVector)
 
 [Vec2D]: https://github.com/ruby-processing/JRubyArt-examples/blob/master/processing_app/library/vecmath/vec2d/

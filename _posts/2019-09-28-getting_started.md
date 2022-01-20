@@ -25,7 +25,7 @@ Although there are some drawbacks to using the Ruby version Processing (slower s
 
 Install Software as required:-
 
-It is probably OK to use default OpenJDK (since jdk15) put if you encounter problems install [Eclipse Temurin][adopt] instead. You can if you like use latest OpenJ9, or even [graalvm][graal]
+It is probably OK to use default OpenJDK but if you encounter problems install [Eclipse Temurin][adopt] instead. You can if you like use latest OpenJ9, or even [graalvm][graal]
 
 ```bash
 sudo pacman -S ruby # installs ruby-2.6
@@ -95,10 +95,10 @@ sudo update-alternatives --config jar # to configure if required
 ```
 #### MRI Ruby
 
-Install MRI ruby (should be at least ruby-2.6, but definitely not 2.7), if you are not using `rvm` or `rbenv`, then you should create a home in a local folder to store your gems eg `~/.gem/ruby/2.5.0` to store your gems:-
+Install MRI ruby, if you are not using `rvm` or `rbenv`, then you should create a home in a local folder to store your gems eg `~/.gem/ruby/2.6.0` to store your gems:-
 
 ```bash
-mkdir -p ~/.gem/ruby/265.0
+mkdir -p ~/.gem/ruby/2.6.0.0
 ```
 
 To get `gem` command to use this location set `GEM_HOME` and `GEM_PATH` in `~/.profile` and add the `GEM_PATH/bin` to `PATH` as below:-
