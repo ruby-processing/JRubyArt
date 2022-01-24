@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/jruby_art.svg)](https://badge.fury.io/rb/jruby_art) ![Travis CI](https://travis-ci.org/ruby-processing/JRubyArt.svg)
 
-A new version for jdk11+ and JRuby-9.3.2.0 use, does not require an installed `vanilla processing`, however if installed you can use processing-ide to download libraries. Configuration file is incompatible with that of previous version of JRubyArt (and you should move or rename old `config.yml` to keep it). This version will run with a default configuration file but you won't be able to use processing libraries, until you match configuration to your setup. Illegal reflective access warning should be fixed for this release (by using JOGL-2.4.0-rc jars), though you may need to define `JAVA_HOME` for JRuby warnings to be suppressed.
+A new version for jdk17+ and JRuby-9.3.2.0 use, does not require an installed `vanilla processing`, however if installed you can use processing-ide to download libraries. Configuration file is incompatible with that of previous version of JRubyArt (and you should move or rename old `config.yml` to keep it). This version will run with a default configuration file but you won't be able to use processing libraries, until you match configuration to your setup. Illegal reflective access warning should be fixed for this release (by using JOGL-2.4.0-rc jars), though you may need to define `JAVA_HOME` for JRuby warnings to be suppressed.
 
 ## Requirements
 
@@ -11,7 +11,7 @@ A clean start for `jruby_art` with custom processing core included, built for [j
 ## Requirements
 
 A suitable version of ruby (MRI `ruby 2.6+` or `jruby-9.3.2.0`) to download gem. NB: avoid ruby 2.7, it is guaranteed to give you problems (you've been warned)
-Tested and working OpenJDK 11-17, if you have any issues with opengl sketches with distro installed JDK use a JDK from AdoptOpenJDK.
+Tested and working OpenJDK 17, if you have any issues with opengl sketches with distro installed JDK use a JDK from AdoptOpenJDK.
 
 
 ## Configuration
