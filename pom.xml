@@ -126,11 +126,11 @@ DO NOT MODIFY - GENERATED CODE
       <plugins>
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.2.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.2.0</version>
           <executions>
             <execution>
               <id>default-cli</id>
@@ -157,14 +157,14 @@ DO NOT MODIFY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.1</version>
+          <version>3.9.0</version>
           <configuration>
             <release>17</release>
           </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.10.4</version>
+          <version>3.3.1</version>
           <configuration>
             <detectOfflineLinks>false</detectOfflineLinks>
             <links>
@@ -175,7 +175,7 @@ DO NOT MODIFY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.2.2</version>
           <configuration>
             <archive>
               <manifestEntries>
@@ -186,7 +186,7 @@ DO NOT MODIFY - GENERATED CODE
         </plugin>
         <plugin>
           <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.14.0</version>
+          <version>3.15.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-jdeps-plugin</artifactId>

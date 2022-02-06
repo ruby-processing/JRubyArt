@@ -41,8 +41,8 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
   jar 'com.itextpdf:itextpdf:${itextpdf.version}'
 
   overrides do
-    plugin :resources, '3.1.0'
-    plugin :dependency, '3.1.2' do
+    plugin :resources, '3.2.0'
+    plugin :dependency, '3.2.0' do
       execute_goals( :id => 'default-cli',
                      'artifactItems' => [ { 'groupId' =>  'com.itextpdf',
                                             'artifactId' =>  'itextpdf',
@@ -56,19 +56,19 @@ project 'jruby_art', 'https://github.com/ruby-processing/JRubyArt' do
                                             'outputDirectory' =>  '${jruby_art.basedir}/library/svg' } ] )
     end
 
-    plugin( :compiler, '3.8.1',
+    plugin( :compiler, '3.9.0',
             'release' =>  '17' )
-    plugin( :javadoc, '2.10.4',
+    plugin( :javadoc, '3.3.1',
             'detectOfflineLinks' =>  'false',
             'links' => [ '${processing.api}',
                          '${jruby.api}' ] )
-    plugin( :jar, '3.2.0',
+    plugin( :jar, '3.2.2',
             'archive' => {
               'manifestEntries' => {
                 'Automatic-Module-Name' =>  'processing.core'
               }
             } )
-    plugin :pmd, '3.14.0'
+    plugin :pmd, '3.15.0'
     plugin :jdeps, '3.1.2' do
       execute_goals 'jdkinternals', 'test-jdkinternals'
     end
