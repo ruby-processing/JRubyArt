@@ -63,7 +63,7 @@ DO NOT MODIFY - GENERATED CODE
   </issueManagement>
   <properties>
     <batik.version>1.14</batik.version>
-    <itextpdf.version>5.5.13.2</itextpdf.version>
+    <itextpdf.version>5.5.13.3</itextpdf.version>
     <jogl.version>2.3.2</jogl.version>
     <jruby.api>http://jruby.org/apidocs/</jruby.api>
     <jruby.version>9.3.3.0</jruby.version>
